@@ -33,7 +33,13 @@
   </div>
 
   <div class="sidebar-user">
-    <span class="avatar">{{ current_user.split('@')[0][:2].upper() if current_user else '?' }}</span>
+    <span class="avatar">
+      {% if user_picture %}
+        <img src="{{ user_picture }}" alt="{{ user_name or current_user }}" referrerpolicy="no-referrer"
+             style="width:100%;height:100%;object-fit:cover;border-radius:inherit"
+             onerror="this.style.display='none';this.parentElement.textContent='{{ current_user.split('@')[0][:2].upper() if current_user else '?' }}'">
+      {% else %}{{ current_user.split('@')[0][:2].upper() if current_user else '?' }}{% endif %}
+    </span>
     <div class="user-meta flex-fill overflow-hidden">
       <div class="uname text-truncate">{{ current_user.split('@')[0] if current_user else t('Guest') }}</div>
       <div class="uemail">{{ current_user if current_user else '' }}</div>

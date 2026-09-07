@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 {% block title %}{{ t('AI Chat') }} · Car Service AI{% endblock %}
+{# When continuing from a diagnosis, load the workspace result styles so the panel
+   matches the final step of the diagnosis flow. #}
+{% block extra_css %}{% if diagnosis %}<link href="/static/ai_report/diagnose.css" rel="stylesheet">{% endif %}{% endblock %}
 
 {% block content %}
 <div class="gpt-wrap gpt-wrap--no-side">
@@ -62,7 +65,7 @@
 
     <!-- ====== AI Chat Panel (always active) ====== -->
     <div class="gpt-mode-panel active" id="mode-chat">
-      <div class="gpt-chat-layout">
+      <div class="gpt-chat-layout{% if diagnosis %} gpt-chat-layout--diag{% endif %}">
         <!-- Left: Messages + Composer -->
         <div class="gpt-chat-col">
           <div class="gpt-messages" id="chat-history">
@@ -165,8 +168,13 @@
             <div class="gpt-composer-hint">{{ t('Press Enter to send, Shift+Enter for new line') }}</div>
           </div>
         </div>
-        <!-- Right: Car visual panel -->
-        <div class="gpt-chat-visual" id="gpt-chat-visual">
+        <!-- Right: diagnosis result panel (from a diagnosis) OR car visual panel -->
+        <div class="gpt-chat-visual{% if diagnosis %} gpt-chat-visual--result{% endif %}" id="gpt-chat-visual"{% if diagnosis %} data-has-diagnosis="1"{% endif %}>
+          {% if diagnosis %}
+          {% with report=diagnosis, vehicle_label=diag_vehicle_label, brand_slug=diag_brand_slug %}
+            {% include "partials/diagnosis_result_panel.html" %}
+          {% endwith %}
+          {% else %}
           <div class="gpt-visual-overlay"></div>
           <img src="/image/ai-mechanic-car.png" alt="AI Mechanic Car" class="gpt-visual-img" loading="lazy">
           <div class="gpt-visual-hud">
@@ -207,6 +215,7 @@
               </div>
             </div>
           </div>
+          {% endif %}
         </div>
       </div>
     </div>

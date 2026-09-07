@@ -1,0 +1,131 @@
+{# Diagnosis result panel — renders with the SAME .dz-ws-result-* layout as the
+   final step of the diagnosis flow (the workspace result panel), so the chat view
+   can show the result on the right while the conversation continues.
+   Requires:  report (dict), vehicle_label (str), brand_slug (str, optional) #}
+{% set sevmap = {
+  'low':      {'label': 'Low Severity',     'icon': 'bi-check-circle-fill',        'pos': 12.5, 'msg': 'This issue does not appear urgent, but inspection may still be recommended.'},
+  'medium':   {'label': 'Moderate Problem', 'icon': 'bi-exclamation-circle-fill',  'pos': 37.5, 'msg': 'This issue should be inspected soon to prevent further damage.'},
+  'high':     {'label': 'Severe Problem',   'icon': 'bi-exclamation-triangle-fill','pos': 62.5, 'msg': 'This issue may require immediate attention. Avoid driving until checked.'},
+  'critical': {'label': 'Critical Issue',   'icon': 'bi-exclamation-octagon-fill', 'pos': 87.5, 'msg': 'Do not drive. This issue poses a safety risk and requires immediate service.'}
+} %}
+{% set sev_level = (report.urgency or 'medium')|lower %}
+{% set sev = sevmap.get(sev_level, sevmap['medium']) %}
+{% set conf = report.confidence or 0 %}
+{% set critical = sev_level in ['high', 'critical'] %}
+<div class="dz-ws-result-inner dz-chat-result">
+  <div class="dz-ws-result-badge"><i class="bi bi-patch-check-fill"></i> DIAGNOSIS RESULT</div>
+
+  <div class="dz-ws-result-vehicle">
+    <div class="dz-ws-result-vehicle-logo">
+      {% if brand_slug %}
+        <img src="/image/car_logos/{{ brand_slug }}.svg" alt="{{ vehicle_label }}"
+             onerror="this.style.display='none';this.parentElement.innerHTML='<i class=&quot;bi bi-car-front-fill&quot;></i>'">
+      {% else %}<i class="bi bi-car-front-fill"></i>{% endif %}
+    </div>
+    <div>
+      <div class="dz-ws-result-vehicle-name">{{ vehicle_label }}</div>
+      <div class="dz-ws-result-vehicle-problem">{{ report.problem[:80] }}{% if report.problem|length > 80 %}...{% endif %}</div>
+    </div>
+  </div>
+
+  <div class="dz-sevmeter dz-sevmeter--{{ sev_level }}" role="group" aria-label="Problem severity: {{ sev.label }}">
+    <div class="dz-sevmeter-top">
+      <span class="dz-sevmeter-badge"><i class="bi {{ sev.icon }}"></i> {{ sev.label }}</span>
+      <span class="dz-sevmeter-conf"><span class="dz-sevmeter-conf-num">{{ conf }}%</span> confidence</span>
+    </div>
+    <div class="dz-sevmeter-gauge">
+      <span class="dz-sevmeter-seg s-low"></span><span class="dz-sevmeter-seg s-med"></span>
+      <span class="dz-sevmeter-seg s-high"></span><span class="dz-sevmeter-seg s-crit"></span>
+      <span class="dz-sevmeter-thumb" style="left:{{ sev.pos }}%"></span>
+    </div>
+    <div class="dz-sevmeter-scale"><span>Low</span><span>Moderate</span><span>Severe</span><span>Critical</span></div>
+    <div class="dz-sevmeter-msg">{{ sev.msg }}</div>
+  </div>
+
+  {% if critical and report.can_drive %}
+  <div class="dz-ws-safety">
+    <div class="dz-ws-safety-icon"><i class="bi bi-shield-exclamation"></i></div>
+    <div>
+      <div class="dz-ws-safety-title">Safety Recommendation</div>
+      <div class="dz-ws-safety-text">{{ report.can_drive }}</div>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="dz-ws-result-card">
+    <div class="dz-ws-result-card-head">
+      <div class="dz-ws-result-card-icon"><i class="bi bi-clipboard2-pulse"></i></div>
+      <div class="dz-ws-result-card-title">Diagnosis</div>
+    </div>
+    <div class="dz-ws-result-card-label">Problem Detected</div>
+    <div class="dz-ws-result-card-value" style="margin-bottom:10px">{{ report.problem }}</div>
+    <div class="dz-ws-result-card-label">Summary</div>
+    <div class="dz-ws-result-card-text">{{ report.summary }}</div>
+    {% if report.can_drive and not critical %}
+    <div style="margin-top:10px">
+      <div class="dz-ws-result-card-label">Can I Still Drive?</div>
+      <div class="dz-ws-result-card-text">{{ report.can_drive }}</div>
+    </div>
+    {% endif %}
+  </div>
+
+  {% if report.causes %}
+  <div class="dz-ws-result-card">
+    <div class="dz-ws-result-card-head">
+      <div class="dz-ws-result-card-icon"><i class="bi bi-search"></i></div>
+      <div class="dz-ws-result-card-title">Possible Causes</div>
+    </div>
+    <div class="dz-ws-causes">
+      {% for c in report.causes %}<div class="dz-ws-cause"><span class="dz-ws-cause-num">{{ '%02d'|format(loop.index) }}</span><span>{{ c }}</span></div>{% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  {% if report.steps %}
+  <div class="dz-ws-result-card">
+    <div class="dz-ws-result-card-head">
+      <div class="dz-ws-result-card-icon"><i class="bi bi-wrench-adjustable"></i></div>
+      <div class="dz-ws-result-card-title">Recommended Actions</div>
+    </div>
+    <div class="dz-ws-timeline">
+      {% for s in report.steps %}<div class="dz-ws-tl-item"><div class="dz-ws-tl-marker"><div class="dz-ws-tl-dot">{{ loop.index }}</div>{% if not loop.last %}<div class="dz-ws-tl-line"></div>{% endif %}</div><div class="dz-ws-tl-content">{{ s }}</div></div>{% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  {% if report.parts %}
+  <div class="dz-ws-result-card">
+    <div class="dz-ws-result-card-head">
+      <div class="dz-ws-result-card-icon"><i class="bi bi-box-seam"></i></div>
+      <div class="dz-ws-result-card-title">Parts Needed</div>
+    </div>
+    <div class="dz-ws-parts">
+      {% for p in report.parts %}<div class="dz-ws-part"><i class="bi bi-gear"></i><span>{{ p }}</span></div>{% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="dz-ws-result-card">
+    <div class="dz-ws-result-card-head">
+      <div class="dz-ws-result-card-icon"><i class="bi bi-cash-stack"></i></div>
+      <div class="dz-ws-result-card-title">Estimated Cost &amp; Time</div>
+    </div>
+    <div class="dz-ws-cost-grid">
+      <div class="dz-ws-cost-item"><div class="dz-ws-cost-label">Estimated Cost</div><div class="dz-ws-cost-value dz-ws-cost-green">{{ report.cost or 'Not available' }}</div></div>
+      <div class="dz-ws-cost-item"><div class="dz-ws-cost-label">Estimated Time</div><div class="dz-ws-cost-value dz-ws-cost-cyan">{{ report.time or 'Not available' }}</div></div>
+      <div class="dz-ws-cost-item full"><div class="dz-ws-cost-label">Recommended Service</div><div class="dz-ws-cost-value dz-ws-cost-muted">{{ report.center or 'Not available' }}</div></div>
+    </div>
+  </div>
+
+  {% if report.tips %}
+  <div class="dz-ws-result-card">
+    <div class="dz-ws-result-card-head">
+      <div class="dz-ws-result-card-icon"><i class="bi bi-lightbulb"></i></div>
+      <div class="dz-ws-result-card-title">Prevention Tips</div>
+    </div>
+    <div class="dz-ws-tips">
+      {% for t in report.tips %}<div class="dz-ws-tip"><i class="bi bi-check2-circle"></i><span>{{ t }}</span></div>{% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</div>

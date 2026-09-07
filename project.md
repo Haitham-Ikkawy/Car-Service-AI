@@ -198,6 +198,109 @@ to the code.
 25. **Debug logging stripped.** Removed the ~10 `console.log("[PERF]…")` timing
     statements from `diagnose.js`'s `runDiagnosis()` (production noise).
 
+### Bug-fix batch (delete, VIN gate, a11y gate, vehicle media, workspace)
+26. **"Delete Diagnosis" now works.** Two causes: (a) the delete + service-request
+    routes called an **undefined `_lang(request)`** → every delete 500'd with a
+    `NameError` (fixed to `resolve_lang`); (b) a *failed* diagnosis left the session
+    stuck in `"diagnosing"`, which the delete route then rejected with 409 — so the
+    former "cannot delete while diagnosing" guard was removed (a diagnosis runs
+    synchronously, so that status only ever means an abandoned run) and
+    `runDiagnosis()` now resets the session to `"ready"` on failure. The service-request
+    lock guard is retained. New tests cover both delete paths.
+27. **VIN lookup temporarily disabled (item 2).** Gated behind a
+    `VIN_LOOKUP_ENABLED = false` flag in `diagnose.js`: the section is hidden and its
+    wiring skipped — no code removed; flip the flag to re-enable.
+28. **Accessibility tab temporarily disabled (item 3).** The `#tab-a11y` button and
+    panel in `settings.html` are commented out (Jinja `{# #}`); the underlying logic
+    (`CS.applyA11y`, `settings.js` handler, `base.html` classes) is intact. Un-comment
+    both blocks to re-enable.
+29. **Vehicle media clears on brand switch (item 4).** `selectBrand()` and
+    `resetVehicleSelection()` now reset `#dz-selected-image` (and the info-panel image)
+    to the placeholder, so a previous vehicle's photo no longer lingers when switching.
+30. **Workspace layout fixed after continuing to chat (item 5).** `.dz-ws-chat` (the
+    `1fr` grid column) lacked `min-width:0`, so a long chat message kept the column from
+    shrinking — it overflowed and pushed the 420px result column out, where
+    `.dz-ws-grid { overflow:hidden }` clipped it (result "disappeared"). Added
+    `min-width:0` to `.dz-ws-chat` and `overflow-wrap:anywhere` to `.dz-ws-msg-text`.
+
+### Bug-fix batch (engine, chat streaming, latency, chat layout, persistence)
+31. **Dynamic engine type per car (item 1).** CarQuery (the live trim source) has a
+    **broken TLS cert** (hostname mismatch) so it always failed → every car showed the
+    same static petrol list (even a Tesla). Fixed: CarQuery is now called with
+    `verify=False` (keyless read-only API, no secrets), and the fallback is
+    **powertrain-aware** (`_smart_fallback_engines`) so EVs (Tesla, EV6, Leaf, e-tron…)
+    show Electric options and hybrids (Prius) show Hybrid first, instead of petrol.
+32. **Chat streaming no longer stalls after a diagnosis (item 2).** `/api/diagnose/complete`
+    called the **blocking** `gemini.diagnose()` directly in the async handler, freezing
+    the single event loop for the whole 10-30s diagnosis — so any chat SSE stream
+    started during/after it hung. Now wrapped in `asyncio.to_thread(...)`.
+33. **Gemini latency reduced (item 3).** (a) The above off-loop fix restores concurrency.
+    (b) `_run_generation` now sends a **no-thinking** generation config
+    (`ThinkingConfig(thinking_budget=0)`) for the structured diagnosis — flash models
+    otherwise spend seconds "thinking" that a strict-schema JSON doesn't need — with a
+    per-candidate retry *without* the config so a model that rejects it still works.
+34. **Chat layout no longer breaks when continuing from a diagnosis (item 5).** On
+    screens ≥1440px, `.gpt-main` re-applied `margin-left:260px` on top of the
+    `.layout-main` sidebar offset — a **double offset** that left a ~260px black gap.
+    Removed it. Also, opening `/chat` with an existing conversation now hides the
+    marketing visual panel + welcome so the chat is full-width and the diagnosis result
+    (first message) stays cleanly visible.
+35. **Per-user history verified across logout/login (item 6).** Diagnoses/sessions are
+    keyed by the user's **email** in the persisted store (`data/store.json`); `logout()`
+    only clears the session cookie and never touches the store, and login never re-seeds
+    an existing user — so history survives logout→login→restart. Locked in with a test
+    (`test_history_persists_per_user_across_logout_login`).
+36. **Diagnosis screen usability (item 4, targeted).** Wired the previously **dead**
+    "Need help?" button on the vehicle step to real guidance (toast). *(A broader visual
+    redesign was left out pending design direction — flagged for follow-up.)*
+
+### Feature batch (pagination, VIN gate, Google avatar, year-aware photos, chat gap)
+37. **Diagnosis history paginated (item 1).** `GET /my-diagnoses` now takes `page` +
+    `q`, returns **9 per page** (limit/offset) scoped to the user, and passes
+    `page/total_pages/total` to the template. `my_diagnoses.html` got Prev / "Page X of
+    Y · N total" / Next controls and a **server-side search** (debounced auto-submit,
+    so results span *all* pages, not just the visible one). Delete reloads when
+    paginated so counts stay correct.
+38. **VIN lookup fully gated (item 2).** In addition to the `diagnose.js` flag, the
+    backend route is commented out with `# TODO: re-enable VIN lookup`; the decoder
+    (`vehicle_api.decode_vin`) and validation stay intact. Route now 404s (tested).
+39. **Google avatar as profile image (item 3).** OAuth already captured `picture`;
+    `render()` now exposes `user_picture`/`user_name` and the **sidebar + navbar**
+    render the real Google avatar (`referrerpolicy=no-referrer`), falling back to
+    initials on error.
+40. **Year-aware vehicle media (item 4).** `photo_url(make, model, year)` tries a
+    year-qualified title first, then make+model — so different years can resolve to
+    different images, with graceful fallback. Year is threaded through every image
+    request that has it.
+41. **Real per-car photo in the history list (item 5).** `my_diagnoses.html` cards now
+    show the **actual car photo** (`/api/vehicles/image?make=&model=&year=`) instead of
+    a generic brand logo, with a photo → brand-logo → icon fallback (`mdImgFallback`).
+42. **Chat black-gap layout fixed (item 6).** Real cause: the base `.gpt-main` reserves
+    `margin-left:260px` for the chat's *own* sidebar (`.gpt-side`), but the `/chat`
+    PAGE uses `.gpt-wrap--no-side` (no `.gpt-side`) — with `.layout-main` already
+    offsetting for the app sidebar, that 260px became a black gap, and **no rule reset
+    it**. Added `.gpt-wrap--no-side .gpt-main { margin-left: 0 !important }` (higher
+    specificity than the `!important` base/media rules). Combined with the earlier
+    hide-visual-panel-on-load fix, the continued chat now renders full-width with the
+    result visible.
+
+### Diagnosis result panel persists in the continued chat
+43. **Result panel shown alongside the chat (continue-chat from a diagnosis).** When a
+    user continues chatting from a completed diagnosis (`mdChat` → `/chat?chat_id=…`),
+    the diagnosis result now stays visible on the **right side**, using the *same*
+    layout as the diagnosis flow's final step (the workspace `.dz-ws-result-*` panel).
+    Implementation:
+    - `Store.diag_session_by_chat()` — reverse lookup chat→session→diagnosis.
+    - New reusable partial `shared/templates/partials/diagnosis_result_panel.html`
+      renders the result (badge, vehicle, severity gauge, diagnosis, causes, actions,
+      parts, cost/time, tips) with the workspace classes.
+    - `chat_page` passes the linked diagnosis; `chat.html` renders the partial in the
+      right visual panel (replacing the marketing content), loads `diagnose.css`, widens
+      the column (`gpt-chat-layout--diag`) and marks it `data-has-diagnosis`.
+    - `app.js` `hideVisualPanel()` + the on-load hook now **keep** the panel when
+      `data-has-diagnosis` is set, so it survives sending messages. Plain chats are
+      unchanged (marketing panel still collapses). Covered by two tests.
+
 > **Outstanding from the audit (not yet done):** split the 8.6k-line `app.css`
 > monolith + de-dupe the doubled `.page`/`.sidebar`/`.layout-main` rules; finish or
 > remove the half-applied i18n (`diagnose.html` uses `t()` 0×, `resolve_lang` still

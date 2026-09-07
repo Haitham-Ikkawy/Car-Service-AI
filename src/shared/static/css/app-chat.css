@@ -306,6 +306,13 @@
 }
 .gpt-main > * { position: relative; z-index: 1; }
 
+/* The /chat PAGE (gpt-wrap--no-side) renders WITHOUT the chat's own internal
+   sidebar (.gpt-side) — it uses the app's main sidebar instead. So its .gpt-main
+   must NOT reserve the 260px the base rule leaves for .gpt-side, or a ~260px black
+   gap appears on the left (item 6 chat-layout bug). Higher specificity than the
+   base/media-query `.gpt-main` rules so it wins even with !important. */
+.gpt-wrap--no-side .gpt-main { margin-left: 0 !important; }
+
 /* --- 3. TOPBAR — Clean single header --- */
 .gpt-topbar {
   display: flex !important;
@@ -1356,8 +1363,22 @@
   .diag-preview-cards { grid-template-columns: repeat(2, 1fr); }
 }
 @media (min-width: 1440px) {
-  .gpt-main { margin-left: 260px !important; }
+  /* NOTE: no `.gpt-main { margin-left: 260px }` here — `.layout-main` already
+     offsets for the fixed 260px sidebar. Adding it again double-offset the chat,
+     leaving a ~260px black gap on the left (the "layout breaks on chat" bug). */
   .gpt-msgs { padding: 28px 40px !important; }
   .gpt-composer { padding: 18px 40px 22px !important; }
   .gpt-chat-layout { grid-template-columns: 1fr 360px !important; }
 }
+
+/* ============================================================
+   Continue-chat-from-a-diagnosis: show the diagnosis result panel on the right,
+   matching the diagnosis flow's final step (.dz-ws-result-* styles from
+   diagnose.css). Widen the column on desktop; the .dz-ws-result-inner keeps its
+   own padding + scroll. Mobile keeps the single column (panel hidden there).
+   ============================================================ */
+@media (min-width: 992px) {
+  .gpt-chat-layout--diag { grid-template-columns: 1fr 400px !important; }
+}
+.gpt-chat-visual--result { padding: 0 !important; overflow: hidden !important; }
+.gpt-chat-visual--result .dz-ws-result-inner { flex: 1 !important; }

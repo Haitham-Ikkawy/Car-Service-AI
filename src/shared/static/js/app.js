@@ -606,6 +606,23 @@
     let recognition = null;
     let currentProvider = "gemini";
 
+    /* Opened with an existing conversation (e.g. "Continue Chat" from a diagnosis):
+       hide the welcome + marketing visual panel so the chat is full-width and the
+       diagnosis result (the first message) stays cleanly visible (item 5). */
+    (function () {
+      const msgs = $("#chat-messages");
+      if (msgs && msgs.children.length > 0) {
+        const welcome = $("#gpt-welcome");
+        if (welcome) welcome.style.display = "none";
+        const visual = $("#gpt-chat-visual");
+        /* If the panel holds a diagnosis result, keep it visible (don't collapse). */
+        if (visual && visual.dataset.hasDiagnosis === "1") return;
+        const layout = $(".gpt-chat-layout");
+        if (visual) visual.classList.add("chat-active");
+        if (layout) layout.classList.add("chat-active");
+      }
+    })();
+
     /* Model selector dropdown */
     const modelBtn = $("#gpt-model-btn");
     const modelDropdown = $("#gpt-model-dropdown");
@@ -954,6 +971,9 @@
     /* --- Submit --- */
     function hideVisualPanel() {
       const visual = $("#gpt-chat-visual");
+      /* Keep the panel when it shows a diagnosis result — the result must stay
+         visible alongside the ongoing conversation (continue-chat from a diagnosis). */
+      if (visual && visual.dataset.hasDiagnosis === "1") return;
       const layout = $(".gpt-chat-layout");
       if (visual) visual.classList.add("chat-active");
       if (layout) layout.classList.add("chat-active");

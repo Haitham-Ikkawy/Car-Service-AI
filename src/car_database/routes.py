@@ -69,11 +69,14 @@ async def vehicles_engines(request: Request, make: str = "", model: str = "", q:
     return JSONResponse({"items": await vehicle_api.engines(make, model, q)})
 
 
-@router.get("/api/vehicles/vin")
-async def vehicles_vin(request: Request, vin: str = ""):
-    """Decode a VIN into structured vehicle fields (NHTSA vPIC)."""
-    require(request)
-    return JSONResponse(await vehicle_api.decode_vin(vin))
+# TODO: re-enable VIN lookup — temporarily disabled (future work). The frontend
+# entry point is also gated off (VIN_LOOKUP_ENABLED = false in diagnose.js) and
+# vehicle_api.decode_vin() is kept intact. Un-comment the route below to restore.
+# @router.get("/api/vehicles/vin")
+# async def vehicles_vin(request: Request, vin: str = ""):
+#     """Decode a VIN into structured vehicle fields (NHTSA vPIC)."""
+#     require(request)
+#     return JSONResponse(await vehicle_api.decode_vin(vin))
 
 
 @router.get("/api/vehicles/image")

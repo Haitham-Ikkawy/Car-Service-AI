@@ -25,11 +25,21 @@ log = logging.getLogger("car_ai.diagnosis")
 # ---------------------------------------------------------------------------
 
 @router.get("/my-diagnoses")
-async def my_diagnoses_page(request: Request):
+async def my_diagnoses_page(request: Request, page: int = 1, q: str = ""):
+    """Per-user diagnosis history, paginated (limit/offset) and searchable server-side."""
     user = require(request)
-    sessions = store.diag_sessions(user)
+    q = (q or "").strip()
+    all_sessions = store.search_diag_sessions(user, q) if q else store.diag_sessions(user)
+    per_page = 9
+    total = len(all_sessions)
+    total_pages = max(1, (total + per_page - 1) // per_page)
+    page = max(1, min(page, total_pages))
+    start = (page - 1) * per_page
+    sessions = all_sessions[start:start + per_page]
     return render(request, "my_diagnoses.html", active="my_diagnoses",
-                  page_title="My Diagnoses", sessions=sessions)
+                  page_title="My Diagnoses", sessions=sessions,
+                  page=page, total_pages=total_pages, total=total,
+                  per_page=per_page, q=q)
 
 
 @router.post("/api/diag-sessions/new")
@@ -138,16 +148,16 @@ async def diag_session_rename(request: Request, session_id: str):
 async def diag_session_delete(request: Request, session_id: str):
     """Delete a diagnosis session — guarded against active work / service requests."""
     user = require(request)
-    lang = _lang(request)
+    lang = resolve_lang(request)
     session = store.diag_session(user, session_id)
     if not session:
         return JSONResponse({"error": i18n.tr(lang, "Session not found")}, status_code=404)
-    # Safeguard 1: cannot delete while a diagnosis is actively running.
-    if session.get("status") == "diagnosing":
-        return JSONResponse(
-            {"error": i18n.tr(lang, "This diagnosis is still running — please wait for it to finish before deleting."),
-             "code": "in_progress"}, status_code=409)
-    # Safeguard 2: cannot delete a diagnosis tied to an active service request.
+    # NOTE: the former "cannot delete while diagnosing" 409 guard was removed. A
+    # diagnosis runs synchronously within its request, so a persisted "diagnosing"
+    # status only ever means a *failed/abandoned* run — which then became
+    # undeletable (the reported "Delete does nothing" bug). Users must always be
+    # able to delete their own diagnosis. The service-request lock below remains.
+    # Safeguard: cannot delete a diagnosis tied to an active service request.
     if session.get("locked") or (session.get("service_request") or {}).get("active"):
         return JSONResponse(
             {"error": i18n.tr(lang, "This diagnosis is linked to an active service request. Cancel the service request before deleting."),
@@ -165,7 +175,7 @@ async def diag_session_service_request(request: Request, session_id: str):
     An active request locks the session against deletion (item 10 safeguard).
     """
     user = require(request)
-    lang = _lang(request)
+    lang = resolve_lang(request)
     body = await request.json()
     active = bool(body.get("active"))
     session = store.diag_session(user, session_id)
@@ -288,7 +298,11 @@ async def diagnose_complete(request: Request):
              (_t_gemini_start - _t_backend_recv) * 1000)
     try:
         msg_lang = "ar" if is_arabic(description) else "en"
-        result = gemini.diagnose(
+        # Run the BLOCKING Gemini call off the event loop. Called directly it froze
+        # the single event loop for the whole diagnosis (10-30s), which is why chat
+        # streaming "stopped working" during/after a diagnosis (item 2).
+        result = await asyncio.to_thread(
+            gemini.diagnose,
             user, mode,
             description=description,
             image_bytes=image_bytes,

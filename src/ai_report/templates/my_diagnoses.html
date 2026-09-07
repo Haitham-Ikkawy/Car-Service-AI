@@ -58,6 +58,7 @@
   background: rgba(var(--c-muted),0.06); display: flex; align-items: center; justify-content: center; overflow: hidden;
 }
 .md-card-logo img { width: 100%; height: 100%; object-fit: contain; }
+.md-card-logo img.md-card-photo { object-fit: cover; border-radius: 10px; }
 .md-card-logo i { font-size: 1.1rem; color: rgba(var(--c-muted),0.3); }
 .md-card-info { flex: 1; min-width: 0; }
 .md-card-title { font-size: 0.95rem; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -106,6 +107,18 @@
 .md-empty-icon { font-size: 3rem; color: rgba(var(--c-muted),0.15); margin-bottom: 16px; }
 .md-empty h3 { font-size: 1.1rem; color: var(--text); margin-bottom: 8px; }
 .md-empty p { color: rgba(var(--c-muted),0.5); font-size: 0.88rem; margin-bottom: 20px; }
+
+/* Pagination */
+.md-pagination { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 24px; flex-wrap: wrap; }
+.md-page-btn {
+  display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 10px;
+  font-size: 0.82rem; font-weight: 600; text-decoration: none; cursor: pointer;
+  color: var(--accent); background: rgba(var(--accent-rgb), 0.08);
+  border: 1px solid rgba(var(--accent-rgb), 0.2); transition: background 0.15s;
+}
+.md-page-btn:hover { background: rgba(var(--accent-rgb), 0.16); color: var(--accent); }
+.md-page-btn.disabled { opacity: 0.4; pointer-events: none; color: rgba(var(--c-muted), 0.6); background: transparent; border-color: rgba(var(--c-muted), 0.15); }
+.md-page-info { font-size: 0.82rem; color: rgba(var(--c-muted), 0.7); }
 
 /* Delete modal */
 .md-modal-overlay {
@@ -160,10 +173,11 @@
 
   <div class="app-card md-panel">
   <div class="md-toolbar">
-    <div class="md-search">
+    <form class="md-search" method="get" action="/my-diagnoses" id="md-search-form" role="search">
       <i class="bi bi-search"></i>
-      <input type="text" id="md-search-input" placeholder="Search by vehicle, problem, or name..." autocomplete="off">
-    </div>
+      <input type="text" name="q" id="md-search-input" value="{{ q }}"
+             placeholder="Search by vehicle, problem, or name..." autocomplete="off">
+    </form>
     <a href="/diagnose" class="md-new-btn" id="md-new-btn">
       <i class="bi bi-plus-lg"></i> New Diagnosis
     </a>
@@ -176,6 +190,8 @@
       <div class="md-card-top">
         <div class="md-card-logo">
           {% set brand = (s.vehicle or {}).get('brand', '') %}
+          {% set model = (s.vehicle or {}).get('model', '') %}
+          {% set year = (s.vehicle or {}).get('year', '') %}
           {% if brand %}
             {% set logo_map = {
               'Acura': 'acura', 'Alfa Romeo': 'alfa-romeo', 'Aston Martin': 'aston-martin', 'Audi': 'audi',
@@ -193,8 +209,16 @@
               'Volvo': 'volvo'
             } %}
             {% set slug = logo_map.get(brand, '') %}
-            {% if slug %}
-              <img src="/image/car_logos/{{ slug }}.svg" alt="{{ brand }}">
+            {% set logo_url = '/image/car_logos/' ~ slug ~ '.svg' if slug else '' %}
+            {% if model %}
+              {# Show the SPECIFIC car's photo (make/model/year), not a generic brand
+                 logo. Falls back to the brand logo, then an icon, via mdImgFallback. #}
+              <img class="md-card-photo"
+                   src="/api/vehicles/image?make={{ brand|urlencode }}&model={{ model|urlencode }}{% if year %}&year={{ year }}{% endif %}"
+                   alt="{{ brand }} {{ model }}" loading="lazy"
+                   data-logo="{{ logo_url }}" onerror="mdImgFallback(this)">
+            {% elif slug %}
+              <img src="{{ logo_url }}" alt="{{ brand }}">
             {% else %}
               <i class="bi bi-car-front-fill"></i>
             {% endif %}
@@ -218,10 +242,10 @@
       <div class="md-card-actions">
         {% if s.status == 'completed' %}
           <button class="md-card-btn primary" onclick="mdOpen('{{ s.id }}')">
-            <i class="bi bi-eye"></i> View Result
+            <i class="bi bi-eye"></i>
           </button>
           <button class="md-card-btn" onclick="mdChat('{{ s.id }}', '{{ s.chat_id or '' }}')">
-            <i class="bi bi-chat-dots"></i> Continue Chat
+            <i class="bi bi-chat-dots"></i>
           </button>
           <button class="md-card-btn md-card-btn--icon" onclick="mdEdit('{{ s.id }}')" title="Edit &amp; re-diagnose">
             <i class="bi bi-pencil-square"></i>
@@ -247,12 +271,35 @@
     {% endfor %}
   </div>
 
-  {% if not sessions %}
+  {% if total == 0 %}
   <div class="md-empty" id="md-empty">
     <div class="md-empty-icon"><i class="bi bi-clipboard2-pulse"></i></div>
-    <h3>No diagnoses yet</h3>
-    <p>Start your first vehicle diagnosis and your results will appear here.</p>
-    <a href="/diagnose" class="md-new-btn"><i class="bi bi-plus-lg"></i> Start Diagnosis</a>
+    {% if q %}
+      <h3>No matches for “{{ q }}”</h3>
+      <p>Try a different search, or clear it to see all your diagnoses.</p>
+      <a href="/my-diagnoses" class="md-new-btn"><i class="bi bi-arrow-counterclockwise"></i> Clear search</a>
+    {% else %}
+      <h3>No diagnoses yet</h3>
+      <p>Start your first vehicle diagnosis and your results will appear here.</p>
+      <a href="/diagnose" class="md-new-btn"><i class="bi bi-plus-lg"></i> Start Diagnosis</a>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  {% if total_pages > 1 %}
+  <div class="md-pagination" id="md-pagination">
+    {% set qs = ('&q=' ~ (q|urlencode)) if q else '' %}
+    {% if page > 1 %}
+      <a class="md-page-btn" href="/my-diagnoses?page={{ page - 1 }}{{ qs }}"><i class="bi bi-chevron-left"></i> Prev</a>
+    {% else %}
+      <span class="md-page-btn disabled"><i class="bi bi-chevron-left"></i> Prev</span>
+    {% endif %}
+    <span class="md-page-info">Page {{ page }} of {{ total_pages }} · {{ total }} total</span>
+    {% if page < total_pages %}
+      <a class="md-page-btn" href="/my-diagnoses?page={{ page + 1 }}{{ qs }}">Next <i class="bi bi-chevron-right"></i></a>
+    {% else %}
+      <span class="md-page-btn disabled">Next <i class="bi bi-chevron-right"></i></span>
+    {% endif %}
   </div>
   {% endif %}
   </div><!-- /app-card -->
@@ -273,25 +320,36 @@
 
 {% block extra_scripts %}
 <script>
+/* Progressive fallback for the per-car photo: real photo → brand logo → icon. */
+window.mdImgFallback = function (img) {
+  var logo = img.getAttribute("data-logo");
+  if (logo && img.getAttribute("src").indexOf(logo) === -1) {
+    img.removeAttribute("data-logo");
+    img.classList.remove("md-card-photo");
+    img.src = logo;
+    return;
+  }
+  var wrap = img.parentElement;
+  if (wrap) wrap.innerHTML = '<i class="bi bi-car-front-fill"></i>';
+};
+
 (function() {
   "use strict";
   let deleteTarget = null;
 
-  /* ---- Search ---- */
+  /* ---- Search (server-side + paginated) — debounced auto-submit so results
+         cover ALL diagnoses, not just the current page. ---- */
   const searchInput = document.getElementById("md-search-input");
-  if (searchInput) {
+  const searchForm = document.getElementById("md-search-form");
+  if (searchInput && searchForm) {
     let debounce = null;
     searchInput.addEventListener("input", function() {
       clearTimeout(debounce);
-      debounce = setTimeout(() => {
-        const q = this.value.trim().toLowerCase();
-        document.querySelectorAll(".md-card").forEach(card => {
-          const title = (card.querySelector(".md-card-title")?.textContent || "").toLowerCase();
-          const problem = (card.querySelector(".md-card-problem")?.textContent || "").toLowerCase();
-          const match = !q || title.includes(q) || problem.includes(q);
-          card.style.display = match ? "" : "none";
-        });
-      }, 200);
+      debounce = setTimeout(() => { searchForm.submit(); }, 450);
+    });
+    /* Keep the caret at the end after the reload re-focuses the field. */
+    searchInput.addEventListener("focus", function() {
+      const v = this.value; this.value = ""; this.value = v;
     });
   }
 
@@ -424,6 +482,12 @@
           const card = document.querySelector('.md-card[data-id="' + id + '"]');
           if (card) card.remove();
           var grid = document.getElementById("md-grid");
+          /* When paginated, reload so page counts/contents stay correct after a
+             delete (a following page's item should move up into this one). */
+          if (document.getElementById("md-pagination")) {
+            window.location.reload();
+            return;
+          }
           if (grid && grid.querySelectorAll(".md-card").length === 0) {
             grid.innerHTML = '<div class="md-empty" id="md-empty">' +
               '<div class="md-empty-icon"><i class="bi bi-clipboard2-pulse"></i></div>' +

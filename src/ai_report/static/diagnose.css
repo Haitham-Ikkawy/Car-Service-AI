@@ -1178,7 +1178,10 @@
 /* ---- LEFT: Chat Panel ---- */
 .dz-ws-chat {
   display: flex; flex-direction: column;
-  min-height: 0; overflow: hidden;
+  /* min-width:0 is REQUIRED: without it a grid item defaults to min-width:auto,
+     so a long chat message keeps the 1fr column from shrinking — it overflows and
+     pushes the result column off-screen (which .dz-ws-grid then clips away). */
+  min-width: 0; min-height: 0; overflow: hidden;
   background: rgba(4, 10, 18, 0.5);
   border-right: 1px solid rgba(var(--accent-rgb), 0.06);
 }
@@ -1256,6 +1259,8 @@
 .dz-ws-msg-text {
   font-size: 0.85rem; line-height: 1.6;
   color: rgba(255, 255, 255, 0.65);
+  /* Wrap long unbroken strings (URLs, IDs) so they never widen the chat column. */
+  overflow-wrap: anywhere; word-break: break-word; min-width: 0;
 }
 .dz-ws-msg-text p { margin: 0 0 8px; }
 .dz-ws-msg-text p:last-child { margin-bottom: 0; }

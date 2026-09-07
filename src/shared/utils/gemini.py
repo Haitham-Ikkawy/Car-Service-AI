@@ -208,22 +208,50 @@ def _model_chain(model: str) -> list[str]:
     return [model] + [m for m in config.MODEL_FALLBACKS if m != model]
 
 
+def _fast_config():
+    """A generation config that turns OFF extended 'thinking' for much lower latency.
+
+    Flash models default to a thinking phase that adds seconds of latency — for our
+    strict-schema JSON diagnosis that reasoning isn't needed, so we set the budget
+    to 0. Returns None if the SDK/model doesn't expose the option (we then just
+    call without it).
+    """
+    try:
+        from google.genai import types
+        return types.GenerateContentConfig(
+            thinking_config=types.ThinkingConfig(thinking_budget=0),
+        )
+    except Exception:  # noqa: BLE001
+        return None
+
+
 def _run_generation(client: Any, model: str, contents: Any) -> str:
-    """Generate with model fallback chain; raises on total failure."""
+    """Generate with model fallback chain; raises on total failure.
+
+    Each candidate is tried first with the low-latency (no-thinking) config, then
+    without it, so a model that rejects the config still succeeds.
+    """
     chain = _model_chain(model)
+    cfg = _fast_config()
     last_err: Exception | None = None
     for candidate in chain:
-        try:
-            resp = client.models.generate_content(model=candidate, contents=contents)
-            if getattr(resp, "text", None):
-                if candidate != model:
-                    logger.info("Fell back to Gemini model %s (primary %s failed).", candidate, model)
-                return resp.text
-        except Exception as exc:  # noqa: BLE001
-            last_err = exc
-            logger.error("Gemini model %s unavailable: %s: %s",
-                         candidate, type(exc).__name__, _error_message(exc))
-            continue
+        for use_cfg in ([cfg, None] if cfg is not None else [None]):
+            try:
+                if use_cfg is not None:
+                    resp = client.models.generate_content(
+                        model=candidate, contents=contents, config=use_cfg)
+                else:
+                    resp = client.models.generate_content(model=candidate, contents=contents)
+                if getattr(resp, "text", None):
+                    if candidate != model:
+                        logger.info("Fell back to Gemini model %s (primary %s failed).", candidate, model)
+                    return resp.text
+            except Exception as exc:  # noqa: BLE001
+                last_err = exc
+                logger.error("Gemini model %s unavailable%s: %s: %s", candidate,
+                             " (fast config)" if use_cfg is not None else "",
+                             type(exc).__name__, _error_message(exc))
+                continue
     if last_err:
         raise last_err
     raise RuntimeError("Gemini returned an empty response")

@@ -15,18 +15,33 @@ from ..shared.utils.templating import render, require
 router = APIRouter()
 
 
+def _diagnosis_panel_ctx(user: str, chat: dict | None) -> dict:
+    """If this chat was spawned from a diagnosis, return the result panel context
+    so the chat view can show the diagnosis alongside the conversation."""
+    if not chat:
+        return {}
+    sess = store.diag_session_by_chat(user, chat.get("id", ""))
+    report = (sess or {}).get("diagnosis")
+    if not report:
+        return {}
+    v = (sess or {}).get("vehicle") or {}
+    brand = str(v.get("brand", "")).strip()
+    model = str(v.get("model", "")).strip()
+    label = " ".join(filter(None, [brand, model])).strip() or report.get("vehicle") or "Your vehicle"
+    slug = brand.lower().replace(" ", "-").replace("/", "-").replace("_", "-") if brand else ""
+    return {"diagnosis": report, "diag_vehicle_label": label, "diag_brand_slug": slug}
+
+
 @router.get("/chat")
 async def chat_page(request: Request):
     user = require(request)
     chat_id = request.query_params.get("chat_id", "")
-    if chat_id:
-        chat = store.set_active_chat(user, chat_id)
-        if chat:
-            return render(request, "chat.html", active="chat", page_title="AI Chat",
-                          chat=chat, chats=store.chats(user))
-    active_chat = store.active_chat(user)
+    chat = store.set_active_chat(user, chat_id) if chat_id else None
+    if not chat:
+        chat = store.active_chat(user)
     return render(request, "chat.html", active="chat", page_title="AI Chat",
-                  chat=active_chat, chats=store.chats(user))
+                  chat=chat, chats=store.chats(user),
+                  **_diagnosis_panel_ctx(user, chat))
 
 
 @router.post("/api/chat/stream")

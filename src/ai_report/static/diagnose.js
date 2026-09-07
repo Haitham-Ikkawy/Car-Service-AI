@@ -7,6 +7,9 @@
   const $ = (sel, root) => document.querySelector(sel, root);
   const $$ = (sel, root) => Array.from(document.querySelectorAll(sel, root));
 
+  /* ---- Feature flags — temporarily disabled features (flip to re-enable) ---- */
+  const VIN_LOOKUP_ENABLED = false;   /* TODO: re-enable VIN lookup (future work) */
+
   /* ---- State ---- */
   const state = {
     step: "vehicle",
@@ -1512,6 +1515,14 @@
     if (brandEl) brandEl.textContent = brandName;
     const modelEl = $("#dz-car-selected-model");
     if (modelEl) modelEl.textContent = "";
+    const engEl = $("#dz-car-selected-engine");
+    if (engEl) { engEl.textContent = ""; engEl.classList.add("d-none"); }
+
+    /* Clear the previous vehicle's photo — a model isn't chosen yet, so media
+       from the prior vehicle must not linger when switching brands (item 4). */
+    const selImg = $("#dz-selected-image");
+    if (selImg) selImg.innerHTML = '<i class="bi bi-car-front-fill"></i>';
+    updateInfoPanelVehicleImage("", "");
 
     /* Enable Continue button */
     const continueBtn = $("#dz-continue-vehicle");
@@ -1838,6 +1849,10 @@
     const modelsEl = $("#dz-car-models");
     if (modelsEl) modelsEl.classList.add("d-none");
 
+    /* Clear the selected-vehicle photo so it never carries over (item 4). */
+    const selImg = $("#dz-selected-image");
+    if (selImg) selImg.innerHTML = '<i class="bi bi-car-front-fill"></i>';
+
     /* Show brands section and search bar */
     const brandsSection = $("#dz-brands-section");
     if (brandsSection) brandsSection.style.display = "";
@@ -2082,8 +2097,25 @@
   function init() {
     renderBrandGrid();
     initViewAllBrands();
+    /* Wire the previously-dead "Need help?" button to actual guidance (item 4). */
+    const helpBtn = $("#dz-vehicle-help");
+    if (helpBtn) {
+      helpBtn.addEventListener("click", () => {
+        if (window.CS && CS.toast) {
+          CS.toast("info", "Choosing your vehicle",
+            "Type your brand or model in the search box, or tap a brand below. Then pick your model — we'll tailor the diagnosis to that exact car.");
+        }
+      });
+    }
     initVehicleSearch();
-    initVinLookup();
+    /* item 2: VIN lookup is gated off — hide the section and skip its wiring.
+       Flip VIN_LOOKUP_ENABLED (top of file) to re-enable; no code was removed. */
+    if (VIN_LOOKUP_ENABLED) {
+      initVinLookup();
+    } else {
+      const vinSection = $("#dz-vin-section");
+      if (vinSection) vinSection.style.display = "none";
+    }
     initEngineInput();
     initVoiceInput();
     initProblemStep();
@@ -2862,6 +2894,7 @@
         body: JSON.stringify({ status: "diagnosing" }),
       }).catch(() => {});
     }
+    let _completed = false;
     try {
       const fullProblem = buildFullProblem();
       const payload = {
@@ -2885,11 +2918,21 @@
       }
 
       showWorkspace(data.result);
+      _completed = true;
     } catch (err) {
       showError("We couldn't complete the diagnosis right now. Please try again.");
     } finally {
       state._diagnosing = false;
       if (diagBtn) { diagBtn.disabled = false; diagBtn.style.opacity = ""; }
+      /* If the run failed, don't leave the session stuck in "diagnosing" — that
+         status blocks deletion (item 1). Reset it so it can be retried/deleted. */
+      if (!_completed && state.sessionId) {
+        fetch(`/api/diag-sessions/${state.sessionId}/update`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ status: "ready" }),
+        }).catch(() => {});
+      }
     }
   }
 

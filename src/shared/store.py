@@ -610,6 +610,19 @@ class Store:
             s["time_ago"] = _relative_time(s.get("updated_at", ""))
         return hits
 
+    def diag_session_by_chat(self, user: str, chat_id: str) -> dict[str, Any] | None:
+        """Find the diagnosis session linked to a given chat thread (reverse lookup).
+
+        Lets the chat view show the diagnosis result panel that spawned the chat.
+        """
+        if not chat_id:
+            return None
+        with self._lock:
+            for s in self._diag_sessions.get(user, []):
+                if s.get("chat_id") == chat_id:
+                    return s
+        return None
+
     def link_diag_session_chat(self, user: str, session_id: str,
                                chat_id: str) -> None:
         """Link a chat thread to a diagnosis session."""

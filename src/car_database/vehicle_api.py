@@ -185,11 +185,41 @@ async def _cached(key: str, producer) -> Any:
         return value
 
 
-async def _get_json(url: str, params: dict | None = None) -> Any:
-    async with httpx.AsyncClient(timeout=8.0, headers={"User-Agent": "CarServiceAI/1.0"}) as client:
+async def _get_json(url: str, params: dict | None = None, verify: bool = True) -> Any:
+    # verify=False is used only for CarQuery, whose public cert is mis-configured
+    # (hostname mismatch); it's a keyless read-only reference API with no secrets.
+    async with httpx.AsyncClient(timeout=8.0, verify=verify,
+                                 headers={"User-Agent": "CarServiceAI/1.0"}) as client:
         resp = await client.get(url, params=params)
         resp.raise_for_status()
         return resp.json()
+
+
+# Detect the powertrain from the make/model so the engine options reflect the
+# ACTUAL car even when the live trim API is unavailable (e.g. an EV must never
+# show petrol engines). Used to build a car-specific fallback list.
+_EV_BRANDS = {"tesla", "polestar", "rivian", "lucid", "byd"}
+_EV_HINTS = ("e-tron", "etron", "leaf", " i3", " i4", " ix", "ev6", "ev9", "taycan",
+             "i-pace", "eqc", "eqb", "eqs", "eqe", "ioniq", "id.", "id3", "id4",
+             "model 3", "model y", "model s", "model x", "mach-e", "bolt", "spectre", "ev")
+_HYBRID_HINTS = ("hybrid", "prius", "insight", "e-hev")
+
+
+def _smart_fallback_engines(make: str, model: str) -> list[dict]:
+    """A car-specific engine list when the live API is down (item: dynamic engines)."""
+    mk = (make or "").strip().lower()
+    m = " " + (model or "").strip().lower()
+    if mk in _EV_BRANDS or any(h in m for h in _EV_HINTS):
+        return [
+            {"value": "Electric", "label": "Electric (EV)", "fuel": "Electric"},
+            {"value": "Dual Motor AWD", "label": "Dual Motor AWD (Electric)", "fuel": "Electric"},
+            {"value": "Long Range", "label": "Long Range (Electric)", "fuel": "Electric"},
+            {"value": "Performance", "label": "Performance (Electric)", "fuel": "Electric"},
+        ]
+    out = list(_FALLBACK_ENGINES)
+    if any(h in m for h in _HYBRID_HINTS):
+        out = [{"value": "Hybrid", "label": "Hybrid (Petrol-Electric)", "fuel": "Hybrid"}] + out
+    return out
 
 
 # ---------------------------------------------------------------------------
@@ -290,7 +320,10 @@ async def engines(make: str, model: str, q: str = "", limit: int = 12) -> list[d
 
     async def _load() -> list[dict]:
         try:
-            raw = await _get_json(_CARQUERY, {"cmd": "getTrims", "make": make, "model": model})
+            # verify=False: CarQuery's cert has a hostname mismatch — without this the
+            # lookup always failed, so every car showed the same static petrol list.
+            raw = await _get_json(_CARQUERY, {"cmd": "getTrims", "make": make, "model": model},
+                                  verify=False)
             # CarQuery sometimes wraps JSON in a JSONP callback — tolerate both.
             if isinstance(raw, str):
                 raw = json.loads(raw[raw.find("{"): raw.rfind("}") + 1])
@@ -312,9 +345,10 @@ async def engines(make: str, model: str, q: str = "", limit: int = 12) -> list[d
                 out.sort(key=lambda x: x["value"].lower())
                 return out
         except Exception as exc:  # noqa: BLE001
-            logger.info("CarQuery engines lookup failed (make=%s model=%s): %s — using fallback",
+            logger.info("CarQuery engines lookup failed (make=%s model=%s): %s — using smart fallback",
                         make, model, type(exc).__name__)
-        return list(_FALLBACK_ENGINES)
+        # Car-specific fallback (EV/hybrid aware) so options reflect the actual car.
+        return _smart_fallback_engines(make, model)
 
     return _filter(await _cached(f"engines:{make.lower()}:{model.lower()}", _load), q, "value", limit)
 

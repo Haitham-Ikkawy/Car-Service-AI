@@ -63,8 +63,13 @@ def render(request: Request, name: str, status_code: int = 200, **ctx) -> HTMLRe
     """Render a template with the standard base context for every page."""
     current_user = user(request)
     lang = resolve_lang(request)
+    _profile = store.user(current_user) if current_user else None
     base = {
         "current_user": current_user,
+        # Google (OAuth) avatar URL + display name, so the profile image shows the
+        # real account picture instead of initials wherever an avatar is rendered.
+        "user_picture": (_profile or {}).get("picture", ""),
+        "user_name": (_profile or {}).get("name", ""),
         "settings": store.settings(current_user) if current_user else {},
         "vehicle": store.vehicle(current_user),
         "is_demo": gemini.is_demo(current_user),

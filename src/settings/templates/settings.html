@@ -22,10 +22,15 @@
         <i class="bi bi-stars"></i>
         <span>{{ t('AI & Models') }}</span>
       </button>
+      {# item 3: Accessibility tab temporarily disabled — un-comment this button
+         AND the #tab-a11y panel below to re-enable. Related JS (CS.applyA11y,
+         settings.js a11y handler, base.html classes) is left intact. #}
+      {#
       <button class="settings-side-link" data-tab="tab-a11y">
         <i class="bi bi-universal-access"></i>
         <span>{{ t('Accessibility') }}</span>
       </button>
+      #}
     </aside>
 
     <div class="settings-content">
@@ -151,6 +156,9 @@
         </div>
       </div>
 
+      {# item 3: Accessibility panel temporarily disabled (see the commented tab
+         button above). Un-comment both to re-enable. #}
+      {#
       <div class="settings-panel" id="tab-a11y">
         <div class="settings-card">
           <div class="settings-card-head">
@@ -188,6 +196,7 @@
           </div>
         </div>
       </div>
+      #}
 
     </div>
   </div>
