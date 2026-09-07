@@ -58,6 +58,7 @@ for _router in (dashboard_router, chat_router, image_diagnosis_router,
 # Demo data seeding
 # ---------------------------------------------------------------------------
 
+
 def _seed(user: str, lang: str = "en") -> None:
     if store.vehicle(user):
         return
