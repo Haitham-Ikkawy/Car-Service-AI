@@ -59,6 +59,7 @@ for _router in (dashboard_router, chat_router, image_diagnosis_router,
 # ---------------------------------------------------------------------------
 
 
+
 def _seed(user: str, lang: str = "en") -> None:
     if store.vehicle(user):
         return
