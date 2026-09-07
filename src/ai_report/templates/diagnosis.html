@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% block title %}{{ t('Repair Result') }} · Car Service AI{% endblock %}
+{% block content %}
+<div class="page-hero d-flex flex-wrap justify-content-between align-items-center gap-2">
+  <div>
+    <a href="/reports" class="small text-decoration-none"><i class="bi bi-arrow-left me-1"></i>{{ t('All reports') }}</a>
+    <h2 class="mb-1 mt-1">{{ t('Repair Result') }}</h2>
+    <p class="text-soft mb-0">{{ t('AI diagnosis #') }}{{ report.id }}</p>
+  </div>
+  <div class="d-flex gap-2 no-print">
+    <button class="btn btn-secondary" onclick="window.print()"><i class="bi bi-printer me-1"></i>{{ t('Print') }}</button>
+    <a href="/diagnosis/{{ report.id }}/print" class="btn btn-primary" target="_blank"><i class="bi bi-filetype-pdf me-1"></i>{{ t('Download PDF') }}</a>
+  </div>
+</div>
+
+<div class="card overflow-hidden">
+  <div class="card-body p-0">
+
+    <div class="report-section d-flex flex-wrap align-items-center justify-content-between gap-3">
+      <div class="d-flex align-items-center gap-3">
+        <div class="icon-chip grad"><i class="bi bi-stars"></i></div>
+        <div>
+          <div class="eyebrow">{{ t('AI Diagnosis · ') }}{{ report.date }}</div>
+          <h4 class="mb-0 mt-1">{{ report.problem }}</h4>
+        </div>
+      </div>
+      <div class="d-flex flex-column align-items-end gap-2">
+        <span class="badge badge-soft-{{ report.urgency_meta.badge }}">
+          <i class="bi {% if report.urgency in ['high','critical'] %}bi-exclamation-octagon{% elif report.urgency == 'medium' %}bi-exclamation-triangle{% else %}bi-shield-check{% endif %} me-1"></i>
+          {{ report.urgency_meta.label }}
+        </span>
+        <span class="badge badge-soft-muted"><i class="bi bi-car-front me-1"></i>{{ report.vehicle }}</span>
+      </div>
+    </div>
+
+    <div class="report-section">
+      <div class="row g-3 align-items-center">
+        <div class="col-md-7">
+          <div class="eyebrow mb-1">{{ t('Summary') }}</div>
+          <p class="mb-0 text-soft">{{ report.summary }}</p>
+        </div>
+        <div class="col-md-5 d-flex justify-content-center">
+          <div class="conf-ring">
+            <svg width="148" height="148" viewBox="0 0 148 148">
+              <defs><linearGradient id="grad"><stop offset="0%" stop-color="#ff7a1a"/><stop offset="100%" stop-color="#ffa24d"/></linearGradient></defs>
+              <circle class="track" cx="74" cy="74" r="62" fill="none" stroke-width="12"/>
+              <circle class="bar" cx="74" cy="74" r="62" fill="none" stroke-width="12"
+                      stroke-dasharray="{{ 2 * 3.14159 * 62 }}" stroke-dashoffset="{{ (2 * 3.14159 * 62) * (1 - report.confidence/100) }}"/>
+            </svg>
+            <div class="label"><div class="num" data-count="{{ report.confidence }}">0</div><div class="cap">{{ t('Confidence') }}</div></div>
+          </div>
+        </div>
+      </div>
+      {% if report.image_data %}
+      <img src="{{ report.image_data }}" alt="{{ t('Diagnosed image') }}" class="mt-3" style="max-width:260px;border-radius:16px;border:1px solid var(--border)">
+      {% endif %}
+    </div>
+
+    {% if report.transcript %}
+    <div class="report-section">
+      <div class="eyebrow mb-2">{{ t('Transcribed sound') }}</div>
+      <p class="mb-0"><i class="bi bi-quote me-1 text-soft"></i>{{ report.transcript }}</p>
+    </div>
+    {% endif %}
+
+    <div class="report-section">
+      <div class="eyebrow mb-2"><i class="bi bi-search me-1"></i>{{ t('Possible causes') }}</div>
+      <ul class="list-clean d-flex flex-column gap-2 mb-0">
+        {% for c in report.causes %}<li class="d-flex gap-2"><i class="bi bi-dot text-soft"></i><span>{{ c }}</span></li>{% endfor %}
+      </ul>
+    </div>
+
+    <div class="report-section">
+      <div class="eyebrow mb-3"><i class="bi bi-speedometer2 me-1"></i>{{ t('Can I still drive?') }}</div>
+      <div class="urgency-hero {{ report.urgency_meta.badge }}">
+        <div class="d-flex gap-2 align-items-start">
+          <i class="bi {% if report.urgency in ['high','critical'] %}bi-exclamation-octagon{% elif report.urgency == 'medium' %}bi-exclamation-triangle{% else %}bi-shield-check{% endif %} fs-4"></i>
+          <div><div class="fw-semibold">{{ report.urgency_meta.label }}</div>
+          <div class="small text-soft">{{ report.can_drive }}</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="report-section">
+      <div class="row g-3">
+        <div class="col-sm-6 col-lg-4">
+          <div class="d-flex gap-3 align-items-start">
+            <div class="report-icon" style="background:var(--brand-soft);color:var(--brand)"><i class="bi bi-cash-stack"></i></div>
+            <div><div class="eyebrow mb-1">{{ t('Estimated cost') }}</div><div class="fw-semibold">{{ report.cost }}</div></div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+          <div class="d-flex gap-3 align-items-start">
+            <div class="report-icon" style="background:var(--brand-soft);color:var(--brand)"><i class="bi bi-clock"></i></div>
+            <div><div class="eyebrow mb-1">{{ t('Estimated time') }}</div><div class="fw-semibold">{{ report.time }}</div></div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-lg-4">
+          <div class="d-flex gap-3 align-items-start">
+            <div class="report-icon" style="background:var(--brand-soft);color:var(--brand)"><i class="bi bi-geo-alt"></i></div>
+            <div><div class="eyebrow mb-1">{{ t('Recommended service') }}</div><div class="fw-semibold">{{ report.center }}</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="report-section">
+      <div class="eyebrow mb-2"><i class="bi bi-box-seam me-1"></i>{{ t('Required parts') }}</div>
+      <div class="d-flex flex-wrap gap-2">
+        {% for p in report.parts %}<span class="badge badge-soft-info" style="font-size:.8rem;padding:.5em .9em">{{ p }}</span>{% endfor %}
+      </div>
+    </div>
+
+    <div class="report-section">
+      <div class="eyebrow mb-2"><i class="bi bi-wrench-adjustable me-1"></i>{{ t('Repair steps') }}</div>
+      <ol class="mb-0 ps-3 d-flex flex-column gap-2">
+        {% for s in report.steps %}<li class="text-soft">{{ s }}</li>{% endfor %}
+      </ol>
+    </div>
+
+    <div class="report-section no-print d-flex justify-content-between gap-2 flex-wrap">
+      <a href="/diagnose" class="btn btn-ghost"><i class="bi bi-arrow-left me-1"></i>{{ t('New diagnosis') }}</a>
+      <a href="/diagnose" class="btn btn-primary"><i class="bi bi-stars me-1"></i>{{ t('Start New Diagnosis') }}</a>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}{{ t('Reports') }} · Car Service AI{% endblock %}
+{% block content %}
+<div class="page-hero d-flex flex-wrap justify-content-between align-items-center gap-2">
+  <div>
+    <h2 class="mb-1">{{ t('Reports') }}</h2>
+    <p class="text-soft mb-0">{{ t('Every AI diagnosis is stored here as a full report with PDF export.') }}</p>
+  </div>
+  <button class="btn btn-secondary no-print" onclick="window.print()"><i class="bi bi-printer me-1"></i>{{ t('Print this page') }}</button>
+</div>
+
+<div class="row g-3 mb-4">
+  <div class="col-6 col-xl-3">
+    <div class="card card-hover h-100"><div class="card-body">
+      <div class="icon-chip mb-2"><i class="bi bi-clipboard-pulse"></i></div>
+      <div class="stat-value" data-count="{{ reports|length }}">0</div>
+      <div class="stat-cap">{{ t('Total reports') }}</div>
+    </div></div>
+  </div>
+  <div class="col-6 col-xl-3">
+    <div class="card card-hover h-100"><div class="card-body">
+      <div class="icon-chip danger mb-2"><i class="bi bi-exclamation-octagon"></i></div>
+      <div class="stat-value" data-count="{{ reports|selectattr('urgency','in',['high','critical'])|list|length }}">0</div>
+      <div class="stat-cap">{{ t('Urgent issues') }}</div>
+    </div></div>
+  </div>
+  <div class="col-6 col-xl-3">
+    <div class="card card-hover h-100"><div class="card-body">
+      <div class="icon-chip success mb-2"><i class="bi bi-shield-check"></i></div>
+      <div class="stat-value" data-count="{{ reports|selectattr('urgency','equalto','low')|list|length }}">0</div>
+      <div class="stat-cap">{{ t('Low risk') }}</div>
+    </div></div>
+  </div>
+  <div class="col-6 col-xl-3">
+    <div class="card card-hover h-100"><div class="card-body">
+      <div class="icon-chip warning mb-2"><i class="bi bi-cash-stack"></i></div>
+      <div class="stat-value">${{ "{:,}".format(total_cost) }}</div>
+      <div class="stat-cap">{{ t('Est. total cost') }}</div>
+    </div></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header"><span class="eyebrow"><i class="bi bi-file-earmark-bar-graph me-1"></i>{{ t('Diagnosis history') }}</span></div>
+  <div class="card-body p-0">
+    {% if reports %}
+    <div class="table-card" style="border:none;border-radius:0">
+      <table class="table table-hover mb-0">
+        <thead><tr><th>{{ t('Date') }}</th><th>{{ t('Vehicle') }}</th><th>{{ t('Issue') }}</th><th>{{ t('Severity') }}</th><th>{{ t('Cost') }}</th><th class="text-end">{{ t('Actions') }}</th></tr></thead>
+        <tbody>
+        {% for r in reports %}
+        <tr>
+          <td class="small text-soft mono">{{ r.date[:10] }}</td>
+          <td class="small">{{ r.vehicle }}</td>
+          <td><div class="fw-semibold small">{{ r.problem[:40] }}{% if r.problem|length > 40 %}…{% endif %}</div></td>
+          <td>{% set u = {'low':'success','medium':'warning','high':'danger','critical':'danger'}.get(r.urgency,'muted') %}
+            <span class="badge badge-soft-{{ u }}">{{ r.urgency|capitalize }}</span></td>
+          <td class="small">{{ r.cost }}</td>
+          <td class="text-end no-print">
+            <a href="/diagnosis/{{ r.id }}" class="btn btn-icon btn-sm" title="{{ t('Open report') }}"><i class="bi bi-eye"></i></a>
+            <a href="/diagnosis/{{ r.id }}/print" class="btn btn-icon btn-sm" target="_blank" title="PDF"><i class="bi bi-filetype-pdf"></i></a>
+          </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="empty-state py-5">
+      <div class="es-icon"><i class="bi bi-file-earmark-bar-graph"></i></div>
+      <h6>{{ t('No reports yet') }}</h6>
+      <p class="text-soft small">{{ t('Run a diagnosis and it will be saved here automatically.') }}</p>
+      <a href="/diagnose" class="btn btn-primary btn-sm"><i class="bi bi-stars me-1"></i>{{ t('Start diagnosing') }}</a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+{% block extra_scripts %}
+<script src="/static/ai_report/reports.js"></script>
+{% endblock %}

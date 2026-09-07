@@ -1,0 +1,220 @@
+{% extends "base.html" %}
+{% block title %}{{ t('AI Chat') }} · Car Service AI{% endblock %}
+
+{% block content %}
+<div class="gpt-wrap gpt-wrap--no-side">
+  <!-- Chat History Panel (toggled inside the popup) -->
+  <div class="gpt-history-panel" id="gpt-history-panel">
+    <div class="gpt-history-header">
+      <button class="gpt-history-back" id="gpt-history-back" title="Back to Chat">
+        <i class="bi bi-arrow-left"></i>
+        <span>Chat History</span>
+      </button>
+    </div>
+    <div class="gpt-history-sub">
+      <div class="gpt-history-subtitle">Your previous AI Mechanic conversations</div>
+      <button class="gpt-history-new-btn" id="gpt-history-new-btn" type="button">
+        <i class="bi bi-plus-lg"></i> New Chat
+      </button>
+    </div>
+    <div class="gpt-history-search">
+      <i class="bi bi-search"></i>
+      <input type="text" id="gpt-history-search" placeholder="Search conversations..." autocomplete="off">
+    </div>
+    <div class="gpt-history-list" id="gpt-history-list">
+      <div class="gpt-history-loading">Loading conversations...</div>
+    </div>
+  </div>
+
+  <!-- Main area -->
+  <section class="gpt-main gpt-main--full" id="gpt-main">
+    <!-- Top bar -->
+    <div class="gpt-topbar">
+      <div class="gpt-topbar-title">
+        <span class="gpt-topbar-icon"><i class="bi bi-stars"></i></span>
+        <div>
+          <div class="gpt-topbar-name">AI MECHANIC</div>
+          <div class="gpt-topbar-status"><span class="gpt-status-dot"></span>{{ t('AI System Online') }}</div>
+        </div>
+      </div>
+      <div class="gpt-topbar-actions">
+        <div class="gpt-model-select" id="gpt-model-select">
+          <button class="gpt-model-btn" id="gpt-model-btn" title="{{ t('Select AI model') }}">
+            <i class="bi bi-cpu"></i>
+            <span class="gpt-model-label">Gemini</span>
+            <i class="bi bi-chevron-down"></i>
+          </button>
+          <div class="gpt-model-dropdown" id="gpt-model-dropdown">
+            <div class="gpt-model-option active" data-provider="gemini">
+              <i class="bi bi-stars"></i>
+              <span>Gemini</span>
+            </div>
+            <div class="gpt-model-option" data-provider="openai">
+              <i class="bi bi-robot"></i>
+              <span>ChatGPT</span>
+            </div>
+          </div>
+        </div>
+        <button class="gpt-topbar-btn" id="chat-topbar-new" title="{{ t('New chat') }}"><i class="bi bi-plus-lg"></i></button>
+        <button class="gpt-topbar-btn" id="chat-topbar-clear" title="{{ t('Clear conversation') }}"><i class="bi bi-eraser"></i></button>
+      </div>
+    </div>
+
+    <!-- ====== AI Chat Panel (always active) ====== -->
+    <div class="gpt-mode-panel active" id="mode-chat">
+      <div class="gpt-chat-layout">
+        <!-- Left: Messages + Composer -->
+        <div class="gpt-chat-col">
+          <div class="gpt-messages" id="chat-history">
+            <div class="gpt-welcome" id="gpt-welcome" {% if chat.messages %}style="display:none"{% endif %}>
+              <div class="gpt-welcome-icon"><i class="bi bi-car-front-fill"></i></div>
+              <h2 class="gpt-welcome-title">AI Mechanic</h2>
+              <p class="gpt-welcome-sub">{{ t('How can I help with your vehicle?') }}</p>
+              <div class="gpt-welcome-grid">
+                <button type="button" class="gpt-suggestion" data-prompt="Why is my engine overheating?">
+                  <i class="bi bi-thermometer-half"></i>
+                  <span>{{ t('Engine overheating') }}</span>
+                </button>
+                <button type="button" class="gpt-suggestion" data-prompt="There's a squealing noise when I brake">
+                  <i class="bi bi-disc"></i>
+                  <span>{{ t('Brake noise') }}</span>
+                </button>
+                <button type="button" class="gpt-suggestion" data-prompt="My check engine light is on">
+                  <i class="bi bi-exclamation-triangle"></i>
+                  <span>{{ t('Check engine light') }}</span>
+                </button>
+                <button type="button" class="gpt-suggestion" data-prompt="My car won't start this morning">
+                  <i class="bi bi-battery-dead"></i>
+                  <span>{{ t("Won't start") }}</span>
+                </button>
+                <button type="button" class="gpt-suggestion" data-prompt="My engine is shaking at idle">
+                  <i class="bi bi-engine"></i>
+                  <span>{{ t('Engine shaking') }}</span>
+                </button>
+                <button type="button" class="gpt-suggestion" data-prompt="How often should I change my oil?">
+                  <i class="bi bi-droplet"></i>
+                  <span>{{ t('Oil change') }}</span>
+                </button>
+                <button type="button" class="gpt-suggestion" data-prompt="My car makes a strange noise when turning">
+                  <i class="bi bi-volume-up"></i>
+                  <span>{{ t('Strange sounds') }}</span>
+                </button>
+                <button type="button" class="gpt-suggestion" data-prompt="My car is pulling to one side">
+                  <i class="bi bi-signpost-split"></i>
+                  <span>{{ t('Alignment') }}</span>
+                </button>
+              </div>
+            </div>
+            <div class="gpt-msgs" id="chat-messages">
+              {% for m in chat.messages %}
+              <div class="gpt-msg gpt-msg-{{ m.role }}">
+                <div class="gpt-msg-avatar {{ 'ai' if m.role == 'assistant' else 'user' }}">
+                  {% if m.role == 'assistant' %}
+                  <i class="bi bi-stars"></i>
+                  {% else %}
+                  <i class="bi bi-person-fill"></i>
+                  {% endif %}
+                </div>
+                <div class="gpt-msg-body" data-id="init-{{ loop.index }}">
+                  <div class="gpt-msg-role">{{ t('AI Mechanic') if m.role == 'assistant' else t('You') }}</div>
+                  <div class="gpt-msg-text md-body">{{ m.content }}</div>
+                  {% if m.ts %}<div class="gpt-msg-time always">{{ m.ts }}</div>{% endif %}
+                  {% if m.role == 'assistant' %}
+                  <div class="gpt-msg-actions">
+                    <button class="gpt-action-btn" title="{{ t('Copy response') }}" data-act="copy" data-id="init-{{ loop.index }}"><i class="bi bi-clipboard"></i></button>
+                    <button class="gpt-action-btn" title="{{ t('Download response') }}" data-act="download" data-id="init-{{ loop.index }}"><i class="bi bi-download"></i></button>
+                    <button class="gpt-action-btn" title="{{ t('Regenerate response') }}" data-act="regen" data-id="init-{{ loop.index }}"><i class="bi bi-arrow-repeat"></i></button>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          <!-- Composer -->
+          <div class="gpt-composer">
+            <div class="gpt-recording-bar" id="gpt-recording-bar" style="display:none">
+              <div class="gpt-rec-dot"></div>
+              <div class="gpt-rec-waves">
+                <span></span><span></span><span></span><span></span><span></span>
+              </div>
+              <span class="gpt-rec-timer" id="gpt-rec-timer">0:00</span>
+              <span class="gpt-rec-label">{{ t('Listening…') }}</span>
+              <button class="gpt-rec-stop" id="gpt-rec-stop" type="button" title="{{ t('Stop') }}"><i class="bi bi-stop-fill"></i></button>
+            </div>
+            <form id="chat-form" class="gpt-composer-inner" autocomplete="off">
+              <div class="gpt-img-preview" id="gpt-img-preview" style="display:none">
+                <img id="gpt-img-thumb" src="" alt="">
+                <button type="button" class="gpt-img-remove" id="gpt-img-remove"><i class="bi bi-x-lg"></i></button>
+              </div>
+              <div class="gpt-composer-row">
+                <label class="gpt-composer-btn" title="{{ t('Attach image') }}" id="gpt-img-label">
+                  <input type="file" id="gpt-img-input" accept="image/*" hidden>
+                  <i class="bi bi-image"></i>
+                </label>
+                <textarea id="chat-input" rows="1" placeholder="{{ t('Ask your AI mechanic anything…') }}"></textarea>
+                <button class="gpt-composer-btn gpt-mic-btn" type="button" id="gpt-mic" title="{{ t('Voice input') }}">
+                  <i class="bi bi-mic"></i>
+                </button>
+                <button class="chat-stop" type="button" id="chat-stop" title="{{ t('Stop generating') }}"><i class="bi bi-stop-fill"></i></button>
+                <button class="gpt-send-btn" id="chat-send" type="submit" title="{{ t('Send') }}">
+                  <i class="bi bi-arrow-up"></i>
+                </button>
+              </div>
+            </form>
+            <div class="gpt-composer-hint">{{ t('Press Enter to send, Shift+Enter for new line') }}</div>
+          </div>
+        </div>
+        <!-- Right: Car visual panel -->
+        <div class="gpt-chat-visual" id="gpt-chat-visual">
+          <div class="gpt-visual-overlay"></div>
+          <img src="/image/ai-mechanic-car.png" alt="AI Mechanic Car" class="gpt-visual-img" loading="lazy">
+          <div class="gpt-visual-hud">
+            <div class="hud-line hud-line-1"></div>
+            <div class="hud-line hud-line-2"></div>
+            <div class="hud-line hud-line-3"></div>
+            <div class="hud-corner hud-tl"></div>
+            <div class="hud-corner hud-tr"></div>
+            <div class="hud-corner hud-bl"></div>
+            <div class="hud-corner hud-br"></div>
+            <div class="hud-scan"></div>
+          </div>
+          <div class="gpt-visual-content">
+            <div class="gpt-visual-badge"><i class="bi bi-stars"></i> AI-Powered</div>
+            <h3 class="gpt-visual-title">AI Car Diagnostics</h3>
+            <p class="gpt-visual-sub">Get instant insights and expert recommendations powered by advanced AI technology.</p>
+            <div class="gpt-visual-benefits">
+              <div class="gpt-visual-benefit">
+                <i class="bi bi-lightning-charge-fill"></i>
+                <div>
+                  <h6>Fast Analysis</h6>
+                  <p>Instant results</p>
+                </div>
+              </div>
+              <div class="gpt-visual-benefit">
+                <i class="bi bi-bullseye"></i>
+                <div>
+                  <h6>Accurate</h6>
+                  <p>AI-powered precision</p>
+                </div>
+              </div>
+              <div class="gpt-visual-benefit">
+                <i class="bi bi-shield-lock-fill"></i>
+                <div>
+                  <h6>Secure</h6>
+                  <p>100% private</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="/static/chat_ai/chat.js"></script>
+{% endblock %}

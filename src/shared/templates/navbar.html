@@ -1,0 +1,29 @@
+<!-- ============ Topbar / navbar ============ -->
+<header class="topbar">
+  <button class="btn btn-icon d-lg-none" data-sidebar-toggle title="{{ t('Menu') }}"><i class="bi bi-list"></i></button>
+  <div class="page-title">{{ page_title }}</div>
+
+  <span class="ai-pill {{ 'off' if is_demo }}" title="{{ t('Gemini online') }}">
+    <span class="pulse-dot"></span><span class="txt">{{ t('AI System Online') }}</span>
+  </span>
+
+  <div class="ms-auto">
+    <div class="dropdown">
+      <button class="btn btn-icon" data-bs-toggle="dropdown" aria-label="{{ t('Account') }}" title="{{ t('Account') }}">
+        <i class="bi bi-person-circle"></i>
+      </button>
+      <div class="dropdown-menu dropdown-menu-end p-2 shadow-lg" style="min-width:200px;background:var(--glass-strong);border:1px solid var(--glass-border);border-radius:16px">
+        <div class="px-3 py-2 border-bottom" style="border-color:var(--border) !important">
+          <div class="fw-bold">{{ current_user.split('@')[0] }}</div>
+          <div class="small text-soft">{{ current_user }}</div>
+        </div>
+        <a class="dropdown-item rounded py-2" href="/settings"><i class="bi bi-gear me-2"></i>{{ t('Settings') }}</a>
+        <a class="dropdown-item rounded py-2" href="/about"><i class="bi bi-info-circle me-2"></i>{{ t('About') }}</a>
+        <hr class="dropdown-divider">
+        <form method="post" action="/logout" class="m-0">
+          <button class="dropdown-item rounded py-2 text-danger" type="submit"><i class="bi bi-box-arrow-right me-2"></i>{{ t('Log out') }}</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}{{ t('Diagnose by Image') }} · Car Service AI{% endblock %}
+{% block content %}
+<div class="diag-wrap">
+  <div class="diag-topbar">
+    <div class="diag-topbar-title">
+      <span class="diag-topbar-icon"><i class="bi bi-camera"></i></span>
+      <div>
+        <div class="diag-topbar-name">{{ t('Diagnose by Image') }}</div>
+        <div class="diag-topbar-status"><span class="diag-status-dot"></span> {{ t('Visual AI') }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="diag-workspace">
+    <div class="diag-input-col">
+      <div class="diag-input-panel">
+        <div class="upload-zone big glass" id="image-zone">
+          <div class="up-icon"><i class="bi bi-cloud-arrow-up"></i></div>
+          <h5 class="mb-1">{{ t('Drag & drop your image') }}</h5>
+          <p class="text-soft small mb-0">{{ t('or ') }}<span class="text-primary">{{ t('click to browse') }}</span></p>
+          <div class="form-text mt-2">{{ t('JPG, PNG or WebP · up to 10 MB') }}</div>
+          <input type="file" id="image-file" accept="image/*" class="d-none">
+        </div>
+        <div id="image-preview"></div>
+
+        <label class="dt-label" for="image-desc">
+          <i class="bi bi-image"></i> {{ t('Optional: add context') }}
+        </label>
+        <textarea class="dt-textarea" id="image-desc" rows="3" placeholder="{{ t('e.g. front bumper after a parking accident') }}"></textarea>
+
+        <button class="dt-submit" type="button" id="image-analyze">
+          <i class="bi bi-stars"></i> {{ t('Analyze image') }} <i class="bi bi-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="diag-output-col">
+      <div id="diagnose-output">
+        <div class="diag-output-empty">
+          <div class="diag-car-scene">
+            <div class="diag-car-glow"></div>
+            <svg class="diag-car-svg" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M30 85 L50 55 L80 45 L120 45 L150 55 L170 85" stroke="url(#grad1)" stroke-width="2.5" stroke-linecap="round" fill="none" class="diag-car-path"/>
+              <rect x="25" y="85" width="150" height="25" rx="8" fill="url(#grad2)" opacity="0.15" class="diag-car-body"/>
+              <circle cx="60" cy="110" r="12" stroke="url(#grad1)" stroke-width="2" fill="none" class="diag-wheel"/>
+              <circle cx="60" cy="110" r="5" fill="url(#grad1)" opacity="0.3"/>
+              <circle cx="140" cy="110" r="12" stroke="url(#grad1)" stroke-width="2" fill="none" class="diag-wheel"/>
+              <circle cx="140" cy="110" r="5" fill="url(#grad1)" opacity="0.3"/>
+              <rect x="85" y="52" width="30" height="20" rx="3" stroke="url(#grad1)" stroke-width="1.5" fill="none" opacity="0.4" class="diag-camera"/>
+              <circle cx="100" cy="62" r="6" stroke="url(#grad1)" stroke-width="1.5" fill="none" opacity="0.5"/>
+              <circle cx="100" cy="62" r="2" fill="#ff7a1a" opacity="0.8"/>
+              <circle cx="100" cy="35" r="3" fill="#ff7a1a" class="diag-pulse-dot"/>
+              <defs>
+                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#ff7a1a"/>
+                  <stop offset="100%" stop-color="#ff7a1a"/>
+                </linearGradient>
+                <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#ff7a1a"/>
+                  <stop offset="100%" stop-color="#ff7a1a"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <div class="diag-scan-line"></div>
+          </div>
+          <h5 class="diag-output-empty-title">{{ t('AI analysis panel') }}</h5>
+          <p class="diag-output-empty-desc">{{ t('Detected issue, confidence score and repair recommendations.') }}</p>
+          <div class="diag-output-tags">
+            <span class="dt-empty-tag"><i class="bi bi-shield-check"></i> Confidence</span>
+            <span class="dt-empty-tag"><i class="bi bi-tools"></i> Parts</span>
+            <span class="dt-empty-tag"><i class="bi bi-file-earmark-pdf"></i> PDF</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block extra_scripts %}
+<script src="/static/image_diagnosis/image_diagnosis.js"></script>
+{% endblock %}

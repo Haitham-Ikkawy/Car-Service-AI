@@ -1,0 +1,332 @@
+{% extends "base_auth.html" %}
+{% block title %}Car Service AI — Your AI Mechanic{% endblock %}
+{% block body %}
+<body class="splash-bg">
+
+<!-- Waves -->
+<div class="splash-waves">
+  <div class="splash-wave w1">
+    <svg viewBox="0 0 1440 400" preserveAspectRatio="none">
+      <path d="M0,200 C240,280 480,120 720,200 C960,280 1200,120 1440,200 L1440,400 L0,400 Z" fill="url(#waveGrad)"/>
+      <defs><linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ff7a1a"/><stop offset="100%" stop-color="#ff7a1a"/></linearGradient></defs>
+    </svg>
+  </div>
+  <div class="splash-wave w2">
+    <svg viewBox="0 0 1440 400" preserveAspectRatio="none">
+      <path d="M0,250 C360,180 600,320 900,220 C1100,150 1300,280 1440,220 L1440,400 L0,400 Z" fill="#ff7a1a"/>
+    </svg>
+  </div>
+  <div class="splash-wave w3">
+    <svg viewBox="0 0 1440 400" preserveAspectRatio="none">
+      <path d="M0,280 C200,220 500,340 800,260 C1000,200 1250,310 1440,260 L1440,400 L0,400 Z" fill="#ff7a1a"/>
+    </svg>
+  </div>
+</div>
+
+<!-- ============================================================
+     HOME PAGE — Interactive Video Hero + Feature Sections
+     ============================================================ -->
+
+<!-- ===== HERO — Interactive Video ===== -->
+<section class="hp-hero" id="hp-hero">
+  <div class="hp-hero-overlay"></div>
+
+  <!-- Top logo -->
+  <div class="splash-top-logo">
+    <img src="/static/images/logo-icon.svg" alt="Car Service AI">
+    <div class="splash-top-brand">
+      <span class="splash-top-text">Car Service AI</span>
+      <span class="splash-top-copy">&copy; 2026 All rights reserved.</span>
+    </div>
+  </div>
+
+  <div class="hp-hero-content">
+    <div class="hp-hero-badge"><span class="hp-pulse"></span> AI Powered</div>
+    <h1 class="hp-hero-title">
+      <span class="gradient-text">Car Service AI</span>
+    </h1>
+    <p class="hp-hero-sub">Your personal AI-powered automotive assistant — diagnose issues, plan maintenance, estimate repair costs, and get expert guidance powered by advanced machine learning. Always on, always accurate, always in your pocket.</p>
+    <div class="hp-hero-actions">
+      <a href="/start" class="btn btn-accent btn-lg"><i class="bi bi-stars me-2"></i>Start Diagnosing</a>
+      <a href="#features" class="btn btn-glass btn-lg"><i class="bi bi-arrow-down-circle me-2"></i>Explore Features</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== AI FEATURES — 3×2 GRID 3D CARDS ===== -->
+<section class="hp-section hp-section--alt" id="features">
+  <div class="container text-center">
+    <div class="hp-section-label mx-auto">Capabilities</div>
+    <h2 class="hp-section-title mx-auto">Powerful <span class="gradient-text">AI Features</span></h2>
+    <p class="hp-section-desc mx-auto" style="max-width:620px;margin-bottom:40px">
+      From describing a car problem to getting an AI-powered diagnosis, Car Service AI helps you understand your vehicle, identify possible causes, and decide what to do next.
+    </p>
+
+    <div class="feat2-grid" id="feat2-grid">
+
+      <!-- 01 — SMART VEHICLE SELECTION -->
+      <a href="/diagnose" class="feat2-card" data-card="0">
+        <div class="feat2-inner" style="perspective:800px">
+          <div class="deck-card-inner">
+            <div class="deck-card-pattern"></div>
+            <div class="deck-card-corner deck-card-corner--tl">
+              <span class="deck-card-num">01</span>
+              <span class="deck-card-label-sm">WIZARD STEP 1</span>
+            </div>
+            <div class="deck-card-center">
+              <div class="deck-card-icon"><i class="bi bi-search-heart"></i></div>
+              <div class="deck-card-tag">VEHICLE SELECTION</div>
+              <h3 class="deck-card-title">Smart Vehicle<br>Selection</h3>
+              <p class="deck-card-desc">Select your brand and model with intelligent search so AI knows exactly which vehicle you're diagnosing.</p>
+            </div>
+            <div class="deck-card-cta">
+              <span class="deck-card-cta-text">SELECT VEHICLE</span>
+              <i class="bi bi-arrow-right"></i>
+            </div>
+            <div class="deck-card-corner deck-card-corner--br">
+              <span class="deck-card-num">01</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- 02 — DESCRIBE THE PROBLEM -->
+      <a href="/diagnose" class="feat2-card" data-card="1">
+        <div class="feat2-inner" style="perspective:800px">
+          <div class="deck-card-inner">
+            <div class="deck-card-pattern"></div>
+            <div class="deck-card-corner deck-card-corner--tl">
+              <span class="deck-card-num">02</span>
+              <span class="deck-card-label-sm">WIZARD STEP 2</span>
+            </div>
+            <div class="deck-card-center">
+              <div class="deck-card-icon deck-card-icon--green"><i class="bi bi-pencil-square"></i></div>
+              <div class="deck-card-tag">PROBLEM INPUT</div>
+              <h3 class="deck-card-title">Describe The<br>Problem</h3>
+              <p class="deck-card-desc">Tell us what's wrong with your vehicle in your own words. Describe the symptoms, sounds, warnings, or unusual behavior.</p>
+            </div>
+            <div class="deck-card-cta">
+              <span class="deck-card-cta-text">START DIAGNOSIS</span>
+              <i class="bi bi-arrow-right"></i>
+            </div>
+            <div class="deck-card-corner deck-card-corner--br">
+              <span class="deck-card-num">02</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- 03 — GUIDED AI QUESTIONS -->
+      <a href="/diagnose" class="feat2-card" data-card="2">
+        <div class="feat2-inner" style="perspective:800px">
+          <div class="deck-card-inner">
+            <div class="deck-card-pattern"></div>
+            <div class="deck-card-corner deck-card-corner--tl">
+              <span class="deck-card-num">03</span>
+              <span class="deck-card-label-sm">WIZARD STEP 3</span>
+            </div>
+            <div class="deck-card-center">
+              <div class="deck-card-icon deck-card-icon--blue"><i class="bi bi-question-circle"></i></div>
+              <div class="deck-card-tag">AI GUIDED WIZARD</div>
+              <h3 class="deck-card-title">Guided<br>Diagnosis</h3>
+              <p class="deck-card-desc">Answer smart questions generated around your vehicle and symptoms. Every answer helps narrow down the possible cause.</p>
+            </div>
+            <div class="deck-card-cta">
+              <span class="deck-card-cta-text">GUIDED ANALYSIS</span>
+              <i class="bi bi-arrow-right"></i>
+            </div>
+            <div class="deck-card-corner deck-card-corner--br">
+              <span class="deck-card-num">03</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- 04 — IMAGE • VIDEO • AUDIO -->
+      <a href="/diagnose" class="feat2-card" data-card="3">
+        <div class="feat2-inner" style="perspective:800px">
+          <div class="deck-card-inner">
+            <div class="deck-card-pattern"></div>
+            <div class="deck-card-corner deck-card-corner--tl">
+              <span class="deck-card-num">04</span>
+              <span class="deck-card-label-sm">WIZARD STEP 4</span>
+            </div>
+            <div class="deck-card-center">
+              <div class="deck-card-icon deck-card-icon--amber"><i class="bi bi-camera-reels"></i></div>
+              <div class="deck-card-tag">MULTIMEDIA INPUT</div>
+              <h3 class="deck-card-title">Image &bull; Video<br>&amp; Audio</h3>
+              <p class="deck-card-desc">Upload a photo, video, or audio recording of the problem. Give the AI more evidence to analyze the fault.</p>
+            </div>
+            <div class="deck-card-cta">
+              <span class="deck-card-cta-text">ADD MEDIA</span>
+              <i class="bi bi-arrow-right"></i>
+            </div>
+            <div class="deck-card-corner deck-card-corner--br">
+              <span class="deck-card-num">04</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- 05 — AI DIAGNOSIS REPORT -->
+      <a href="/diagnose" class="feat2-card" data-card="4">
+        <div class="feat2-inner" style="perspective:800px">
+          <div class="deck-card-inner">
+            <div class="deck-card-pattern"></div>
+            <div class="deck-card-corner deck-card-corner--tl">
+              <span class="deck-card-num">05</span>
+              <span class="deck-card-label-sm">AI ANALYSIS</span>
+            </div>
+            <div class="deck-card-center">
+              <div class="deck-card-icon deck-card-icon--red"><i class="bi bi-clipboard2-pulse"></i></div>
+              <div class="deck-card-tag">DIAGNOSIS REPORT</div>
+              <h3 class="deck-card-title">Detailed Diagnosis<br>Report</h3>
+              <p class="deck-card-desc">Receive a complete AI-powered report with possible causes, severity, recommended repairs, parts, estimated cost, and repair steps.</p>
+            </div>
+            <div class="deck-card-cta">
+              <span class="deck-card-cta-text">VIEW REPORT</span>
+              <i class="bi bi-arrow-right"></i>
+            </div>
+            <div class="deck-card-corner deck-card-corner--br">
+              <span class="deck-card-num">05</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- 06 — CONTINUE WITH AI MECHANIC -->
+      <a href="/diagnose" class="feat2-card" data-card="5">
+        <div class="feat2-inner" style="perspective:800px">
+          <div class="deck-card-inner">
+            <div class="deck-card-pattern"></div>
+            <div class="deck-card-corner deck-card-corner--tl">
+              <span class="deck-card-num">06</span>
+              <span class="deck-card-label-sm">FOLLOW-UP</span>
+            </div>
+            <div class="deck-card-center">
+              <div class="deck-card-icon deck-card-icon--purple"><i class="bi bi-robot"></i></div>
+              <div class="deck-card-tag">AI MECHANIC CHAT</div>
+              <h3 class="deck-card-title">Continue With<br>AI Mechanic</h3>
+              <p class="deck-card-desc">After receiving your diagnosis, continue chatting with the AI Mechanic. Ask questions and get explanations without restarting the diagnosis.</p>
+            </div>
+            <div class="deck-card-cta">
+              <span class="deck-card-cta-text">ASK AI MECHANIC</span>
+              <i class="bi bi-arrow-right"></i>
+            </div>
+            <div class="deck-card-corner deck-card-corner--br">
+              <span class="deck-card-num">06</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== HOW IT WORKS ===== -->
+<section class="hp-section hp-section--alt" id="how">
+  <div class="container text-center">
+    <div class="hp-section-label mx-auto">Process</div>
+    <h2 class="hp-section-title mx-auto">How It <span class="gradient-text">Works</span></h2>
+    <p class="hp-section-desc mx-auto" style="max-width:560px">From a single symptom to a full diagnostic report — Car Service AI guides you through a streamlined four-step process that turns uncertainty into clear, actionable insight.</p>
+
+    <div class="hp-process mt-5">
+      <div class="hp-process-item">
+        <div class="hp-process-circle"><i class="bi bi-chat-dots"></i></div>
+        <h5 class="hp-process-name">Describe Your Issue</h5>
+        <p class="hp-process-desc">Open the chat or a diagnosis form and describe what you see, hear, or feel — type naturally, upload a photo, or record a sound.</p>
+      </div>
+      <div class="hp-process-arrow"><i class="bi bi-arrow-right"></i></div>
+      <div class="hp-process-item">
+        <div class="hp-process-circle" style="--pc-c:var(--success)"><i class="bi bi-cpu"></i></div>
+        <h5 class="hp-process-name">AI Analyses</h5>
+        <p class="hp-process-desc">Google Gemini AI processes your input — text, image, or audio — combining automotive engineering knowledge with deep learning to identify the root cause.</p>
+      </div>
+      <div class="hp-process-arrow"><i class="bi bi-arrow-right"></i></div>
+      <div class="hp-process-item">
+        <div class="hp-process-circle" style="--pc-c:var(--warning)"><i class="bi bi-clipboard-data"></i></div>
+        <h5 class="hp-process-name">Receive Your Report</h5>
+        <p class="hp-process-desc">Get a structured diagnostic report with problem summary, severity level, estimated cost range, required parts, and detailed repair steps.</p>
+      </div>
+      <div class="hp-process-arrow"><i class="bi bi-arrow-right"></i></div>
+      <div class="hp-process-item">
+        <div class="hp-process-circle" style="--pc-c:var(--danger)"><i class="bi bi-tools"></i></div>
+        <h5 class="hp-process-name">Take Action</h5>
+        <p class="hp-process-desc">Use the insights to decide your next move — perform a DIY fix with step-by-step guidance, schedule a service, or visit a certified mechanic with confidence.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== AI MECHANIC ===== -->
+<section class="hp-section" id="mechanic">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6 order-lg-2">
+        <div class="hp-mechanic-visual">
+          <div class="hp-mechanic-card">
+            <div class="hp-mechanic-card-head">
+              <span class="hp-mechanic-avatar"><i class="bi bi-stars"></i></span>
+              <div>
+                <div class="hp-mechanic-name">AI Mechanic</div>
+                <div class="hp-mechanic-status"><span class="hp-status-dot"></span> Online</div>
+              </div>
+            </div>
+            <div class="hp-mechanic-msg hp-mechanic-msg--ai">
+              <p>I can see the check engine light code is P0301 — cylinder 1 misfire. This is commonly caused by a faulty spark plug or ignition coil. Would you like a full repair plan with cost estimates?</p>
+            </div>
+            <div class="hp-mechanic-msg hp-mechanic-msg--user">
+              <p>Yes, please include the estimated cost and parts needed.</p>
+            </div>
+            <div class="hp-mechanic-msg hp-mechanic-msg--ai">
+              <p>Here's your diagnostic report for the cylinder 1 misfire...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 order-lg-1">
+        <div class="hp-section-label">AI Diagnosis</div>
+        <h2 class="hp-section-title">Diagnose with your <span class="gradient-text">AI Mechanic</span></h2>
+        <p class="hp-section-desc">
+          Follow a guided step-by-step wizard to diagnose your vehicle. Describe symptoms, upload photos or recordings, answer smart questions, and receive a comprehensive diagnosis report with cost estimates, repair steps, and severity assessment.
+        </p>
+        <ul class="hp-checklist">
+          <li><i class="bi bi-check-circle-fill"></i> Guided wizard — no technical knowledge needed</li>
+          <li><i class="bi bi-check-circle-fill"></i> Supports text, images, and audio recordings</li>
+          <li><i class="bi bi-check-circle-fill"></i> Get severity, cost estimates, and repair steps</li>
+          <li><i class="bi bi-check-circle-fill"></i> Continue chatting after diagnosis for follow-up</li>
+        </ul>
+        <a href="/diagnose" class="btn btn-accent mt-3"><i class="bi bi-heart-pulse me-2"></i>Start Diagnosis</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="hp-cta" id="start">
+  <div class="container text-center">
+    <h2 class="hp-cta-title">Ready to understand your car?</h2>
+    <p class="hp-cta-desc">Sign in to unlock AI-powered diagnostics, maintenance tracking, and repair guidance — your vehicle deserves smarter care.</p>
+    <div class="hp-cta-actions">
+      <a href="/start" class="btn btn-accent btn-lg"><i class="bi bi-stars me-2"></i>Sign In &amp; Start</a>
+      <a href="/diagnose" class="btn btn-glass btn-lg"><i class="bi bi-pencil-square me-2"></i>Quick Text Diagnosis</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="hp-footer">
+  <div class="container d-flex flex-wrap justify-content-between align-items-center gap-3">
+    <div class="d-flex align-items-center gap-2">
+      <span class="hp-footer-logo"><img src="/static/images/logo.svg" alt="Car Service AI" style="width:100%;height:100%;object-fit:contain"></span>
+      <span class="small">&copy; 2026 Car Service AI. All rights reserved.</span>
+    </div>
+    <div class="d-flex gap-3 small">
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+      <a href="/start">Sign In</a>
+    </div>
+  </div>
+</footer>
+{% endblock %}

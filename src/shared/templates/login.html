@@ -1,0 +1,147 @@
+{% extends "base_auth.html" %}
+{% block title %}{{ t('Sign in') }} · Car Service AI{% endblock %}
+{% block body %}
+<div class="auth-bg">
+  <!-- Automotive AI Background Layers -->
+  <div class="auth-automotive-bg" aria-hidden="true">
+    <!-- Workshop grid pattern -->
+    <div class="auth-grid"></div>
+    <!-- Car silhouette SVG -->
+    <div class="auth-car-silhouette">
+      <svg viewBox="0 0 800 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M120 220 C120 220 140 180 200 160 C260 140 320 135 400 132 C480 135 540 140 600 160 C660 180 680 220 680 220" stroke="rgba(255, 122, 26,0.06)" stroke-width="1.5" fill="none"/>
+        <path d="M160 220 C160 220 180 190 230 175 C280 160 340 155 400 152 C460 155 520 160 570 175 C620 190 640 220 640 220" stroke="rgba(255, 122, 26,0.04)" stroke-width="1" fill="none"/>
+        <!-- Wheels -->
+        <circle cx="220" cy="230" r="28" stroke="rgba(255, 122, 26,0.08)" stroke-width="1.5" fill="none"/>
+        <circle cx="220" cy="230" r="18" stroke="rgba(255, 122, 26,0.05)" stroke-width="1" fill="none"/>
+        <circle cx="580" cy="230" r="28" stroke="rgba(255, 122, 26,0.08)" stroke-width="1.5" fill="none"/>
+        <circle cx="580" cy="230" r="18" stroke="rgba(255, 122, 26,0.05)" stroke-width="1" fill="none"/>
+        <!-- Headlights -->
+        <ellipse cx="170" cy="200" rx="12" ry="6" fill="rgba(255, 122, 26,0.08)"/>
+        <ellipse cx="630" cy="200" rx="12" ry="6" fill="rgba(255, 122, 26,0.08)"/>
+      </svg>
+    </div>
+    <!-- Scanning line -->
+    <div class="auth-scan-line"></div>
+    <!-- Diagnostic points -->
+    <div class="auth-dots">
+      <span class="auth-dot" style="top:25%;left:18%;animation-delay:0s"></span>
+      <span class="auth-dot" style="top:40%;left:72%;animation-delay:1.2s"></span>
+      <span class="auth-dot" style="top:60%;left:35%;animation-delay:2.4s"></span>
+      <span class="auth-dot" style="top:30%;left:85%;animation-delay:3.6s"></span>
+      <span class="auth-dot" style="top:70%;left:12%;animation-delay:4.8s"></span>
+      <span class="auth-dot" style="top:55%;left:60%;animation-delay:0.8s"></span>
+      <span class="auth-dot" style="top:20%;left:45%;animation-delay:2s"></span>
+      <span class="auth-dot" style="top:75%;left:80%;animation-delay:3.2s"></span>
+    </div>
+    <!-- Circuit lines -->
+    <div class="auth-circuits">
+      <svg class="auth-circuit-svg" viewBox="0 0 1200 800" fill="none">
+        <path d="M0 400 H200 L250 350 H450 L500 400 H700 L750 350 H900 L950 400 H1200" stroke="rgba(255, 122, 26,0.04)" stroke-width="1"/>
+        <path d="M0 500 H150 L200 450 H400 L450 500 H650 L700 450 H850 L900 500 H1200" stroke="rgba(255, 122, 26,0.03)" stroke-width="1"/>
+        <circle cx="250" cy="350" r="3" fill="rgba(255, 122, 26,0.1)"/>
+        <circle cx="500" cy="400" r="3" fill="rgba(255, 122, 26,0.08)"/>
+        <circle cx="750" cy="350" r="3" fill="rgba(255, 122, 26,0.1)"/>
+        <circle cx="200" cy="450" r="3" fill="rgba(255, 122, 26,0.08)"/>
+        <circle cx="450" cy="500" r="3" fill="rgba(255, 122, 26,0.1)"/>
+        <circle cx="700" cy="450" r="3" fill="rgba(255, 122, 26,0.08)"/>
+      </svg>
+    </div>
+    <!-- Ambient glow orbs -->
+    <div class="auth-orbs">
+      <span class="auth-orb auth-orb--1"></span>
+      <span class="auth-orb auth-orb--2"></span>
+      <span class="auth-orb auth-orb--3"></span>
+    </div>
+    <!-- HUD overlay -->
+    <div class="auth-hud">
+      <div class="auth-hud-corner auth-hud-corner--tl"></div>
+      <div class="auth-hud-corner auth-hud-corner--tr"></div>
+      <div class="auth-hud-corner auth-hud-corner--bl"></div>
+      <div class="auth-hud-corner auth-hud-corner--br"></div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="auth-main">
+    <!-- Left: Branding + Features -->
+    <div class="auth-left">
+      <div class="auth-left-content">
+        <div class="auth-brand-badge">
+          <span class="auth-brand-badge-dot"></span>
+          AI SYSTEM ONLINE
+        </div>
+        <h2 class="auth-left-headline">
+          AI-POWERED<br>VEHICLE DIAGNOSIS
+        </h2>
+        <p class="auth-left-desc">
+          Understand your vehicle. Identify possible problems. Get actionable repair guidance.
+        </p>
+        <div class="auth-features">
+          <div class="auth-feature">
+            <i class="bi bi-check-circle-fill"></i>
+            <span>AI symptom analysis</span>
+          </div>
+          <div class="auth-feature">
+            <i class="bi bi-check-circle-fill"></i>
+            <span>Image & media analysis</span>
+          </div>
+          <div class="auth-feature">
+            <i class="bi bi-check-circle-fill"></i>
+            <span>Detailed diagnosis report</span>
+          </div>
+          <div class="auth-feature">
+            <i class="bi bi-check-circle-fill"></i>
+            <span>AI Mechanic chat</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Login Panel -->
+    <div class="auth-right">
+      <div class="auth-card">
+        <!-- Logo -->
+        <div class="auth-logo">
+          <img src="/static/images/logo-icon.svg" alt="Car Service AI" width="48" height="48">
+        </div>
+        <div class="auth-logo-text">
+          <span class="auth-logo-name">CAR SERVICE AI</span>
+          <span class="auth-logo-sub">AI-Powered Vehicle Diagnostics</span>
+        </div>
+
+        <!-- Headline -->
+        <h1 class="auth-title">{{ t('Welcome back') }}</h1>
+        <p class="auth-sub">Your AI Mechanic is ready.</p>
+        <p class="auth-sub auth-sub--small">Sign in to continue your vehicle diagnosis and access your AI mechanic.</p>
+
+        <!-- Error -->
+        {% if error %}
+        <div class="auth-error">
+          <i class="bi bi-exclamation-circle"></i>
+          <span>{{ error }}</span>
+        </div>
+        {% endif %}
+
+        <!-- Google Sign-In -->
+        <a href="/auth/google" class="auth-google-btn" role="button">
+          <svg viewBox="0 0 24 24" width="20" height="20">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+          </svg>
+          {{ t('Continue with Google') }}
+        </a>
+
+        <!-- AI Status -->
+        <div class="auth-ai-status">
+          <span class="auth-ai-status-dot"></span>
+          <span class="auth-ai-status-text">AI MECHANIC</span>
+          <span class="auth-ai-status-label">SYSTEM ONLINE</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}" dir="{{ dir }}"
+      data-server-theme="{{ settings.theme if settings else 'dark' }}"
+      data-authed="1"{% if chat %} data-chat-id="{{ chat.id }}"{% endif %}>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Car Service AI — diagnose car problems with AI by text, image or audio.">
+  <title>{% block title %}{{ page_title }} · Car Service AI{% endblock %}</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23FF7A1A'/%3E%3Cpath fill='white' d='M7 15.5 8.2 11h7.6L17 15.5z'/%3E%3C/svg%3E">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="/static/css/app.css" rel="stylesheet">
+  <link href="/static/css/app-chat.css" rel="stylesheet">
+  {% block extra_css %}{% endblock %}
+  <script>
+    (function () {
+      var t = localStorage.getItem('cs-theme') || '{{ settings.theme if settings else "dark" }}';
+      var r = t === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : t;
+      document.documentElement.setAttribute('data-bs-theme', r);
+      document.documentElement.style.colorScheme = r;
+      var a = localStorage.getItem('cs-accent') || '{{ settings.accent if settings else "" }}';
+      if (a) {
+        var h = a.replace('#', ''); if (h.length === 3) h = h.replace(/(.)/g, '$1$1');
+        var n = parseInt(h, 16), rgb = ((n >> 16) & 255) + ', ' + ((n >> 8) & 255) + ', ' + (n & 255);
+        var st = document.documentElement.style;
+        st.setProperty('--accent', a); st.setProperty('--brand', a);
+        st.setProperty('--accent-soft', 'rgba(' + rgb + ', 0.12)');
+        st.setProperty('--brand-soft', 'rgba(' + rgb + ', 0.18)');
+        st.setProperty('--glass-border', 'rgba(' + rgb + ', 0.10)');
+        st.setProperty('--sidebar-active', 'rgba(' + rgb + ', 0.14)');
+      }
+    })();
+  </script>
+</head>
+<body>
+<a class="skip-link" href="#main">{{ t('Skip to content') }}</a>
+<div class="sidebar-backdrop"></div>
+
+{% include "sidebar.html" %}
+
+<div class="layout-main">
+  {% include "navbar.html" %}
+
+  <main class="page" id="main">
+    {% block content %}{% endblock %}
+  </main>
+</div>
+
+{% include "footer.html" %}
+
+<!-- ====== AI CHAT MODAL ====== -->
+<div class="chat-modal-overlay" id="chat-modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="AI Chat">
+  <div class="chat-modal-backdrop" id="chat-modal-backdrop"></div>
+  <div class="chat-modal-container" id="chat-modal-container" tabindex="-1">
+    <div class="chat-modal-inner" id="chat-modal-inner">
+      <!-- Header -->
+      <div class="chat-modal-header">
+        <div class="chat-modal-header-left">
+          <span class="chat-modal-header-icon"><i class="bi bi-stars"></i></span>
+          <div>
+            <div class="chat-modal-header-title">AI MECHANIC</div>
+            <div class="chat-modal-header-status"><span class="gpt-status-dot"></span> AI System Online</div>
+          </div>
+        </div>
+        <div class="chat-modal-header-right">
+          <button class="chat-modal-history-btn" id="chat-modal-history-btn" title="Chat History">
+            <i class="bi bi-clock-history"></i>
+            <span class="chat-modal-history-label">History</span>
+          </button>
+          <div class="gpt-model-select" id="modal-gpt-model-select">
+            <button class="gpt-model-btn" id="modal-gpt-model-btn" title="Select AI model">
+              <i class="bi bi-cpu"></i>
+              <span class="gpt-model-label">Gemini</span>
+              <i class="bi bi-chevron-down"></i>
+            </button>
+            <div class="gpt-model-dropdown" id="modal-gpt-model-dropdown">
+              <div class="gpt-model-option active" data-provider="gemini">
+                <i class="bi bi-stars"></i>
+                <span>Gemini</span>
+              </div>
+              <div class="gpt-model-option" data-provider="openai">
+                <i class="bi bi-robot"></i>
+                <span>ChatGPT</span>
+              </div>
+            </div>
+          </div>
+          <button class="chat-modal-close" id="chat-modal-close" aria-label="Close" title="Close (ESC)">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+      </div>
+      <!-- Body: chat content loaded here -->
+      <div class="chat-modal-body" id="chat-modal-body">
+        <div class="chat-modal-loading">
+          <div class="chat-modal-loading-ring"></div>
+          <div>Loading AI Chat...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% block extra_scripts %}{% endblock %}
+</body>
+</html>

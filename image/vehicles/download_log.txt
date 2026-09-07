@@ -1,0 +1,1330 @@
+﻿
+
+Brand  : Land Rover
+Model  : Range Rover
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\land-rover\range-rover.jpg
+Size   : 27881
+
+Brand  : Land Rover
+Model  : Discovery
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\land-rover\discovery.jpg
+Size   : 27881
+
+Brand  : Land Rover
+Model  : Defender
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\land-rover\defender.jpg
+Size   : 27881
+
+Brand  : Land Rover
+Model  : Evoque
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\land-rover\evoque.jpg
+Size   : 25274
+
+Brand  : Opel
+Model  : Corsa
+Status : MISSING
+File   : 
+Size   : 0
+
+Brand  : Opel
+Model  : Astra
+Status : MISSING
+File   : 
+Size   : 0
+
+Brand  : Opel
+Model  : Insignia
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\opel\insignia.jpg
+Size   : 20288
+
+Brand  : Opel
+Model  : Mokka
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\opel\mokka.jpg
+Size   : 20288
+
+Brand  : Opel
+Model  : Grandland
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\opel\grandland.jpg
+Size   : 20288
+
+Brand  : Bentley
+Model  : Continental Gt
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\bentley\continental-gt.jpg
+Size   : 27881
+
+Brand  : Bentley
+Model  : Flying Spur
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\bentley\flying-spur.jpg
+Size   : 26328
+
+Brand  : Bentley
+Model  : Bentayga
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\bentley\bentayga.jpg
+Size   : 27881
+
+Brand  : Genesis
+Model  : G70
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\genesis\g70.jpg
+Size   : 52120
+
+Brand  : Genesis
+Model  : G80
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\genesis\g80.jpg
+Size   : 52120
+
+Brand  : Genesis
+Model  : G90
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\genesis\g90.jpg
+Size   : 52120
+
+Brand  : Genesis
+Model  : Gv70
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\genesis\gv70.jpg
+Size   : 23716
+
+Brand  : Genesis
+Model  : Gv80
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\genesis\gv80.jpg
+Size   : 23716
+
+Brand  : Ferrari
+Model  : Roma
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\ferrari\roma.jpg
+Size   : 26328
+
+Brand  : Ferrari
+Model  : Sf90 Stradale
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\ferrari\sf90-stradale.jpg
+Size   : 24891
+
+Brand  : Ferrari
+Model  : 296 Gtb
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\ferrari\296-gtb.jpg
+Size   : 26328
+
+Brand  : Ferrari
+Model  : 812 Superfast
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\ferrari\812-superfast.jpg
+Size   : 24551
+
+Brand  : Ferrari
+Model  : F8 Tributo
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\ferrari\f8-tributo.jpg
+Size   : 26328
+
+Brand  : Ram
+Model  : 1500
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\ram\1500.jpg
+Size   : 34527
+
+Brand  : Ram
+Model  : 2500
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\ram\2500.jpg
+Size   : 34527
+
+Brand  : Ram
+Model  : 3500
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\ram\3500.jpg
+Size   : 34527
+
+Brand  : Volkswagen
+Model  : Golf
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\volkswagen\golf.jpg
+Size   : 24981
+
+Brand  : Volkswagen
+Model  : Passat
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\volkswagen\passat.jpg
+Size   : 28667
+
+Brand  : Volkswagen
+Model  : Tiguan
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\volkswagen\tiguan.jpg
+Size   : 28667
+
+Brand  : Volkswagen
+Model  : Polo
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\volkswagen\polo.jpg
+Size   : 28667
+
+Brand  : Volkswagen
+Model  : Touareg
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\volkswagen\touareg.jpg
+Size   : 28667
+
+Brand  : Volkswagen
+Model  : Arteon
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\volkswagen\arteon.jpg
+Size   : 24981
+
+Brand  : Smart
+Model  : Fortwo
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\smart\fortwo.jpg
+Size   : 20099
+
+Brand  : Smart
+Model  : Forfour
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\smart\forfour.jpg
+Size   : 20099
+
+Brand  : Aston Martin
+Model  : Vantage
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\aston-martin\vantage.jpg
+Size   : 26328
+
+Brand  : Aston Martin
+Model  : Db12
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\aston-martin\db12.jpg
+Size   : 26328
+
+Brand  : Aston Martin
+Model  : Dbx
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\aston-martin\dbx.jpg
+Size   : 26328
+
+Brand  : Jaguar
+Model  : Xe
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\jaguar\xe.jpg
+Size   : 27456
+
+Brand  : Jaguar
+Model  : Xf
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\jaguar\xf.jpg
+Size   : 27456
+
+Brand  : Jaguar
+Model  : F Pace
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\jaguar\f-pace.jpg
+Size   : 27881
+
+Brand  : Jaguar
+Model  : E Pace
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\jaguar\e-pace.jpg
+Size   : 27456
+
+Brand  : Jaguar
+Model  : I Pace
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\jaguar\i-pace.jpg
+Size   : 27456
+
+Brand  : Maserati
+Model  : Ghibli
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\maserati\ghibli.jpg
+Size   : 54068
+
+Brand  : Maserati
+Model  : Levante
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\maserati\levante.jpg
+Size   : 27881
+
+Brand  : Maserati
+Model  : Grecale
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\maserati\grecale.jpg
+Size   : 30596
+
+Brand  : Maserati
+Model  : Granturismo
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\maserati\granturismo.jpg
+Size   : 26328
+
+Brand  : Infiniti
+Model  : Q50
+Status : MISSING
+File   : 
+Size   : 0
+
+Brand  : Infiniti
+Model  : Q60
+Status : MISSING
+File   : 
+Size   : 0
+
+Brand  : Infiniti
+Model  : Qx50
+Status : MISSING
+File   : 
+Size   : 0
+
+Brand  : Infiniti
+Model  : Qx60
+Status : MISSING
+File   : 
+Size   : 0
+
+Brand  : Tesla
+Model  : Model 3
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\tesla\model-3.jpg
+Size   : 17973
+
+Brand  : Tesla
+Model  : Model Y
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\tesla\model-y.jpg
+Size   : 26162
+
+Brand  : Tesla
+Model  : Model S
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\tesla\model-s.jpg
+Size   : 16872
+
+Brand  : Tesla
+Model  : Model X
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\tesla\model-x.jpg
+Size   : 18259
+
+Brand  : Chevrolet
+Model  : Spark
+Status : MISSING
+File   : 
+Size   : 0
+
+Brand  : Chevrolet
+Model  : Cruze
+Status : MISSING
+File   : 
+Size   : 0
+
+Brand  : Chevrolet
+Model  : Malibu
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\chevrolet\malibu.jpg
+Size   : 21936
+
+Brand  : Chevrolet
+Model  : Trailblazer
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\chevrolet\trailblazer.jpg
+Size   : 19971
+
+Brand  : Chevrolet
+Model  : Equinox
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\chevrolet\equinox.jpg
+Size   : 21936
+
+Brand  : Lamborghini
+Model  : Huracan
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\lamborghini\huracan.jpg
+Size   : 24741
+
+Brand  : Lamborghini
+Model  : Urus
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\lamborghini\urus.jpg
+Size   : 26328
+
+Brand  : Lamborghini
+Model  : Revuelto
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\lamborghini\revuelto.jpg
+Size   : 24891
+
+Brand  : Hyundai
+Model  : I20
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\hyundai\i20.jpg
+Size   : 25113
+
+Brand  : Hyundai
+Model  : I30
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\hyundai\i30.jpg
+Size   : 24796
+
+Brand  : Hyundai
+Model  : Tucson
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\hyundai\tucson.jpg
+Size   : 26717
+
+Brand  : Hyundai
+Model  : Santa Fe
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\hyundai\santa-fe.jpg
+Size   : 26717
+
+Brand  : Hyundai
+Model  : Elantra
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\hyundai\elantra.jpg
+Size   : 26717
+
+Brand  : Hyundai
+Model  : Kona
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\hyundai\kona.jpg
+Size   : 26717
+
+Brand  : Audi
+Model  : A3
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\audi\a3.jpg
+Size   : 35088
+
+Brand  : Audi
+Model  : A4
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\audi\a4.jpg
+Size   : 29717
+
+Brand  : Audi
+Model  : A6
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\audi\a6.jpg
+Size   : 27881
+
+Brand  : Audi
+Model  : Q3
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\audi\q3.jpg
+Size   : 29717
+
+Brand  : Audi
+Model  : Q5
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\audi\q5.jpg
+Size   : 27881
+
+Brand  : Audi
+Model  : Q7
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\audi\q7.jpg
+Size   : 24280
+
+Brand  : Audi
+Model  : E Tron
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\audi\e-tron.jpg
+Size   : 29717
+
+Brand  : Buick
+Model  : Encore
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\buick\encore.jpg
+Size   : 34527
+
+Brand  : Buick
+Model  : Envision
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\buick\envision.jpg
+Size   : 34527
+
+Brand  : Buick
+Model  : Lacrosse
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\buick\lacrosse.jpg
+Size   : 34527
+
+Brand  : Nissan
+Model  : Micra
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\nissan\micra.jpg
+Size   : 9845
+
+Brand  : Nissan
+Model  : Qashqai
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\nissan\qashqai.jpg
+Size   : 9845
+
+Brand  : Nissan
+Model  : X Trail
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\nissan\x-trail.jpg
+Size   : 34527
+
+Brand  : Nissan
+Model  : Leaf
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\nissan\leaf.jpg
+Size   : 9845
+
+Brand  : Nissan
+Model  : Altima
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\nissan\altima.jpg
+Size   : 9845
+
+Brand  : Fiat
+Model  : 500
+Status : MISSING
+File   : 
+Size   : 0
+
+Brand  : Fiat
+Model  : Panda
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\fiat\panda.jpg
+Size   : 25113
+
+Brand  : Fiat
+Model  : Punto
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\fiat\punto.jpg
+Size   : 17916
+
+Brand  : Fiat
+Model  : Tipo
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\fiat\tipo.jpg
+Size   : 69389
+
+Brand  : BMW
+Model  : 1 Series
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\bmw\1-series.jpg
+Size   : 25768
+
+Brand  : BMW
+Model  : 3 Series
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\bmw\3-series.jpg
+Size   : 27881
+
+Brand  : BMW
+Model  : 5 Series
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\bmw\5-series.jpg
+Size   : 29717
+
+Brand  : BMW
+Model  : X1
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\bmw\x1.jpg
+Size   : 34527
+
+Brand  : BMW
+Model  : X3
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\bmw\x3.jpg
+Size   : 34527
+
+Brand  : BMW
+Model  : X5
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\bmw\x5.jpg
+Size   : 27881
+
+Brand  : BMW
+Model  : I4
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\bmw\i4.jpg
+Size   : 20866
+
+Brand  : Jeep
+Model  : Renegade
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\jeep\renegade.jpg
+Size   : 32944
+
+Brand  : Jeep
+Model  : Compass
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\jeep\compass.jpg
+Size   : 32944
+
+Brand  : Jeep
+Model  : Cherokee
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\jeep\cherokee.jpg
+Size   : 32944
+
+Brand  : Jeep
+Model  : Wrangler
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\jeep\wrangler.jpg
+Size   : 27881
+
+Brand  : Jeep
+Model  : Grand Cherokee
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\jeep\grand-cherokee.jpg
+Size   : 27881
+
+Brand  : Volvo
+Model  : S60
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\volvo\s60.jpg
+Size   : 28542
+
+Brand  : Volvo
+Model  : S90
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\volvo\s90.jpg
+Size   : 28542
+
+Brand  : Volvo
+Model  : Xc40
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\volvo\xc40.jpg
+Size   : 28542
+
+Brand  : Volvo
+Model  : Xc60
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\volvo\xc60.jpg
+Size   : 34527
+
+Brand  : Volvo
+Model  : Xc90
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\volvo\xc90.jpg
+Size   : 30596
+
+Brand  : Renault
+Model  : Clio
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\renault\clio.jpg
+Size   : 25113
+
+Brand  : Renault
+Model  : Megane
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\renault\megane.jpg
+Size   : 28296
+
+Brand  : Renault
+Model  : Captur
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\renault\captur.jpg
+Size   : 27949
+
+Brand  : Renault
+Model  : Duster
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\renault\duster.jpg
+Size   : 9754
+
+Brand  : Renault
+Model  : Arkana
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\renault\arkana.jpg
+Size   : 27949
+
+Brand  : Chrysler
+Model  : 300
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\chrysler\300.jpg
+Size   : 15911
+
+Brand  : Chrysler
+Model  : Pacifica
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\chrysler\pacifica.jpg
+Size   : 15911
+
+Brand  : Peugeot
+Model  : 208
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\peugeot\208.jpg
+Size   : 17076
+
+Brand  : Peugeot
+Model  : 308
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\peugeot\308.jpg
+Size   : 17076
+
+Brand  : Peugeot
+Model  : 3008
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\peugeot\3008.jpg
+Size   : 17076
+
+Brand  : Peugeot
+Model  : 5008
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\peugeot\5008.jpg
+Size   : 17076
+
+Brand  : Peugeot
+Model  : 2008
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\peugeot\2008.jpg
+Size   : 17076
+
+Brand  : Seat
+Model  : Ibiza
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\seat\ibiza.jpg
+Size   : 34527
+
+Brand  : Seat
+Model  : Leon
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\seat\leon.jpg
+Size   : 34527
+
+Brand  : Seat
+Model  : Arona
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\seat\arona.jpg
+Size   : 34527
+
+Brand  : Seat
+Model  : Ateca
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\seat\ateca.jpg
+Size   : 34527
+
+Brand  : Seat
+Model  : Tarraco
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\seat\tarraco.jpg
+Size   : 34527
+
+Brand  : Ford
+Model  : Fiesta
+Status : MISSING
+File   : 
+Size   : 0
+
+Brand  : Ford
+Model  : Focus
+Status : MISSING
+File   : 
+Size   : 0
+
+Brand  : Ford
+Model  : Mustang
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\ford\mustang.jpg
+Size   : 23626
+
+Brand  : Ford
+Model  : Ranger
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\ford\ranger.jpg
+Size   : 45258
+
+Brand  : Ford
+Model  : Escape
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\ford\escape.jpg
+Size   : 45258
+
+Brand  : Ford
+Model  : Explorer
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\ford\explorer.jpg
+Size   : 45258
+
+Brand  : Lexus
+Model  : Ux
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\lexus\ux.jpg
+Size   : 50743
+
+Brand  : Lexus
+Model  : Nx
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\lexus\nx.jpg
+Size   : 27881
+
+Brand  : Lexus
+Model  : Rx
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\lexus\rx.jpg
+Size   : 27881
+
+Brand  : Lexus
+Model  : Es
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\lexus\es.jpg
+Size   : 31472
+
+Brand  : Lexus
+Model  : Ls
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\lexus\ls.jpg
+Size   : 32124
+
+Brand  : GMC
+Model  : Terrain
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\gmc\terrain.jpg
+Size   : 31981
+
+Brand  : GMC
+Model  : Acadia
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\gmc\acadia.jpg
+Size   : 31981
+
+Brand  : GMC
+Model  : Yukon
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\gmc\yukon.jpg
+Size   : 31981
+
+Brand  : GMC
+Model  : Sierra
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\gmc\sierra.jpg
+Size   : 31981
+
+Brand  : McLaren
+Model  : 720s
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\mclaren\720s.jpg
+Size   : 19401
+
+Brand  : McLaren
+Model  : 750s
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\mclaren\750s.jpg
+Size   : 26328
+
+Brand  : McLaren
+Model  : Artura
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\mclaren\artura.jpg
+Size   : 20673
+
+Brand  : McLaren
+Model  : Gt
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\mclaren\gt.jpg
+Size   : 25235
+
+Brand  : Acura
+Model  : Ilx
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\acura\ilx.jpg
+Size   : 34527
+
+Brand  : Acura
+Model  : Tlx
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\acura\tlx.jpg
+Size   : 34527
+
+Brand  : Acura
+Model  : Rdx
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\acura\rdx.jpg
+Size   : 34527
+
+Brand  : Acura
+Model  : Mdx
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\acura\mdx.jpg
+Size   : 34527
+
+Brand  : Kia
+Model  : Rio
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\kia\rio.jpg
+Size   : 27905
+
+Brand  : Kia
+Model  : Ceed
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\kia\ceed.jpg
+Size   : 27905
+
+Brand  : Kia
+Model  : Sportage
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\kia\sportage.jpg
+Size   : 27905
+
+Brand  : Kia
+Model  : Sorento
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\kia\sorento.jpg
+Size   : 21065
+
+Brand  : Kia
+Model  : Picanto
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\kia\picanto.jpg
+Size   : 27905
+
+Brand  : Kia
+Model  : Ev6
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\kia\ev6.jpg
+Size   : 26162
+
+Brand  : Porsche
+Model  : 911
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\porsche\911.jpg
+Size   : 22470
+
+Brand  : Porsche
+Model  : Cayenne
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\porsche\cayenne.jpg
+Size   : 27881
+
+Brand  : Porsche
+Model  : Macan
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\porsche\macan.jpg
+Size   : 27881
+
+Brand  : Porsche
+Model  : Taycan
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\porsche\taycan.jpg
+Size   : 24737
+
+Brand  : Porsche
+Model  : Panamera
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\porsche\panamera.jpg
+Size   : 26328
+
+Brand  : Dodge
+Model  : Challenger
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\dodge\challenger.jpg
+Size   : 16137
+
+Brand  : Dodge
+Model  : Charger
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\dodge\charger.jpg
+Size   : 16137
+
+Brand  : Dodge
+Model  : Durango
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\dodge\durango.jpg
+Size   : 16137
+
+Brand  : Citroen
+Model  : C1
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\citroen\c1.jpg
+Size   : 31883
+
+Brand  : Citroen
+Model  : C3
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\citroen\c3.jpg
+Size   : 31883
+
+Brand  : Citroen
+Model  : C4
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\citroen\c4.jpg
+Size   : 31883
+
+Brand  : Citroen
+Model  : C5
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\citroen\c5.jpg
+Size   : 31883
+
+Brand  : Citroen
+Model  : Berlingo
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\citroen\berlingo.jpg
+Size   : 31883
+
+Brand  : Toyota
+Model  : Corolla
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\toyota\corolla.jpg
+Size   : 29453
+
+Brand  : Toyota
+Model  : Camry
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\toyota\camry.jpg
+Size   : 29717
+
+Brand  : Toyota
+Model  : Rav4
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\toyota\rav4.jpg
+Size   : 30192
+
+Brand  : Toyota
+Model  : Land Cruiser
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\toyota\land-cruiser.jpg
+Size   : 23745
+
+Brand  : Toyota
+Model  : Yaris
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\toyota\yaris.jpg
+Size   : 29453
+
+Brand  : Toyota
+Model  : Prius
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\toyota\prius.jpg
+Size   : 23745
+
+Brand  : Toyota
+Model  : Hilux
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\toyota\hilux.jpg
+Size   : 26396
+
+Brand  : Mitsubishi
+Model  : Lancer
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\mitsubishi\lancer.jpg
+Size   : 20124
+
+Brand  : Mitsubishi
+Model  : Outlander
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\mitsubishi\outlander.jpg
+Size   : 20692
+
+Brand  : Mitsubishi
+Model  : Asx
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\mitsubishi\asx.jpg
+Size   : 13657
+
+Brand  : Mitsubishi
+Model  : Pajero
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\mitsubishi\pajero.jpg
+Size   : 15662
+
+Brand  : Lincoln
+Model  : Corsair
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\lincoln\corsair.jpg
+Size   : 34527
+
+Brand  : Lincoln
+Model  : Aviator
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\lincoln\aviator.jpg
+Size   : 34527
+
+Brand  : Lincoln
+Model  : Navigator
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\lincoln\navigator.jpg
+Size   : 34527
+
+Brand  : Alfa Romeo
+Model  : Giulia
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\alfa-romeo\giulia.jpg
+Size   : 34527
+
+Brand  : Alfa Romeo
+Model  : Stelvio
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\alfa-romeo\stelvio.jpg
+Size   : 34527
+
+Brand  : Alfa Romeo
+Model  : Tonale
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\alfa-romeo\tonale.jpg
+Size   : 34527
+
+Brand  : Rolls-Royce
+Model  : Ghost
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\rolls-royce\ghost.jpg
+Size   : 30284
+
+Brand  : Rolls-Royce
+Model  : Phantom
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\rolls-royce\phantom.jpg
+Size   : 27881
+
+Brand  : Rolls-Royce
+Model  : Cullinan
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\rolls-royce\cullinan.jpg
+Size   : 27881
+
+Brand  : Rolls-Royce
+Model  : Spectre
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\rolls-royce\spectre.jpg
+Size   : 23776
+
+Brand  : Suzuki
+Model  : Swift
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\suzuki\swift.jpg
+Size   : 34527
+
+Brand  : Suzuki
+Model  : Baleno
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\suzuki\baleno.jpg
+Size   : 34527
+
+Brand  : Suzuki
+Model  : Vitara
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\suzuki\vitara.jpg
+Size   : 34527
+
+Brand  : Suzuki
+Model  : Jimny
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\suzuki\jimny.jpg
+Size   : 34527
+
+Brand  : Suzuki
+Model  : Ertiga
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\suzuki\ertiga.jpg
+Size   : 34527
+
+Brand  : Cadillac
+Model  : Ct4
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\cadillac\ct4.jpg
+Size   : 15764
+
+Brand  : Cadillac
+Model  : Ct5
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\cadillac\ct5.jpg
+Size   : 15764
+
+Brand  : Cadillac
+Model  : Xt4
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\cadillac\xt4.jpg
+Size   : 15764
+
+Brand  : Cadillac
+Model  : Xt5
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\cadillac\xt5.jpg
+Size   : 15764
+
+Brand  : Cadillac
+Model  : Escalade
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\cadillac\escalade.jpg
+Size   : 19160
+
+Brand  : Honda
+Model  : Civic
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\honda\civic.jpg
+Size   : 24141
+
+Brand  : Honda
+Model  : Accord
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\honda\accord.jpg
+Size   : 24141
+
+Brand  : Honda
+Model  : Cr V
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\honda\cr-v.jpg
+Size   : 24141
+
+Brand  : Honda
+Model  : Hr V
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\honda\hr-v.jpg
+Size   : 24141
+
+Brand  : Honda
+Model  : City
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\honda\city.jpg
+Size   : 24141
+
+Brand  : Honda
+Model  : Fit
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\honda\fit.jpg
+Size   : 24141
+
+Brand  : Subaru
+Model  : Impreza
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\subaru\impreza.jpg
+Size   : 7616
+
+Brand  : Subaru
+Model  : Forester
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\subaru\forester.jpg
+Size   : 7616
+
+Brand  : Subaru
+Model  : Outback
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\subaru\outback.jpg
+Size   : 7616
+
+Brand  : Subaru
+Model  : Xv
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\subaru\xv.jpg
+Size   : 7616
+
+Brand  : Subaru
+Model  : Wrx
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\subaru\wrx.jpg
+Size   : 7616
+
+Brand  : Skoda
+Model  : Fabia
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\skoda\fabia.jpg
+Size   : 32325
+
+Brand  : Skoda
+Model  : Octavia
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\skoda\octavia.jpg
+Size   : 32325
+
+Brand  : Skoda
+Model  : Superb
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\skoda\superb.jpg
+Size   : 32325
+
+Brand  : Skoda
+Model  : Karoq
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\skoda\karoq.jpg
+Size   : 32325
+
+Brand  : Skoda
+Model  : Kodiaq
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\skoda\kodiaq.jpg
+Size   : 52120
+
+Brand  : Mazda
+Model  : 2
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\mazda\2.jpg
+Size   : 16611
+
+Brand  : Mazda
+Model  : 3
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\mazda\3.jpg
+Size   : 16611
+
+Brand  : Mazda
+Model  : 6
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\mazda\6.jpg
+Size   : 16611
+
+Brand  : Mazda
+Model  : Cx 3
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\mazda\cx-3.jpg
+Size   : 16611
+
+Brand  : Mazda
+Model  : Cx 5
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\mazda\cx-5.jpg
+Size   : 16611
+
+Brand  : Mazda
+Model  : Mx 5
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\mazda\mx-5.jpg
+Size   : 16611
+
+Brand  : Mercedes-Benz
+Model  : A Class
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\mercedes-benz\a-class.jpg
+Size   : 25468
+
+Brand  : Mercedes-Benz
+Model  : C Class
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\mercedes-benz\c-class.jpg
+Size   : 27881
+
+Brand  : Mercedes-Benz
+Model  : E Class
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\mercedes-benz\e-class.jpg
+Size   : 25786
+
+Brand  : Mercedes-Benz
+Model  : Glc
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\mercedes-benz\glc.jpg
+Size   : 27881
+
+Brand  : Mercedes-Benz
+Model  : Gle
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\mercedes-benz\gle.jpg
+Size   : 27881
+
+Brand  : Mercedes-Benz
+Model  : Eqc
+Status : OK
+File   : C:\workbench\fastAPI\Car_Service_AI\image\vehicles\mercedes-benz\eqc.jpg
+Size   : 23596
+
+
+

@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+{% block title %}{{ t('Maintenance') }} · Car Service AI{% endblock %}
+{% block content %}
+<div class="page-hero d-flex flex-wrap justify-content-between align-items-center gap-2">
+  <div>
+    <h2 class="mb-1">{{ t('Maintenance') }}</h2>
+    <p class="text-soft mb-0">{{ t('Track services and never miss an interval again.') }}</p>
+  </div>
+<!--  <button class="btn btn-primary" id="maint-add-btn" type="button"><i class="bi bi-plus-lg me-1"></i>{{ t('New reminder') }}</button>-->
+</div>
+
+<div class="row g-3">
+  <div class="col-lg-7">
+    <div class="card h-100 d-flex flex-column">
+      <div class="card-header"><span class="eyebrow"><i class="bi bi-calendar-check me-1"></i>{{ t('Upcoming services') }}</span></div>
+      <div class="card-body">
+        <div class="service-phase mb-3">
+          <span class="ph-dot"></span><span>{{ t('Due') }}</span>
+          <span class="ph-line"></span>
+          <span class="ph-dot"></span><span>{{ t('Soon') }}</span>
+          <span class="ph-line"></span>
+          <span class="ph-dot"></span><span>{{ t('Healthy') }}</span>
+        </div>
+        <div class="row g-3" id="maint-list">
+          {% for m in items %}
+          {% set st = m.service_status %}
+          {% if st == 'overdue' %}{% set bcls = 'badge-soft-danger' %}{% set slabel = 'Overdue' %}
+          {% elif st == 'due_soon' %}{% set bcls = 'badge-soft-warning' %}{% set slabel = 'Due soon' %}
+          {% else %}{% set bcls = 'badge-soft-success' %}{% set slabel = 'Upcoming' %}{% endif %}
+          <div class="col-md-6">
+            <div class="card card-hover h-100" data-id="{{ m.id }}">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start gap-2">
+                  <div class="d-flex gap-3">
+                    <div class="icon-chip"><i class="bi bi-tools"></i></div>
+                    <div>
+                      <h6 class="mb-1">{{ m.title }}</h6>
+                      <div class="small text-soft">{{ m.category }}</div>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-column align-items-end gap-1">
+                    <span class="badge {{ bcls }}">{{ t(slabel) }}</span>
+                    <div class="d-flex gap-1">
+                      <button class="btn-icon" data-done="{{ m.id }}" title="{{ t('Mark done') }}"><i class="bi bi-check-lg" style="color:var(--success)"></i></button>
+                      <button class="btn-icon" data-del="{{ m.id }}" title="{{ t('Delete') }}"><i class="bi bi-trash" style="color:var(--danger)"></i></button>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex flex-wrap gap-2 small text-soft mt-2">
+                  <span>{{ t('Next service') }} <b>{{ "{:,}".format(m.next_service_km) }}</b> {{ t('km') }}</span>
+                  <span>{{ t('Current') }} <b>{{ "{:,}".format(m.current_km or vehicle_km) }}</b> {{ t('km') }}</span>
+                  <span>{{ t('Remaining') }} <b>{{ "{:,}".format(m.remaining_km) }}</b> {{ t('km') }}</span>
+                </div>
+                <div class="progress mt-2" style="height:8px;background:var(--surface-3)">
+                  <div class="progress-bar gradient-bg" style="width:{{ m.progress }}%"></div>
+                </div>
+                <div class="d-flex justify-content-between mt-2">
+                  <span class="small text-soft">{{ m.progress|round|int }}% {{ t('of interval used') }}</span>
+                  <span class="small text-soft">{{ m.notes[:36] }}{% if m.notes|length > 36 %}…{% endif %}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-5">
+    <div class="card h-100 d-flex flex-column">
+      <div class="card-header"><span class="eyebrow"><i class="bi bi-clock-history me-1"></i>{{ t('Service history') }}</span></div>
+      <div class="card-body">
+        <div class="timeline" id="maint-done">
+          {% for m in done %}
+          <div class="timeline-item done" data-id="{{ m.id }}">
+            <div class="d-flex justify-content-between">
+              <div>
+                <div class="fw-semibold">{{ m.title }}</div>
+                <div class="small text-soft">{{ m.category }} · {{ m.date_added[:10] }}</div>
+              </div>
+              <div class="d-flex gap-1">
+                <button class="btn-icon" data-del="{{ m.id }}" title="{{ t('Delete') }}"><i class="bi bi-trash" style="color:var(--danger)"></i></button>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add modal -->
+<div class="modal fade" id="addMaintenanceModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="bi bi-calendar-plus me-2" style="color:var(--accent)"></i>{{ t('Add maintenance reminder') }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <form id="maint-form" method="post" action="/api/maintenance">
+        <div class="modal-body d-flex flex-column gap-3">
+          <div>
+            <label class="form-label" for="m-title">{{ t('Service title') }}</label>
+            <input class="form-control" id="m-title" name="title" placeholder="{{ t('e.g. Brake fluid flush') }}" required>
+          </div>
+          <div class="row g-2">
+            <div class="col-6">
+              <label class="form-label" for="m-cat">{{ t('Category') }}</label>
+              <select class="form-select" id="m-cat" name="category">
+                <option>{{ t('Engine') }}</option><option>{{ t('Brakes') }}</option><option>{{ t('Tires') }}</option>
+                <option>{{ t('Oil') }}</option><option>{{ t('Battery') }}</option><option>{{ t('Other') }}</option>
+              </select>
+            </div>
+            <div class="col-6">
+              <label class="form-label" for="m-interval">{{ t('Interval (km)') }}</label>
+              <input type="number" class="form-control" id="m-interval" name="interval_km" min="100" value="10000" required>
+            </div>
+            <div class="col-6">
+              <label class="form-label" for="m-last">{{ t('Last done at (km)') }}</label>
+              <input type="number" class="form-control" id="m-last" name="last_done_km" min="0" value="{{ vehicle_km or 0 }}" required>
+            </div>
+            <div class="col-6">
+              <label class="form-label" for="m-current">{{ t('Current (km)') }}</label>
+              <input type="number" class="form-control" id="m-current" name="current_km" min="0" value="{{ vehicle_km or 0 }}" required>
+            </div>
+          </div>
+          <div>
+            <label class="form-label" for="m-notes">{{ t('Notes (optional)') }}</label>
+            <textarea class="form-control" id="m-notes" name="notes" rows="2" placeholder="{{ t('Specs, torque, reminders…') }}"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">{{ t('Cancel') }}</button>
+          <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg me-1"></i>{{ t('Save reminder') }}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block extra_scripts %}
+<script src="/static/maintenance/maintenance.js"></script>
+{% endblock %}

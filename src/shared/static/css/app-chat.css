@@ -1,0 +1,1363 @@
+
+/* ============================================================
+   AI MECHANIC WORKSPACE — Premium Automotive Redesign
+   ============================================================ */
+
+/* --- Base Layout --- */
+.gpt-wrap {
+  display: flex !important;
+  height: calc(100vh - var(--navbar-height, 56px) - 44px) !important;
+  margin: -22px !important;
+  overflow: hidden !important;
+  background: var(--bg-primary, #101317) !important;
+  color: var(--text);
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  position: relative;
+}
+.gpt-wrap::before { display: none !important; }
+
+/* --- 1. SIDEBAR --- */
+.gpt-side {
+  width: 260px !important;
+  min-width: 260px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  background: rgba(6, 10, 22, 0.97) !important;
+  border-right: 1px solid rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(20px) saturate(1.2) !important;
+  transition: transform 0.25s ease !important;
+  z-index: 1040 !important;
+  position: fixed !important;
+  top: 0; bottom: 0; left: 0;
+  overflow: visible !important;
+}
+.gpt-side::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, rgba(255, 122, 26, 0.04), transparent);
+  pointer-events: none;
+}
+.gpt-side-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+.gpt-side-logo {
+  width: 42px; height: 42px; border-radius: 12px;
+  background: linear-gradient(135deg, rgba(255, 122, 26, 0.2), rgba(255, 122, 26, 0.1));
+  padding: 6px;
+}
+.gpt-side-brand-name {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #c8d6e5;
+  line-height: 1.2;
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: #c8d6e5;
+}
+.gpt-side-brand-tag {
+  font-size: 0.68rem;
+  color: rgba(255, 122, 26, 0.35);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+.gpt-side-head { padding: 14px 16px 0; }
+.gpt-new-btn {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  border-radius: 12px !important;
+  padding: 11px 16px !important;
+  color: #b0bec5 !important;
+  font-weight: 600;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.25s ease !important;
+}
+.gpt-new-btn:hover {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: var(--text) !important;
+}
+.gpt-new-btn i { color: rgba(255, 122, 26, 0.4); }
+.gpt-side-search {
+  background: rgba(0, 0, 0, 0.25) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  border-radius: 10px !important;
+  margin: 10px 16px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  transition: border-color 0.25s ease;
+}
+.gpt-side-search:focus-within { border-color: rgba(255, 122, 26, 0.12) !important; }
+.gpt-side-search i { color: rgba(255, 255, 255, 0.2); font-size: 0.85rem; }
+.gpt-side-search input {
+  background: transparent !important;
+  border: none !important;
+  color: #b0bec5 !important;
+  font-size: 0.85rem;
+  padding: 10px 0;
+  width: 100%;
+  outline: none;
+}
+.gpt-side-search input::placeholder { color: rgba(255, 255, 255, 0.2); }
+.gpt-side-nav { padding: 8px 0; }
+.gpt-nav-group { padding: 0 12px; margin-bottom: 6px; }
+.gpt-nav-group-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 8px 10px 4px;
+}
+.gpt-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.88rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  position: relative;
+  border: 1px solid transparent;
+}
+.gpt-nav-item::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 50%;
+  transform: translateY(-50%);
+  width: 3px; height: 0;
+  background: rgba(255, 122, 26, 0.3);
+  border-radius: 0 3px 3px 0;
+  transition: height 0.25s ease;
+}
+.gpt-nav-item:hover { background: rgba(255, 255, 255, 0.03); color: rgba(255, 255, 255, 0.6); }
+.gpt-nav-item.active {
+  background: rgba(255, 122, 26, 0.06);
+  color: rgba(255, 122, 26, 0.7);
+  border-color: rgba(255, 122, 26, 0.08);
+}
+.gpt-nav-item.active::before { height: 18px; }
+.gpt-nav-item i { font-size: 1rem; width: 20px; text-align: center; }
+.gpt-side-list {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 4px 10px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.04) transparent;
+}
+.gpt-side-list::-webkit-scrollbar { width: 3px; }
+.gpt-side-list::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.06); border-radius: 3px; }
+.gpt-side-item {
+  border-radius: 10px !important;
+  margin: 2px 0;
+  padding: 10px 12px !important;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  transition: all 0.2s ease !important;
+  border: 1px solid transparent !important;
+  cursor: pointer;
+  position: relative;
+}
+.gpt-side-item:hover { background: rgba(255, 255, 255, 0.03) !important; }
+.gpt-side-item.active { background: rgba(255, 122, 26, 0.05) !important; border-color: rgba(255, 122, 26, 0.07) !important; }
+.gpt-side-item-content { flex: 1; min-width: 0; }
+.gpt-side-title-row { display: flex; align-items: center; gap: 6px; }
+.gpt-side-title {
+  flex: 1; font-size: 0.88rem; font-weight: 500;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  color: rgba(255, 255, 255, 0.65);
+}
+.gpt-side-item.active .gpt-side-title { color: rgba(255, 122, 26, 0.75); }
+.gpt-side-meta {
+  display: flex; align-items: center; gap: 8px;
+  margin-top: 3px; flex-wrap: wrap;
+}
+.gpt-side-vehicle {
+  font-size: 0.72rem; color: rgba(255, 122, 26, 0.4);
+  display: flex; align-items: center; gap: 3px;
+  background: rgba(255, 122, 26, 0.04);
+  padding: 1px 6px; border-radius: 4px;
+}
+.gpt-side-vehicle i { font-size: 0.65rem; }
+.gpt-side-count {
+  font-size: 0.68rem; color: rgba(255, 255, 255, 0.2);
+}
+.gpt-side-preview {
+  font-size: 0.75rem; color: rgba(255, 255, 255, 0.2);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  margin-top: 2px; line-height: 1.3;
+}
+.gpt-side-menu-btn {
+  opacity: 0; background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  border-radius: 6px !important;
+  padding: 4px 6px !important;
+  color: rgba(255, 255, 255, 0.35) !important;
+  font-size: 0.72rem; transition: all 0.2s ease !important;
+  flex-shrink: 0; cursor: pointer;
+}
+.gpt-side-item:hover .gpt-side-menu-btn { opacity: 1; }
+.gpt-side-menu-btn:hover { background: rgba(255, 255, 255, 0.06) !important; color: rgba(255, 255, 255, 0.55) !important; }
+/* Legacy delete button (hidden, replaced by menu) */
+.gpt-side-del { display: none !important; }
+/* Date group labels */
+.gpt-side-group-label {
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 1px;
+  text-transform: uppercase; color: rgba(255, 255, 255, 0.18);
+  padding: 14px 12px 6px; user-select: none;
+}
+.gpt-side-empty {
+  text-align: center; padding: 24px 12px;
+  font-size: 0.82rem; color: rgba(255, 255, 255, 0.2);
+}
+/* Context menu */
+.gpt-side-menu {
+  position: absolute; right: 8px; top: 100%;
+  background: rgba(12, 18, 32, 0.97);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px; padding: 4px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.6);
+  z-index: 100; min-width: 140px;
+  backdrop-filter: blur(12px);
+}
+.gpt-side-menu-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px; border: none; background: none;
+  width: 100%; border-radius: 7px; cursor: pointer;
+  font-size: 0.82rem; color: rgba(255, 255, 255, 0.55);
+  transition: all 0.15s ease;
+}
+.gpt-side-menu-item:hover { background: rgba(255, 255, 255, 0.05); color: rgba(255, 255, 255, 0.75); }
+.gpt-side-menu-item i { font-size: 0.85rem; width: 16px; text-align: center; }
+.gpt-side-menu-divider { height: 1px; background: rgba(255, 255, 255, 0.05); margin: 4px 0; }
+.gpt-side-menu-danger:hover { background: rgba(239, 68, 68, 0.08); color: rgba(239, 68, 68, 0.8); }
+.gpt-side-foot {
+  border-top: 1px solid rgba(255, 255, 255, 0.04) !important;
+  padding: 8px 12px;
+}
+.gpt-side-foot-btn {
+  border-radius: 10px !important;
+  padding: 10px 12px !important;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.35) !important;
+  font-size: 0.88rem;
+  transition: all 0.2s ease !important;
+  border: 1px solid transparent !important;
+  width: 100%;
+}
+.gpt-side-foot-btn:hover { background: rgba(255, 255, 255, 0.03) !important; color: rgba(255, 255, 255, 0.5) !important; }
+.gpt-side-foot-btn i { font-size: 1rem; width: 20px; text-align: center; }
+.gpt-side-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  margin-top: auto;
+}
+.gpt-profile-avatar {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255, 255, 255, 0.3); font-size: 0.72rem; font-weight: 700; flex-shrink: 0;
+}
+.gpt-profile-meta { min-width: 0; }
+.gpt-profile-name { font-size: 0.85rem; font-weight: 600; color: rgba(255, 255, 255, 0.5); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.gpt-profile-email { font-size: 0.72rem; color: rgba(255, 255, 255, 0.2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* --- 2. MAIN AREA --- */
+.gpt-main {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  background: #0a0b0e !important;
+  margin-left: 260px !important;
+  position: relative !important;
+}
+.gpt-main::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: none;
+  pointer-events: none;
+  z-index: 0;
+}
+.gpt-main > * { position: relative; z-index: 1; }
+
+/* --- 3. TOPBAR — Clean single header --- */
+.gpt-topbar {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  padding: 0 24px !important;
+  background: rgba(4, 8, 16, 0.85) !important;
+  border-bottom: 1px solid rgba(255, 122, 26, 0.06) !important;
+  backdrop-filter: blur(12px);
+  flex-shrink: 0 !important;
+  min-height: 60px !important;
+}
+.gpt-topbar-toggle {
+  display: none;
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.4);
+  align-items: center; justify-content: center;
+  font-size: 1.1rem; transition: all 0.2s ease; flex-shrink: 0;
+}
+.gpt-topbar-toggle:hover { background: rgba(255, 255, 255, 0.05); color: rgba(255, 255, 255, 0.6); }
+.gpt-topbar-title { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
+.gpt-topbar-icon {
+  width: 40px; height: 40px;
+  border-radius: 12px;
+  background: rgba(255, 122, 26, 0.06);
+  border: 1px solid rgba(255, 122, 26, 0.08);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255, 122, 26, 0.5); font-size: 1rem; flex-shrink: 0;
+}
+.gpt-topbar-name {
+  font-weight: 700 !important; font-size: 0.95rem; letter-spacing: 2px !important;
+  color: rgba(255, 255, 255, 0.7);
+}
+.gpt-topbar-status {
+  font-size: 0.72rem; color: rgba(255, 255, 255, 0.3);
+  display: flex; align-items: center; gap: 6px; margin-top: 1px;
+}
+.gpt-status-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: rgba(34, 197, 94, 0.6) !important;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.4) !important;
+  animation: status-pulse 2s ease-in-out infinite;
+}
+@keyframes status-pulse {
+  0%, 100% { box-shadow: 0 0 4px rgba(34, 197, 94, 0.3); }
+  50% { box-shadow: 0 0 10px rgba(34, 197, 94, 0.5); }
+}
+.gpt-topbar-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.gpt-model-select { position: relative; }
+.gpt-model-btn {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  border-radius: 10px !important;
+  padding: 8px 14px !important;
+  color: rgba(255, 255, 255, 0.5) !important; font-size: 0.85rem;
+  display: flex; align-items: center; gap: 6px;
+  transition: all 0.2s ease !important; cursor: pointer;
+}
+.gpt-model-btn:hover { background: rgba(255, 255, 255, 0.05) !important; border-color: rgba(255, 255, 255, 0.1) !important; }
+.gpt-model-btn i:first-child { color: rgba(255, 122, 26, 0.4); font-size: 0.9rem; }
+.gpt-model-label { font-weight: 500; }
+.gpt-model-btn i:last-child { font-size: 0.6rem; color: rgba(255, 255, 255, 0.2); }
+.gpt-model-dropdown {
+  position: absolute; top: calc(100% + 6px); right: 0; min-width: 170px;
+  background: rgba(6, 10, 22, 0.98) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  border-radius: 12px !important; backdrop-filter: blur(24px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6) !important; padding: 5px;
+  display: none; z-index: 200; animation: dropdown-in 0.18s ease;
+}
+.gpt-model-dropdown.open { display: block; }
+@keyframes dropdown-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+.gpt-model-option {
+  padding: 10px 12px !important; border-radius: 8px !important;
+  display: flex; align-items: center; gap: 9px; font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5); transition: all 0.15s ease !important; cursor: pointer;
+}
+.gpt-model-option:hover { background: rgba(255, 255, 255, 0.04); }
+.gpt-model-option.active { background: rgba(255, 122, 26, 0.06); color: rgba(255, 122, 26, 0.6); }
+.gpt-model-option i { font-size: 1rem; width: 18px; text-align: center; }
+.gpt-topbar-btn {
+  width: 40px; height: 40px; border-radius: 10px !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  color: rgba(255, 255, 255, 0.35) !important;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; transition: all 0.2s ease !important;
+}
+.gpt-topbar-btn:hover { background: rgba(255, 255, 255, 0.05) !important; border-color: rgba(255, 255, 255, 0.1) !important; color: rgba(255, 255, 255, 0.5) !important; }
+
+/* --- 4. MODE TABS --- */
+.gpt-mode-tabs {
+  display: flex !important; gap: 2px !important;
+  padding: 0 28px !important;
+  background: rgba(4, 8, 16, 0.5) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
+  flex-shrink: 0 !important; overflow-x: visible !important;
+}
+.gpt-mode-tab {
+  padding: 12px 18px !important; border-radius: 0 !important; position: relative !important;
+  font-weight: 500 !important; font-size: 0.85rem !important; letter-spacing: 0.3px !important;
+  color: rgba(255, 255, 255, 0.35) !important; background: transparent !important;
+  border: none !important; border-bottom: 2px solid transparent !important;
+  transition: all 0.25s ease !important; display: flex !important; align-items: center !important;
+  gap: 7px !important; cursor: pointer !important; white-space: nowrap !important;
+}
+.gpt-mode-tab:hover { color: rgba(255, 255, 255, 0.5) !important; background: rgba(255, 255, 255, 0.02) !important; }
+.gpt-mode-tab.active {
+  color: rgba(255, 122, 26, 0.6) !important; border-bottom-color: rgba(255, 122, 26, 0.5) !important;
+  background: rgba(255, 122, 26, 0.02) !important;
+}
+.gpt-mode-tab i { font-size: 0.95rem; }
+
+/* --- 5. MODE PANELS --- */
+.gpt-mode-panel {
+  display: none !important; flex: 1 !important; min-height: 0 !important; overflow: hidden !important;
+}
+.gpt-mode-panel.active { display: flex !important; flex-direction: column !important; }
+
+/* --- 6. AI CHAT MODE — 3-column layout --- */
+.gpt-chat-layout {
+  display: grid !important; grid-template-columns: 1fr 320px !important;
+  flex: 1 !important; min-height: 0 !important; overflow: hidden !important;
+}
+.gpt-chat-col {
+  display: flex !important; flex-direction: column !important;
+  min-height: 0 !important; overflow: hidden !important;
+  border-right: 1px solid rgba(255, 122, 26, 0.04) !important;
+}
+.gpt-chat-col .gpt-messages { flex: 1 !important; overflow: auto !important; min-height: 0 !important; }
+.gpt-chat-col .gpt-composer { flex-shrink: 0 !important; }
+.gpt-welcome {
+  text-align: center; padding: 48px 24px; max-width: 640px; margin: 0 auto;
+  animation: fadeUp 0.4s ease;
+}
+@keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.gpt-welcome-icon {
+  width: 80px; height: 80px; border-radius: 22px;
+  background: rgba(255, 122, 26, 0.05);
+  border: 1px solid rgba(255, 122, 26, 0.10);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 24px; font-size: 2rem; color: rgba(255, 122, 26, 0.4);
+}
+.gpt-welcome-title {
+  font-weight: 700; font-size: 1.8rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 8px;
+}
+.gpt-welcome-sub { color: rgba(255, 255, 255, 0.3); font-size: 1rem; margin-bottom: 32px; }
+.gpt-welcome-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; max-width: 540px; margin: 0 auto; }
+.gpt-suggestion {
+  background: rgba(255, 255, 255, 0.02) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  border-radius: 14px !important; padding: 16px 18px !important;
+  text-align: left; display: flex; align-items: center; gap: 12px;
+  color: rgba(255, 255, 255, 0.45) !important; font-size: 0.9rem; transition: all 0.25s ease !important;
+}
+.gpt-suggestion:hover {
+  background: rgba(255, 255, 255, 0.04) !important; border-color: rgba(255, 122, 26, 0.1) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+.gpt-suggestion i { color: rgba(255, 122, 26, 0.35); font-size: 1.1rem; flex-shrink: 0; }
+
+/* --- RIGHT PANEL — Vehicle/Diagnosis Info --- */
+.gpt-chat-visual {
+  position: relative !important; overflow-y: auto !important;
+  display: flex !important; flex-direction: column !important;
+  background: rgba(6, 10, 22, 0.6) !important;
+  border-left: 1px solid rgba(255, 122, 26, 0.04) !important;
+  padding: 24px 20px !important;
+}
+.gpt-visual-img { display: none !important; }
+.gpt-visual-overlay { display: none !important; }
+.gpt-visual-hud { display: none !important; }
+.gpt-visual-content {
+  position: relative !important; z-index: 3 !important;
+  padding: 0 !important; text-align: left; width: 100%;
+}
+.gpt-visual-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255, 122, 26, 0.05); border: 1px solid rgba(255, 122, 26, 0.08);
+  border-radius: 100px; padding: 6px 14px; font-size: 0.68rem; font-weight: 600;
+  color: rgba(255, 122, 26, 0.5); letter-spacing: 0.8px; text-transform: uppercase;
+  margin-bottom: 24px;
+}
+.gpt-visual-badge i { font-size: 0.75rem; }
+.gpt-visual-title {
+  font-size: 1.1rem; font-weight: 700;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 6px; line-height: 1.3;
+}
+.gpt-visual-sub { font-size: 0.85rem; color: rgba(255, 255, 255, 0.25); line-height: 1.5; margin-bottom: 24px; }
+.gpt-visual-benefits { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+.gpt-visual-benefit {
+  display: flex; align-items: center; gap: 12px; padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 12px; text-align: left;
+}
+.gpt-visual-benefit i {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: rgba(255, 122, 26, 0.05); border: 1px solid rgba(255, 122, 26, 0.07);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255, 122, 26, 0.4); font-size: 0.9rem; flex-shrink: 0;
+}
+.gpt-visual-benefit h6 { font-size: 0.82rem; font-weight: 600; color: rgba(255, 255, 255, 0.5); margin: 0; }
+.gpt-visual-benefit p { font-size: 0.72rem; color: rgba(255, 255, 255, 0.2); margin: 0; }
+.gpt-visual-report { text-align: left; }
+.gpt-visual-report h6 {
+  font-size: 0.82rem; font-weight: 600; color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+}
+.gpt-visual-report h6 i { color: rgba(255, 122, 26, 0.35); font-size: 0.9rem; }
+.gpt-visual-report-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.gpt-visual-report-grid > :last-child { grid-column: span 2; }
+.gpt-visual-rpt-card {
+  display: flex; align-items: center; gap: 8px; padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 10px; font-size: 0.78rem; color: rgba(255, 255, 255, 0.35);
+}
+.gpt-visual-rpt-card i { font-size: 0.9rem; color: rgba(255, 122, 26, 0.3); }
+#gpt-chat-visual.chat-active { display: none !important; }
+.gpt-chat-layout.chat-active { grid-template-columns: 1fr !important; }
+
+/* --- 7. COMPOSER — Premium large input --- */
+.gpt-composer { padding: 16px 28px 20px !important; background: rgba(4, 8, 16, 0.4) !important; border-top: 1px solid rgba(255, 122, 26, 0.04) !important; }
+.gpt-composer-inner {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 122, 26, 0.08) !important;
+  border-radius: 18px !important; padding: 14px 16px !important;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+.gpt-composer-inner:focus-within {
+  border-color: rgba(255, 122, 26, 0.2) !important;
+  box-shadow: 0 0 0 3px rgba(255, 122, 26, 0.04) !important;
+}
+.gpt-composer-row { display: flex; align-items: flex-end; gap: 10px; }
+.gpt-composer-row textarea {
+  flex: 1; background: transparent; border: none; color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem; resize: none; outline: none; padding: 10px 6px;
+  min-height: 28px; max-height: 160px; line-height: 1.6;
+  font-family: 'Inter', sans-serif;
+}
+.gpt-composer-row textarea::placeholder { color: rgba(255, 255, 255, 0.25); }
+.gpt-composer-btn {
+  width: 42px; height: 42px; border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.3); display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: all 0.2s ease; cursor: pointer; font-size: 1.05rem;
+}
+.gpt-composer-btn:hover { background: rgba(255, 255, 255, 0.06); color: rgba(255, 255, 255, 0.5); border-color: rgba(255, 255, 255, 0.1); }
+.gpt-send-btn {
+  background: linear-gradient(135deg, rgba(255, 122, 26, 0.2), rgba(255, 122, 26, 0.15)) !important;
+  border: 1px solid rgba(255, 122, 26, 0.15) !important; border-radius: 12px !important;
+  width: 42px; height: 42px; display: flex; align-items: center; justify-content: center;
+  color: rgba(255, 122, 26, 0.7) !important; font-size: 1.1rem; transition: all 0.2s ease !important;
+  flex-shrink: 0;
+}
+.gpt-send-btn:hover { background: linear-gradient(135deg, rgba(255, 122, 26, 0.25), rgba(255, 122, 26, 0.2)) !important; color: rgba(255, 122, 26, 0.9) !important; transform: translateY(-1px); }
+.gpt-send-btn:disabled { opacity: 0.3; transform: none; }
+.chat-stop {
+  display: none; width: 42px; height: 42px; border-radius: 12px;
+  background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.12);
+  color: rgba(239, 68, 68, 0.6); align-items: center; justify-content: center;
+  flex-shrink: 0; transition: all 0.2s ease; cursor: pointer; font-size: 1.05rem;
+}
+.chat-stop.visible { display: flex; }
+.chat-stop:hover { background: rgba(239, 68, 68, 0.12); }
+.gpt-mic-btn.recording {
+  background: rgba(239, 68, 68, 0.1) !important;
+  border-color: rgba(239, 68, 68, 0.18) !important;
+  color: rgba(239, 68, 68, 0.7) !important;
+  animation: mic-pulse 1s ease-in-out infinite;
+}
+@keyframes mic-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.1); }
+  50% { box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+}
+.gpt-composer-hint { text-align: center; font-size: 0.72rem; color: rgba(255, 255, 255, 0.15); margin-top: 10px; }
+.gpt-img-preview {
+  padding: 10px; margin-bottom: 10px; border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex; align-items: center; gap: 10px;
+}
+.gpt-img-preview img { width: 56px; height: 56px; object-fit: cover; border-radius: 10px; }
+.gpt-img-remove {
+  background: rgba(239, 68, 68, 0.06); border: 1px solid rgba(239, 68, 68, 0.1);
+  border-radius: 8px; color: rgba(239, 68, 68, 0.5); padding: 5px 10px; font-size: 0.78rem;
+  cursor: pointer; transition: all 0.2s;
+}
+.gpt-img-remove:hover { background: rgba(239, 68, 68, 0.1); }
+
+/* --- 8. MESSAGES — Large, readable, distinct --- */
+.gpt-msgs {
+  padding: 24px 32px !important; display: flex !important;
+  flex-direction: column !important; gap: 20px !important;
+}
+.gpt-msg {
+  display: flex !important; gap: 14px !important; max-width: 85% !important;
+  width: auto !important; margin: 0 !important; padding: 0 !important;
+  border-top: none !important; animation: msg-in 0.3s ease;
+}
+@keyframes msg-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.gpt-msg-assistant { align-self: flex-start; }
+.gpt-msg-user { align-self: flex-end; flex-direction: row-reverse; max-width: 75% !important; }
+.gpt-msg-avatar {
+  width: 38px !important; height: 38px !important; border-radius: 12px !important;
+  display: flex !important; align-items: center !important; justify-content: center !important;
+  flex-shrink: 0 !important; font-size: 0.9rem !important; margin-top: 2px !important;
+}
+.gpt-msg-avatar.ai {
+  background: rgba(255, 122, 26, 0.06);
+  border: 1px solid rgba(255, 122, 26, 0.08);
+  color: rgba(255, 122, 26, 0.45);
+}
+.gpt-msg-avatar.user {
+  background: rgba(255, 122, 26, 0.08);
+  border: 1px solid rgba(255, 122, 26, 0.10);
+  color: rgba(96, 165, 250, 0.6);
+}
+.gpt-msg-body {
+  background: rgba(10, 18, 32, 0.7) !important;
+  border: 1px solid rgba(255, 122, 26, 0.06) !important;
+  border-radius: 18px !important; padding: 16px 20px !important;
+  min-width: 0 !important; flex: 1 !important;
+  backdrop-filter: blur(8px) !important;
+}
+.gpt-msg-user .gpt-msg-body {
+  background: rgba(255, 122, 26, 0.06) !important;
+  border-color: rgba(255, 122, 26, 0.08) !important;
+}
+.gpt-msg-role {
+  font-size: 0.75rem !important; font-weight: 600 !important;
+  color: rgba(255, 255, 255, 0.3) !important; margin-bottom: 6px !important; letter-spacing: 0.3px;
+}
+.gpt-msg-text {
+  font-size: 0.95rem !important; line-height: 1.7 !important; color: rgba(255, 255, 255, 0.7) !important; word-break: break-word;
+}
+.gpt-msg-text p { margin: 0 0 10px; }
+.gpt-msg-text p:last-child { margin-bottom: 0; }
+.gpt-msg-text code {
+  background: rgba(255, 122, 26, 0.04); border: 1px solid rgba(255, 122, 26, 0.06);
+  border-radius: 6px; padding: 2px 6px; font-size: 0.88rem;
+  font-family: 'JetBrains Mono', monospace;
+}
+.gpt-msg-text pre {
+  background: rgba(0, 0, 0, 0.35); border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px; padding: 14px; overflow-x: auto; margin: 10px 0;
+}
+.gpt-msg-text pre code {
+  background: none; border: none; padding: 0;
+}
+.gpt-msg-text ul, .gpt-msg-text ol {
+  padding-left: 1.3em; margin: 6px 0;
+}
+.gpt-msg-text li { margin-bottom: 4px; }
+.gpt-msg-text strong { color: rgba(255, 255, 255, 0.8); }
+.gpt-msg-text h1, .gpt-msg-text h2, .gpt-msg-text h3, .gpt-msg-text h4 {
+  color: rgba(255, 255, 255, 0.8); margin: 14px 0 8px;
+}
+.gpt-msg-text h1 { font-size: 1.2rem; }
+.gpt-msg-text h2 { font-size: 1.1rem; }
+.gpt-msg-text h3 { font-size: 1rem; }
+.gpt-msg-text blockquote {
+  border-left: 3px solid rgba(255, 122, 26, 0.2);
+  padding-left: 14px; margin: 10px 0;
+  color: rgba(255, 255, 255, 0.4);
+}
+.gpt-msg-time { font-size: 0.68rem !important; color: rgba(255, 255, 255, 0.18) !important; margin-top: 8px; }
+.gpt-msg-actions { display: flex; gap: 6px; margin-top: 10px; }
+.gpt-action-btn {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  border-radius: 8px !important; padding: 5px 10px !important;
+  color: rgba(255, 255, 255, 0.3) !important; font-size: 0.78rem; transition: all 0.2s ease !important;
+}
+.gpt-action-btn:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important; color: rgba(255, 255, 255, 0.55) !important;
+}
+
+/* --- 9. DIAGNOSE WORKSPACE --- */
+.diag-workspace {
+  display: grid !important; grid-template-columns: 1fr 1fr !important;
+  flex: 1 !important; min-height: 0 !important; overflow: hidden !important; position: relative !important;
+}
+.gpt-mode-panel .diag-workspace::before {
+  content: ""; position: absolute; inset: 0;
+  background: url('/image/ai-services.png') center/cover no-repeat; opacity: 0.02;
+  pointer-events: none; z-index: 0;
+}
+.gpt-mode-panel .diag-workspace > * { position: relative; z-index: 1; }
+.diag-input-col { padding: 24px !important; overflow-y: auto !important; display: flex; flex-direction: column; }
+.diag-output-col {
+  background: rgba(0, 0, 0, 0.2) !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.03) !important;
+  padding: 24px !important; overflow-y: auto !important;
+}
+.diag-input-panel {
+  background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 12px;
+}
+.dt-label { color: rgba(255, 255, 255, 0.5); font-weight: 600; font-size: 0.92rem; display: flex; align-items: center; gap: 7px; }
+.dt-label i { color: rgba(255, 122, 26, 0.3); font-size: 1rem; }
+.dt-textarea {
+  background: rgba(0, 0, 0, 0.25) !important;
+  border: 1px solid rgba(255, 255, 255, 0.04) !important;
+  border-radius: 12px !important; color: rgba(255, 255, 255, 0.6) !important; padding: 14px 16px !important;
+  font-size: 0.92rem; line-height: 1.6; resize: vertical;
+  transition: border-color 0.3s ease !important; min-height: 110px;
+  font-family: 'Inter', sans-serif;
+}
+.dt-textarea:focus {
+  border-color: rgba(255, 122, 26, 0.12) !important; outline: none !important;
+}
+.dt-textarea::placeholder { color: rgba(255, 255, 255, 0.18); }
+.dt-hint { color: rgba(255, 255, 255, 0.2); font-size: 0.8rem; display: flex; align-items: center; gap: 5px; }
+.dt-hint i { color: rgba(255, 122, 26, 0.2); }
+.dt-chips { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 8px; }
+.dt-chip {
+  background: rgba(255, 255, 255, 0.02) !important;
+  border: 1px solid rgba(255, 255, 255, 0.04) !important;
+  border-radius: 10px !important; padding: 12px 14px !important;
+  color: rgba(255, 255, 255, 0.45) !important; font-size: 0.88rem;
+  display: flex; align-items: center; gap: 8px; transition: all 0.2s ease !important; cursor: pointer;
+}
+.dt-chip:hover {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important; color: rgba(255, 255, 255, 0.6) !important;
+}
+.dt-chip.selected { background: rgba(255, 122, 26, 0.05) !important; border-color: rgba(255, 122, 26, 0.12) !important; color: rgba(255, 122, 26, 0.6) !important; }
+.dt-chip i { color: rgba(255, 122, 26, 0.3); font-size: 1rem; }
+.dt-vehicle {
+  background: rgba(255, 122, 26, 0.03); border: 1px solid rgba(255, 122, 26, 0.05);
+  border-radius: 10px; padding: 12px 14px; font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.4); display: flex; align-items: center; gap: 8px;
+}
+.dt-vehicle i { color: rgba(255, 122, 26, 0.35); }
+.dt-vehicle b { color: rgba(255, 255, 255, 0.55); }
+.dt-submit {
+  background: rgba(255, 122, 26, 0.12) !important;
+  border: 1px solid rgba(255, 122, 26, 0.1) !important; border-radius: 12px !important;
+  padding: 14px 24px !important; color: rgba(255, 122, 26, 0.6) !important;
+  font-weight: 600 !important; font-size: 0.95rem !important;
+  display: flex !important; align-items: center !important; justify-content: center !important;
+  gap: 8px; width: 100%; transition: all 0.3s ease !important;
+  position: relative; overflow: hidden;
+}
+.dt-submit:hover { background: rgba(255, 122, 26, 0.16) !important; color: rgba(255, 122, 26, 0.8) !important; }
+.dt-submit.loading { pointer-events: none; opacity: 0.6; }
+.dt-submit.loading i { animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.upload-zone {
+  background: rgba(0, 0, 0, 0.2) !important;
+  border: 2px dashed rgba(255, 255, 255, 0.06) !important;
+  border-radius: 16px !important; padding: 36px 20px !important;
+  text-align: center; transition: all 0.3s ease !important; cursor: pointer;
+}
+.upload-zone:hover { border-color: rgba(255, 255, 255, 0.1) !important; }
+.upload-zone .up-icon {
+  width: 56px; height: 56px; border-radius: 15px;
+  background: rgba(255, 122, 26, 0.04);
+  border: 1px solid rgba(255, 122, 26, 0.06);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 14px; font-size: 1.4rem; color: rgba(255, 122, 26, 0.3);
+}
+.upload-zone h5 { font-size: 0.95rem; font-weight: 600; color: rgba(255, 255, 255, 0.5); }
+.upload-zone .text-soft, .upload-zone .small { color: rgba(255, 255, 255, 0.22); font-size: 0.88rem; }
+.upload-zone .text-primary { color: rgba(255, 122, 26, 0.45); cursor: pointer; }
+
+/* --- 10. DIAGNOSE OUTPUT --- */
+.diag-output-empty { text-align: center; padding: 32px 16px; }
+.diag-car-scene {
+  position: relative; width: 240px; height: 140px;
+  margin: 0 auto 16px; border-radius: 16px; overflow: hidden;
+}
+.diag-car-img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: brightness(0.4) saturate(0.8); transition: transform 6s ease-out;
+}
+.diag-car-scene:hover .diag-car-img { transform: scale(1.03); }
+.diag-car-scene::after {
+  content: ''; position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0.4) 0%, transparent 30%, transparent 60%, rgba(0,0,0,0.7) 100%);
+  pointer-events: none; z-index: 1;
+}
+.diag-car-glow {
+  position: absolute; inset: -15px;
+  background: radial-gradient(circle, rgba(255, 122, 26, 0.03), transparent);
+  border-radius: 50%; animation: pulse-glow 3s ease-in-out infinite; z-index: 0;
+}
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(1.04); }
+}
+.diag-scan-line {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 122, 26, 0.25), transparent);
+  animation: scan 2.5s ease-in-out infinite; opacity: 0.3; z-index: 2;
+}
+@keyframes scan {
+  0% { transform: translateY(0); opacity: 0; }
+  50% { opacity: 0.3; }
+  100% { transform: translateY(-100px); opacity: 0; }
+}
+.diag-output-empty-title {
+  font-size: 1.1rem !important; font-weight: 600 !important; color: rgba(255, 255, 255, 0.55) !important;
+  margin-top: 12px !important;
+}
+.diag-output-empty-desc {
+  color: rgba(255, 255, 255, 0.25) !important; font-size: 0.9rem !important;
+  margin-top: 4px !important; max-width: 360px; margin-left: auto; margin-right: auto;
+}
+.diag-benefits {
+  display: grid !important; grid-template-columns: repeat(3, 1fr) !important;
+  gap: 10px !important; margin: 20px 0 !important;
+}
+.diag-benefit-card {
+  background: rgba(255, 255, 255, 0.02) !important;
+  border: 1px solid rgba(255, 255, 255, 0.03) !important;
+  border-radius: 12px !important; padding: 14px 10px !important;
+  text-align: center; transition: all 0.2s ease;
+}
+.diag-benefit-card:hover { border-color: rgba(255, 255, 255, 0.06); }
+.diag-benefit-card i { font-size: 1.2rem; color: rgba(255, 122, 26, 0.3); margin-bottom: 6px; }
+.diag-benefit-card h6 { font-size: 0.82rem; font-weight: 600; margin-bottom: 2px; color: rgba(255, 255, 255, 0.45); }
+.diag-benefit-card p { font-size: 0.72rem; color: rgba(255, 255, 255, 0.2); margin: 0; }
+.diag-report-preview { margin: 20px 0 12px !important; }
+.diag-report-preview h6 {
+  font-size: 0.88rem !important; font-weight: 600 !important; color: rgba(255, 255, 255, 0.45) !important;
+  margin-bottom: 10px !important; display: flex; align-items: center; gap: 6px;
+}
+.diag-report-preview h6 i { color: rgba(255, 122, 26, 0.3); }
+.diag-preview-cards { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 8px !important; }
+.diag-preview-card {
+  background: rgba(255, 255, 255, 0.02) !important;
+  border: 1px solid rgba(255, 255, 255, 0.03) !important;
+  border-radius: 10px !important; padding: 12px 10px !important;
+  text-align: center; transition: all 0.2s ease;
+}
+.diag-preview-card:hover { border-color: rgba(255, 255, 255, 0.06); }
+.diag-preview-card i { font-size: 1.1rem; margin-bottom: 4px; display: block; }
+.diag-preview-card span { font-size: 0.75rem; color: rgba(255, 255, 255, 0.35); display: block; }
+.diag-output-tags {
+  display: flex !important; flex-wrap: wrap !important;
+  justify-content: center !important; gap: 6px !important; margin-top: 14px !important;
+}
+.dt-empty-tag {
+  background: rgba(255, 122, 26, 0.03); border: 1px solid rgba(255, 122, 26, 0.05);
+  border-radius: 8px; padding: 6px 12px; font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.35); display: flex; align-items: center; gap: 5px;
+}
+.dt-empty-tag i { color: rgba(255, 122, 26, 0.3); }
+.diag-privacy {
+  background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 12px; padding: 14px 16px;
+  display: flex; align-items: center; gap: 10px; margin-top: auto;
+}
+.diag-privacy i { color: rgba(255, 122, 26, 0.3); font-size: 1.1rem; flex-shrink: 0; }
+.diag-privacy strong { font-size: 0.85rem; color: rgba(255, 255, 255, 0.45); display: block; margin-bottom: 2px; }
+.diag-privacy span { font-size: 0.78rem; color: rgba(255, 255, 255, 0.2); }
+
+/* ============================================================
+   DIALOGS (Delete / Rename)
+   ============================================================ */
+.gpt-dialog-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.2s ease;
+}
+.gpt-dialog-overlay.open { opacity: 1; }
+.gpt-dialog {
+  background: rgba(10, 18, 32, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px; padding: 28px;
+  width: 100%; max-width: 380px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+  transform: translateY(12px); transition: transform 0.2s ease;
+}
+.gpt-dialog-overlay.open .gpt-dialog { transform: translateY(0); }
+.gpt-dialog-header { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+.gpt-dialog-icon {
+  width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
+  background: rgba(255, 122, 26, 0.06);
+  border: 1px solid rgba(255, 122, 26, 0.1);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255, 122, 26, 0.5); font-size: 1.1rem;
+}
+.gpt-dialog-icon--danger {
+  background: rgba(239, 68, 68, 0.06);
+  border-color: rgba(239, 68, 68, 0.1);
+  color: rgba(239, 68, 68, 0.6);
+}
+.gpt-dialog-title {
+  font-size: 1.05rem; font-weight: 600;
+  color: rgba(255, 255, 255, 0.85); margin: 0;
+}
+.gpt-dialog-text {
+  font-size: 0.88rem; color: rgba(255, 255, 255, 0.4);
+  margin: 0 0 20px; line-height: 1.5;
+}
+.gpt-dialog-input {
+  width: 100%; padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px; color: rgba(255, 255, 255, 0.8);
+  font-size: 0.92rem; outline: none;
+  margin-bottom: 20px; box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+.gpt-dialog-input:focus { border-color: rgba(255, 122, 26, 0.3); }
+.gpt-dialog-actions { display: flex; gap: 10px; justify-content: flex-end; }
+.gpt-dialog-btn {
+  padding: 10px 20px; border-radius: 10px; border: none;
+  font-size: 0.88rem; font-weight: 500; cursor: pointer;
+  transition: all 0.2s ease;
+}
+.gpt-dialog-btn--ghost {
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+.gpt-dialog-btn--ghost:hover { background: rgba(255, 255, 255, 0.06); color: rgba(255, 255, 255, 0.7); }
+.gpt-dialog-btn--primary {
+  background: rgba(255, 122, 26, 0.1);
+  color: rgba(255, 122, 26, 0.8);
+  border: 1px solid rgba(255, 122, 26, 0.15);
+}
+.gpt-dialog-btn--primary:hover { background: rgba(255, 122, 26, 0.15); }
+.gpt-dialog-btn--danger {
+  background: rgba(239, 68, 68, 0.12);
+  color: rgba(239, 68, 68, 0.85);
+  border: 1px solid rgba(239, 68, 68, 0.18);
+}
+.gpt-dialog-btn--danger:hover { background: rgba(239, 68, 68, 0.18); }
+
+/* ============================================================
+   CHAT HISTORY PANEL (inside popup/modal)
+   ============================================================ */
+.gpt-history-panel {
+  display: none;
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  background: rgba(6, 10, 22, 0.98);
+  border-radius: inherit;
+  flex-direction: column;
+  overflow: hidden;
+  animation: historySlideIn 0.25s ease;
+}
+.gpt-history-panel.open {
+  display: flex;
+}
+@keyframes historySlideIn {
+  from { opacity: 0; transform: translateX(-12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.gpt-wrap { position: relative; }
+
+/* Header */
+.gpt-history-header {
+  display: flex;
+  align-items: center;
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(255, 122, 26, 0.06);
+  flex-shrink: 0;
+  background: rgba(4, 8, 16, 0.6);
+}
+.gpt-history-back {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: all 0.15s ease;
+}
+.gpt-history-back:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.85);
+}
+.gpt-history-back i {
+  font-size: 1rem;
+  color: rgba(255, 122, 26, 0.5);
+}
+
+/* Sub header */
+.gpt-history-sub {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px 0;
+  flex-shrink: 0;
+}
+.gpt-history-subtitle {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.3);
+}
+.gpt-history-new-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 122, 26, 0.08);
+  border: 1px solid rgba(255, 122, 26, 0.12);
+  border-radius: 8px;
+  padding: 7px 14px;
+  color: rgba(255, 122, 26, 0.7);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+.gpt-history-new-btn:hover {
+  background: rgba(255, 122, 26, 0.12);
+  color: rgba(255, 122, 26, 0.9);
+  border-color: rgba(255, 122, 26, 0.18);
+}
+.gpt-history-new-btn i { font-size: 0.75rem; }
+
+/* Search */
+.gpt-history-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 20px 0;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 0 12px;
+  flex-shrink: 0;
+  transition: border-color 0.2s ease;
+}
+.gpt-history-search:focus-within {
+  border-color: rgba(255, 122, 26, 0.15);
+}
+.gpt-history-search i {
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 0.85rem;
+}
+.gpt-history-search input {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.85rem;
+  padding: 10px 0;
+  width: 100%;
+  outline: none;
+}
+.gpt-history-search input::placeholder {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+/* List */
+.gpt-history-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 12px 20px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.04) transparent;
+}
+.gpt-history-list::-webkit-scrollbar { width: 3px; }
+.gpt-history-list::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.06); border-radius: 3px; }
+
+/* Group labels */
+.gpt-history-group {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.18);
+  padding: 14px 10px 6px;
+  user-select: none;
+}
+
+/* History item */
+.gpt-history-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+  border: 1px solid transparent;
+  margin-bottom: 4px;
+}
+.gpt-history-item:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+.gpt-history-item.active {
+  background: rgba(255, 122, 26, 0.06);
+  border-color: rgba(255, 122, 26, 0.1);
+}
+
+/* Vehicle logo */
+.gpt-history-item-logo {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.gpt-history-item-logo img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+.gpt-history-item-logo .gpt-history-item-icon {
+  color: rgba(255, 122, 26, 0.35);
+  font-size: 1.1rem;
+}
+
+/* Content */
+.gpt-history-item-content {
+  flex: 1;
+  min-width: 0;
+}
+.gpt-history-item-vehicle {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(255, 122, 26, 0.55);
+  margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.gpt-history-item-vehicle i {
+  font-size: 0.7rem;
+}
+.gpt-history-item-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.65);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+.gpt-history-item.active .gpt-history-item-title {
+  color: rgba(255, 122, 26, 0.75);
+}
+.gpt-history-item-preview {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.25);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+  max-width: 100%;
+}
+.gpt-history-item-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+.gpt-history-item-date {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.2);
+}
+.gpt-history-item-count {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.18);
+}
+
+/* Active badge */
+.gpt-history-active-badge {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: rgba(255, 122, 26, 0.5);
+  background: rgba(255, 122, 26, 0.08);
+  padding: 2px 7px;
+  border-radius: 4px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* Menu button */
+.gpt-history-item-menu {
+  opacity: 0;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  padding: 5px 7px;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 2px;
+}
+.gpt-history-item:hover .gpt-history-item-menu {
+  opacity: 1;
+}
+.gpt-history-item-menu:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Context menu */
+.gpt-history-menu {
+  position: absolute;
+  right: 10px;
+  top: calc(100% - 4px);
+  background: rgba(12, 18, 32, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 4px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.6);
+  z-index: 100;
+  min-width: 140px;
+  backdrop-filter: blur(12px);
+}
+.gpt-history-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: none;
+  background: none;
+  width: 100%;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.55);
+  transition: all 0.12s ease;
+}
+.gpt-history-menu-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.75);
+}
+.gpt-history-menu-item i { font-size: 0.85rem; width: 16px; text-align: center; }
+.gpt-history-menu-divider { height: 1px; background: rgba(255, 255, 255, 0.05); margin: 4px 0; }
+.gpt-history-menu-danger:hover { background: rgba(239, 68, 68, 0.08); color: rgba(239, 68, 68, 0.8); }
+
+/* Empty / Loading */
+.gpt-history-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 0.88rem;
+}
+.gpt-history-empty i {
+  display: block;
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.1);
+  margin-bottom: 12px;
+}
+.gpt-history-loading {
+  text-align: center;
+  padding: 32px;
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 0.85rem;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (min-width: 992px) {
+  .gpt-side {
+    position: fixed !important; transform: none !important;
+  }
+  .gpt-main {
+    margin-left: 260px !important;
+  }
+}
+@media (max-width: 991.98px) {
+  .gpt-side {
+    position: fixed !important; top: 0; left: 0; bottom: 0;
+    transform: translateX(-100%) !important; z-index: 1040 !important;
+    box-shadow: 4px 0 28px rgba(0, 0, 0, 0.5);
+  }
+  .gpt-side:not(.collapsed) { transform: translateX(0) !important; }
+  .gpt-main { margin-left: 0 !important; }
+  .gpt-topbar-toggle { display: flex !important; }
+  .gpt-chat-layout { grid-template-columns: 1fr !important; }
+  .gpt-chat-visual { display: none !important; }
+  .gpt-chat-col { border-right: none !important; }
+  .diag-workspace { grid-template-columns: 1fr !important; overflow-y: auto !important; }
+  .diag-output-col { border-left: none !important; border-top: 1px solid rgba(255, 122, 26, 0.05) !important; }
+  .gpt-mode-tab span { display: none; }
+  .gpt-mode-tab i { font-size: 1rem; }
+}
+.gpt-side-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0, 0, 0, 0.5); z-index: 1039; backdrop-filter: blur(3px);
+}
+.gpt-side-overlay.visible { display: block; }
+@media (max-width: 767.98px) {
+  .gpt-topbar { padding: 12px 16px !important; min-height: 52px !important; }
+  .gpt-topbar-icon { width: 36px; height: 36px; font-size: 0.9rem; }
+  .gpt-topbar-name { font-size: 0.85rem; letter-spacing: 1.5px; }
+  .gpt-mode-tabs { padding: 0 12px !important; gap: 1px; overflow-x: auto; }
+  .gpt-mode-tab { padding: 10px 10px !important; font-size: 0.82rem; white-space: nowrap; }
+  .gpt-welcome { padding: 32px 16px; }
+  .gpt-welcome-title { font-size: 1.5rem; }
+  .gpt-welcome-grid { grid-template-columns: 1fr; gap: 10px; }
+  .gpt-composer { padding: 12px 14px 16px !important; }
+  .gpt-msgs { padding: 16px 16px !important; gap: 14px; }
+  .gpt-msg { max-width: 90%; }
+  .gpt-msg-text { font-size: 0.92rem !important; }
+  .diag-input-col, .diag-output-col { padding: 16px !important; }
+  .diag-input-panel { padding: 18px; }
+  .dt-chips { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+  .diag-benefits { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .diag-benefit-card { padding: 10px 6px; }
+  .diag-benefit-card h6 { font-size: 0.75rem; }
+  .diag-benefit-card p { font-size: 0.65rem; }
+  .diag-preview-cards { grid-template-columns: repeat(3, 1fr); gap: 5px; }
+  .diag-preview-card { padding: 8px 4px; }
+  .diag-preview-card span { font-size: 0.65rem; }
+  .gpt-side-brand { padding: 16px 16px 12px; }
+  .gpt-nav-group { padding: 0 10px; }
+  .gpt-nav-item { padding: 9px 10px; font-size: 0.85rem; }
+}
+@media (max-width: 430px) {
+  .gpt-topbar-name { font-size: 0.78rem; letter-spacing: 1px; }
+  .gpt-topbar-status { display: none; }
+  .gpt-model-label { display: none; }
+  .gpt-msgs { padding: 14px 12px !important; }
+  .gpt-composer { padding: 10px 12px 14px !important; }
+  .gpt-composer-inner { border-radius: 16px !important; padding: 12px !important; }
+  .gpt-msg { max-width: 92%; }
+  .gpt-msg-text { font-size: 0.9rem !important; }
+}
+@media (max-width: 390px) {
+  .gpt-topbar-name { font-size: 0.72rem; letter-spacing: 0.8px; }
+  .gpt-mode-tabs { padding: 0 8px !important; }
+  .diag-preview-cards { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1440px) {
+  .gpt-main { margin-left: 260px !important; }
+  .gpt-msgs { padding: 28px 40px !important; }
+  .gpt-composer { padding: 18px 40px 22px !important; }
+  .gpt-chat-layout { grid-template-columns: 1fr 360px !important; }
+}

@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}{{ guide.title }} · Car Service AI{% endblock %}
+{% block content %}
+<div class="page-hero d-flex flex-wrap justify-content-between align-items-center gap-2">
+  <div>
+    <div class="d-flex align-items-center gap-2 mb-1 flex-wrap">
+      <a href="/repair-guide" class="btn btn-sm btn-ghost"><i class="bi bi-arrow-left-short me-1"></i>{{ t('Repair Guide') }}</a>
+      <span class="badge badge-soft-accent">{{ guide.category }}</span>
+      <span class="badge badge-soft-muted"><i class="bi {% if guide.difficulty == 'Easy' %}bi-emoji-smile{% elif guide.difficulty == 'Medium' %}bi-emoji-neutral{% else %}bi-emoji-frown{% endif %} me-1"></i>{{ t(guide.difficulty) }}</span>
+      <span class="badge badge-soft-muted"><i class="bi bi-clock me-1"></i>{{ guide.time }} {{ t('min') }}</span>
+    </div>
+    <h2 class="mb-1">{{ guide.title }}</h2>
+    <p class="text-soft mb-0">{{ guide.summary }}</p>
+  </div>
+</div>
+
+<div class="row g-3">
+  <div class="col-lg-8">
+    <div class="card">
+      <div class="card-header"><span class="eyebrow"><i class="bi bi-list-ol me-1"></i>{{ t('Steps') }}</span></div>
+      <div class="card-body">
+        <ol class="guide-steps">
+          {% for step in guide.steps %}
+          <li class="guide-step">
+            <span class="guide-step-num">{{ loop.index }}</span>
+            <div>
+              <h6 class="mb-1">{{ step.title }}</h6>
+              <p class="text-soft small mb-0">{{ step.text }}</p>
+            </div>
+          </li>
+          {% endfor %}
+        </ol>
+      </div>
+    </div>
+
+    {% if guide.tips %}
+    <div class="card mt-3">
+      <div class="card-header"><span class="eyebrow"><i class="bi bi-lightbulb me-1"></i>{{ t('Pro tip') }}</span></div>
+      <div class="card-body d-flex gap-2">
+        <i class="bi bi-lightbulb" style="color:var(--warning)"></i>
+        <p class="small mb-0">{{ guide.tips }}</p>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card mb-3">
+      <div class="card-header"><span class="eyebrow"><i class="bi bi-tools me-1"></i>{{ t('You will need') }}</span></div>
+      <div class="card-body">
+        <div class="eyebrow mb-2">{{ t('Tools') }}</div>
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          {% for tool in guide.tools %}
+          <span class="tool-chip"><i class="bi bi-wrench-adjustable me-1"></i>{{ tool }}</span>
+          {% endfor %}
+        </div>
+        <div class="eyebrow mb-2">{{ t('Parts') }}</div>
+        <div class="d-flex flex-wrap gap-2">
+          {% for part in guide.parts %}
+          <span class="tool-chip"><i class="bi bi-box-seam me-1"></i>{{ part }}</span>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="eyebrow"><i class="bi bi-diagram-2 me-1"></i>{{ t('Related guides') }}</span></div>
+      <div class="card-body">
+        {% for g in related %}
+        <a href="/repair-guide/{{ g.slug }}" class="text-decoration-none">
+          <div class="d-flex align-items-center gap-3 py-2 border-bottom" style="border-color:var(--border)!important">
+            <div class="icon-chip" style="width:38px;height:38px"><i class="bi bi-tools"></i></div>
+            <div class="flex-grow-1">
+              <div class="fw-semibold small">{{ g.title }}</div>
+              <div class="small text-soft">{{ g.category }} · {{ t(g.difficulty) }}</div>
+            </div>
+            <i class="bi bi-chevron-right text-soft"></i>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

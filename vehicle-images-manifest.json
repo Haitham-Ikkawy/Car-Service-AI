@@ -1,0 +1,1404 @@
+{
+  "_comment": "Vehicle image manifest for Car Service AI. Edit sourceUrl fields with official manufacturer image URLs, then run download_vehicle_images.py to download and convert to WebP.",
+  "_instructions": "1. For each model, find the official manufacturer press/media image URL. 2. Paste it into the sourceUrl field. 3. Run: python download_vehicle_images.py",
+  "brands": {
+    "Acura": {
+      "logo": "/image/car_logos/acura.svg",
+      "officialSource": "https://www.acura.com",
+      "models": {
+        "ILX": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "TLX": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "RDX": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "MDX": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Alfa Romeo": {
+      "logo": "/image/car_logos/alfa-romeo.svg",
+      "officialSource": "https://www.alfaromeo.com",
+      "models": {
+        "Giulia": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Stelvio": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Tonale": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Aston Martin": {
+      "logo": "/image/car_logos/aston-martin.svg",
+      "officialSource": "https://www.astonmartin.com",
+      "models": {
+        "Vantage": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "DB12": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "DBX": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Audi": {
+      "logo": "/image/car_logos/audi.svg",
+      "officialSource": "https://www.audi.com",
+      "models": {
+        "A3": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "A4": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "A6": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Q3": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Q5": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Q7": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "e-tron": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Bentley": {
+      "logo": "/image/car_logos/bentley.svg",
+      "officialSource": "https://www.bentleymotors.com",
+      "models": {
+        "Continental GT": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Flying Spur": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Bentayga": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "BMW": {
+      "logo": "/image/car_logos/bmw.svg",
+      "officialSource": "https://www.press.bmwgroup.com",
+      "models": {
+        "1 Series": {
+          "sourceUrl": "",
+          "sourceType": "official_press",
+          "imageSource": ""
+        },
+        "3 Series": {
+          "sourceUrl": "",
+          "sourceType": "official_press",
+          "imageSource": ""
+        },
+        "5 Series": {
+          "sourceUrl": "",
+          "sourceType": "official_press",
+          "imageSource": ""
+        },
+        "X1": {
+          "sourceUrl": "",
+          "sourceType": "official_press",
+          "imageSource": ""
+        },
+        "X3": {
+          "sourceUrl": "",
+          "sourceType": "official_press",
+          "imageSource": ""
+        },
+        "X5": {
+          "sourceUrl": "",
+          "sourceType": "official_press",
+          "imageSource": ""
+        },
+        "i4": {
+          "sourceUrl": "",
+          "sourceType": "official_press",
+          "imageSource": ""
+        }
+      }
+    },
+    "Buick": {
+      "logo": "/image/car_logos/buick.svg",
+      "officialSource": "https://www.buick.com",
+      "models": {
+        "Encore": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Envision": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "LaCrosse": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Cadillac": {
+      "logo": "/image/car_logos/cadillac.svg",
+      "officialSource": "https://www.cadillac.com",
+      "models": {
+        "CT4": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "CT5": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "XT4": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "XT5": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Escalade": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Chevrolet": {
+      "logo": "/image/car_logos/chevrolet.svg",
+      "officialSource": "https://www.chevrolet.com",
+      "models": {
+        "Spark": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Cruze": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Malibu": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Trailblazer": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Equinox": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Chrysler": {
+      "logo": "/image/car_logos/chrysler.svg",
+      "officialSource": "https://www.chrysler.com",
+      "models": {
+        "300": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Pacifica": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Citroen": {
+      "logo": "/image/car_logos/citroen.svg",
+      "officialSource": "https://www.citroen.com",
+      "models": {
+        "C1": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "C3": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "C4": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "C5": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Berlingo": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Dodge": {
+      "logo": "/image/car_logos/dodge.svg",
+      "officialSource": "https://www.dodge.com",
+      "models": {
+        "Challenger": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Charger": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Durango": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Ferrari": {
+      "logo": "/image/car_logos/ferrari.svg",
+      "officialSource": "https://www.ferrari.com",
+      "models": {
+        "Roma": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": "",
+          "_filename": "roma"
+        },
+        "SF90": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": "",
+          "_filename": "sf90-stradale"
+        },
+        "296": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": "",
+          "_filename": "296-gtb"
+        },
+        "812": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": "",
+          "_filename": "812-superfast"
+        },
+        "F8": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": "",
+          "_filename": "f8-tributo"
+        }
+      }
+    },
+    "Fiat": {
+      "logo": "/image/car_logos/fiat.svg",
+      "officialSource": "https://www.fiat.com",
+      "models": {
+        "500": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Panda": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Punto": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Tipo": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Ford": {
+      "logo": "/image/car_logos/ford.svg",
+      "officialSource": "https://www.ford.com",
+      "models": {
+        "Fiesta": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Focus": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Mustang": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Ranger": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Escape": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Explorer": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Genesis": {
+      "logo": "/image/car_logos/genesis.svg",
+      "officialSource": "https://www.genesis.com",
+      "models": {
+        "G70": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "G80": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "G90": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "GV70": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "GV80": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "GMC": {
+      "logo": "/image/car_logos/gmc.svg",
+      "officialSource": "https://www.gmc.com",
+      "models": {
+        "Terrain": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Acadia": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Yukon": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Sierra": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Honda": {
+      "logo": "/image/car_logos/honda.svg",
+      "officialSource": "https://www.honda.com",
+      "models": {
+        "Civic": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Accord": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "CR-V": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "HR-V": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "City": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Fit": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Hyundai": {
+      "logo": "/image/car_logos/hyundai.svg",
+      "officialSource": "https://www.hyundai.com",
+      "models": {
+        "i20": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "i30": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Tucson": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Santa Fe": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Elantra": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Kona": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Infiniti": {
+      "logo": "/image/car_logos/infiniti.svg",
+      "officialSource": "https://www.infiniti.com",
+      "models": {
+        "Q50": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Q60": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "QX50": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "QX60": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Jaguar": {
+      "logo": "/image/car_logos/jaguar.svg",
+      "officialSource": "https://www.jaguar.com",
+      "models": {
+        "XE": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "XF": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "F-PACE": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "E-PACE": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "I-PACE": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Jeep": {
+      "logo": "/image/car_logos/jeep.svg",
+      "officialSource": "https://www.jeep.com",
+      "models": {
+        "Renegade": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Compass": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Cherokee": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Wrangler": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Grand Cherokee": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Kia": {
+      "logo": "/image/car_logos/kia.svg",
+      "officialSource": "https://www.kia.com",
+      "models": {
+        "Rio": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Ceed": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Sportage": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Sorento": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Picanto": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "EV6": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Lamborghini": {
+      "logo": "/image/car_logos/lamborghini.svg",
+      "officialSource": "https://www.lamborghini.com",
+      "models": {
+        "Huracan": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Urus": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Revuelto": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Land Rover": {
+      "logo": "/image/car_logos/land-rover.svg",
+      "officialSource": "https://www.landrover.com",
+      "models": {
+        "Range Rover": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Discovery": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Defender": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Evoque": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Lexus": {
+      "logo": "/image/car_logos/lexus.svg",
+      "officialSource": "https://www.lexus.com",
+      "models": {
+        "UX": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "NX": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "RX": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "ES": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "LS": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Lincoln": {
+      "logo": "/image/car_logos/lincoln.svg",
+      "officialSource": "https://www.lincoln.com",
+      "models": {
+        "Corsair": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Aviator": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Navigator": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Maserati": {
+      "logo": "/image/car_logos/maserati.svg",
+      "officialSource": "https://www.maserati.com",
+      "models": {
+        "Ghibli": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Levante": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Grecale": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "GranTurismo": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Mazda": {
+      "logo": "/image/car_logos/mazda.svg",
+      "officialSource": "https://www.mazda.com",
+      "models": {
+        "2": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "3": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "6": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "CX-3": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "CX-5": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "MX-5": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "McLaren": {
+      "logo": "/image/car_logos/mclaren.svg",
+      "officialSource": "https://www.mclaren.com",
+      "models": {
+        "720S": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "750S": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Artura": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "GT": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Mercedes-Benz": {
+      "logo": "/image/car_logos/mercedes-benz.svg",
+      "officialSource": "https://media.mercedes-benz.com",
+      "models": {
+        "A-Class": {
+          "sourceUrl": "",
+          "sourceType": "official_press",
+          "imageSource": ""
+        },
+        "C-Class": {
+          "sourceUrl": "",
+          "sourceType": "official_press",
+          "imageSource": ""
+        },
+        "E-Class": {
+          "sourceUrl": "",
+          "sourceType": "official_press",
+          "imageSource": ""
+        },
+        "GLC": {
+          "sourceUrl": "",
+          "sourceType": "official_press",
+          "imageSource": ""
+        },
+        "GLE": {
+          "sourceUrl": "",
+          "sourceType": "official_press",
+          "imageSource": ""
+        },
+        "EQC": {
+          "sourceUrl": "",
+          "sourceType": "official_press",
+          "imageSource": ""
+        }
+      }
+    },
+    "Mitsubishi": {
+      "logo": "/image/car_logos/mitsubishi.svg",
+      "officialSource": "https://www.mitsubishi-motors.com",
+      "models": {
+        "Lancer": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Outlander": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "ASX": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Pajero": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Nissan": {
+      "logo": "/image/car_logos/nissan.svg",
+      "officialSource": "https://www.nissan-global.com",
+      "models": {
+        "Micra": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Qashqai": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "X-Trail": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Leaf": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Altima": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Opel": {
+      "logo": "/image/car_logos/opel.svg",
+      "officialSource": "https://www.opel.com",
+      "models": {
+        "Corsa": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Astra": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Insignia": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Mokka": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Grandland": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Peugeot": {
+      "logo": "/image/car_logos/peugeot.svg",
+      "officialSource": "https://www.peugeot.com",
+      "models": {
+        "208": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "308": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "3008": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "5008": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "2008": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Porsche": {
+      "logo": "/image/car_logos/porsche.svg",
+      "officialSource": "https://www.porsche.com",
+      "models": {
+        "911": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Cayenne": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Macan": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Taycan": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Panamera": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Ram": {
+      "logo": "/image/car_logos/ram.svg",
+      "officialSource": "https://www.ramtruck.com",
+      "models": {
+        "1500": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "2500": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "3500": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Renault": {
+      "logo": "/image/car_logos/renault.svg",
+      "officialSource": "https://www.renault.com",
+      "models": {
+        "Clio": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Megane": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Captur": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Duster": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Arkana": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Rolls-Royce": {
+      "logo": "/image/car_logos/rolls-royce.svg",
+      "officialSource": "https://www.rolls-roycemotorcars.com",
+      "models": {
+        "Ghost": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Phantom": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Cullinan": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Spectre": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Seat": {
+      "logo": "/image/car_logos/seat.svg",
+      "officialSource": "https://www.seat.com",
+      "models": {
+        "Ibiza": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Leon": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Arona": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Ateca": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Tarraco": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Skoda": {
+      "logo": "/image/car_logos/skoda.svg",
+      "officialSource": "https://www.skoda-auto.com",
+      "models": {
+        "Fabia": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Octavia": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Superb": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Karoq": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Kodiaq": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Smart": {
+      "logo": "/image/car_logos/smart.svg",
+      "officialSource": "https://www.smart.com",
+      "models": {
+        "ForTwo": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "ForFour": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Subaru": {
+      "logo": "/image/car_logos/subaru.svg",
+      "officialSource": "https://www.subaru.com",
+      "models": {
+        "Impreza": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Forester": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Outback": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "XV": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "WRX": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Suzuki": {
+      "logo": "/image/car_logos/suzuki.svg",
+      "officialSource": "https://www.suzuki.co.jp",
+      "models": {
+        "Swift": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Baleno": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Vitara": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Jimny": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Ertiga": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Tesla": {
+      "logo": "/image/car_logos/tesla.svg",
+      "officialSource": "https://www.tesla.com",
+      "models": {
+        "Model 3": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Model Y": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Model S": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Model X": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Toyota": {
+      "logo": "/image/car_logos/toyota.svg",
+      "officialSource": "https://pressroom.toyota.com",
+      "models": {
+        "Corolla": {
+          "sourceUrl": "https://toyota-cms-media.s3.amazonaws.com/wp-content/uploads/2023/06/MY24_Corolla-Nightshade_0001_V001-2-1-1500x1125.jpg",
+          "sourceType": "official_press",
+          "imageSource": "Toyota USA Newsroom"
+        },
+        "Camry": {
+          "sourceUrl": "https://toyota-cms-media.s3.amazonaws.com/wp-content/uploads/2024/04/2025_Camry_SE_AWD_SupersonicRed_003-1500x989.jpg",
+          "sourceType": "official_press",
+          "imageSource": "Toyota USA Newsroom"
+        },
+        "RAV4": {
+          "sourceUrl": "",
+          "sourceType": "official_press",
+          "imageSource": ""
+        },
+        "Land Cruiser": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Yaris": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Prius": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Hilux": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Volkswagen": {
+      "logo": "/image/car_logos/volkswagen.svg",
+      "officialSource": "https://www.volkswagen.com",
+      "models": {
+        "Golf": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Passat": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Tiguan": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Polo": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Touareg": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "Arteon": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    },
+    "Volvo": {
+      "logo": "/image/car_logos/volvo.svg",
+      "officialSource": "https://www.volvocars.com",
+      "models": {
+        "S60": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "S90": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "XC40": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "XC60": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        },
+        "XC90": {
+          "sourceUrl": "",
+          "sourceType": "official_website",
+          "imageSource": ""
+        }
+      }
+    }
+  }
+}

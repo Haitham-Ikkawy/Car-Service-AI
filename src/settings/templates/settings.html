@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+{% block title %}{{ t('Settings') }} · Car Service AI{% endblock %}
+{% block content %}
+<div class="settings-wrap">
+  <div class="settings-topbar">
+    <div class="settings-topbar-title">
+      <span class="settings-topbar-icon"><i class="bi bi-gear"></i></span>
+      <div>
+        <div class="settings-topbar-name">{{ t('Settings') }}</div>
+        <div class="settings-topbar-desc">{{ t('Tune the app to your preferences.') }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="settings-body">
+    <aside class="settings-side">
+      <button class="settings-side-link active" data-tab="tab-appearance">
+        <i class="bi bi-palette"></i>
+        <span>{{ t('Appearance') }}</span>
+      </button>
+      <button class="settings-side-link" data-tab="tab-ai">
+        <i class="bi bi-stars"></i>
+        <span>{{ t('AI & Models') }}</span>
+      </button>
+      <button class="settings-side-link" data-tab="tab-a11y">
+        <i class="bi bi-universal-access"></i>
+        <span>{{ t('Accessibility') }}</span>
+      </button>
+    </aside>
+
+    <div class="settings-content">
+
+      <div class="settings-panel active" id="tab-appearance">
+        <div class="settings-card">
+          <div class="settings-card-head">
+            <span class="settings-card-icon"><i class="bi bi-palette"></i></span>
+            <span class="settings-card-label">{{ t('Theme') }}</span>
+          </div>
+          <div class="settings-card-body">
+            <div class="settings-picks">
+              <button class="settings-pick {{ 'selected' if settings.theme == 'light' }}" data-setting="theme" data-val="light">
+                <i class="bi bi-sun-fill"></i>
+                <span>{{ t('Light') }}</span>
+              </button>
+              <button class="settings-pick {{ 'selected' if settings.theme == 'dark' }}" data-setting="theme" data-val="dark">
+                <i class="bi bi-moon-fill"></i>
+                <span>{{ t('Dark') }}</span>
+              </button>
+              <button class="settings-pick {{ 'selected' if settings.theme == 'auto' }}" data-setting="theme" data-val="auto">
+                <i class="bi bi-circle-half"></i>
+                <span>{{ t('Auto') }}</span>
+              </button>
+            </div>
+            <div class="settings-hint">{{ t('Auto follows your operating system preference.') }}</div>
+          </div>
+        </div>
+
+        <div class="settings-card">
+          <div class="settings-card-head">
+            <span class="settings-card-icon"><i class="bi bi-droplet-half"></i></span>
+            <span class="settings-card-label">{{ t('Accent colour') }}</span>
+          </div>
+          <div class="settings-card-body">
+            <div class="settings-accents" id="accent-swatches" data-current="{{ settings.accent or '' }}">
+              <button type="button" class="accent-swatch" data-accent="#ff7a1a" style="--sw:#ff7a1a" title="Safety Orange" aria-label="Safety Orange"></button>
+              <button type="button" class="accent-swatch" data-accent="#3b82f6" style="--sw:#3b82f6" title="Blue" aria-label="Blue"></button>
+              <button type="button" class="accent-swatch" data-accent="#22c55e" style="--sw:#22c55e" title="Green" aria-label="Green"></button>
+              <button type="button" class="accent-swatch" data-accent="#8b5cf6" style="--sw:#8b5cf6" title="Violet" aria-label="Violet"></button>
+              <button type="button" class="accent-swatch" data-accent="#ef4444" style="--sw:#ef4444" title="Red" aria-label="Red"></button>
+              <button type="button" class="accent-swatch" data-accent="#06b6d4" style="--sw:#06b6d4" title="Cyan" aria-label="Cyan"></button>
+              <button type="button" class="accent-swatch" data-accent="#f59e0b" style="--sw:#f59e0b" title="Amber" aria-label="Amber"></button>
+              <label class="accent-swatch accent-swatch--custom" title="Custom colour">
+                <i class="bi bi-eyedropper"></i>
+                <input type="color" id="accent-custom" value="#ff7a1a" aria-label="Custom accent colour">
+              </label>
+            </div>
+            <div class="settings-hint d-flex align-items-center justify-content-between gap-2">
+              <span>{{ t('Pick an accent colour for buttons, highlights and the active menu.') }}</span>
+              <button type="button" class="settings-reset-accent" id="accent-reset">{{ t('Reset') }}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-panel" id="tab-ai">
+        <div class="settings-card">
+          <div class="settings-card-head">
+            <span class="settings-card-icon"><i class="bi bi-stars"></i></span>
+            <span class="settings-card-label">{{ t('AI & Models') }}</span>
+          </div>
+          <div class="settings-card-body">
+            <div class="settings-status {{ 'settings-status--success' if not is_demo else 'settings-status--warning' }}">
+              <i class="bi {{ 'bi-check-circle' if not is_demo else 'bi-exclamation-triangle' }}"></i>
+              <div>
+                <div class="settings-status-title">{{ t('Gemini is connected') if not is_demo else t('API key not configured') }}</div>
+                <div class="settings-status-desc">{{ t('Live AI responses are enabled.') if not is_demo else t('Add your free Gemini API key to enable real AI responses.') }}</div>
+              </div>
+            </div>
+
+            <form id="api-key-form" class="settings-form">
+              <div class="settings-field">
+                <label class="settings-field-label" for="gemini-key">{{ t('Gemini API key') }}</label>
+                <div class="settings-input-group">
+                  <span class="settings-input-icon"><i class="bi bi-key"></i></span>
+                  <input type="password" class="settings-input" id="gemini-key" value="{{ gemini_key }}" placeholder="AIza…">
+                  <button class="settings-input-btn" type="button" data-toggle-pass2><i class="bi bi-eye"></i></button>
+                </div>
+                <div class="settings-hint">{{ t('Get a free key at ') }}<a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a>. {{ t('Saved to the project .env file.') }}</div>
+              </div>
+
+              <div class="settings-field">
+                <label class="settings-field-label" for="chatgpt-key">{{ t('ChatGPT API key') }}</label>
+                <div class="settings-input-group">
+                  <span class="settings-input-icon"><i class="bi bi-key"></i></span>
+                  <input type="password" class="settings-input" id="chatgpt-key" value="{{ chatgpt_key }}" placeholder="sk-…">
+                  <button class="settings-input-btn" type="button" data-toggle-pass3><i class="bi bi-eye"></i></button>
+                </div>
+                <div class="settings-hint">{{ t('Get your key at ') }}<a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">platform.openai.com/api-keys</a>. {{ t('Saved to the project .env file.') }}</div>
+              </div>
+
+              <div id="gemini-test-status" class="d-none align-items-center gap-2 small">
+                <i id="gemini-test-icon" class="bi"></i>
+                <span id="gemini-test-text"></span>
+                <span id="gemini-test-detail" class="text-soft"></span>
+              </div>
+
+              <div class="settings-field">
+                <label class="settings-field-label" for="gemini-model">{{ t('Model') }}</label>
+                <select class="settings-select" id="gemini-model">
+                  {% for m in gemini_models %}
+                    <option value="{{ m }}" {{ 'selected' if settings.model == m or (not settings.model and m == default_model) }}>{{ m }}{% if m == default_model %} ({{ t('recommended') }}){% endif %}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="settings-switch">
+                <div>
+                  <div class="settings-switch-title">{{ t('Streaming responses') }}</div>
+                  <div class="settings-switch-desc">{{ t('Show AI replies word-by-word as they are generated.') }}</div>
+                </div>
+                <input class="settings-switch-input" type="checkbox" data-setting="streaming" data-group="ai" {{ 'checked' if settings.streaming }}>
+              </div>
+
+              <div class="settings-actions">
+                <button class="settings-btn settings-btn--primary" type="submit"><i class="bi bi-check-lg"></i> {{ t('Save AI settings') }}</button>
+                <button class="settings-btn settings-btn--secondary" type="button" id="gemini-test-btn"><i class="bi bi-plug"></i> {{ t('Test connection') }}</button>
+                <button class="settings-btn settings-btn--secondary" type="button" id="gemini-cache-btn"><i class="bi bi-arrow-counterclockwise"></i> {{ t('Clear AI cache') }}</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-panel" id="tab-a11y">
+        <div class="settings-card">
+          <div class="settings-card-head">
+            <span class="settings-card-icon"><i class="bi bi-universal-access"></i></span>
+            <span class="settings-card-label">{{ t('Accessibility') }}</span>
+          </div>
+          <div class="settings-card-body">
+            <form id="a11y-form" class="settings-form">
+              <div class="settings-switch">
+                <div>
+                  <div class="settings-switch-title">{{ t('Reduce motion') }}</div>
+                  <div class="settings-switch-desc">{{ t('Disable animations and transitions.') }}</div>
+                </div>
+                <input class="settings-switch-input" type="checkbox" name="reduce_motion" value="true" {{ 'checked' if settings.a11y.reduce_motion }}>
+              </div>
+              <div class="settings-switch">
+                <div>
+                  <div class="settings-switch-title">{{ t('High contrast') }}</div>
+                  <div class="settings-switch-desc">{{ t('Increase contrast of surfaces and text.') }}</div>
+                </div>
+                <input class="settings-switch-input" type="checkbox" name="high_contrast" value="true" {{ 'checked' if settings.a11y.high_contrast }}>
+              </div>
+              <div class="settings-field">
+                <label class="settings-field-label" for="a11y-font">{{ t('Text size') }}</label>
+                <select class="settings-select" id="a11y-font" name="font_size">
+                  <option value="normal" {{ 'selected' if settings.a11y.font_size == 'normal' }}>{{ t('Normal') }}</option>
+                  <option value="large" {{ 'selected' if settings.a11y.font_size == 'large' }}>{{ t('Large') }}</option>
+                  <option value="xlarge" {{ 'selected' if settings.a11y.font_size == 'xlarge' }}>{{ t('Extra large') }}</option>
+                </select>
+              </div>
+              <div class="settings-actions">
+                <button class="settings-btn settings-btn--primary" type="submit"><i class="bi bi-check-lg"></i> {{ t('Save accessibility') }}</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.settings-side-link').forEach(function (link) {
+      link.addEventListener('click', function () {
+        document.querySelectorAll('.settings-side-link').forEach(function (l) { l.classList.remove('active'); });
+        document.querySelectorAll('.settings-panel').forEach(function (p) { p.classList.remove('active'); });
+        this.classList.add('active');
+        var tab = document.getElementById(this.dataset.tab);
+        if (tab) tab.classList.add('active');
+      });
+    });
+  });
+</script>
+{% endblock %}
+{% block extra_scripts %}
+<script src="/static/settings/settings.js"></script>
+{% endblock %}

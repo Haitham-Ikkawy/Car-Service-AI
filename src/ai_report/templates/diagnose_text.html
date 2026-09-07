@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block title %}{{ t('Diagnose by Text') }} · Car Service AI{% endblock %}
+{% block content %}
+<div class="diag-wrap">
+  <div class="diag-topbar">
+    <div class="diag-topbar-title">
+      <span class="diag-topbar-icon"><i class="bi bi-pencil-square"></i></span>
+      <div>
+        <div class="diag-topbar-name">{{ t('Diagnose by Text') }}</div>
+        <div class="diag-topbar-status"><span class="diag-status-dot"></span> {{ t('AI analysis') }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="diag-workspace">
+    <div class="diag-input-col">
+      <div class="diag-input-panel">
+        <label class="dt-label" for="diag-desc">
+          <i class="bi bi-chat-left-text"></i> {{ t('Describe your car problem') }}
+        </label>
+        <textarea class="dt-textarea" id="diag-desc" rows="7" minlength="8"
+                  placeholder="{{ t('e.g. There is a knocking sound from the front left when I turn, and the check engine light came on…') }}"></textarea>
+        <span class="dt-hint"><i class="bi bi-info-circle"></i> {{ t('Include when it happens, where the sound comes from, and any warning lights.') }}</span>
+
+        <div class="dt-chips">
+          <button type="button" class="dt-chip" data-fill="engine shaking and rough idle"><i class="bi bi-engine"></i> {{ t('Engine') }}</button>
+          <button type="button" class="dt-chip" data-fill="squealing noise when braking"><i class="bi bi-disc"></i> {{ t('Brakes') }}</button>
+          <button type="button" class="dt-chip" data-fill="air conditioning blows warm air"><i class="bi bi-snow"></i> {{ t('A/C') }}</button>
+          <button type="button" class="dt-chip" data-fill="car won't start, battery dead"><i class="bi bi-battery-dead"></i> {{ t('Battery') }}</button>
+        </div>
+
+        {% if vehicle %}
+        <div class="dt-vehicle">
+          <i class="bi bi-car-front"></i> {{ t('Will diagnose for your ') }}<b>{{ vehicle.year }} {{ vehicle.manufacturer }} {{ vehicle.model }}</b>
+        </div>
+        {% endif %}
+
+        <form id="diagnose-text-form">
+          <button class="dt-submit" type="submit">
+            <i class="bi bi-stars"></i> {{ t('Run diagnosis') }} <i class="bi bi-arrow-right"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div class="diag-output-col">
+      <div id="diagnose-output">
+        <div class="diag-output-empty">
+          <div class="diag-car-scene">
+            <div class="diag-car-glow"></div>
+            <svg class="diag-car-svg" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M30 85 L50 55 L80 45 L120 45 L150 55 L170 85" stroke="url(#grad1)" stroke-width="2.5" stroke-linecap="round" fill="none" class="diag-car-path"/>
+              <rect x="25" y="85" width="150" height="25" rx="8" fill="url(#grad2)" opacity="0.15" class="diag-car-body"/>
+              <circle cx="60" cy="110" r="12" stroke="url(#grad1)" stroke-width="2" fill="none" class="diag-wheel"/>
+              <circle cx="60" cy="110" r="5" fill="url(#grad1)" opacity="0.3"/>
+              <circle cx="140" cy="110" r="12" stroke="url(#grad1)" stroke-width="2" fill="none" class="diag-wheel"/>
+              <circle cx="140" cy="110" r="5" fill="url(#grad1)" opacity="0.3"/>
+              <path d="M55 55 L70 48 L130 48 L145 55" stroke="url(#grad1)" stroke-width="1.5" fill="none" opacity="0.5"/>
+              <circle cx="100" cy="35" r="3" fill="#ff7a1a" class="diag-pulse-dot"/>
+              <defs>
+                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#ff7a1a"/>
+                  <stop offset="100%" stop-color="#ff7a1a"/>
+                </linearGradient>
+                <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#ff7a1a"/>
+                  <stop offset="100%" stop-color="#ff7a1a"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <div class="diag-scan-line"></div>
+          </div>
+          <h5 class="diag-output-empty-title">{{ t('Your report will appear here') }}</h5>
+          <p class="diag-output-empty-desc">{{ t('Problem, causes, urgency, cost, parts, repair steps & a downloadable PDF.') }}</p>
+          <div class="diag-output-tags">
+            <span class="dt-empty-tag"><i class="bi bi-shield-check"></i> Urgency</span>
+            <span class="dt-empty-tag"><i class="bi bi-cash-stack"></i> Cost</span>
+            <span class="dt-empty-tag"><i class="bi bi-tools"></i> Parts</span>
+            <span class="dt-empty-tag"><i class="bi bi-file-earmark-pdf"></i> PDF</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('[data-fill]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var ta = document.getElementById('diag-desc');
+        ta.value = btn.dataset.fill;
+        ta.focus();
+      });
+    });
+  });
+</script>
+{% endblock %}
+{% block extra_scripts %}
+<script src="/static/ai_report/diagnose_text.js"></script>
+{% endblock %}

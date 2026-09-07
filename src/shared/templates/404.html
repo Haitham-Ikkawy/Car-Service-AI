@@ -1,0 +1,13 @@
+{% extends "base_auth.html" %}
+{% block title %}404 · {{ t('Page not found') }}{% endblock %}
+{% block body %}
+<div class="error-wrap">
+  <div class="error-code gradient-text">4<span class="car">🚗</span>4</div>
+  <h2 class="mb-1">{{ t('Page pulled over for inspection') }}</h2>
+  <p class="text-soft mb-4">{{ t("The page you're looking for doesn't exist or was moved.") }}</p>
+  <div class="d-flex gap-2">
+    <a href="/diagnose" class="btn btn-primary"><i class="bi bi-heart-pulse me-1"></i>{{ t('Go to Diagnosis') }}</a>
+    <a href="/contact" class="btn btn-ghost">{{ t('Report a broken link') }}</a>
+  </div>
+</div>
+{% endblock %}

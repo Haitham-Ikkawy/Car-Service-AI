@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}{{ t('Diagnose by Audio') }} · Car Service AI{% endblock %}
+{% block content %}
+<div class="diag-wrap">
+  <div class="diag-topbar">
+    <div class="diag-topbar-title">
+      <span class="diag-topbar-icon"><i class="bi bi-mic"></i></span>
+      <div>
+        <div class="diag-topbar-name">{{ t('Diagnose by Audio') }}</div>
+        <div class="diag-topbar-status"><span class="diag-status-dot"></span> {{ t('Audio AI') }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="diag-workspace">
+    <div class="diag-input-col">
+      <div class="diag-input-panel">
+        <div class="upload-zone glass" id="audio-zone">
+          <div class="up-icon"><i class="bi bi-mic"></i></div>
+          <h5 class="mb-1">{{ t('Record or upload a sound') }}</h5>
+          <p class="text-soft small mb-2">{{ t('MP3, WAV, M4A, OGG or AAC · up to 15 MB') }}</p>
+          <div class="d-flex gap-2 justify-content-center flex-wrap" onclick="event.stopPropagation()">
+            <button class="btn btn-primary btn-sm" type="button" id="audio-record-btn"><i class="bi bi-mic-fill me-1"></i>{{ t('Record') }}</button>
+            <button class="btn btn-ghost btn-sm" type="button" id="audio-upload-btn"><i class="bi bi-upload me-1"></i>{{ t('Upload file') }}</button>
+          </div>
+          <input type="file" id="audio-file" accept="audio/*" class="d-none">
+        </div>
+
+        <!-- Live recording controls -->
+        <div class="audio-record-ctrl d-none" id="audio-record-ctrl">
+          <div class="d-flex align-items-center gap-2">
+            <span class="rec-dot"></span>
+            <span id="audio-record-status">{{ t('Recording…') }}</span>
+            <span class="mono ms-auto" id="audio-record-timer">00:00</span>
+          </div>
+          <div class="d-flex gap-2 mt-3">
+            <button class="btn btn-primary btn-sm flex-fill" type="button" id="audio-record-stop"><i class="bi bi-stop-fill me-1"></i>{{ t('Stop') }}</button>
+            <button class="btn btn-ghost btn-sm" type="button" id="audio-record-cancel"><i class="bi bi-x-lg"></i></button>
+          </div>
+        </div>
+
+        <div id="audio-preview"></div>
+
+        <label class="dt-label" for="audio-desc">
+          <i class="bi bi-soundwave"></i> {{ t('Optional: describe when the sound occurs') }}
+        </label>
+        <textarea class="dt-textarea" id="audio-desc" rows="3" placeholder="{{ t('e.g. ticking noise when the engine is warm') }}"></textarea>
+
+        <button class="dt-submit" type="button" id="audio-analyze">
+          <i class="bi bi-stars"></i> {{ t('Transcribe & diagnose') }} <i class="bi bi-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="diag-output-col">
+      <div id="diagnose-output">
+        <div class="diag-output-empty">
+          <div class="diag-car-scene">
+            <div class="diag-car-glow"></div>
+            <svg class="diag-car-svg" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M30 85 L50 55 L80 45 L120 45 L150 55 L170 85" stroke="url(#grad1)" stroke-width="2.5" stroke-linecap="round" fill="none" class="diag-car-path"/>
+              <rect x="25" y="85" width="150" height="25" rx="8" fill="url(#grad2)" opacity="0.15" class="diag-car-body"/>
+              <circle cx="60" cy="110" r="12" stroke="url(#grad1)" stroke-width="2" fill="none" class="diag-wheel"/>
+              <circle cx="60" cy="110" r="5" fill="url(#grad1)" opacity="0.3"/>
+              <circle cx="140" cy="110" r="12" stroke="url(#grad1)" stroke-width="2" fill="none" class="diag-wheel"/>
+              <circle cx="140" cy="110" r="5" fill="url(#grad1)" opacity="0.3"/>
+              <path d="M170 75 Q185 65 195 75" stroke="url(#grad1)" stroke-width="1.5" fill="none" opacity="0.5" class="diag-sound-wave"/>
+              <path d="M170 80 Q190 68 200 80" stroke="url(#grad1)" stroke-width="1" fill="none" opacity="0.3" class="diag-sound-wave"/>
+              <circle cx="100" cy="35" r="3" fill="#ff7a1a" class="diag-pulse-dot"/>
+              <defs>
+                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#ff7a1a"/>
+                  <stop offset="100%" stop-color="#ff7a1a"/>
+                </linearGradient>
+                <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#ff7a1a"/>
+                  <stop offset="100%" stop-color="#ff7a1a"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <div class="diag-scan-line"></div>
+          </div>
+          <h5 class="diag-output-empty-title">{{ t('Audio analysis panel') }}</h5>
+          <p class="diag-output-empty-desc">{{ t('Transcribed sound, AI diagnosis and repair suggestions.') }}</p>
+          <div class="diag-output-tags">
+            <span class="dt-empty-tag"><i class="bi bi-shield-check"></i> Diagnosis</span>
+            <span class="dt-empty-tag"><i class="bi bi-tools"></i> Parts</span>
+            <span class="dt-empty-tag"><i class="bi bi-file-earmark-pdf"></i> PDF</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block extra_scripts %}
+<script src="/static/sound_diagnosis/sound_diagnosis.js"></script>
+{% endblock %}

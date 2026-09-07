@@ -1,0 +1,13 @@
+{% extends "base_auth.html" %}
+{% block title %}500 · {{ t('Server error') }}{% endblock %}
+{% block body %}
+<div class="error-wrap">
+  <div class="error-code gradient-text">5<span class="car">⚙️</span>0</div>
+  <h2 class="mb-1">{{ t('Engine light on — server needs a service') }}</h2>
+  <p class="text-soft mb-4">{{ t('Something went wrong on our side. Please try again in a moment.') }}</p>
+  <div class="d-flex gap-2">
+    <button class="btn btn-primary" onclick="location.reload()"><i class="bi bi-arrow-clockwise me-1"></i>{{ t('Retry') }}</button>
+    <a href="/contact" class="btn btn-ghost">{{ t('Contact support') }}</a>
+  </div>
+</div>
+{% endblock %}
