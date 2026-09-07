@@ -138,7 +138,7 @@ async def diag_session_rename(request: Request, session_id: str):
 async def diag_session_delete(request: Request, session_id: str):
     """Delete a diagnosis session — guarded against active work / service requests."""
     user = require(request)
-    lang = _lang(request)
+    lang = resolve_lang(request)
     session = store.diag_session(user, session_id)
     if not session:
         return JSONResponse({"error": i18n.tr(lang, "Session not found")}, status_code=404)
@@ -165,7 +165,7 @@ async def diag_session_service_request(request: Request, session_id: str):
     An active request locks the session against deletion (item 10 safeguard).
     """
     user = require(request)
-    lang = _lang(request)
+    lang = resolve_lang(request)
     body = await request.json()
     active = bool(body.get("active"))
     session = store.diag_session(user, session_id)
