@@ -70,15 +70,25 @@
     const btn = e.target.closest("[data-theme-toggle]");
     if (!btn) return;
     const current = localStorage.getItem(THEME_KEY) || "dark";
-    applyTheme(current === "dark" ? "light" : "dark");
+    const next = current === "dark" ? "light" : "dark";
+    applyTheme(next);
+    /* Persist to the server too so the choice survives across devices/sessions
+       (fire-and-forget — the local change already applied instantly). */
+    try {
+      fetch("/api/settings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ theme: next }),
+      });
+    } catch (_) { /* non-critical */ }
   });
 
   /* ---------------- Accent colour (custom theming) ---------------- */
   const ACCENT_KEY = "cs-accent";
-  const ACCENT_DEFAULT = "#ff7a1a";
+  const ACCENT_DEFAULT = "#3b82f6";
   const ACCENT_PRESETS = {
-    orange: "#ff7a1a", blue: "#3b82f6", green: "#22c55e",
-    violet: "#8b5cf6", red: "#ef4444", cyan: "#06b6d4", amber: "#f59e0b",
+    blue: "#3b82f6", cyan: "#06b6d4", violet: "#8b5cf6", green: "#22c55e",
+    orange: "#ff7a1a", red: "#ef4444", amber: "#f59e0b",
   };
   function _hexToRgb(hex) {
     hex = String(hex || "").replace("#", "");
@@ -101,6 +111,7 @@
     const rgb = `${r}, ${g}, ${b}`;
     const s = document.documentElement.style;
     s.setProperty("--accent", hex);
+    s.setProperty("--accent-rgb", rgb);
     s.setProperty("--brand", hex);
     s.setProperty("--accent-2", _shade(hex, 0.28));
     s.setProperty("--brand-hover", _shade(hex, -0.14));
@@ -111,8 +122,8 @@
     localStorage.setItem(ACCENT_KEY, hex);
   }
   function resetAccent() {
-    ["--accent", "--brand", "--accent-2", "--brand-hover", "--accent-soft",
-     "--brand-soft", "--glass-border", "--sidebar-active"].forEach((v) =>
+    ["--accent", "--accent-rgb", "--brand", "--accent-2", "--brand-hover",
+     "--accent-soft", "--brand-soft", "--glass-border", "--sidebar-active"].forEach((v) =>
       document.documentElement.style.removeProperty(v));
     localStorage.removeItem(ACCENT_KEY);
   }
@@ -120,6 +131,18 @@
   CS.resetAccent = resetAccent;
   CS.ACCENT_PRESETS = ACCENT_PRESETS;
   CS.ACCENT_DEFAULT = ACCENT_DEFAULT;
+
+  /* ---------------- Accessibility (reduce motion / high contrast / text size) ----
+     Applied as classes/attr on <html>. base.html sets these server-side on load;
+     applyA11y() lets the Settings page reflect changes instantly. */
+  function applyA11y(a) {
+    a = a || {};
+    const el = document.documentElement;
+    if ("reduce_motion" in a) el.classList.toggle("a11y-reduce-motion", !!a.reduce_motion);
+    if ("high_contrast" in a) el.classList.toggle("a11y-high-contrast", !!a.high_contrast);
+    if ("font_size" in a) el.setAttribute("data-font-size", a.font_size || "normal");
+  }
+  CS.applyA11y = applyA11y;
 
   /* ---------------- Sidebar (mobile) ---------------- */
   function initSidebar() {
@@ -1608,7 +1631,7 @@
     const ring = r.confidence != null ? `
       <div class="conf-ring">
         <svg width="148" height="148" viewBox="0 0 148 148">
-          <defs><linearGradient id="grad"><stop offset="0%" stop-color="#ff7a1a"/><stop offset="100%" stop-color="#ffa24d"/></linearGradient></defs>
+          <defs><linearGradient id="grad"><stop offset="0%" stop-color="#3b82f6"/><stop offset="100%" stop-color="#60a5fa"/></linearGradient></defs>
           <circle class="track" cx="74" cy="74" r="62" fill="none" stroke-width="12"/>
           <circle class="bar" cx="74" cy="74" r="62" fill="none" stroke-width="12" stroke-dasharray="${2 * Math.PI * 62}" stroke-dashoffset="${2 * Math.PI * 62 * (1 - r.confidence / 100)}" data-dashoffset="${2 * Math.PI * 62 * (1 - r.confidence / 100)}"/>
         </svg>
@@ -1885,13 +1908,8 @@
       e.preventDefault();
       save({ gemini_key: $("#gemini-key").value.trim(), model: $("#gemini-model").value });
     });
-    const a11yForm = $("#a11y-form");
-    if (a11yForm) a11yForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const patch = { a11y: {} };
-      new FormData(a11yForm).forEach((v, k) => (patch.a11y[k] = v === "true" || v === "on" || v));
-      save(patch);
-    });
+    /* NOTE: the #a11y-form submit (+ instant apply via CS.applyA11y) is handled in
+       settings.js — do not bind it here too, or every save fires twice. */
 
     // Gemini connection test (✅ Connected / ❌ Invalid / ⚠ Missing)
     const testBtn = $("#gemini-test-btn");

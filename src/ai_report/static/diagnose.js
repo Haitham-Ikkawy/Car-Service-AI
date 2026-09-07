@@ -9,7 +9,7 @@
 
   /* ---- State ---- */
   const state = {
-    step: "welcome",
+    step: "vehicle",
     sessionId: null,  /* diagnosis session id for persistence */
     vehicle: { brand: "", model: "", engine: "" },
     problem: "",
@@ -34,7 +34,9 @@
   };
 
   /* ---- Browser history tracking for wizard Back/Forward ---- */
-  const WIZARD_STEPS = ["welcome", "vehicle", "describe", "questions", "image", "review", "ready"];
+  /* The wizard now opens straight on "vehicle" — the old "welcome" splash step
+     (with its duplicate "Start Diagnosis" button) was removed. */
+  const WIZARD_STEPS = ["vehicle", "describe", "questions", "image", "review", "ready"];
   let _wizIdx = -1;        /* current position in WIZARD_STEPS; -1 = not in wizard */
   let _navGuard = false;   /* true while we are programmatic pushState/popstate handling */
 
@@ -131,9 +133,10 @@
     /* Vehicle image */
     let vehicleImgHtml = "";
     if (brand && model) {
-      const imgPath = getModelImage(brand, model);
-      if (imgPath) {
-        vehicleImgHtml = `<img src="${esc(imgPath)}" alt="${esc(brand)} ${esc(model)}" class="dz-loading-vehicle-img" onerror="this.style.display='none'">`;
+      const local = getModelImage(brand, model);
+      const primary = getVehicleImageUrl(brand, model, state.vehicle.year) || local;
+      if (primary) {
+        vehicleImgHtml = `<img src="${esc(primary)}" data-local="${esc(local || "")}" alt="${esc(brand)} ${esc(model)}" class="dz-loading-vehicle-img" onerror="dzImgFallback(this)">`;
       }
     }
 
@@ -257,12 +260,20 @@
 
     /* Vehicle image */
     if (imgEl) {
-      const imgPath = getModelImage(brand, model);
-      if (imgPath) {
+      const local = getModelImage(brand, model);
+      const primary = getVehicleImageUrl(brand, model, state.vehicle.year) || local;
+      if (primary) {
         const img = document.createElement("img");
-        img.src = imgPath;
+        img.src = primary;
+        if (local) img.setAttribute("data-local", local);
         img.alt = brand + " " + model;
         img.onerror = function() {
+          const lc = img.getAttribute("data-local");
+          if (lc && img.getAttribute("src") !== lc) {
+            img.removeAttribute("data-local");
+            img.src = lc;
+            return;
+          }
           imgEl.innerHTML = '<i class="bi bi-car-front-fill"></i>';
         };
         imgEl.innerHTML = "";
@@ -451,7 +462,7 @@
       if (WIZARD_STEPS.indexOf(state.step) < 0) {
         state.step = state.problem
           ? "ready"
-          : ((s.vehicle && s.vehicle.brand) ? "describe" : "welcome");
+          : ((s.vehicle && s.vehicle.brand) ? "describe" : "vehicle");
       }
 
       document.title = s.title + " · Car Service AI";
@@ -460,7 +471,17 @@
          to EDIT it, in which case fall through and restore the wizard so they
          can change inputs and re-run the diagnosis (item 10). */
       if (s.status === "completed" && s.diagnosis && !editMode) {
-        showResult(s.diagnosis);
+        /* Land the wizard on a real step FIRST so there is always visible
+           content behind the result (prevents a blank page if the modal fails
+           to open for any reason). */
+        state.step = "ready";
+        try { showReady(); } catch (e) { showStep("vehicle"); }
+        try {
+          showResult(s.diagnosis);
+        } catch (e) {
+          /* Modal failed to render — keep the wizard visible rather than blank. */
+          showStep("ready");
+        }
         return true;
       }
       if (editMode) {
@@ -551,6 +572,9 @@
 
       return true;
     } catch (e) {
+      /* Never leave the user on a blank page — fall back to a safe wizard step. */
+      try { showStep(WIZARD_STEPS.indexOf(state.step) >= 0 ? state.step : "vehicle"); }
+      catch (_) { showStep("vehicle"); }
       return false;
     }
   }
@@ -665,6 +689,40 @@
     return brandImages[model] || null;
   }
 
+  /* Dynamic, per-vehicle image fetched from an external CDN (imagin.studio) so
+     the picture matches the ACTUAL make/model/year instead of a static
+     placeholder. Used as the primary <img> src; on error the UI falls back to a
+     shipped image (getModelImage) and finally an icon — see dzImgFallback(). */
+  function getVehicleImageUrl(brand, model, year) {
+    if (!brand) return "";
+    /* Route through the server proxy so the image-CDN key lives in one place
+       (env IMAGIN_CUSTOMER) and can be swapped for a watermark-free licensed key
+       without touching the client. The server 307-redirects to the CDN. */
+    let u = "/api/vehicles/image?make=" + encodeURIComponent(brand) +
+            "&model=" + encodeURIComponent(model || "");
+    if (year) u += "&year=" + encodeURIComponent(year);
+    return u;
+  }
+
+  /* Progressive image fallback: dynamic CDN image -> shipped local image ->
+     icon. Attached inline via onerror on vehicle <img> tags. */
+  window.dzImgFallback = function (img) {
+    const local = img.getAttribute("data-local");
+    if (local && img.getAttribute("src") !== local) {
+      img.removeAttribute("data-local");
+      img.src = local;
+      return;
+    }
+    img.style.display = "none";
+    const wrap = img.parentElement;
+    if (!wrap) return;
+    wrap.classList.add("dz-selected-img-failed", "dz-model-img-failed");
+    const fb = wrap.querySelector(
+      ".dz-selected-img-fallback, .dz-model-img-fallback, .dz-info-vehicle-fallback"
+    );
+    if (fb) { fb.classList.remove("hidden"); fb.style.display = "flex"; }
+  };
+
   /* ============================================================
      LIVE VEHICLE DATA — cascading brand -> model -> engine
      Backed by /api/vehicles/{makes,models,engines} (NHTSA vPIC +
@@ -688,7 +746,7 @@
         .map(([k, v]) => `${k}=${encodeURIComponent(v)}`)
         .join("&");
     return {
-      makes: (q) => fetchItems(`/api/vehicles/makes?${qp({ q })}`),
+      makes: (q, limit) => fetchItems(`/api/vehicles/makes?${qp({ q, limit })}`),
       models: (make, q) => fetchItems(`/api/vehicles/models?${qp({ make, q })}`),
       engines: (make, model, q) =>
         fetchItems(`/api/vehicles/engines?${qp({ make, model, q })}`),
@@ -1316,7 +1374,7 @@
     if (modelResults.length > 0) {
       html += `<div class="dz-car-section-header">Models</div>`;
       for (const entry of modelResults) {
-        const imgSrc = entry.image;
+        const imgSrc = getVehicleImageUrl(entry.brand, entry.model) || entry.image;
         const vehicleImgHtml = imgSrc
           ? `<img src="${esc(imgSrc)}" alt="${esc(entry.brand)} ${esc(entry.model)}" class="dz-car-item-vehicle-img" loading="lazy" onerror="this.style.display='none'">`
           : "";
@@ -1406,6 +1464,11 @@
     state.vehicle.brand = brandName;
     state.vehicle.model = "";
 
+    /* Create the persistence session on the user's first real action (picking a
+       brand) so visiting /diagnose without doing anything never leaves an empty
+       session behind. */
+    if (!state.sessionId) createSession();
+
     const brand = CAR_BRANDS.find((b) => b.name === brandName);
     const models = brand ? brand.models : [];
     const logo = brand ? brand.logo : null;
@@ -1472,11 +1535,13 @@
     if (!models.length) { if (modelsEl) modelsEl.classList.add("d-none"); return; }
     if (modelsEl) modelsEl.classList.remove("d-none");
     grid.innerHTML = models.map((m) => {
-      /* Prefer the curated image, then the server-resolved live image for this
-         exact model. Never fall back to another model's image — only the icon. */
-      const imgSrc = getModelImage(brandName, m) || (imgMap && imgMap[m]) || null;
-      const modelImageHtml = imgSrc
-        ? `<div class="dz-model-img-wrap"><img src="${esc(imgSrc)}" alt="${esc(brandName)} ${esc(m)}" class="dz-model-img" loading="lazy" onerror="this.parentElement.classList.add('dz-model-img-failed')"><div class="dz-model-img-fallback"><i class="bi bi-car-front-fill"></i></div></div>`
+      /* Fetch each model's image from the vehicle-image API so every card is
+         accurate for THAT model, falling back to the shipped local image and
+         finally an icon (dzImgFallback). Never show another model's image. */
+      const local = getModelImage(brandName, m) || (imgMap && imgMap[m]) || "";
+      const primary = getVehicleImageUrl(brandName, m) || local;
+      const modelImageHtml = primary
+        ? `<div class="dz-model-img-wrap"><img src="${esc(primary)}" data-local="${esc(local)}" alt="${esc(brandName)} ${esc(m)}" class="dz-model-img" loading="lazy" onerror="dzImgFallback(this)"><div class="dz-model-img-fallback"><i class="bi bi-car-front-fill"></i></div></div>`
         : `<div class="dz-model-img-wrap dz-model-img-no"><div class="dz-model-img-fallback dz-model-img-fallback--visible"><i class="bi bi-car-front-fill"></i></div></div>`;
       const logoHtml = logo
         ? `<img src="${logo}" alt="${esc(brandName)}" class="dz-model-logo" onerror="this.style.display='none'">`
@@ -1523,9 +1588,10 @@
   function updateSelectedVehicleImage(brand, model) {
     const imgWrap = $("#dz-selected-image");
     if (!imgWrap) return;
-    const imgSrc = getModelImage(brand, model);
-    if (imgSrc) {
-      imgWrap.innerHTML = `<img src="${esc(imgSrc)}" alt="${esc(brand)} ${esc(model)}" class="dz-selected-vehicle-img" onerror="this.parentElement.classList.add('dz-selected-img-failed')"><div class="dz-selected-img-fallback"><i class="bi bi-car-front-fill"></i></div>`;
+    const local = getModelImage(brand, model);
+    const primary = getVehicleImageUrl(brand, model, state.vehicle.year) || local;
+    if (primary) {
+      imgWrap.innerHTML = `<img src="${esc(primary)}" data-local="${esc(local || "")}" alt="${esc(brand)} ${esc(model)}" class="dz-selected-vehicle-img" onerror="dzImgFallback(this)"><div class="dz-selected-img-fallback"><i class="bi bi-car-front-fill"></i></div>`;
     } else {
       imgWrap.innerHTML = `<div class="dz-selected-img-fallback dz-selected-img-fallback--visible"><i class="bi bi-car-front-fill"></i></div>`;
     }
@@ -1536,15 +1602,24 @@
     const img = $("#dz-info-vehicle-img");
     const fallback = $("#dz-info-vehicle-fallback");
     if (!img || !fallback) return;
-    const imgSrc = getModelImage(brand, model);
+    const local = getModelImage(brand, model);
+    const imgSrc = getVehicleImageUrl(brand, model, state.vehicle.year) || local;
     if (imgSrc) {
+      img.setAttribute("data-local", local || "");
       img.src = imgSrc;
       img.alt = (brand || "vehicle") + " " + (model || "");
       img.onload = function() {
+        img.style.display = "";
         img.classList.add("loaded");
         fallback.classList.add("hidden");
       };
       img.onerror = function() {
+        const lc = img.getAttribute("data-local");
+        if (lc && img.getAttribute("src") !== lc) {
+          img.removeAttribute("data-local");
+          img.src = lc;
+          return;
+        }
         img.style.display = "none";
         img.classList.remove("loaded");
         fallback.classList.remove("hidden");
@@ -1555,6 +1630,110 @@
       img.classList.remove("loaded");
       fallback.classList.remove("hidden");
     }
+  }
+
+  /* ============================================================
+     VIN LOOKUP — decode a 17-char VIN into a vehicle (NHTSA vPIC)
+     ============================================================ */
+  function applyDecodedVehicle(d) {
+    const brand = d.make || "";
+    const model = d.model || "";
+    state.vehicle.brand = brand;
+    state.vehicle.model = model;
+    state.vehicle.engine = d.engine || "";
+    state.vehicle.year = d.year || "";
+    if (!state.sessionId) createSession();
+
+    const known = CAR_BRANDS.find((b) => b.name === brand);
+    if (known) {
+      selectBrand(brand);   /* renders the selected card + logo (also resets model) */
+    } else {
+      /* Unlisted brand — render the selected card manually. */
+      const brandsSection = $("#dz-brands-section");
+      if (brandsSection) brandsSection.style.display = "none";
+      const searchBar = $("#dz-car-search");
+      if (searchBar) searchBar.style.display = "none";
+      const selectedEl = $("#dz-car-selected");
+      if (selectedEl) selectedEl.classList.remove("d-none");
+      const brandEl = $("#dz-car-selected-brand");
+      if (brandEl) brandEl.textContent = brand;
+      const iconEl = $("#dz-car-selected-icon");
+      if (iconEl) {
+        iconEl.innerHTML = d.logo
+          ? `<img src="${esc(d.logo)}" alt="${esc(brand)}" class="dz-car-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="dz-car-icon-fallback" style="display:none"><i class="bi bi-car-front-fill"></i></div>`
+          : `<div class="dz-car-icon-fallback"><i class="bi bi-car-front-fill"></i></div>`;
+      }
+    }
+
+    /* Fill in the exact model + engine from the VIN and hide the model grid. */
+    state.vehicle.model = model;
+    const modelEl = $("#dz-car-selected-model");
+    if (modelEl) modelEl.textContent = model;
+    const engEl = $("#dz-car-selected-engine");
+    if (engEl && state.vehicle.engine) {
+      engEl.textContent = state.vehicle.engine;
+      engEl.classList.remove("d-none");
+    }
+    const modelsEl = $("#dz-car-models");
+    if (modelsEl) modelsEl.classList.add("d-none");
+
+    updateSelectedVehicleImage(brand, model);
+    updateInfoPanelVehicleImage(brand, model);
+    const cont = $("#dz-continue-vehicle");
+    if (cont) cont.classList.remove("dz-btn-locked");
+    updateVehicleBadge();
+    scheduleSave();
+  }
+
+  function initVinLookup() {
+    const input = $("#dz-vin-input");
+    const btn = $("#dz-vin-btn");
+    const msg = $("#dz-vin-msg");
+    if (!input || !btn) return;
+
+    function showMsg(text, kind) {
+      if (!msg) return;
+      msg.textContent = text;
+      msg.className = "dz-vin-msg " + kind;
+    }
+
+    async function lookup() {
+      const vin = (input.value || "").trim().toUpperCase();
+      if (vin.length !== 17) {
+        showMsg("A VIN is exactly 17 characters (letters and numbers). Please check and try again.", "error");
+        return;
+      }
+      btn.disabled = true;
+      const orig = btn.innerHTML;
+      btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Looking up…';
+      showMsg("Looking up your vehicle…", "success");
+      try {
+        const res = await fetch("/api/vehicles/vin?vin=" + encodeURIComponent(vin));
+        const data = await res.json();
+        if (data && data.ok) {
+          applyDecodedVehicle(data);
+          const label = [data.year, data.make, data.model].filter(Boolean).join(" ");
+          showMsg("Found your car: " + label + ". You can fine-tune the details below if needed.", "success");
+        } else {
+          showMsg((data && data.message) || "We couldn't find that VIN. Please pick your car manually.", "error");
+        }
+      } catch (e) {
+        showMsg("Something went wrong looking up your VIN. Please try again, or pick your car manually.", "error");
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = orig;
+      }
+    }
+
+    btn.addEventListener("click", lookup);
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") { e.preventDefault(); lookup(); }
+    });
+    /* Keep only valid VIN characters, uppercased, as the user types. */
+    input.addEventListener("input", () => {
+      const clean = input.value.toUpperCase().replace(/[^A-HJ-NPR-Z0-9]/g, "");
+      if (clean !== input.value) input.value = clean;
+    });
   }
 
   /* ============================================================
@@ -1688,6 +1867,47 @@
     updateInfoPanelVehicleImage("", "");
   }
 
+  /* Append live vPIC makes (beyond the curated list) to the search dropdown so
+     every car make is findable by typing, not just via "View all brands". */
+  const augmentWithLiveMakes = debounce(async (query) => {
+    const q = (query || "").trim();
+    if (q.length < 2) return;
+    let makes = [];
+    try { makes = await VehicleAPI.makes(q, 8); } catch (_) { return; }
+    const input = $("#dz-car-input");
+    if (!input || input.value.trim() !== q) return;   /* stale query */
+    const container = $("#dz-car-suggestions");
+    if (!container) return;
+    const shown = new Set(
+      Array.from(container.querySelectorAll(".dz-car-item"))
+        .map((el) => (el.dataset.brand || "").toLowerCase())
+    );
+    const extra = makes.filter((m) => {
+      const n = (m.value || m.label || "").toLowerCase();
+      return n && !shown.has(n);
+    });
+    if (!extra.length) return;
+    let html = `<div class="dz-car-section-header">More brands</div>`;
+    for (const m of extra) {
+      const name = m.value || m.label;
+      const logoHtml = m.logo
+        ? `<img src="${m.logo}" alt="${esc(name)}" class="dz-car-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="dz-car-item-icon" style="display:none"><i class="bi bi-car-front-fill"></i></div>`
+        : `<div class="dz-car-item-icon"><i class="bi bi-car-front-fill"></i></div>`;
+      html += `
+      <div class="dz-car-item dz-car-item--live" data-brand="${esc(name)}">
+        ${logoHtml}
+        <div class="dz-car-item-name">${esc(name)}</div>
+      </div>`;
+    }
+    container.insertAdjacentHTML("beforeend", html);
+    container.classList.remove("d-none");
+    container.querySelectorAll(".dz-car-item--live").forEach((item) => {
+      if (item.dataset.wired) return;
+      item.dataset.wired = "1";
+      item.addEventListener("click", () => selectBrand(item.dataset.brand));
+    });
+  }, 300);
+
   function initVehicleSearch() {
     const input = $("#dz-car-input");
     const dropdown = $("#dz-car-dropdown");
@@ -1701,6 +1921,7 @@
       if (clearBtn) clearBtn.classList.toggle("d-none", !val);
       if (val.length >= 1) {
         renderSuggestions(val);
+        augmentWithLiveMakes(val);   /* find makes beyond the curated list */
       } else {
         /* Empty: show all brands grouped by letter */
         renderSuggestions("");
@@ -1785,33 +2006,84 @@
     }
   }
 
-  /* ---- Render popular brands grid ---- */
-  function renderBrandGrid() {
-    const grid = $("#dz-brands-grid");
-    if (!grid) return;
-    /* Show first 12 brands as popular */
-    const popular = CAR_BRANDS.slice(0, 12);
-    grid.innerHTML = popular.map((brand) => {
-      const logoHtml = brand.logo
-        ? `<img src="${brand.logo}" alt="${esc(brand.name)}" class="dz-car-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="dz-brand-card-fallback" style="display:none"><i class="bi bi-car-front-fill"></i></div>`
-        : `<div class="dz-brand-card-fallback"><i class="bi bi-car-front-fill"></i></div>`;
-      return `
+  /* ---- Render brands grid (popular by default; ALL makes on demand) ---- */
+  let _showAllBrands = false;
+  let _allBrandsList = null;   /* curated ∪ live vPIC makes, cached */
+
+  function brandCardHtml(brand) {
+    const logoHtml = brand.logo
+      ? `<img src="${brand.logo}" alt="${esc(brand.name)}" class="dz-car-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="dz-brand-card-fallback" style="display:none"><i class="bi bi-car-front-fill"></i></div>`
+      : `<div class="dz-brand-card-fallback"><i class="bi bi-car-front-fill"></i></div>`;
+    return `
       <div class="dz-brand-card" data-brand="${esc(brand.name)}">
         <div class="dz-brand-card-icon">${logoHtml}</div>
         <div class="dz-brand-card-name">${esc(brand.name)}</div>
       </div>`;
-    }).join("");
+  }
+
+  function renderBrandList(list) {
+    const grid = $("#dz-brands-grid");
+    if (!grid) return;
+    grid.innerHTML = list.map(brandCardHtml).join("");
     grid.querySelectorAll(".dz-brand-card").forEach((card) => {
-      card.addEventListener("click", () => {
-        selectBrand(card.dataset.brand);
-      });
+      card.addEventListener("click", () => selectBrand(card.dataset.brand));
+    });
+  }
+
+  function renderBrandGrid() {
+    _showAllBrands = false;
+    renderBrandList(CAR_BRANDS.slice(0, 12));
+  }
+
+  /* Merge the curated brands (with logos + model lists) with the FULL live vPIC
+     make catalogue so every car make is selectable. Cached after first load. */
+  async function ensureAllBrands() {
+    if (_allBrandsList) return _allBrandsList;
+    let live = [];
+    try { live = await VehicleAPI.makes("", 600); } catch (_) { live = []; }
+    const seen = new Set(CAR_BRANDS.map((b) => b.name.toLowerCase()));
+    const merged = CAR_BRANDS.slice();
+    for (const it of live) {
+      const name = (it.value || it.label || "").trim();
+      if (name && !seen.has(name.toLowerCase())) {
+        seen.add(name.toLowerCase());
+        merged.push({ name: name, logo: it.logo || null, models: [] });
+      }
+    }
+    merged.sort((a, b) => a.name.localeCompare(b.name));
+    _allBrandsList = merged;
+    return merged;
+  }
+
+  /* Wire the "View all brands" toggle — now loads EVERY make from the live API. */
+  function initViewAllBrands() {
+    const btn = $("#dz-brands-view-all");
+    const title = document.querySelector(".dz-brands-title");
+    if (!btn) return;
+    btn.addEventListener("click", async () => {
+      _showAllBrands = !_showAllBrands;
+      if (_showAllBrands) {
+        btn.disabled = true;
+        btn.innerHTML = 'Loading… <i class="bi bi-hourglass-split"></i>';
+        const all = await ensureAllBrands();
+        renderBrandList(all);
+        btn.disabled = false;
+        btn.innerHTML = 'Show popular only <i class="bi bi-arrow-up"></i>';
+        if (title) title.textContent = 'All Brands (' + all.length + ')';
+      } else {
+        renderBrandGrid();
+        btn.innerHTML = 'View all brands <i class="bi bi-arrow-right"></i>';
+        if (title) title.textContent = 'Popular Brands';
+      }
     });
   }
 
   /* ---- Init ---- */
   function init() {
     renderBrandGrid();
+    initViewAllBrands();
     initVehicleSearch();
+    initVinLookup();
     initEngineInput();
     initVoiceInput();
     initProblemStep();
@@ -1820,16 +2092,9 @@
 
     /* ---- Bind ALL wizard navigation (always, regardless of session restore) ---- */
 
-    const startBtn = $("#dz-start");
-    if (startBtn) {
-      startBtn.addEventListener("click", () => {
-        showStep("vehicle");
-        createSession();
-      });
-    }
-
-    /* Vehicle */
-    $("#dz-back-vehicle").addEventListener("click", () => showStep("welcome"));
+    /* Vehicle — first step. "Back" leaves the wizard for the diagnoses list
+       (there is no longer a welcome splash to return to). */
+    $("#dz-back-vehicle").addEventListener("click", () => { window.location.href = "/my-diagnoses"; });
     $("#dz-continue-vehicle").addEventListener("click", () => {
       if (state.vehicle.brand) {
         $("#dz-vehicle-validation").classList.add("d-none");
@@ -1910,7 +2175,7 @@
 
     /* Drag & drop */
     const zone = $("#dz-upload-zone");
-    zone.addEventListener("dragover", (e) => { e.preventDefault(); zone.style.borderColor = "rgba(255, 122, 26,0.4)"; });
+    zone.addEventListener("dragover", (e) => { e.preventDefault(); zone.style.borderColor = "rgba(var(--accent-rgb), 0.4)"; });
     zone.addEventListener("dragleave", () => { zone.style.borderColor = ""; });
     zone.addEventListener("drop", (e) => {
       e.preventDefault();
@@ -1967,20 +2232,24 @@
       _navGuard = true;
       window.history.replaceState({}, "", "/diagnose");
       _navGuard = false;
-      showStep("welcome");
+      showStep("vehicle");
     });
 
     /* ---- Check for session_id in URL — restore existing session ---- */
     const params = new URLSearchParams(window.location.search);
     const restoreId = params.get("session_id");
+    const hashMatch = window.location.hash.match(/^#step-(\w+)$/);
     if (restoreId) {
       loadSession(restoreId, params.get("edit") === "1");
+    } else if (!hashMatch) {
+      /* Fresh visit with no session and no step hash — open directly on the
+         vehicle step (the welcome splash + its duplicate Start button are gone). */
+      showStep("vehicle");
     }
 
     /* ---- Browser Back/Forward handling ---- */
     /* If URL already has a wizard hash on load (e.g. refresh or direct link),
        restore that step immediately. */
-    const hashMatch = window.location.hash.match(/^#step-(\w+)$/);
     if (hashMatch) {
       const hashStep = hashMatch[1];
       if (WIZARD_STEPS.indexOf(hashStep) >= 0) {
@@ -2584,9 +2853,6 @@
     const diagBtn = $("#dz-diagnose");
     if (diagBtn) { diagBtn.disabled = true; diagBtn.style.opacity = "0.5"; }
 
-    const _t1 = performance.now();
-    console.log("[PERF] T1: User clicked Diagnose");
-
     modalLoading();
     /* Mark session as diagnosing */
     if (state.sessionId) {
@@ -2606,10 +2872,6 @@
       };
       if (state.sessionId) payload.session_id = state.sessionId;
 
-      const _t2 = performance.now();
-      console.log("[PERF] T2: Request sent from frontend (%d ms after click)", Math.round(_t2 - _t1));
-      console.log("[PERF]    Payload size: ~%d KB (image: %s)", Math.round(JSON.stringify(payload).length / 1024), state.image ? "yes" : "no");
-
       const res = await fetch("/api/diagnose/complete", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -2617,24 +2879,12 @@
       });
       const data = await res.json();
 
-      const _t7 = performance.now();
-      console.log("[PERF] T7: Response received (%d ms after click, %d ms network)", Math.round(_t7 - _t1), Math.round(_t7 - _t2));
-
       if (!res.ok) {
         showError(data.error || "Diagnosis failed. Please try again.");
         return;
       }
 
       showWorkspace(data.result);
-
-      const _t8 = performance.now();
-      console.log("[PERF] T8: Result visible (%d ms after click)", Math.round(_t8 - _t1));
-      console.log("[PERF] ────────────────────────────────────");
-      console.log("[PERF] Frontend start → Request sent:  %d ms", Math.round(_t2 - _t1));
-      console.log("[PERF] Network round-trip:             %d ms", Math.round(_t7 - _t2));
-      console.log("[PERF] Result rendering:               %d ms", Math.round(_t8 - _t7));
-      console.log("[PERF] TOTAL:                          %d ms", Math.round(_t8 - _t1));
-      console.log("[PERF] ────────────────────────────────────");
     } catch (err) {
       showError("We couldn't complete the diagnosis right now. Please try again.");
     } finally {
@@ -2722,7 +2972,7 @@
     /* ---- Vehicle visual ---- */
     html += `<div class="dz-modal-vehicle">
       <div class="dz-modal-vehicle-logo">
-        <img src="/image/car_logos/${esc(brandSlug)}.svg" alt="${esc(state.vehicle.brand)}" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\\'bi bi-car-front-fill\\' style=\\'font-size:1.5rem;color:rgba(255, 122, 26,0.3)\\'></i>'">
+        <img src="/image/car_logos/${esc(brandSlug)}.svg" alt="${esc(state.vehicle.brand)}" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\\'bi bi-car-front-fill\\' style=\\'font-size:1.5rem;color:rgba(var(--accent-rgb),0.3)\\'></i>'">
       </div>
       <div class="dz-modal-vehicle-info">
         <div class="dz-modal-vehicle-name">${esc(vehicleLabel)}</div>
@@ -2922,7 +3172,7 @@
     /* Vehicle card */
     rhtml += `<div class="dz-ws-result-vehicle">
       <div class="dz-ws-result-vehicle-logo">
-        <img src="/image/car_logos/${esc(brandSlug)}.svg" alt="${esc(state.vehicle.brand)}" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\\'bi bi-car-front-fill\\' style=\\'font-size:1.2rem;color:rgba(255, 122, 26,0.3)\\'></i>'">
+        <img src="/image/car_logos/${esc(brandSlug)}.svg" alt="${esc(state.vehicle.brand)}" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\\'bi bi-car-front-fill\\' style=\\'font-size:1.2rem;color:rgba(var(--accent-rgb),0.3)\\'></i>'">
       </div>
       <div>
         <div class="dz-ws-result-vehicle-name">${esc(vehicleLabel)}</div>

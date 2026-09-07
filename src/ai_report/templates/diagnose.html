@@ -67,33 +67,8 @@
     <!-- ====== LEFT COLUMN: Wizard Steps ====== -->
     <div class="dz-grid-left">
 
-      <!-- Step 1: Welcome -->
-      <div class="dz-step active" data-step="welcome">
-        <div class="dz-center">
-          <div class="dz-welcome-hero">
-            <div class="dz-logo">
-              <img src="/static/images/logo-icon.svg" alt="CSAI" width="56" height="56">
-            </div>
-            <h1 class="dz-hero-title">Car Service AI</h1>
-            <p class="dz-hero-sub">AI MECHANIC</p>
-          </div>
-          <div class="dz-welcome-card">
-            <div class="dz-welcome-card-header">
-              <div class="dz-welcome-card-icon"><i class="bi bi-car-front-fill"></i></div>
-              <div>
-                <h2>What's wrong with your car?</h2>
-                <p>Tell us what happened and we'll guide you through the diagnosis.</p>
-              </div>
-            </div>
-            <button class="dz-btn dz-btn-primary dz-btn-lg" id="dz-start">
-              Start Diagnosis <i class="bi bi-arrow-right"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Step 2: Select Vehicle -->
-      <div class="dz-step" data-step="vehicle">
+      <!-- Step 1: Select Vehicle (wizard opens here directly) -->
+      <div class="dz-step active" data-step="vehicle">
         <div class="dz-card">
           <div class="dz-card-header">
             <div class="dz-card-header-icon"><i class="bi bi-car-front-fill"></i></div>
@@ -131,6 +106,27 @@
                 <i class="bi bi-stop-fill"></i>
               </button>
             </div>
+          </div>
+
+          <!-- VIN lookup — alternative to searching / voice -->
+          <div class="dz-vin-section" id="dz-vin-section">
+            <div class="dz-vin-divider"><span>or find your car by VIN</span></div>
+            <div class="dz-vin-row">
+              <div class="dz-vin-input-wrap">
+                <i class="bi bi-upc-scan dz-vin-icon"></i>
+                <input type="text" class="dz-vin-input" id="dz-vin-input" maxlength="17"
+                       placeholder="Enter 17-character VIN (chassis number)"
+                       autocomplete="off" autocapitalize="characters" spellcheck="false">
+              </div>
+              <button class="dz-vin-btn" id="dz-vin-btn" type="button">
+                <i class="bi bi-search"></i> Look up
+              </button>
+            </div>
+            <div class="dz-vin-hint">
+              Your VIN is a 17-character code — a plain-language name for your car's unique "chassis number".
+              It's on the driver's door frame, your registration, or insurance card.
+            </div>
+            <div class="dz-vin-msg d-none" id="dz-vin-msg"></div>
           </div>
 
           <!-- Popular Brands -->

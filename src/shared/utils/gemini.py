@@ -42,16 +42,30 @@ NO_KEY_MESSAGE = (
 )
 
 
+def _clean_key(raw: Any) -> str:
+    """Normalise an API key: strip whitespace and any surrounding quotes.
+
+    A key pasted with quotes (``"AIza..."``) or a stray BOM/newline is a common
+    cause of "invalid authentication credentials" — clean it before use.
+    """
+    key = (raw or "").strip().lstrip("﻿").strip()
+    if len(key) >= 2 and key[0] == key[-1] and key[0] in ("'", '"'):
+        key = key[1:-1].strip()
+    return key
+
+
 def _api_key(user: str | None) -> str:
-    """Effective API key: project ``.env`` first, then a per-user Settings key."""
-    env_key = os.getenv("GEMINI_API_KEY", "").strip()
-    if env_key:
-        return env_key
+    """Effective API key.
+
+    A per-user key entered in **Settings takes priority** so a user can always
+    override a missing or invalid project ``.env`` key at runtime; the ``.env``
+    value is the fallback.
+    """
     if user:
-        key = (store.settings(user).get("gemini_key") or "").strip()
+        key = _clean_key(store.settings(user).get("gemini_key"))
         if key:
             return key
-    return ""
+    return _clean_key(os.getenv("GEMINI_API_KEY", ""))
 
 
 def load_api_key(user: str | None = None) -> str:
@@ -88,7 +102,11 @@ def _client_for(user: str | None, model: str | None = None) -> tuple[Any, str] |
     try:
         from google import genai
 
-        client = genai.Client(api_key=key)
+        # Force the Gemini **Developer API** (vertexai=False) so the key is always
+        # sent as an API key (x-goog-api-key), never treated as an OAuth2 access
+        # token. This avoids the 401 UNAUTHENTICATED / ACCESS_TOKEN_TYPE_UNSUPPORTED
+        # error that occurs when the client falls back to OAuth/ADC credentials.
+        client = genai.Client(api_key=key, vertexai=False)
         entry = (client, model)
         _MODEL_CACHE[cache_key] = entry
         return entry
@@ -129,7 +147,7 @@ def test_gemini_connection(user: str | None = None, key: str | None = None,
     def _probe() -> str:
         from google import genai
 
-        client = genai.Client(api_key=key)
+        client = genai.Client(api_key=key, vertexai=False)
         resp = client.models.generate_content(
             model=model, contents="Reply with exactly: OK")
         return (getattr(resp, "text", None) or "").strip()
@@ -333,6 +351,30 @@ def _error_message(exc: BaseException) -> str:
     return str(exc)
 
 
+def _friendly_error(exc: BaseException) -> str:
+    """Turn a raw provider error into clear, non-technical guidance for the user.
+
+    Keeps the raw message for anything we don't specifically recognise (it is
+    still logged verbatim elsewhere).
+    """
+    raw = _error_message(exc)
+    low = raw.lower()
+    if any(s in low for s in (
+        "authentication credential", "api key not valid", "api_key_invalid",
+        "unauthenticated", "permission denied", "invalid authentication",
+        "expected oauth", "api key expired", "access_token_type_unsupported",
+        "access token", "401",
+    )):
+        return ("We couldn't reach the AI service because the API key is missing or invalid. "
+                "Please add a valid Gemini API key in Settings and try again.")
+    if any(s in low for s in ("quota", "rate limit", "resource_exhausted", "too many requests")):
+        return ("The AI service is busy right now (usage limit reached). "
+                "Please wait a moment and try again.")
+    if any(s in low for s in ("timed out", "timeout", "deadline")):
+        return "The AI service took too long to respond. Please try again."
+    return raw
+
+
 # ---------------------------------------------------------------------------
 # Chat (streaming)
 # ---------------------------------------------------------------------------
@@ -534,7 +576,7 @@ def diagnose(
     except Exception as exc:  # noqa: BLE001
         logger.error("Gemini diagnosis failed (user=%r, mode=%s): %s: %s",
                      user, mode, type(exc).__name__, exc, exc_info=True)
-        raise UnavailableError(_error_message(exc)) from None
+        raise UnavailableError(_friendly_error(exc)) from None
 
     if data is None:
         logger.warning("Gemini diagnosis returned empty/invalid data (user=%r, mode=%s).", user, mode)

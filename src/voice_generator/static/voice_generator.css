@@ -10,8 +10,8 @@
 
 :root {
   --vg-bg: #101317;
-  --vg-accent: #ff7a1a;
-  --vg-accent-2: #ff7a1a;
+  --vg-accent: var(--accent);
+  --vg-accent-2: var(--accent);
   --vg-text: #f0f4f8;
   --vg-text-soft: #8899aa;
   --vg-glass-bg: rgba(255, 255, 255, 0.06);
@@ -165,7 +165,7 @@ html, body {
 }
 
 .vg-nav-cta:hover {
-  background: #ff7a1a;
+  background: var(--accent);
   transform: scale(1.02);
 }
 
@@ -229,7 +229,7 @@ html, body {
 }
 
 .vg-mobile-cta:hover {
-  background: #ff7a1a;
+  background: var(--accent);
 }
 
 /* --- Breadcrumb --- */

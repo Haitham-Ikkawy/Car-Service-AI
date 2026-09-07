@@ -114,12 +114,23 @@
 
   var a11yForm = document.getElementById('a11y-form');
   if (a11yForm) {
-    a11yForm.addEventListener('submit', function (e) {
-      e.preventDefault();
+    function collectA11y() {
       var data = {};
-      this.querySelectorAll('[name]').forEach(function (el) {
+      a11yForm.querySelectorAll('[name]').forEach(function (el) {
         data[el.name] = el.type === 'checkbox' ? el.checked : el.value;
       });
+      return data;
+    }
+    /* Apply instantly as the user toggles/selects — no save needed to see it. */
+    a11yForm.querySelectorAll('[name]').forEach(function (el) {
+      el.addEventListener('change', function () {
+        if (window.CS && CS.applyA11y) CS.applyA11y(collectA11y());
+      });
+    });
+    a11yForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var data = collectA11y();
+      if (window.CS && CS.applyA11y) CS.applyA11y(data);
       fetch('/api/settings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

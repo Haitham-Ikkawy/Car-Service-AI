@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="{{ lang }}" dir="{{ dir }}"
       data-server-theme="{{ settings.theme if settings else 'dark' }}"
+      data-font-size="{{ settings.a11y.font_size if settings and settings.a11y and settings.a11y.font_size else 'normal' }}"
+      class="{% if settings and settings.a11y %}{{ 'a11y-reduce-motion ' if settings.a11y.reduce_motion }}{{ 'a11y-high-contrast ' if settings.a11y.high_contrast }}{% endif %}"
       data-authed="1"{% if chat %} data-chat-id="{{ chat.id }}"{% endif %}>
 <head>
   <meta charset="UTF-8">
@@ -23,9 +25,10 @@
       var a = localStorage.getItem('cs-accent') || '{{ settings.accent if settings else "" }}';
       if (a) {
         var h = a.replace('#', ''); if (h.length === 3) h = h.replace(/(.)/g, '$1$1');
-        var n = parseInt(h, 16), rgb = ((n >> 16) & 255) + ', ' + ((n >> 8) & 255) + ', ' + (n & 255);
+        var n = parseInt(h, 16), rr = (n >> 16) & 255, gg = (n >> 8) & 255, bb = n & 255;
+        var rgb = rr + ', ' + gg + ', ' + bb;
         var st = document.documentElement.style;
-        st.setProperty('--accent', a); st.setProperty('--brand', a);
+        st.setProperty('--accent', a); st.setProperty('--accent-rgb', rgb); st.setProperty('--brand', a);
         st.setProperty('--accent-soft', 'rgba(' + rgb + ', 0.12)');
         st.setProperty('--brand-soft', 'rgba(' + rgb + ', 0.18)');
         st.setProperty('--glass-border', 'rgba(' + rgb + ', 0.10)');

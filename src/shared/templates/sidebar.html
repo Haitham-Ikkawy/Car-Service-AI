@@ -13,20 +13,20 @@
       <div class="nav-group-label">{{ t('Main') }}</div>
       <a class="sidebar-link {{ 'active' if active == 'diagnose' }}" href="/diagnose" data-label="{{ t('AI Diagnosis') }}"{% if active == 'diagnose' %} aria-current="page"{% endif %}><i class="bi bi-heart-pulse"></i><span class="s-label">{{ t('AI Diagnosis') }}</span></a>
       <a class="sidebar-link {{ 'active' if active == 'my_diagnoses' }}" href="/my-diagnoses" data-label="{{ t('My Diagnoses') }}"{% if active == 'my_diagnoses' %} aria-current="page"{% endif %}><i class="bi bi-clipboard2-pulse"></i><span class="s-label">{{ t('My Diagnoses') }}</span></a>
-      <a class="sidebar-link {{ 'active' if active == 'sound' }}" href="/diagnose/audio" data-label="{{ t('Sound Diagnosis') }}"{% if active == 'sound' %} aria-current="page"{% endif %}><i class="bi bi-mic"></i><span class="s-label">{{ t('Sound Diagnosis') }}</span></a>
+{#      <a class="sidebar-link {{ 'active' if active == 'sound' }}" href="/diagnose/audio" data-label="{{ t('Sound Diagnosis') }}"{% if active == 'sound' %} aria-current="page"{% endif %}><i class="bi bi-mic"></i><span class="s-label">{{ t('Sound Diagnosis') }}</span></a>#}
     </div>
     <div class="nav-group">
       <div class="nav-group-label">{{ t('System') }}</div>
       <a class="sidebar-link {{ 'active' if active == 'settings' }}" href="/settings" data-label="{{ t('Settings') }}"{% if active == 'settings' %} aria-current="page"{% endif %}><i class="bi bi-gear"></i><span class="s-label">{{ t('Settings') }}</span></a>
       <a class="sidebar-link {{ 'active' if active == 'about' }}" href="/about" data-label="{{ t('About') }}"{% if active == 'about' %} aria-current="page"{% endif %}><i class="bi bi-info-circle"></i><span class="s-label">{{ t('About') }}</span></a>
-      <a class="sidebar-link {{ 'active' if active == 'contact' }}" href="/contact" data-label="{{ t('Contact') }}"{% if active == 'contact' %} aria-current="page"{% endif %}><i class="bi bi-envelope"></i><span class="s-label">{{ t('Contact') }}</span></a>
+{#      <a class="sidebar-link {{ 'active' if active == 'contact' }}" href="/contact" data-label="{{ t('Contact') }}"{% if active == 'contact' %} aria-current="page"{% endif %}><i class="bi bi-envelope"></i><span class="s-label">{{ t('Contact') }}</span></a>#}
     </div>
   </nav>
 
   <div class="sidebar-status">
     <span class="status-dot {{ 'offline' if is_demo }}"></span>
     {% if is_demo %}
-      <span class="stext">{{ t('Demo mode') }} · <a href="/settings">{{ t('add API key') }}</a></span>
+      <span class="stext">{{ t('AI offline') }} · <a href="/settings">{{ t('add your AI key') }}</a></span>
     {% else %}
       <span class="stext">{{ t('Gemini online') }}</span>
     {% endif %}

@@ -17,7 +17,193 @@ Business-logic section for the domain workflows.
 > in [CHANGES.md](CHANGES.md). Highlights so far: a live cascading
 > brand→model→engine vehicle autocomplete, rich typed problem suggestions,
 > same-context continue-chat, edit/delete-with-safeguards for past diagnoses, and
-> a cross-device responsiveness pass.
+> a cross-device responsiveness pass. The **2026-09-07 fix pass** below is the
+> latest batch.
+
+---
+
+## 0. Fix & improvement pass — 2026-09-07
+
+This batch addressed a list of theming, diagnosis-flow, input and content issues.
+Each item notes **what** changed and **where**, so this section is the quick map
+to the code.
+
+### Theming & styling
+1. **Accent colour now applies on every page (incl. diagnosis pages).** The
+   diagnosis CSS (`ai_report/static/diagnose.css`) and the shared stylesheets
+   hard-coded the orange literal `#ff7a1a` / `rgba(255,122,26,…)` ~800 times, so
+   the runtime accent override never reached them. Introduced an **`--accent-rgb`
+   channel** token (`app.css :root`) and converted **all** accent literals across
+   `diagnose.css`, `app.css`, `app-chat.css`, `voice_generator.css` and
+   `my_diagnoses.html` to `var(--accent)` / `rgba(var(--accent-rgb), a)`. The JS
+   `applyAccent()` (`app.js`) and the pre-paint head scripts (`base.html`,
+   `base_auth.html`) now also set `--accent-rgb`, so a chosen accent recolours
+   the whole app — diagnosis pages included.
+2. **Default theme is now Blue.** `:root --accent` is `#3b82f6` (was safety
+   orange), `--accent-rgb: 59,130,246`, `--brand`/`--accent-2`/`--brand-hover`
+   updated to the blue family; `ACCENT_DEFAULT` in `app.js` and the Settings
+   accent swatches/`accent-custom` default reordered to Blue-first.
+3. **Light/Dark toggle works.** Mechanism (`data-bs-theme` + `applyTheme`) was
+   fine, but hard-coded dark page backgrounds (`#101317`, `#0a0b0e`) kept the
+   diagnosis/chat surfaces dark under the light theme — converted to
+   `var(--page-bg)`. The sidebar theme toggle (`[data-theme-toggle]`) now also
+   **persists to the server** (`POST /api/settings`), not just `localStorage`.
+4. **Mobile menu fixed (was shaded / unclickable).** In the mobile breakpoint the
+   `.sidebar-backdrop` had `z-index:1059` while `.sidebar` inherited only `1040`,
+   so the backdrop rendered **over** the drawer (darkening it and eating clicks).
+   The mobile `.sidebar` now sets `z-index:1060`.
+5. **Margins / scrolling / responsiveness (targeted pass).** Added a global safety
+   block (`html { overflow-x:hidden }`, `img { max-width:100% }`, consistent phone
+   `.page` padding) to kill horizontal scroll and tighten mobile margins;
+   normalised the diagnosis wrapper background to the theme token.
+6. **AI Diagnosis ↔ My Diagnoses design unified.** `my_diagnoses.html` now uses a
+   header that mirrors the AI-Diagnosis wizard header (icon badge + title +
+   subtitle + "AI System Online" status pill) and shares the token-based card
+   styling.
+
+### Diagnosis flow
+7. **Blank screen when opening a diagnosis — hardened.** `loadSession()`
+   (`diagnose.js`) now always lands on a visible step: the completed-result path
+   renders the wizard behind the modal first and is wrapped in try/catch, and the
+   outer catch falls back to a safe wizard step, so a restore error can never
+   leave a blank page.
+8. **Removed the redundant "Start Diagnosis" button / duplicate step.** The
+   welcome splash step (and its `#dz-start` button) was removed; the wizard opens
+   directly on **Vehicle** selection. The session is created lazily on the first
+   real action (picking a brand / VIN lookup) so empty visits don't create junk
+   sessions. The final **Ready → Start Diagnosis** button (which actually runs the
+   AI) is retained.
+9. **Distinct, descriptive diagnosis names.** New `Store._unique_title()` appends
+   ` (2)`, ` (3)`… to avoid duplicates, and `Store.set_session_title_from_diagnosis()`
+   renames a completed session to the **AI-detected fault** (e.g. *"Audi A4 — Worn
+   brake pads"*), called from `POST /api/diagnose/complete`. User renames are
+   respected via a `title_custom` flag.
+10. **Progress is persisted per user.** The in-memory `Store` now snapshots all
+    per-user collections (users, vehicles, chats, diagnoses, maintenance, settings,
+    **diagnosis sessions**) to `data/store.json` after each mutation and reloads on
+    startup (`Store._save()` / `Store._load()`). "Continue diagnosis" now survives a
+    restart. `data/` is gitignored.
+11. **Dynamic, per-vehicle images (incl. the model grid).** Static `.webp`
+    placeholders (which were generic — every model showed the same car) are
+    replaced by images fetched from an external CDN (imagin.studio) keyed on
+    make/model/year. **Every** vehicle image now uses the API: the model-selection
+    cards, the selected-vehicle card, the info panel, the loading screen and the
+    continue-to-chat card — each requests its **own** `modelFamily` so the picture
+    matches that exact model. Client `getVehicleImageUrl()` points at the server
+    proxy `GET /api/vehicles/image` (→ `vehicle_api.image_url()`), which builds the
+    CDN URL from the **env-configurable** `IMAGIN_CUSTOMER` key and 307-redirects.
+    A progressive `onerror` fallback (`dzImgFallback`) degrades → shipped local
+    image → icon. **⚠ Superseded by item 21:** the primary image source is now real
+    Wikipedia photos, not the imagin CGI CDN (which produced schematic-looking
+    watermarked renders); imagin is now off by default.
+12. **"Unable to Complete Diagnosis" / `401 UNAUTHENTICATED
+    ACCESS_TOKEN_TYPE_UNSUPPORTED` fixed.** Root cause: the Gemini client was
+    letting the credential be treated as an OAuth access token. Fixes in
+    `gemini.py`: (a) `genai.Client(api_key=…, vertexai=False)` forces the Gemini
+    **Developer API** so the key is sent as an API key, never a bearer token;
+    (b) a per-user **Settings key now takes priority** over the `.env` key (matching
+    the documented intent) so a bad `.env` key can be overridden at runtime;
+    (c) keys are sanitised (`_clean_key` strips whitespace/quotes/BOM);
+    (d) auth/quota/timeout errors are surfaced as plain-language guidance
+    (`_friendly_error`). **Note:** the committed `.env` key (`AQ.Ab8RN6…`) is **not**
+    a valid Gemini API key (those start with `AIza…`) — replace it in `.env` or via
+    **Settings → AI & Models**.
+
+### Search & input
+13. **VIN search added.** `vehicle_api.decode_vin()` (NHTSA vPIC `DecodeVinValues`)
+    + `GET /api/vehicles/vin`, with a VIN input in the wizard's Vehicle step and
+    `initVinLookup()`/`applyDecodedVehicle()` in `diagnose.js`. A valid 17-char VIN
+    auto-fills make/model/year/engine (tested end-to-end: `1HGCM82633A004352` →
+    *2003 Honda Accord, 3.0L 6-cyl*). Invalid/unknown VINs show a friendly message
+    and let the user pick manually. Voice search is unchanged and still available.
+
+### Content
+14. **Less jargon / plain-language explanations.** VIN input explains it is the
+    car's 17-character "chassis number" and where to find it; the sidebar AI-status
+    reads *"AI offline · add your AI key"* instead of "Demo mode"; AI auth/errors
+    now speak plainly (see item 12).
+
+### Follow-up pass — UI consistency, accessibility, logo, brands
+15. **Consistent card layout across pages.** `.dz-card` still hard-coded a navy
+    background + **cyan** border (`rgba(8,22,38)`, `rgba(0,200,255)`) — converted to
+    theme tokens (`rgba(var(--c-deep),…)`, `rgba(var(--accent-rgb),…)`) so it flips
+    with theme and uses the accent. Added a shared **`.app-card`** + `.app-page-header`
+    component in `app.css`, and **My Diagnoses** now wraps its content in an
+    `.app-card` with the same header treatment as **AI Diagnosis** — the two pages
+    now read as one app. (Other pages — Settings, Maintenance, Repair Guide — already
+    use token-based cards; `.app-card` is the target to migrate them to next.)
+16. **Accessibility settings now actually apply.** Root cause: nothing ever applied
+    the stored a11y prefs to the DOM and **no CSS existed** for them. Added: (a) CSS
+    for `html.a11y-reduce-motion`, `html.a11y-high-contrast`, and
+    `html[data-font-size="large"|"xlarge"]` in `app.css`; (b) server-side application
+    on `<html>` in `base.html` (class + `data-font-size` from `settings.a11y`), so it
+    persists across page loads with no flash; (c) `CS.applyA11y()` in `app.js` +
+    change listeners in `settings.js` so toggles/selects take effect **instantly**.
+    Reduce-motion neutralises animations/transitions; high-contrast brightens text &
+    strengthens borders; text-size scales all rem/em sizing (18px / 20px root).
+17. **Theme-aware logo icon.** `logo-icon.svg` was loaded via `<img>` (an isolated
+    document that can't read page CSS vars), so it never followed the accent. Replaced
+    the in-page usages (splash, about, login) with a `<span class="cs-logo-icon">` that
+    paints the SVG as a **CSS mask** filled with `var(--accent)` — so the logo now
+    tracks the selected accent across all themes. (The browser-chrome favicon still
+    references the static file.)
+18. **"View all brands" now works.** The button had **no handler** and `renderBrandGrid()`
+    only ever rendered the first 12 brands. Added `initViewAllBrands()` + a
+    `renderBrandGrid(showAll)` toggle in `diagnose.js` that swaps between the popular 12
+    and the full brand list (and updates the button/heading label).
+19. **Diagnosis header ↔ cards edge alignment.** On wide screens (`≥1440px`) the
+    wizard header bar was capped at `max-width:1280px` while the card grid widened to
+    `1400px`, so the header's edges stopped ~60px short of the cards below. Replaced
+    the three separate max-widths (`.dz-wizard-header-inner`, `.dz-main-grid`,
+    `.dz-benefits`) with a single `--dz-content-max` variable (1280 → 1400 at ≥1440px)
+    so the header, cards and benefits bar always share the same left/right edges. Also
+    converted the header's leftover hard-coded navy background to `rgba(var(--c-deep),…)`.
+
+### Full make/model coverage + realistic vehicle photos
+20. **All makes / models / years selectable.** `vehicle_api.makes()` now unions the
+    vPIC `car`, `mpv` (SUV/crossover) and `truck` (pickup) vehicle types → **406 makes**
+    (was 195; SUV/EV-only brands like **Rivian**, **Lucid** were previously missing).
+    "View all brands" (`ensureAllBrands()` in `diagnose.js`) merges the curated logo
+    list with the full live catalogue, and the vehicle **search box** now appends live
+    makes (`augmentWithLiveMakes()`) so any make is findable by typing — not just the
+    curated 49. Models come from vPIC per make **across all production years** (no year
+    restriction); selecting a live-only make loads its models the same way.
+21. **Realistic vehicle photos (no blueprint/schematic renders).** The image source
+    switched from the imagin.studio CGI CDN (whose demo key returned watermarked,
+    schematic-looking renders) to **real photographs from Wikipedia / Wikimedia
+    Commons**: `vehicle_api.photo_url()` resolves the model page's lead image via the
+    MediaWiki `pageimages` API, **rejects SVG** results (logos/line-art), and falls back
+    to a shipped local image → icon. `GET /api/vehicles/image` now redirects to the
+    resolved photo (24h cache). Applied everywhere a vehicle image appears — model
+    cards, search results, selected-vehicle card, info panel, loading screen. imagin is
+    demoted to an opt-in last resort (only when a licensed `IMAGIN_CUSTOMER` key is set;
+    default is empty/off). Verified: Honda Civic, Toyota RAV4, BMW 3 Series, Tesla
+    Model 3, Kia EV6, Ford Mustang, Porsche 911 all resolve to genuine JPG photos.
+
+### Quality/cleanup pass (post-audit P0/P1)
+22. **Test suite added.** `tests/` (pytest) covers store logic (unique/descriptive
+    titles, rename-custom flag, delete, **persistence round-trip**, id uniqueness),
+    gemini helpers (`_clean_key`, Settings-over-env key precedence, friendly errors),
+    vehicle_api pure helpers (VIN validation, slug/title, imagin off-by-default), and
+    routes (auth redirect, authed pages render, a11y tab present, session create/list,
+    invalid-VIN, short-problem rejection). **24 tests, all green**, fully isolated from
+    the real store (persistence redirected to a tmp file per test — no network calls).
+    `requirements-dev.txt`, `pytest.ini`, and a GitHub Actions `ci.yml` were added.
+23. **Accessibility tab re-enabled.** Its nav button was commented out in
+    `settings.html` while the (now-working) panel existed below it — users couldn't
+    reach the accessibility settings. Un-commented.
+24. **Duplicate `#a11y-form` handler removed.** The form was bound in *both*
+    `settings.js` and `app.js`, so every save fired two `POST /api/settings`. Kept the
+    `settings.js` handler (which also applies changes instantly); removed the `app.js` one.
+25. **Debug logging stripped.** Removed the ~10 `console.log("[PERF]…")` timing
+    statements from `diagnose.js`'s `runDiagnosis()` (production noise).
+
+> **Outstanding from the audit (not yet done):** split the 8.6k-line `app.css`
+> monolith + de-dupe the doubled `.page`/`.sidebar`/`.layout-main` rules; finish or
+> remove the half-applied i18n (`diagnose.html` uses `t()` 0×, `resolve_lang` still
+> hard-returns `"en"`); migrate Settings/Maintenance/Repair-Guide cards to `.app-card`;
+> route hygiene (`require()` in `/about`,`/contact`; drop `/500`); pin dependencies;
+> purge committed `env/`,`_env/`,`env.zip`.
 
 ---
 
@@ -491,10 +677,13 @@ car-service-ai`. No API key ⇒ AI features report "unavailable"; add a key in
 - **Bootstrap 5.3** as the base grid/components, heavily themed on top by a
   single large stylesheet (`shared/static/css/app.css`, 8,381 lines) plus
   `app-chat.css`.
-- **Premium automotive dark aesthetic** — a navy/graphite palette
-  (`--bg-primary: #060d18`) with a cyan/electric-blue accent
-  (`--accent: #00e5ff`, `--accent-blue: #3b82f6`) and semantic colors
-  (`--success #00e676`, `--warning #ffab00`, `--danger #ff1744`).
+- **Premium automotive dark aesthetic** — a navy/graphite palette with an
+  **electric-blue accent by default** (`--accent: #3b82f6`, plus the
+  `--accent-rgb: 59,130,246` channel used by `rgba(var(--accent-rgb), a)`) and
+  semantic colors (`--success`, `--warning`, `--danger`). The accent is fully
+  user-configurable in Settings and propagates to **every** page via the token
+  system (see §0, item 1). Older revisions shipped a cyan (`#00e5ff`) then a
+  safety-orange (`#ff7a1a`) accent — both are superseded by the blue default.
 - **Glassmorphism** — translucent surfaces (`--glass-bg`, `--glass-strong`,
   `--glass-border`), soft shadows, rounded radii (`--radius`, `--radius-lg`).
 - **Theming** via `data-bs-theme` (`dark` / `light` / `auto`). An inline
@@ -603,8 +792,12 @@ shim).
 
 ## 5. Known gaps & gotchas (for the next developer)
 
-1. **Data is ephemeral** — in-memory store; everything resets on restart. Login
-   re-seeds a demo Audi A4 + reminders + 2 AI reports.
+1. **Data now persists across restarts.** As of 2026-09-07 the `Store` snapshots
+   per-user data (incl. diagnosis sessions/progress) to `data/store.json` and
+   reloads it on startup (§0, item 10), so "continue diagnosis" survives a
+   restart. It is still a single-file JSON snapshot, not a real database — fine
+   for the project scope; delete `data/store.json` to reset. Login still seeds a
+   demo Audi A4 + reminders + 2 AI reports on a brand-new user.
 2. **i18n / RTL is inert** — `resolve_lang` hard-returns `"en"`; the Arabic layer
    and `dir=rtl` never activate; no language switch in the UI.
 3. **Email/password login is a no-op** — only Google/Apple OAuth actually sign

@@ -50,9 +50,11 @@ async def repair_guide_detail(request: Request, slug: str):
 # ---- Cascading autocomplete: brand -> model -> engine (live NHTSA/CarQuery) ----
 
 @router.get("/api/vehicles/makes")
-async def vehicles_makes(request: Request, q: str = ""):
+async def vehicles_makes(request: Request, q: str = "", limit: int = 12):
     require(request)
-    return JSONResponse({"items": await vehicle_api.makes(q)})
+    # Cap generously so "View all brands" can list the full make catalogue.
+    limit = max(1, min(limit, 600))
+    return JSONResponse({"items": await vehicle_api.makes(q, limit=limit)})
 
 
 @router.get("/api/vehicles/models")
@@ -65,6 +67,31 @@ async def vehicles_models(request: Request, make: str = "", q: str = ""):
 async def vehicles_engines(request: Request, make: str = "", model: str = "", q: str = ""):
     require(request)
     return JSONResponse({"items": await vehicle_api.engines(make, model, q)})
+
+
+@router.get("/api/vehicles/vin")
+async def vehicles_vin(request: Request, vin: str = ""):
+    """Decode a VIN into structured vehicle fields (NHTSA vPIC)."""
+    require(request)
+    return JSONResponse(await vehicle_api.decode_vin(vin))
+
+
+@router.get("/api/vehicles/image")
+async def vehicles_image(request: Request, make: str = "", model: str = "", year: str = ""):
+    """Redirect to a realistic PHOTO of the given vehicle.
+
+    Resolves a real photo (Wikipedia → shipped image → optional licensed render);
+    blueprint/schematic (SVG) images are excluded. The client uses this as an
+    ``<img src>`` and falls back to an icon via ``onerror`` if nothing is found.
+    """
+    from fastapi.responses import RedirectResponse, Response
+    require(request)
+    url = await vehicle_api.photo_url(make, model, year)
+    if not url:
+        return Response(status_code=404)
+    # Wikimedia/Wikipedia images are safe to hotlink from an <img>. Cache at the
+    # edge/browser since model photos are effectively static.
+    return RedirectResponse(url, headers={"Cache-Control": "public, max-age=86400"})
 
 
 @router.post("/api/vehicle")

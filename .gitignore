@@ -13,6 +13,9 @@ env/
 .env
 .env.local
 
+# Persisted per-user store (diagnoses, sessions, progress) — runtime data
+data/
+
 # IDE
 .idea/
 .vscode/

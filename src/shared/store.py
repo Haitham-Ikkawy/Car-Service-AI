@@ -7,10 +7,19 @@ NOTE: data is lost on server restart. This is fine for the project scope.
 """
 from __future__ import annotations
 
-import itertools
+import json
+import logging
 import threading
 from datetime import datetime
+from pathlib import Path
 from typing import Any
+
+log = logging.getLogger("car_ai.store")
+
+# Per-user data is persisted here so diagnoses, sessions and progress survive a
+# server restart (item: "continue diagnosis" must be saved per user). The file
+# lives outside the source tree layout under a gitignored ``data/`` folder.
+_DATA_FILE = Path(__file__).resolve().parent.parent.parent / "data" / "store.json"
 
 
 def _now() -> str:
@@ -62,11 +71,71 @@ class Store:
         self._twin: dict[str, dict[str, Any]] = {}           # user -> digital twin analysis
         self._diag_sessions: dict[str, list[dict[str, Any]]] = {}  # user -> diagnosis sessions
         self._diag_active: dict[str, str] = {}               # user -> active diagnosis session id
-        self._seq = itertools.count(1)
+        self._seq = 0
+        self._load()
+
+    # ---------- persistence ----------
+    # Snapshot of every per-user collection. Written after each mutation and
+    # reloaded on startup so a user can resume exactly where they left off.
+    _PERSIST = (
+        ("_users", "users"), ("_vehicles", "vehicles"), ("_chats", "chats"),
+        ("_active", "active"), ("_diagnoses", "diagnoses"),
+        ("_maintenance", "maintenance"), ("_settings", "settings"),
+        ("_diag_sessions", "diag_sessions"), ("_diag_active", "diag_active"),
+    )
+
+    def _load(self) -> None:
+        """Load the persisted snapshot on startup (best-effort)."""
+        try:
+            if not _DATA_FILE.exists():
+                return
+            data = json.loads(_DATA_FILE.read_text(encoding="utf-8"))
+            for attr, key in self._PERSIST:
+                if key in data and isinstance(data[key], dict):
+                    setattr(self, attr, data[key])
+            self._seq = int(data.get("seq", 0))
+            log.info("Store: restored persisted data for %d user(s).", len(self._users))
+        except Exception as exc:  # noqa: BLE001 — never let bad data block startup
+            log.warning("Store: could not load persisted data: %s: %s",
+                        type(exc).__name__, exc)
+
+    def _save(self) -> None:
+        """Persist the current snapshot atomically (best-effort).
+
+        Called while ``self._lock`` is already held by the calling thread, so the
+        dicts are read consistently. Failures are swallowed — persistence is a
+        convenience, never a hard dependency.
+        """
+        try:
+            _DATA_FILE.parent.mkdir(parents=True, exist_ok=True)
+            data: dict[str, Any] = {key: getattr(self, attr) for attr, key in self._PERSIST}
+            data["seq"] = self._seq
+            tmp = _DATA_FILE.with_suffix(".tmp")
+            tmp.write_text(json.dumps(data), encoding="utf-8")
+            tmp.replace(_DATA_FILE)
+        except Exception as exc:  # noqa: BLE001
+            log.warning("Store: could not persist data: %s: %s", type(exc).__name__, exc)
 
     # ---------- helpers ----------
     def _new_id(self, prefix: str) -> str:
-        return f"{prefix}-{datetime.now():%Y%m%d}-{next(self._seq):04d}"
+        self._seq += 1
+        return f"{prefix}-{datetime.now():%Y%m%d}-{self._seq:04d}"
+
+    def _unique_title(self, user: str, base: str, exclude_id: str | None = None) -> str:
+        """Return ``base`` made unique among this user's sessions.
+
+        Duplicate diagnosis names are confusing, so a numeric suffix is added
+        (``"… (2)"``) when the base title already exists. Caller must hold the lock.
+        """
+        base = (base or "New Diagnosis").strip()
+        existing = {s.get("title") for s in self._diag_sessions.get(user, [])
+                    if s.get("id") != exclude_id}
+        if base not in existing:
+            return base
+        i = 2
+        while f"{base} ({i})" in existing:
+            i += 1
+        return f"{base} ({i})"
 
     def _default_settings(self) -> dict[str, Any]:
         return {
@@ -108,6 +177,7 @@ class Store:
                 if provider_id and not profile.get("provider_id"):
                     profile["provider_id"] = provider_id
             self._users[key]["last_login"] = _now()
+            self._save()
             return self._users[key]
 
     def user(self, email: str) -> dict[str, Any] | None:
@@ -121,6 +191,7 @@ class Store:
             self._vehicles[user] = vehicle
             # The stored AI analysis is stale once the vehicle data changes.
             self._twin.pop(user, None)
+            self._save()
 
     def vehicle(self, user: str) -> dict[str, Any] | None:
         return self._vehicles.get(user)
@@ -155,6 +226,7 @@ class Store:
             if isinstance(data.get("a11y"), dict):
                 current["a11y"].update(data["a11y"])
             self._settings[user] = current
+            self._save()
             return current
 
     def get_lang(self, user: str) -> str:
@@ -185,6 +257,7 @@ class Store:
                     "vehicle": {"brand": "", "model": ""}, "diag_id": None}
             chats.insert(0, chat)
             self._active[user] = chat["id"]
+            self._save()
             return chat
 
     def new_chat(self, user: str, vehicle: dict | None = None,
@@ -196,6 +269,7 @@ class Store:
                     "diag_id": diag_id}
             self._chats.setdefault(user, []).insert(0, chat)
             self._active[user] = chat["id"]
+            self._save()
             return chat
 
     def set_active_chat(self, user: str, chat_id: str) -> dict[str, Any] | None:
@@ -240,6 +314,7 @@ class Store:
                             c["title"] = f"{vehicle_str} — {topic}" if topic else vehicle_str
                         else:
                             c["title"] = topic if topic else "New conversation"
+                    self._save()
                     return
 
     def clear_messages(self, user: str, chat_id: str) -> bool:
@@ -281,6 +356,7 @@ class Store:
             self._chats[user] = [c for c in chats if c["id"] != chat_id]
             if self._active.get(user) == chat_id:
                 self._active.pop(user, None)
+            self._save()
 
     def rename_chat(self, user: str, chat_id: str, title: str) -> dict[str, Any] | None:
         with self._lock:
@@ -338,6 +414,7 @@ class Store:
             record.setdefault("date", _now())
             self._diagnoses.setdefault(user, []).insert(0, record)
             self._twin.pop(user, None)
+            self._save()
             return record
 
     def diagnoses(self, user: str) -> list[dict[str, Any]]:
@@ -376,7 +453,7 @@ class Store:
             now = _now()
             session = {
                 "id": self._new_id("DXS"),
-                "title": self._generate_session_title(vehicle, problem),
+                "title": self._unique_title(user, self._generate_session_title(vehicle, problem)),
                 "status": "in_progress",  # in_progress, ready, diagnosing, completed
                 "created_at": now,
                 "updated_at": now,
@@ -398,7 +475,32 @@ class Store:
             }
             self._diag_sessions.setdefault(user, []).insert(0, session)
             self._diag_active[user] = session["id"]
+            self._save()
             return session
+
+    def set_session_title_from_diagnosis(self, user: str, session_id: str,
+                                         diagnosis: dict[str, Any] | None) -> dict[str, Any] | None:
+        """Rename a session to a short, descriptive title based on the detected fault.
+
+        e.g. ``"Audi A4 — Worn front brake pads"``. Kept unique so no two
+        diagnoses share a name (item: distinct, descriptive names).
+        """
+        with self._lock:
+            for s in self._diag_sessions.get(user, []):
+                if s["id"] == session_id:
+                    problem = (diagnosis or {}).get("problem") or s.get("problem") or "Diagnosis"
+                    problem = str(problem).strip()
+                    vehicle = s.get("vehicle") or {}
+                    vstr = " ".join(filter(None, [vehicle.get("brand", ""),
+                                                  vehicle.get("model", "")])).strip()
+                    base = f"{vstr} — {problem}" if vstr else problem
+                    if len(base) > 60:
+                        base = base[:60].rstrip() + "…"
+                    s["title"] = self._unique_title(user, base, exclude_id=session_id)
+                    s["updated_at"] = _now()
+                    self._save()
+                    return s
+        return None
 
     def diag_session(self, user: str, session_id: str) -> dict[str, Any] | None:
         with self._lock:
@@ -424,10 +526,12 @@ class Store:
                     for key, val in updates.items():
                         s[key] = val
                     s["updated_at"] = _now()
-                    # Auto-generate title if vehicle or problem changed
-                    if "vehicle" in updates or "problem" in updates:
-                        s["title"] = self._generate_session_title(
-                            s.get("vehicle"), s.get("problem"))
+                    # Auto-generate title if vehicle or problem changed — but keep
+                    # any custom name the user typed via rename, and keep it unique.
+                    if ("vehicle" in updates or "problem" in updates) and not s.get("title_custom"):
+                        base = self._generate_session_title(s.get("vehicle"), s.get("problem"))
+                        s["title"] = self._unique_title(user, base, exclude_id=session_id)
+                    self._save()
                     return s
         return None
 
@@ -437,8 +541,11 @@ class Store:
         with self._lock:
             for s in self._diag_sessions.get(user, []):
                 if s["id"] == session_id:
-                    s["title"] = title.strip() or s["title"]
+                    s["title"] = self._unique_title(user, title.strip() or s["title"],
+                                                    exclude_id=session_id)
+                    s["title_custom"] = True  # user-chosen name; don't auto-overwrite
                     s["updated_at"] = _now()
+                    self._save()
                     return s
         return None
 
@@ -464,6 +571,7 @@ class Store:
                                          if s["id"] != session_id]
             if self._diag_active.get(user) == session_id:
                 self._diag_active.pop(user, None)
+            self._save()
             return True
 
     def set_active_diag_session(self, user: str,
@@ -510,6 +618,7 @@ class Store:
                 if s["id"] == session_id:
                     s["chat_id"] = chat_id
                     s["updated_at"] = _now()
+                    self._save()
                     return
 
     # ---------- maintenance ----------
@@ -521,6 +630,7 @@ class Store:
             item.setdefault("status", "active")
             self._maintenance.setdefault(user, []).insert(0, item)
             self._twin.pop(user, None)
+            self._save()
             return item
 
     def maintenance(self, user: str) -> list[dict[str, Any]]:
@@ -538,6 +648,7 @@ class Store:
             for m in self._maintenance.get(user, []):
                 if m["id"] == mid:
                     m.update(updates)
+                    self._save()
                     return m
         return None
 
@@ -545,7 +656,10 @@ class Store:
         with self._lock:
             before = len(self._maintenance.get(user, []))
             self._maintenance[user] = [m for m in self._maintenance.get(user, []) if m["id"] != mid]
-            return len(self._maintenance.get(user, [])) != before
+            changed = len(self._maintenance.get(user, [])) != before
+            if changed:
+                self._save()
+            return changed
 
 
 # Global singleton shared across requests.

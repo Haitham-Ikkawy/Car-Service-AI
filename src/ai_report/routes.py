@@ -325,6 +325,9 @@ async def diagnose_complete(request: Request):
             "diagnosis": saved,
             "status": "completed",
         })
+        # Auto-rename the session to a distinct, descriptive name based on the
+        # fault the AI actually detected (e.g. "Audi A4 — Worn brake pads").
+        store.set_session_title_from_diagnosis(user, session_id, saved)
 
     _t_response = time.perf_counter()
     log.info("[PERF] T6: Backend sending response (%.0f ms after recv, %.0f ms Gemini)",

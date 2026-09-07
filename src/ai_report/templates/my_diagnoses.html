@@ -3,27 +3,44 @@
 {% block extra_css %}
 <style>
 /* ---- My Diagnoses Page ---- */
-.md-wrap { max-width: 960px; margin: 0 auto; padding: 0 20px 60px; }
-.md-hero { text-align: center; padding: 32px 0 24px; }
-.md-hero h1 { font-size: 1.6rem; font-weight: 700; color: #f1f5f9; margin-bottom: 6px; }
-.md-hero p { color: rgba(148,163,184,0.7); font-size: 0.92rem; margin: 0; }
+.md-wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px 60px; }
+
+/* Unified header — mirrors the AI Diagnosis wizard header (icon badge + title +
+   subtitle + "AI System Online" status) so the two sections match visually. */
+.md-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 24px 0 20px; }
+.md-header-left { display: flex; align-items: center; gap: 14px; }
+.md-header-icon {
+  width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 1.2rem;
+  background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.12), rgba(var(--accent-rgb), 0.08));
+  border: 1px solid rgba(var(--accent-rgb), 0.2);
+}
+.md-header h1 { font-size: 1.35rem; font-weight: 700; color: var(--text); margin: 0; }
+.md-header p { color: rgba(var(--c-muted), 0.75); font-size: 0.85rem; margin: 2px 0 0; }
+.md-header-status {
+  display: inline-flex; align-items: center; gap: 7px; font-size: 0.78rem; font-weight: 600; color: var(--accent);
+  padding: 6px 12px; border-radius: 999px;
+  background: rgba(var(--accent-rgb), 0.08); border: 1px solid rgba(var(--accent-rgb), 0.18);
+}
+.md-header-status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+@media (max-width: 560px) { .md-header-status { display: none; } }
 
 /* Search + New */
 .md-toolbar { display: flex; gap: 10px; align-items: center; margin-bottom: 24px; flex-wrap: wrap; }
 .md-search { flex: 1; min-width: 200px; position: relative; }
 .md-search input {
-  width: 100%; padding: 10px 14px 10px 38px; border-radius: 12px; border: 1px solid rgba(148,163,184,0.15);
-  background: rgba(24, 27, 33,0.6); color: #e2e8f0; font-size: 0.88rem; outline: none; transition: border 0.2s;
+  width: 100%; padding: 10px 14px 10px 38px; border-radius: 12px; border: 1px solid rgba(var(--c-muted),0.15);
+  background: rgba(var(--c-panel),0.6); color: var(--text); font-size: 0.88rem; outline: none; transition: border 0.2s;
 }
-.md-search input:focus { border-color: rgba(255, 122, 26,0.4); }
-.md-search input::placeholder { color: rgba(148,163,184,0.4); }
-.md-search i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: rgba(148,163,184,0.4); font-size: 0.85rem; }
+.md-search input:focus { border-color: rgba(var(--accent-rgb), 0.4); }
+.md-search input::placeholder { color: rgba(var(--c-muted),0.4); }
+.md-search i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: rgba(var(--c-muted),0.4); font-size: 0.85rem; }
 .md-new-btn {
   display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px; border-radius: 12px;
-  background: linear-gradient(135deg, #ff7a1a, #ff7a1a); color: #fff; font-weight: 600; font-size: 0.88rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent)); color: #fff; font-weight: 600; font-size: 0.88rem;
   border: none; cursor: pointer; white-space: nowrap; transition: transform 0.15s, box-shadow 0.2s;
 }
-.md-new-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(255, 122, 26,0.25); }
+.md-new-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(var(--accent-rgb), 0.25); }
 
 /* Session grid */
 .md-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
@@ -31,22 +48,22 @@
 /* Session card */
 .md-card {
   position: relative; border-radius: 16px; padding: 20px;
-  background: rgba(24, 27, 33,0.5); border: 1px solid rgba(148,163,184,0.08);
+  background: rgba(var(--c-panel),0.5); border: 1px solid rgba(var(--c-muted),0.08);
   backdrop-filter: blur(12px); cursor: pointer; transition: transform 0.15s, border-color 0.2s, box-shadow 0.2s;
 }
-.md-card:hover { transform: translateY(-2px); border-color: rgba(255, 122, 26,0.2); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+.md-card:hover { transform: translateY(-2px); border-color: rgba(var(--accent-rgb), 0.2); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
 .md-card-top { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
 .md-card-logo {
   width: 44px; height: 44px; border-radius: 10px; flex-shrink: 0;
-  background: rgba(148,163,184,0.06); display: flex; align-items: center; justify-content: center; overflow: hidden;
+  background: rgba(var(--c-muted),0.06); display: flex; align-items: center; justify-content: center; overflow: hidden;
 }
 .md-card-logo img { width: 100%; height: 100%; object-fit: contain; }
-.md-card-logo i { font-size: 1.1rem; color: rgba(148,163,184,0.3); }
+.md-card-logo i { font-size: 1.1rem; color: rgba(var(--c-muted),0.3); }
 .md-card-info { flex: 1; min-width: 0; }
-.md-card-title { font-size: 0.95rem; font-weight: 600; color: #f1f5f9; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.md-card-problem { font-size: 0.82rem; color: rgba(148,163,184,0.6); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.md-card-title { font-size: 0.95rem; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.md-card-problem { font-size: 0.82rem; color: rgba(var(--c-muted),0.6); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .md-card-meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-.md-card-time { font-size: 0.78rem; color: rgba(148,163,184,0.4); }
+.md-card-time { font-size: 0.78rem; color: rgba(var(--c-muted),0.4); }
 .md-card-status {
   display: inline-flex; align-items: center; gap: 5px; font-size: 0.75rem; font-weight: 600;
   padding: 3px 8px; border-radius: 6px;
@@ -54,27 +71,27 @@
 .md-card-status::before { content: ""; width: 6px; height: 6px; border-radius: 50%; }
 .md-status-completed { color: #22c55e; background: rgba(34,197,94,0.1); }
 .md-status-completed::before { background: #22c55e; }
-.md-status-in_progress { color: #ff7a1a; background: rgba(255, 122, 26,0.1); }
-.md-status-in_progress::before { background: #ff7a1a; }
-.md-status-diagnosing { color: #ff7a1a; background: rgba(255, 122, 26,0.1); }
-.md-status-diagnosing::before { background: #ff7a1a; }
+.md-status-in_progress { color: var(--accent); background: rgba(var(--accent-rgb), 0.1); }
+.md-status-in_progress::before { background: var(--accent); }
+.md-status-diagnosing { color: var(--accent); background: rgba(var(--accent-rgb), 0.1); }
+.md-status-diagnosing::before { background: var(--accent); }
 .md-status-ready { color: #f59e0b; background: rgba(245,158,11,0.1); }
 .md-status-ready::before { background: #f59e0b; }
 
 /* Card actions */
 .md-card-actions {
   display: flex; gap: 6px; margin-top: 14px; padding-top: 12px;
-  border-top: 1px solid rgba(148,163,184,0.06);
+  border-top: 1px solid rgba(var(--c-muted),0.06);
 }
 .md-card-btn {
   flex: 1; display: flex; align-items: center; justify-content: center; gap: 5px;
   padding: 8px 0; border-radius: 8px; font-size: 0.78rem; font-weight: 500;
-  border: 1px solid rgba(148,163,184,0.1); background: transparent; color: rgba(148,163,184,0.7);
+  border: 1px solid rgba(var(--c-muted),0.1); background: transparent; color: rgba(var(--c-muted),0.7);
   cursor: pointer; transition: all 0.15s;
 }
-.md-card-btn:hover { border-color: rgba(255, 122, 26,0.3); color: #ff7a1a; background: rgba(255, 122, 26,0.05); }
-.md-card-btn.primary { background: rgba(255, 122, 26,0.1); border-color: rgba(255, 122, 26,0.2); color: #ff7a1a; }
-.md-card-btn.primary:hover { background: rgba(255, 122, 26,0.2); }
+.md-card-btn:hover { border-color: rgba(var(--accent-rgb), 0.3); color: var(--accent); background: rgba(var(--accent-rgb), 0.05); }
+.md-card-btn.primary { background: rgba(var(--accent-rgb), 0.1); border-color: rgba(var(--accent-rgb), 0.2); color: var(--accent); }
+.md-card-btn.primary:hover { background: rgba(var(--accent-rgb), 0.2); }
 .md-card-btn.danger { color: #ef4444; }
 .md-card-btn.danger:hover { border-color: rgba(239,68,68,0.3); background: rgba(239,68,68,0.05); }
 .md-card-btn--icon { flex: 0 0 auto; width: 34px; padding: 8px 0; }
@@ -86,9 +103,9 @@
 
 /* Empty state */
 .md-empty { text-align: center; padding: 60px 20px; }
-.md-empty-icon { font-size: 3rem; color: rgba(148,163,184,0.15); margin-bottom: 16px; }
-.md-empty h3 { font-size: 1.1rem; color: #f1f5f9; margin-bottom: 8px; }
-.md-empty p { color: rgba(148,163,184,0.5); font-size: 0.88rem; margin-bottom: 20px; }
+.md-empty-icon { font-size: 3rem; color: rgba(var(--c-muted),0.15); margin-bottom: 16px; }
+.md-empty h3 { font-size: 1.1rem; color: var(--text); margin-bottom: 8px; }
+.md-empty p { color: rgba(var(--c-muted),0.5); font-size: 0.88rem; margin-bottom: 20px; }
 
 /* Delete modal */
 .md-modal-overlay {
@@ -97,24 +114,24 @@
 }
 .md-modal-overlay.active { opacity: 1; pointer-events: auto; }
 .md-modal {
-  background: #1a1e25; border: 1px solid rgba(148,163,184,0.1); border-radius: 16px;
+  background: var(--surface); border: 1px solid rgba(var(--c-muted),0.1); border-radius: 16px;
   padding: 28px; width: 90%; max-width: 400px; text-align: center;
 }
-.md-modal h3 { font-size: 1.05rem; color: #f1f5f9; margin-bottom: 8px; }
-.md-modal p { font-size: 0.85rem; color: rgba(148,163,184,0.6); margin-bottom: 20px; }
+.md-modal h3 { font-size: 1.05rem; color: var(--text); margin-bottom: 8px; }
+.md-modal p { font-size: 0.85rem; color: rgba(var(--c-muted),0.6); margin-bottom: 20px; }
 .md-modal-btns { display: flex; gap: 10px; justify-content: center; }
 .md-modal-btn {
   padding: 8px 20px; border-radius: 10px; font-size: 0.85rem; font-weight: 500; border: none; cursor: pointer; transition: all 0.15s;
 }
-.md-modal-cancel { background: rgba(148,163,184,0.1); color: rgba(148,163,184,0.7); }
-.md-modal-cancel:hover { background: rgba(148,163,184,0.15); }
+.md-modal-cancel { background: rgba(var(--c-muted),0.1); color: rgba(var(--c-muted),0.7); }
+.md-modal-cancel:hover { background: rgba(var(--c-muted),0.15); }
 .md-modal-delete { background: #ef4444; color: #fff; }
 .md-modal-delete:hover { background: #dc2626; }
 
 /* Rename inline */
 .md-card-title-input {
-  font-size: 0.95rem; font-weight: 600; color: #f1f5f9; background: rgba(24, 27, 33,0.8);
-  border: 1px solid rgba(255, 122, 26,0.3); border-radius: 6px; padding: 2px 6px; width: 100%;
+  font-size: 0.95rem; font-weight: 600; color: var(--text); background: rgba(var(--c-panel),0.8);
+  border: 1px solid rgba(var(--accent-rgb), 0.3); border-radius: 6px; padding: 2px 6px; width: 100%;
   outline: none;
 }
 
@@ -130,11 +147,18 @@
 
 {% block content %}
 <div class="md-wrap">
-  <div class="md-hero">
-    <h1>My Diagnoses</h1>
-    <p>All your vehicle diagnosis sessions — continue where you left off.</p>
+  <div class="md-header">
+    <div class="md-header-left">
+      <div class="md-header-icon"><i class="bi bi-clipboard2-pulse"></i></div>
+      <div>
+        <h1>My Diagnoses</h1>
+        <p>All your vehicle checks — continue where you left off.</p>
+      </div>
+    </div>
+    <div class="md-header-status"><span>AI System Online</span></div>
   </div>
 
+  <div class="app-card md-panel">
   <div class="md-toolbar">
     <div class="md-search">
       <i class="bi bi-search"></i>
@@ -231,6 +255,7 @@
     <a href="/diagnose" class="md-new-btn"><i class="bi bi-plus-lg"></i> Start Diagnosis</a>
   </div>
   {% endif %}
+  </div><!-- /app-card -->
 </div>
 
 <!-- Delete confirmation modal -->

@@ -22,6 +22,7 @@ from __future__ import annotations
 import asyncio
 import json
 import logging
+import os
 import time
 from pathlib import Path
 from typing import Any
@@ -34,6 +35,18 @@ logger = logging.getLogger("car_ai.vehicle_api")
 # --- Upstream endpoints ------------------------------------------------------
 _VPIC = "https://vpic.nhtsa.dot.gov/api/vehicles"
 _CARQUERY = "https://www.carqueryapi.com/api/0.3/"
+
+# Vehicle images: we prefer REAL PHOTOS of the actual car (Wikipedia / Wikimedia
+# Commons lead image for the model page) and deliberately AVOID CGI blueprint /
+# schematic-style renders. Wikipedia is free, keyless and returns genuine
+# photographs; SVG results (logos / line-art) are filtered out.
+_WIKI_API = "https://en.wikipedia.org/w/api.php"
+
+# imagin.studio (CGI renders) is kept ONLY as an opt-in last resort behind a
+# licensed key — the public demo key produces watermarked, schematic-looking
+# images, which the product explicitly excludes, so it is off by default.
+_IMAGIN_CDN = "https://cdn.imagin.studio/getimage"
+_IMAGIN_CUSTOMER = os.getenv("IMAGIN_CUSTOMER", "").strip()  # empty => don't use imagin
 
 # --- Local media (used to enrich upstream data with images we already ship) --
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
@@ -184,12 +197,24 @@ async def _get_json(url: str, params: dict | None = None) -> Any:
 # ---------------------------------------------------------------------------
 
 async def makes(q: str = "", limit: int = 12) -> list[dict]:
-    """All car makes (vPIC), enriched with a local logo when we have one."""
+    """All passenger-vehicle makes (vPIC), enriched with a local logo when we have one.
+
+    Unions the ``car``, ``mpv`` (SUV/crossover) and ``truck`` (pickup) vehicle
+    types so SUV/EV-only brands (e.g. Rivian) are included — a single type misses
+    them. Motorcycle/trailer/etc. types are intentionally excluded.
+    """
+
+    async def _type(vtype: str) -> list[dict]:
+        try:
+            data = await _get_json(f"{_VPIC}/GetMakesForVehicleType/{vtype}", {"format": "json"})
+            return data.get("Results") or []
+        except Exception:  # noqa: BLE001
+            return []
 
     async def _load() -> list[dict]:
         try:
-            data = await _get_json(f"{_VPIC}/GetMakesForVehicleType/car", {"format": "json"})
-            rows = data.get("Results") or []
+            groups = await asyncio.gather(_type("car"), _type("mpv"), _type("truck"))
+            rows = [r for g in groups for r in g]
             seen: set[str] = set()
             out: list[dict] = []
             for r in rows:
@@ -292,3 +317,168 @@ async def engines(make: str, model: str, q: str = "", limit: int = 12) -> list[d
         return list(_FALLBACK_ENGINES)
 
     return _filter(await _cached(f"engines:{make.lower()}:{model.lower()}", _load), q, "value", limit)
+
+
+# ---------------------------------------------------------------------------
+# VIN decode — look up a vehicle from its 17-character VIN (NHTSA vPIC)
+# ---------------------------------------------------------------------------
+
+# A VIN is 17 characters, letters + digits, excluding I, O and Q (to avoid
+# confusion with 1 and 0).
+_VIN_RE = None  # compiled lazily to keep import light
+
+
+def _valid_vin(vin: str) -> bool:
+    import re
+    global _VIN_RE
+    if _VIN_RE is None:
+        _VIN_RE = re.compile(r"^[A-HJ-NPR-Z0-9]{17}$")
+    return bool(_VIN_RE.match((vin or "").strip().upper()))
+
+
+async def decode_vin(vin: str) -> dict[str, Any]:
+    """Decode a VIN into structured vehicle fields via NHTSA vPIC.
+
+    Returns ``{ok, vin, make, model, year, fuel, engine, body, ...}``. ``ok`` is
+    False (with a ``message``) for an invalid VIN or when the lookup finds no
+    make/model — the caller shows a friendly message and lets the user pick
+    manually instead.
+    """
+    vin = (vin or "").strip().upper()
+    if not _valid_vin(vin):
+        return {"ok": False, "message": "That doesn't look like a valid 17-character VIN."}
+
+    async def _load() -> dict[str, Any]:
+        try:
+            data = await _get_json(f"{_VPIC}/DecodeVinValues/{quote(vin, safe='')}",
+                                   {"format": "json"})
+            rows = data.get("Results") or []
+            row = rows[0] if rows else {}
+        except Exception as exc:  # noqa: BLE001
+            logger.warning("vPIC VIN decode failed (%s): %s: %s", vin, type(exc).__name__, exc)
+            return {"ok": False, "message": "The VIN lookup service is unavailable right now. Please try again or pick your car manually."}
+
+        make = _title(row.get("Make") or "")
+        model = (row.get("Model") or "").strip()
+        year = (row.get("ModelYear") or "").strip()
+        fuel = (row.get("FuelTypePrimary") or "").strip()
+        disp = (row.get("DisplacementL") or "").strip()
+        cyl = (row.get("EngineCylinders") or "").strip()
+        body = (row.get("BodyClass") or "").strip()
+        trans = (row.get("TransmissionStyle") or "").strip()
+
+        if not make and not model:
+            return {"ok": False, "message": "We couldn't find a car for that VIN. Please pick your vehicle manually."}
+
+        # Build a friendly engine descriptor from displacement + cylinders + fuel.
+        parts = []
+        if disp:
+            try:
+                parts.append(f"{float(disp):.1f}L")
+            except ValueError:
+                pass
+        if fuel and fuel.lower() not in ("", "not applicable"):
+            parts.append(fuel)
+        if cyl:
+            parts.append(f"{cyl}-cyl")
+        engine = " ".join(parts).strip()
+
+        return {
+            "ok": True,
+            "vin": vin,
+            "make": make,
+            "model": model,
+            "year": year,
+            "fuel": fuel,
+            "engine": engine,
+            "transmission": trans,
+            "body": body,
+            "logo": _logo_for(make),
+            "image": _image_for(make, model) or image_url(make, model, year),
+        }
+
+    return await _cached(f"vin:{vin}", _load)
+
+
+# ---------------------------------------------------------------------------
+# Dynamic vehicle image — per make/model/year, from an external CDN
+# ---------------------------------------------------------------------------
+
+def local_image(make: str, model: str) -> str:
+    """A shipped local image for this make/model, or empty string."""
+    return _image_for(make, model) or ""
+
+
+def _imagin_url(make: str, model: str, year: str | int = "") -> str:
+    """Last-resort CGI render URL — only when a licensed imagin key is set."""
+    if not _IMAGIN_CUSTOMER:
+        return ""
+    make = (make or "").strip().lower()
+    if not make:
+        return ""
+    params = {
+        "customer": _IMAGIN_CUSTOMER, "make": make,
+        "modelFamily": (model or "").strip().lower(),
+        "zoomType": "fullscreen", "angle": "23",
+    }
+    year = str(year or "").strip()
+    if year:
+        params["modelYear"] = year
+    query = "&".join(f"{k}={quote(str(v), safe='')}" for k, v in params.items() if v)
+    return f"{_IMAGIN_CDN}?{query}"
+
+
+async def _wiki_photo(title: str) -> str | None:
+    """Return the lead-image (real photo) URL of a Wikipedia page, or None.
+
+    SVG results (logos / schematics) are rejected so only photographs are used.
+    """
+    try:
+        data = await _get_json(_WIKI_API, {
+            "action": "query", "format": "json", "redirects": "1",
+            "prop": "pageimages", "piprop": "thumbnail|original", "pithumbsize": "800",
+            "titles": title,
+        })
+    except Exception:  # noqa: BLE001
+        return None
+    pages = ((data or {}).get("query") or {}).get("pages") or {}
+    for pid, page in pages.items():
+        if str(pid) == "-1":
+            continue
+        src = ((page.get("thumbnail") or {}).get("source")
+               or (page.get("original") or {}).get("source"))
+        if src and not src.lower().split("?")[0].endswith(".svg"):
+            return src
+    return None
+
+
+async def photo_url(make: str, model: str, year: str | int = "") -> str:
+    """Resolve a realistic PHOTO of the given vehicle (make/model[/year]).
+
+    Priority: a real photo from Wikipedia → a shipped local image → an optional
+    licensed CGI render → empty (the UI then shows an icon). Blueprint/schematic
+    (SVG) images are never returned. Cached per make/model/year.
+    """
+    make = (make or "").strip()
+    model = (model or "").strip()
+    if not make and not model:
+        return ""
+    year = str(year or "").strip()
+
+    async def _load() -> str:
+        # Try the most specific Wikipedia titles first, then broaden.
+        titles: list[str] = []
+        if make and model:
+            if year:
+                titles.append(f"{make} {model} ({year})")
+            titles += [f"{make} {model}", f"{make} {model} (car)"]
+        elif make:
+            titles.append(make)
+        for title in titles:
+            src = await _wiki_photo(title)
+            if src:
+                return src
+        # Fallbacks: shipped local image, then an optional licensed CGI render.
+        return local_image(make, model) or _imagin_url(make, model, year)
+
+    return await _cached(f"photo:{make.lower()}:{model.lower()}:{year}", _load)

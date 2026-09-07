@@ -23,7 +23,7 @@
         var h = a.replace('#', ''); if (h.length === 3) h = h.replace(/(.)/g, '$1$1');
         var n = parseInt(h, 16), rgb = ((n >> 16) & 255) + ', ' + ((n >> 8) & 255) + ', ' + (n & 255);
         var st = document.documentElement.style;
-        st.setProperty('--accent', a); st.setProperty('--brand', a);
+        st.setProperty('--accent', a); st.setProperty('--accent-rgb', rgb); st.setProperty('--brand', a);
         st.setProperty('--accent-soft', 'rgba(' + rgb + ', 0.12)');
         st.setProperty('--brand-soft', 'rgba(' + rgb + ', 0.18)');
         st.setProperty('--glass-border', 'rgba(' + rgb + ', 0.10)');
