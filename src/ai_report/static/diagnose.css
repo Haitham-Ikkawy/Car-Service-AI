@@ -427,7 +427,7 @@
 .dz-info-panel-tip p { font-size: 0.8rem; color: rgba(var(--c-muted), 0.6); line-height: 1.5; margin: 0; }
 
 /* BENEFITS */
-.dz-benefits { max-width: var(--dz-content-max); margin: 0 auto; padding: 0 32px 32px; }
+.dz-benefits { max-width: var(--dz-content-max); margin: 0 auto;    padding: 10px 0px 0px; }
 .dz-benefits-inner { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
 .dz-benefit-item { display: flex; align-items: flex-start; gap: 12px; padding: 16px; background: rgba(var(--c-deep), 0.6); border: 1px solid rgba(var(--accent-rgb), 0.06); border-radius: 14px; }
 .dz-benefit-icon { width: 40px; height: 40px; min-width: 40px; border-radius: 10px; background: rgba(var(--accent-rgb), 0.08); border: 1px solid rgba(var(--accent-rgb), 0.12); display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 1rem; flex-shrink: 0; }
