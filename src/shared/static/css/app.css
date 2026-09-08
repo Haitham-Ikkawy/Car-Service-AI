@@ -1496,7 +1496,7 @@ a {
 
 .gpt-welcome-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
   gap: 8px;
   max-width: 640px;
   width: 100%;
@@ -8639,4 +8639,16 @@ body {
   font-size: 1.55rem; line-height: 1; color: var(--accent);
   background: rgba(var(--accent-rgb), 0.1);
   border: 1.5px solid rgba(var(--accent-rgb), 0.3);
+}
+
+/* ============================================================
+   Responsive safety net (all pages) — prevents horizontal overflow at narrow
+   widths without relying solely on html{overflow-x:hidden} clipping.
+   ============================================================ */
+img, svg, video, canvas { max-width: 100%; }
+pre, table { max-width: 100%; overflow-x: auto; }
+/* Long unbroken words/URLs in content areas wrap instead of overflowing. */
+.md-card-title, .md-card-problem, .dz-card-title, .dz-card-subtitle { overflow-wrap: anywhere; }
+@media (max-width: 480px) {
+  .page { padding: 14px 12px; }
 }

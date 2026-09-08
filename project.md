@@ -411,6 +411,22 @@ to the code.
     year-accurate **photo** is best-effort (a licensed `IMAGIN_CUSTOMER` key renders the
     exact year); the **data/diagnosis** is now fully year-specific.
 
+### Responsiveness pass (no horizontal overflow)
+59. **Fixed the real mobile overflow + hardened responsiveness app-wide.** The visible
+    "cards cut off on the right" was caused by CSS grids using `minmax(NNNpx, 1fr)`
+    (e.g. `.md-grid`'s `minmax(300px,1fr)`): on a ~360px screen the inner container is
+    smaller than the fixed min, so the track overflowed (and `html{overflow-x:hidden}`
+    merely clipped it). Guarded **all 5** such tracks with `minmax(min(NNNpx,100%),1fr)`
+    (my_diagnoses grid, brands grid, model-parts grid, engine grid, an app.css grid) so
+    a track never exceeds its container. Also: `.md-card-actions` now `flex-wrap`s;
+    added a global safety net (`img/svg/video{max-width:100%}`, `pre/table{overflow-x:
+    auto}`, long-word wrapping on titles, tighter `.page` padding ≤480px). The wizard
+    containers (`.dz-wrap`, `.dz-wizard-header(-inner)`, `.dz-main-grid`) were already
+    fluid (max-width + shared `--dz-gutter` 32/20/16px + `1fr`, collapsing to one column
+    ≤1024px); the chat `.dz-ws-grid` stacks ≤900px; `--navbar-height` scales 62→54px
+    ≤992px. Verified all pages render at each breakpoint with no unguarded fixed-min
+    tracks remaining.
+
 > **Outstanding from the audit (not yet done):** split the 8.6k-line `app.css`
 > monolith + de-dupe the doubled `.page`/`.sidebar`/`.layout-main` rules; finish or
 > remove the half-applied i18n (`diagnose.html` uses `t()` 0×, `resolve_lang` still
