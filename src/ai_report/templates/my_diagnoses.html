@@ -105,7 +105,10 @@
 .md-card.locked { border-color: rgba(245,158,11,0.25); }
 
 /* Empty state */
-.md-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 48px 20px; min-height: 340px; }
+/* grid-column:1/-1 so that when the empty state is injected INTO #md-grid after
+   deleting the last item, it spans every column and centers — matching the
+   server-rendered (refreshed) layout instead of sitting in the left grid track. */
+.md-empty { grid-column: 1 / -1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 48px 20px; min-height: 340px; }
 .md-empty-icon { font-size: 3rem; color: rgba(var(--c-muted),0.15); margin-bottom: 16px; }
 .md-empty h3 { font-size: 1.1rem; color: var(--text); margin-bottom: 8px; }
 .md-empty p { color: rgba(var(--c-muted),0.5); font-size: 0.88rem; margin-bottom: 20px; }
