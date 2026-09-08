@@ -7818,12 +7818,12 @@ body.splash-bg::after {
 .gpt-recording-bar {
   display: none;
   align-items: center;
-  gap: 10px;
-  padding: 10px 16px;
+  gap: 8px;
+  padding: 8px 14px;
   margin: 0 0 6px;
   background: rgba(239, 68, 68, 0.06);
-  border: 1px solid rgba(239, 68, 68, 0.15);
-  border-radius: 12px;
+  border: 1px solid rgba(239, 68, 68, 0.12);
+  border-radius: 10px;
   opacity: 0;
   transform: translateY(6px);
 }
@@ -7869,14 +7869,14 @@ body.splash-bg::after {
 }
 .gpt-rec-timer {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 600;
   color: #ef4444;
-  min-width: 36px;
+  min-width: 32px;
 }
 .gpt-rec-label {
   flex: 1;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: rgba(239, 68, 68, 0.6);
   animation: recLabelPulse 2s ease-in-out infinite;
 }
@@ -7885,7 +7885,7 @@ body.splash-bg::after {
   50% { opacity: 1; }
 }
 .gpt-rec-stop {
-  width: 32px; height: 32px;
+  width: 28px; height: 28px;
   border-radius: 50%;
   background: #ef4444;
   border: none;
@@ -7893,7 +7893,7 @@ body.splash-bg::after {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   cursor: pointer;
   flex-shrink: 0;
   transition: transform 0.15s;

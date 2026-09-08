@@ -379,18 +379,18 @@
 .gpt-model-label { font-weight: 500; }
 .gpt-model-btn i:last-child { font-size: 0.6rem; color: rgba(255, 255, 255, 0.2); }
 .gpt-model-dropdown {
-  position: absolute; top: calc(100% + 6px); right: 0; min-width: 170px;
+  position: absolute; top: calc(100% + 6px); right: 0; min-width: 160px;
   background: rgba(6, 10, 22, 0.98) !important;
   border: 1px solid rgba(255, 255, 255, 0.06) !important;
-  border-radius: 12px !important; backdrop-filter: blur(24px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6) !important; padding: 5px;
+  border-radius: 10px !important; backdrop-filter: blur(24px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6) !important; padding: 4px;
   display: none; z-index: 200; animation: dropdown-in 0.18s ease;
 }
 .gpt-model-dropdown.open { display: block; }
 @keyframes dropdown-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
 .gpt-model-option {
-  padding: 10px 12px !important; border-radius: 8px !important;
-  display: flex; align-items: center; gap: 9px; font-size: 0.85rem;
+  padding: 8px 10px !important; border-radius: 7px !important;
+  display: flex; align-items: center; gap: 8px; font-size: 0.82rem;
   color: rgba(255, 255, 255, 0.5); transition: all 0.15s ease !important; cursor: pointer;
 }
 .gpt-model-option:hover { background: rgba(255, 255, 255, 0.04); }
@@ -443,49 +443,50 @@
 .gpt-chat-col {
   display: flex !important; flex-direction: column !important;
   min-height: 0 !important; overflow: hidden !important;
-  border-right: 1px solid rgba(var(--accent-rgb), 0.04) !important;
+  border-right: 1px solid rgba(var(--accent-rgb), 0.06) !important;
+  background: rgba(4, 10, 18, 0.5) !important;
 }
 .gpt-chat-col .gpt-messages { flex: 1 !important; overflow: auto !important; min-height: 0 !important; }
 .gpt-chat-col .gpt-composer { flex-shrink: 0 !important; }
 .gpt-welcome {
-  text-align: center; padding: 48px 24px; max-width: 640px; margin: 0 auto;
+  text-align: center; padding: 36px 24px; max-width: 640px; margin: 0 auto;
   animation: fadeUp 0.4s ease;
 }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 .gpt-welcome-icon {
-  width: 80px; height: 80px; border-radius: 22px;
+  width: 64px; height: 64px; border-radius: 18px;
   background: rgba(var(--accent-rgb), 0.05);
   border: 1px solid rgba(var(--accent-rgb), 0.10);
   display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 24px; font-size: 2rem; color: rgba(var(--accent-rgb), 0.4);
+  margin: 0 auto 20px; font-size: 1.6rem; color: rgba(var(--accent-rgb), 0.4);
 }
 .gpt-welcome-title {
-  font-weight: 700; font-size: 1.8rem;
+  font-weight: 700; font-size: 1.5rem;
   color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
-.gpt-welcome-sub { color: rgba(255, 255, 255, 0.3); font-size: 1rem; margin-bottom: 32px; }
-.gpt-welcome-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; max-width: 540px; margin: 0 auto; }
+.gpt-welcome-sub { color: rgba(255, 255, 255, 0.3); font-size: 0.9rem; margin-bottom: 24px; }
+.gpt-welcome-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; max-width: 500px; margin: 0 auto; }
 .gpt-suggestion {
   background: rgba(255, 255, 255, 0.02) !important;
   border: 1px solid rgba(255, 255, 255, 0.05) !important;
-  border-radius: 14px !important; padding: 16px 18px !important;
-  text-align: left; display: flex; align-items: center; gap: 12px;
-  color: rgba(255, 255, 255, 0.45) !important; font-size: 0.9rem; transition: all 0.25s ease !important;
+  border-radius: 12px !important; padding: 14px 16px !important;
+  text-align: left; display: flex; align-items: center; gap: 10px;
+  color: rgba(255, 255, 255, 0.45) !important; font-size: 0.85rem; transition: all 0.25s ease !important;
 }
 .gpt-suggestion:hover {
   background: rgba(255, 255, 255, 0.04) !important; border-color: rgba(var(--accent-rgb), 0.1) !important;
   color: rgba(255, 255, 255, 0.6) !important;
 }
-.gpt-suggestion i { color: rgba(var(--accent-rgb), 0.35); font-size: 1.1rem; flex-shrink: 0; }
+.gpt-suggestion i { color: rgba(var(--accent-rgb), 0.35); font-size: 1rem; flex-shrink: 0; }
 
 /* --- RIGHT PANEL — Vehicle/Diagnosis Info --- */
 .gpt-chat-visual {
   position: relative !important; overflow-y: auto !important;
   display: flex !important; flex-direction: column !important;
-  background: rgba(6, 10, 22, 0.6) !important;
+  background: rgba(var(--c-deep), 0.8) !important;
   border-left: 1px solid rgba(var(--accent-rgb), 0.04) !important;
-  padding: 24px 20px !important;
+  padding: 20px 18px !important;
 }
 .gpt-visual-img { display: none !important; }
 .gpt-visual-overlay { display: none !important; }
@@ -495,33 +496,33 @@
   padding: 0 !important; text-align: left; width: 100%;
 }
 .gpt-visual-badge {
-  display: inline-flex; align-items: center; gap: 6px;
+  display: inline-flex; align-items: center; gap: 5px;
   background: rgba(var(--accent-rgb), 0.05); border: 1px solid rgba(var(--accent-rgb), 0.08);
-  border-radius: 100px; padding: 6px 14px; font-size: 0.68rem; font-weight: 600;
+  border-radius: 100px; padding: 5px 12px; font-size: 0.65rem; font-weight: 600;
   color: rgba(var(--accent-rgb), 0.5); letter-spacing: 0.8px; text-transform: uppercase;
-  margin-bottom: 24px;
+  margin-bottom: 18px;
 }
-.gpt-visual-badge i { font-size: 0.75rem; }
+.gpt-visual-badge i { font-size: 0.7rem; }
 .gpt-visual-title {
-  font-size: 1.1rem; font-weight: 700;
+  font-size: 1rem; font-weight: 700;
   color: rgba(255, 255, 255, 0.6);
-  margin-bottom: 6px; line-height: 1.3;
+  margin-bottom: 5px; line-height: 1.3;
 }
-.gpt-visual-sub { font-size: 0.85rem; color: rgba(255, 255, 255, 0.25); line-height: 1.5; margin-bottom: 24px; }
-.gpt-visual-benefits { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+.gpt-visual-sub { font-size: 0.8rem; color: rgba(255, 255, 255, 0.25); line-height: 1.5; margin-bottom: 18px; }
+.gpt-visual-benefits { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
 .gpt-visual-benefit {
-  display: flex; align-items: center; gap: 12px; padding: 12px 14px;
+  display: flex; align-items: center; gap: 10px; padding: 10px 12px;
   background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.04);
-  border-radius: 12px; text-align: left;
+  border-radius: 10px; text-align: left;
 }
 .gpt-visual-benefit i {
-  width: 32px; height: 32px; border-radius: 8px;
+  width: 28px; height: 28px; border-radius: 7px;
   background: rgba(var(--accent-rgb), 0.05); border: 1px solid rgba(var(--accent-rgb), 0.07);
   display: flex; align-items: center; justify-content: center;
-  color: rgba(var(--accent-rgb), 0.4); font-size: 0.9rem; flex-shrink: 0;
+  color: rgba(var(--accent-rgb), 0.4); font-size: 0.8rem; flex-shrink: 0;
 }
-.gpt-visual-benefit h6 { font-size: 0.82rem; font-weight: 600; color: rgba(255, 255, 255, 0.5); margin: 0; }
-.gpt-visual-benefit p { font-size: 0.72rem; color: rgba(255, 255, 255, 0.2); margin: 0; }
+.gpt-visual-benefit h6 { font-size: 0.78rem; font-weight: 600; color: rgba(255, 255, 255, 0.5); margin: 0; }
+.gpt-visual-benefit p { font-size: 0.68rem; color: rgba(255, 255, 255, 0.2); margin: 0; }
 .gpt-visual-report { text-align: left; }
 .gpt-visual-report h6 {
   font-size: 0.82rem; font-weight: 600; color: rgba(255, 255, 255, 0.4);
@@ -584,8 +585,8 @@
 .chat-stop.visible { display: flex; }
 .chat-stop:hover { background: rgba(239, 68, 68, 0.1); color: rgba(239, 68, 68, 0.7); }
 .gpt-mic-btn.recording {
-  background: rgba(239, 68, 68, 0.1) !important;
-  border-color: rgba(239, 68, 68, 0.18) !important;
+  background: rgba(239, 68, 68, 0.08) !important;
+  border-color: rgba(239, 68, 68, 0.15) !important;
   color: rgba(239, 68, 68, 0.7) !important;
   animation: mic-pulse 1s ease-in-out infinite;
 }
@@ -1361,7 +1362,7 @@
   .gpt-msg-text { font-size: 0.8rem !important; }
 }
 @media (max-width: 390px) {
-  .gpt-topbar-name { font-size: 0.72rem; letter-spacing: 0.8px; }
+  .gpt-topbar-name { font-size: 0.68rem; letter-spacing: 0.2px; }
   .gpt-mode-tabs { padding: 0 8px !important; }
   .diag-preview-cards { grid-template-columns: repeat(2, 1fr); }
 }
