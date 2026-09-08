@@ -14,7 +14,7 @@
   const state = {
     step: "vehicle",
     sessionId: null,  /* diagnosis session id for persistence */
-    vehicle: { brand: "", model: "", engine: "" },
+    vehicle: { brand: "", model: "", engine: "", year: "" },
     problem: "",
     notice: "",
     category: "",
@@ -514,6 +514,11 @@
           loadEngines(state.vehicle.brand, state.vehicle.model).then(() => {
             if (_savedEngine) selectEngine(_savedEngine);
           });
+          /* Restore the model-year selector. */
+          const yearWrap = $("#dz-car-year");
+          if (yearWrap) yearWrap.classList.remove("d-none");
+          const yearSel = $("#dz-year-select");
+          if (yearSel && state.vehicle.year) yearSel.value = String(state.vehicle.year);
         }
         updateVehicleBadge();
       }
@@ -687,9 +692,14 @@
   };
 
   function getModelImage(brand, model) {
-    const brandImages = VEHICLE_IMAGES[brand];
-    if (!brandImages) return null;
-    return brandImages[model] || null;
+    /* The shipped local /image/vehicles/<brand>/<model>.webp files are unreliable
+       DUPLICATES (many distinct models share one identical file — e.g. every Honda
+       file is byte-identical), which caused every model to show the same (Civic)
+       image. They are therefore no longer used: the correct per-model photo comes
+       from the image API (getVehicleImageUrl → Wikipedia). Returning null makes any
+       image fallback skip straight to a neutral icon instead of another model's
+       photo. (VEHICLE_IMAGES is kept for reference / possible future re-population.) */
+    return null;
   }
 
   /* Dynamic, per-vehicle image fetched from an external CDN (imagin.studio) so
@@ -1762,7 +1772,24 @@
     updateSelectedVehicleImage(brandName, model);
     updateInfoPanelVehicleImage(brandName, model);
     loadEngines(brandName, model);
+    /* Reveal the model-year selector once a model is chosen. */
+    const yearWrap = $("#dz-car-year");
+    if (yearWrap) yearWrap.classList.remove("d-none");
     if (typeof scheduleSave === "function") scheduleSave();
+  }
+
+  /* Model year → makes the diagnosis + image specific to that year. */
+  function initYearSelect() {
+    const sel = $("#dz-year-select");
+    if (!sel) return;
+    sel.addEventListener("change", () => {
+      state.vehicle.year = sel.value || "";
+      /* Re-fetch the image for the chosen year and update every image slot. */
+      updateSelectedVehicleImage(state.vehicle.brand, state.vehicle.model);
+      updateInfoPanelVehicleImage(state.vehicle.brand, state.vehicle.model);
+      updateVehicleBadge();
+      if (typeof scheduleSave === "function") scheduleSave();
+    });
   }
 
   async function loadEngines(brand, model) {
@@ -1838,10 +1865,15 @@
   }
 
   function resetVehicleSelection() {
-    state.vehicle = { brand: "", model: "", engine: "" };
+    state.vehicle = { brand: "", model: "", engine: "", year: "" };
     _engineItems = [];
     const enginesWrap = $("#dz-car-engines");
     if (enginesWrap) enginesWrap.classList.add("d-none");
+    /* Reset + hide the year selector for the new vehicle. */
+    const yearWrap = $("#dz-car-year");
+    if (yearWrap) yearWrap.classList.add("d-none");
+    const yearSel = $("#dz-year-select");
+    if (yearSel) yearSel.value = "";
 
     /* Hide selected card and models */
     const selectedEl = $("#dz-car-selected");
@@ -2108,6 +2140,7 @@
       });
     }
     initVehicleSearch();
+    initYearSelect();
     /* item 2: VIN lookup is gated off — hide the section and skip its wiring.
        Flip VIN_LOOKUP_ENABLED (top of file) to re-enable; no code was removed. */
     if (VIN_LOOKUP_ENABLED) {

@@ -689,12 +689,13 @@
 
     const actionsRow = (id, includeRegen = true) => `
       <div class="gpt-msg-actions" style="display:flex;gap:6px;margin-top:8px;">
+        <button class="gpt-action-btn" title="${esc(CS.t("Listen"))}" data-act="speak" data-id="${id}"><i class="bi bi-volume-up"></i></button>
         <button class="gpt-action-btn" title="${esc(CS.t("Copy response"))}" data-act="copy" data-id="${id}"><i class="bi bi-clipboard"></i></button>
         <button class="gpt-action-btn" title="${esc(CS.t("Download response"))}" data-act="download" data-id="${id}"><i class="bi bi-download"></i></button>
         ${includeRegen ? `<button class="gpt-action-btn" title="${esc(CS.t("Regenerate response"))}" data-act="regen" data-id="${id}"><i class="bi bi-arrow-repeat"></i></button>` : ""}
       </div>`;
 
-    function addBubble(role, content, { ts = "", regen = role === "assistant", image = null } = {}) {
+    function addBubble(role, content, { ts = "", regen = role === "assistant", image = null, audio = null } = {}) {
       const wrap = document.createElement("div");
       wrap.className = `dz-ws-msg dz-ws-msg-${role}`;
       const avatar = role === "user"
@@ -702,12 +703,16 @@
         : `<div class="dz-ws-msg-avatar ai"><i class="bi bi-stars"></i></div>`;
       const id = "m" + Date.now() + Math.floor(Math.random() * 1e4);
       const imgHtml = image ? `<div class="gpt-msg-image"><img src="${esc(image)}" alt="Attached image" style="max-height:180px;border-radius:10px;margin-bottom:6px"></div>` : "";
+      /* Playable voice note (the user's recorded audio). */
+      const audioHtml = audio ? `<div class="gpt-msg-audio" style="margin-bottom:6px"><audio controls preload="metadata" src="${esc(audio)}" style="max-width:240px;height:38px;vertical-align:middle"></audio></div>` : "";
       const roleLabel = role === "assistant" ? CS.t("AI Mechanic") : CS.t("You");
+      const userText = esc(content) || (audio ? `<span style="opacity:.55"><i class="bi bi-mic-fill"></i> ${esc(CS.t("Voice message"))}</span>` : "");
       wrap.innerHTML = `${avatar}
         <div class="dz-ws-msg-body" data-id="${id}">
           <div class="dz-ws-msg-role">${esc(roleLabel)}</div>
           ${imgHtml}
-          <div class="dz-ws-msg-text ${role === "assistant" ? "md-body" : ""}">${role === "user" ? esc(content) : renderMarkdown(content)}</div>
+          ${audioHtml}
+          <div class="dz-ws-msg-text ${role === "assistant" ? "md-body" : ""}">${role === "user" ? userText : renderMarkdown(content)}</div>
           ${ts ? `<div class="dz-ws-msg-time" style="font-size:0.62rem;color:rgba(255,255,255,0.18);margin-top:4px;">${esc(fmtTime(ts))}</div>` : ""}
           ${role === "assistant" ? actionsRow(id, regen) : ""}
         </div>`;
@@ -765,104 +770,85 @@
     });
     imgRemove?.addEventListener("click", clearImage);
 
-    /* --- Voice input (Web Speech API) --- */
-    /* Requires a secure context (HTTPS) or localhost — otherwise start() fails. */
+    /* --- Voice note recording (MediaRecorder -> audio sent to Gemini) ---
+       Records real audio, attaches it as a playable voice note, sends it in the
+       payload (audio_url) for the AI to transcribe + answer. The reply can be read
+       back via the "Listen" (TTS) action. Falls back to a disabled state when the
+       browser/context can't record. */
+    /* getUserMedia needs a secure context (HTTPS) or localhost, else it's blocked. */
     const _voiceSecure = window.isSecureContext ||
       ["localhost", "127.0.0.1", "[::1]"].indexOf(location.hostname) >= 0;
-    if (micBtn && _voiceSecure && ("webkitSpeechRecognition" in window || "SpeechRecognition" in window)) {
-      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-      recognition = new SR();
-      recognition.continuous = false;
-      recognition.interimResults = true;
-      recognition.lang = "en-US";
-      let lastTranscript = "";
-      const recBar = document.getElementById("gpt-recording-bar");
-      const recTimer = document.getElementById("gpt-rec-timer");
-      const recStop = document.getElementById("gpt-rec-stop");
-      let recInterval = null;
-      let recSeconds = 0;
+    const _recBar = document.getElementById("gpt-recording-bar");
+    const _recTimer = document.getElementById("gpt-rec-timer");
+    const _recStopBtn = document.getElementById("gpt-rec-stop");
+    let _recInterval = null, _recSeconds = 0;
+    let _mediaRecorder = null, _audioChunks = [], _recStream = null;
 
-      function showRecBar() {
-        recSeconds = 0;
-        if (recTimer) recTimer.textContent = "0:00";
-        if (recBar) {
-          recBar.classList.add("visible");
-        }
-        recInterval = setInterval(() => {
-          recSeconds++;
-          const m = Math.floor(recSeconds / 60);
-          const s = (recSeconds % 60).toString().padStart(2, "0");
-          if (recTimer) recTimer.textContent = m + ":" + s;
-        }, 1000);
-      }
-      function hideRecBar() {
-        clearInterval(recInterval);
-        recInterval = null;
-        if (recBar) {
-          recBar.classList.remove("visible");
-        }
-      }
-
-      recognition.onresult = (e) => {
-        let transcript = "";
-        for (let i = e.resultIndex; i < e.results.length; i++) {
-          transcript += e.results[i][0].transcript;
-        }
-        lastTranscript = transcript;
-        input.value = transcript;
-        input.style.height = "auto";
-        input.style.height = Math.min(input.scrollHeight, 160) + "px";
+    function _showRecBar() {
+      _recSeconds = 0;
+      if (_recTimer) _recTimer.textContent = "0:00";
+      if (_recBar) { _recBar.classList.add("visible"); _recBar.style.display = ""; }
+      _recInterval = setInterval(() => {
+        _recSeconds++;
+        const m = Math.floor(_recSeconds / 60), sec = (_recSeconds % 60).toString().padStart(2, "0");
+        if (_recTimer) _recTimer.textContent = m + ":" + sec;
+      }, 1000);
+    }
+    function _hideRecBar() {
+      clearInterval(_recInterval); _recInterval = null;
+      if (_recBar) { _recBar.classList.remove("visible"); _recBar.style.display = "none"; }
+    }
+    function _resetMic() {
+      if (micBtn) { micBtn.classList.remove("recording"); const i = micBtn.querySelector("i"); if (i) i.className = "bi bi-mic"; }
+      _hideRecBar();
+    }
+    async function _startRecording() {
+      if (streaming) return;
+      try { _recStream = await navigator.mediaDevices.getUserMedia({ audio: true }); }
+      catch (err) { toast("error", CS.t("Microphone blocked"), CS.t("Allow microphone access in your browser settings.")); return; }
+      _audioChunks = [];
+      const prefs = ["audio/webm;codecs=opus", "audio/webm", "audio/mp4", "audio/ogg"];
+      let mime = "";
+      if (window.MediaRecorder && MediaRecorder.isTypeSupported) mime = prefs.find((t) => MediaRecorder.isTypeSupported(t)) || "";
+      try { _mediaRecorder = mime ? new MediaRecorder(_recStream, { mimeType: mime }) : new MediaRecorder(_recStream); }
+      catch (_) { _mediaRecorder = new MediaRecorder(_recStream); }
+      _mediaRecorder.ondataavailable = (e) => { if (e.data && e.data.size) _audioChunks.push(e.data); };
+      _mediaRecorder.onstop = () => {
+        if (_recStream) { _recStream.getTracks().forEach((t) => t.stop()); _recStream = null; }
+        _resetMic();
+        if (!_audioChunks.length) return;
+        const blob = new Blob(_audioChunks, { type: (_mediaRecorder && _mediaRecorder.mimeType) || "audio/webm" });
+        const reader = new FileReader();
+        reader.onload = () => sendVoiceNote(String(reader.result));
+        reader.readAsDataURL(blob);
       };
-      const resetMic = () => {
-        micBtn.classList.remove("recording");
-        micBtn.querySelector("i").className = "bi bi-mic";
-        hideRecBar();
-      };
-      recognition.onend = () => {
-        resetMic();
-        if (lastTranscript.trim()) {
-          input.value = lastTranscript.trim();
-          lastTranscript = "";
-          setTimeout(() => form.requestSubmit(), 150);
-        }
-      };
-      recognition.onerror = (e) => {
-        resetMic();
-        lastTranscript = "";
-        if (e.error === "not-allowed" || e.error === "service-not-allowed") {
-          toast("error", CS.t("Microphone blocked"), CS.t("Allow microphone access in your browser settings."));
-        } else if (e.error !== "aborted") {
-          toast("error", CS.t("Voice input failed"), CS.t("Please try again."));
-        }
-      };
+      _mediaRecorder.start();
+      if (micBtn) { micBtn.classList.add("recording"); const i = micBtn.querySelector("i"); if (i) i.className = "bi bi-record-circle"; }
+      _showRecBar();
+    }
+    function _stopRecording() {
+      try { if (_mediaRecorder && _mediaRecorder.state !== "inactive") _mediaRecorder.stop(); } catch (_) {}
+    }
+    function sendVoiceNote(dataUrl) {
+      if (!dataUrl || streaming) return;
+      const welcome = $("#gpt-welcome"); if (welcome) welcome.style.display = "none";
+      hideVisualPanel();
+      addBubble("user", "", { audio: dataUrl, regen: false });
+      scrollBottom();
+      stream({ chat_id: chatId, provider: currentProvider, audio_url: dataUrl });
+    }
+    const _canRecord = _voiceSecure && navigator.mediaDevices &&
+      typeof navigator.mediaDevices.getUserMedia === "function" && window.MediaRecorder;
+    if (micBtn && _canRecord) {
       micBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        e.preventDefault();
-        if (micBtn.classList.contains("recording")) {
-          recognition.stop();
-        } else {
-          lastTranscript = "";
-          try {
-            recognition.start();
-          } catch (err) {
-            /* start() throws if already running or on an insecure origin. */
-            toast("error", CS.t("Voice input failed"), CS.t("Please try again."));
-            return;
-          }
-          micBtn.classList.add("recording");
-          micBtn.querySelector("i").className = "bi bi-record-circle";
-          showRecBar();
-        }
+        e.preventDefault(); e.stopPropagation();
+        if (micBtn.classList.contains("recording")) _stopRecording(); else _startRecording();
       });
-      recStop?.addEventListener("click", (e) => {
-        e.stopPropagation();
-        e.preventDefault();
-        if (micBtn.classList.contains("recording")) recognition.stop();
-      });
+      if (_recStopBtn) _recStopBtn.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); _stopRecording(); });
     } else if (micBtn) {
       const reason = _voiceSecure
-        ? CS.t("Voice input not supported in this browser")
-        : CS.t("Voice input needs a secure connection (HTTPS) or localhost.");
+        ? CS.t("Voice recording is not supported in this browser")
+        : CS.t("Voice recording needs a secure connection (HTTPS) or localhost.");
       micBtn.title = reason;
       micBtn.style.opacity = "0.35";
       micBtn.style.cursor = "not-allowed";
@@ -1016,7 +1002,19 @@
       const body = historyEl.querySelector(`.dz-ws-msg-body[data-id="${id}"]`);
       const bubble = body?.querySelector(".dz-ws-msg-text");
       const text = bubble ? bubble.innerText : "";
-      if (btn.dataset.act === "copy") {
+      if (btn.dataset.act === "speak") {
+        /* Read the response aloud (play back the result), toggle on repeat click. */
+        const synth = window.speechSynthesis;
+        if (!synth) { toast("error", CS.t("Text-to-speech not supported")); return; }
+        if (synth.speaking) { synth.cancel(); btn.querySelector("i").className = "bi bi-volume-up"; return; }
+        /* Strip markdown symbols so the spoken audio reads cleanly. */
+        const spoken = text.replace(/[*_`#>|]/g, " ").replace(/\s+/g, " ").trim();
+        const u = new SpeechSynthesisUtterance(spoken);
+        u.rate = 1; u.pitch = 1;
+        u.onend = () => { btn.querySelector("i").className = "bi bi-volume-up"; };
+        btn.querySelector("i").className = "bi bi-stop-circle";
+        synth.speak(u);
+      } else if (btn.dataset.act === "copy") {
         navigator.clipboard?.writeText(text).then(() => toast("success", CS.t("Copied"), CS.t("Response copied to clipboard."))).catch(() => toast("error", CS.t("Copy failed")));
       } else if (btn.dataset.act === "download") {
         const blob = new Blob([text], { type: "text/markdown" });

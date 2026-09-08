@@ -108,7 +108,10 @@
             </div>
           </div>
 
-          <!-- VIN lookup — alternative to searching / voice -->
+          {# VIN lookup removed from the UI (item 13). Feature kept as future work —
+             see VIN_LOOKUP_ENABLED in diagnose.js and the commented route in
+             car_database/routes.py. To restore, un-comment this block. #}
+          {#
           <div class="dz-vin-section" id="dz-vin-section">
             <div class="dz-vin-divider"><span>or find your car by VIN</span></div>
             <div class="dz-vin-row">
@@ -128,6 +131,7 @@
             </div>
             <div class="dz-vin-msg d-none" id="dz-vin-msg"></div>
           </div>
+          #}
 
           <!-- Popular Brands -->
           <div class="dz-brands-section" id="dz-brands-section">
@@ -177,6 +181,18 @@
                      autocomplete="off" spellcheck="false">
             </div>
             <div class="dz-engine-suggestions" id="dz-engine-suggestions"></div>
+          </div>
+
+          <!-- Model year — makes the diagnosis + image specific to that year -->
+          <div class="dz-car-year d-none" id="dz-car-year">
+            <p class="dz-car-models-title">Model year <span class="dz-optional-tag">recommended</span></p>
+            <div class="dz-year-select-wrap">
+              <i class="bi bi-calendar3 dz-year-icon"></i>
+              <select class="dz-year-select" id="dz-year-select">
+                <option value="">Select year…</option>
+                {% for y in years %}<option value="{{ y }}">{{ y }}</option>{% endfor %}
+              </select>
+            </div>
           </div>
 
           <!-- Validation message -->

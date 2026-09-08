@@ -8593,3 +8593,50 @@ html[data-font-size="xlarge"] { font-size: 20px; }
 .app-page-header h1 { font-size: 1.35rem; font-weight: 700; color: var(--text); margin: 0; }
 .app-page-header p { color: rgba(var(--c-muted), 0.75); font-size: 0.85rem; margin: 2px 0 0; }
 @media (max-width: 640px) { .app-card { padding: 16px; } }
+
+/* Account profile picture — always a perfect circle, never oval (item 14). */
+.sidebar-user .avatar { aspect-ratio: 1 / 1; overflow: hidden; border-radius: 50% !important; }
+.sidebar-user .avatar img,
+.topbar .dropdown img { border-radius: 50% !important; object-fit: cover; aspect-ratio: 1 / 1; display: block; }
+
+/* ============================================================
+   Consistent branded background treatment (item 16) — a subtle, theme-aware
+   accent glow layered over --page-bg, shared across all app pages (AI Diagnosis,
+   My Diagnoses, Settings, About, Analyzing, Workspace). Very low opacity so it
+   never changes the colour scheme, just adds a consistent branded texture.
+   ============================================================ */
+body {
+  background:
+    radial-gradient(900px 520px at 12% -8%, rgba(var(--accent-rgb), 0.055), transparent 58%),
+    radial-gradient(820px 480px at 100% 0%, rgba(var(--accent-rgb), 0.035), transparent 55%),
+    var(--page-bg);
+  background-attachment: fixed;
+}
+
+/* ============================================================
+   Top-bar account avatar — a clean circular frame with the Google avatar
+   filling it (replaces the small circle floating in a rounded-square button).
+   ============================================================ */
+.topbar-account {
+  width: 40px; height: 40px; min-width: 40px; padding: 0;
+  border-radius: 50%; overflow: hidden; flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.topbar-account:hover { background: transparent; }
+.topbar-avatar {
+  width: 100%; height: 100%; object-fit: cover; aspect-ratio: 1 / 1;
+  border-radius: 50%; display: block; box-sizing: border-box;
+  border: 1.5px solid rgba(var(--accent-rgb), 0.4);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.topbar-account:hover .topbar-avatar {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.18);
+}
+.topbar-avatar-fallback {
+  width: 100%; height: 100%; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.55rem; line-height: 1; color: var(--accent);
+  background: rgba(var(--accent-rgb), 0.1);
+  border: 1.5px solid rgba(var(--accent-rgb), 0.3);
+}

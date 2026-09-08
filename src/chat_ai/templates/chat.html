@@ -77,16 +77,8 @@
 
           <!-- LEFT: Chat -->
           <div class="dz-ws-chat" id="dz-ws-chat">
-            <div class="dz-ws-chat-header">
-              <div class="dz-ws-chat-header-left">
-                <div class="dz-ws-chat-avatar"><i class="bi bi-stars"></i></div>
-                <div>
-                  <div class="dz-ws-chat-title">AI Mechanic</div>
-                  <div class="dz-ws-chat-status"><span class="dz-ws-status-dot"></span> {{ t('AI System Online') }}</div>
-                </div>
-              </div>
-            </div>
-
+            {# The workspace header above already shows "AI Mechanic" + status —
+               the inner chat sub-header was a duplicate, so it is removed. #}
             <div class="dz-ws-chat-history" id="chat-history">
               <!-- Welcome screen -->
               <div class="gpt-welcome" id="gpt-welcome" {% if chat.messages %}style="display:none"{% endif %}>
@@ -145,6 +137,7 @@
                     {% if m.ts %}<div class="dz-ws-msg-time" style="font-size:0.62rem;color:rgba(255,255,255,0.18);margin-top:4px;">{{ m.ts }}</div>{% endif %}
                     {% if m.role == 'assistant' %}
                     <div class="gpt-msg-actions" style="display:flex;gap:6px;margin-top:8px;">
+                      <button class="gpt-action-btn" title="{{ t('Listen') }}" data-act="speak" data-id="init-{{ loop.index }}"><i class="bi bi-volume-up"></i></button>
                       <button class="gpt-action-btn" title="{{ t('Copy response') }}" data-act="copy" data-id="init-{{ loop.index }}"><i class="bi bi-clipboard"></i></button>
                       <button class="gpt-action-btn" title="{{ t('Download response') }}" data-act="download" data-id="init-{{ loop.index }}"><i class="bi bi-download"></i></button>
                       <button class="gpt-action-btn" title="{{ t('Regenerate response') }}" data-act="regen" data-id="init-{{ loop.index }}"><i class="bi bi-arrow-repeat"></i></button>

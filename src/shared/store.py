@@ -170,7 +170,9 @@ class Store:
                 }
             else:
                 profile = self._users[key]
-                if picture and not profile.get("picture"):
+                # Always refresh the Google avatar on login so it stays current
+                # (and back-fills accounts created before avatars were captured).
+                if picture:
                     profile["picture"] = picture
                 if provider and not profile.get("provider"):
                     profile["provider"] = provider

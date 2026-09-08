@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% block title %}My Diagnoses · Car Service AI{% endblock %}
 {% block extra_css %}
+<!-- Reuse the AI Diagnosis header/container/card so both pages are identical. -->
+<link href="/static/ai_report/diagnose.css" rel="stylesheet">
 <style>
 /* ---- My Diagnoses Page ---- */
 .md-wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px 60px; }
@@ -103,7 +105,7 @@
 .md-card.locked { border-color: rgba(245,158,11,0.25); }
 
 /* Empty state */
-.md-empty { text-align: center; padding: 60px 20px; }
+.md-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 48px 20px; min-height: 340px; }
 .md-empty-icon { font-size: 3rem; color: rgba(var(--c-muted),0.15); margin-bottom: 16px; }
 .md-empty h3 { font-size: 1.1rem; color: var(--text); margin-bottom: 8px; }
 .md-empty p { color: rgba(var(--c-muted),0.5); font-size: 0.88rem; margin-bottom: 20px; }
@@ -159,19 +161,30 @@
 {% endblock %}
 
 {% block content %}
-<div class="md-wrap">
-  <div class="md-header">
-    <div class="md-header-left">
-      <div class="md-header-icon"><i class="bi bi-clipboard2-pulse"></i></div>
-      <div>
-        <h1>My Diagnoses</h1>
-        <p>All your vehicle checks — continue where you left off.</p>
+<div class="dz-wrap">
+  <!-- Same header bar as AI Diagnosis (icon + title + subtitle + status), minus the stepper -->
+  <div class="dz-wizard-header">
+    <div class="dz-wizard-header-inner">
+      <div class="dz-wizard-title-row">
+        <div class="dz-wizard-title-group">
+          <div class="dz-wizard-icon"><i class="bi bi-clipboard2-pulse"></i></div>
+          <div>
+            <h1 class="dz-wizard-page-title">My Diagnoses</h1>
+            <p class="dz-wizard-page-sub">Smart vehicle problem analysis</p>
+          </div>
+        </div>
+        <div class="dz-wizard-status">
+          <span class="dz-wizard-status-dot"></span>
+          <span>AI System Online</span>
+        </div>
       </div>
     </div>
-    <div class="md-header-status"><span>AI System Online</span></div>
   </div>
 
-  <div class="app-card md-panel">
+  <!-- Same container + card as AI Diagnosis (single column for the list) -->
+  <div class="dz-main-grid" style="grid-template-columns:1fr;">
+   <div class="dz-grid-left">
+    <div class="dz-card md-panel">
   <div class="md-toolbar">
     <form class="md-search" method="get" action="/my-diagnoses" id="md-search-form" role="search">
       <i class="bi bi-search"></i>
@@ -302,8 +315,10 @@
     {% endif %}
   </div>
   {% endif %}
-  </div><!-- /app-card -->
-</div>
+    </div><!-- /dz-card -->
+   </div><!-- /dz-grid-left -->
+  </div><!-- /dz-main-grid -->
+</div><!-- /dz-wrap -->
 
 <!-- Delete confirmation modal -->
 <div class="md-modal-overlay" id="md-delete-modal">

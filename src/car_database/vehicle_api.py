@@ -486,6 +486,26 @@ async def _wiki_photo(title: str) -> str | None:
     return None
 
 
+async def _wiki_search_photo(query: str) -> str | None:
+    """Find the best-matching Wikipedia page for a free-text query and return its
+    lead photo — used when an exact title doesn't resolve (model-name variants)."""
+    try:
+        data = await _get_json(_WIKI_API, {
+            "action": "query", "format": "json", "redirects": "1",
+            "generator": "search", "gsrsearch": query, "gsrlimit": "1",
+            "prop": "pageimages", "piprop": "thumbnail|original", "pithumbsize": "800",
+        })
+    except Exception:  # noqa: BLE001
+        return None
+    pages = ((data or {}).get("query") or {}).get("pages") or {}
+    for _pid, page in pages.items():
+        src = ((page.get("thumbnail") or {}).get("source")
+               or (page.get("original") or {}).get("source"))
+        if src and not src.lower().split("?")[0].endswith(".svg"):
+            return src
+    return None
+
+
 async def photo_url(make: str, model: str, year: str | int = "") -> str:
     """Resolve a realistic PHOTO of the given vehicle (make/model[/year]).
 
@@ -500,7 +520,9 @@ async def photo_url(make: str, model: str, year: str | int = "") -> str:
     year = str(year or "").strip()
 
     async def _load() -> str:
-        # Try the most specific Wikipedia titles first, then broaden.
+        # Try the most specific Wikipedia titles first, then broaden. Wikipedia's
+        # redirect handling normalises name variants (CR-V / CRV / Cr-v resolve to
+        # the same page).
         titles: list[str] = []
         if make and model:
             if year:
@@ -512,7 +534,17 @@ async def photo_url(make: str, model: str, year: str | int = "") -> str:
             src = await _wiki_photo(title)
             if src:
                 return src
-        # Fallbacks: shipped local image, then an optional licensed CGI render.
-        return local_image(make, model) or _imagin_url(make, model, year)
+        # Full-text search as a last resort (handles odd model-name variants).
+        if make and model:
+            src = await _wiki_search_photo(f"{make} {model} car")
+            if src:
+                return src
+        # IMPORTANT: the shipped local .webp files are unreliable DUPLICATES — many
+        # distinct models share one file (e.g. every Honda file is byte-identical),
+        # so using them as a fallback is exactly what made every model show the same
+        # (e.g. Civic) image. They are therefore NOT used here. Fall back only to a
+        # licensed CGI render if configured, otherwise "" (the UI shows an icon —
+        # never another model's photo).
+        return _imagin_url(make, model, year)
 
     return await _cached(f"photo:{make.lower()}:{model.lower()}:{year}", _load)

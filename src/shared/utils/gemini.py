@@ -426,7 +426,8 @@ _SYSTEM_CHAT = (
 
 def chat_stream(user: str | None, messages: list[dict[str, str]],
                 lang: str = "en", msg_lang: str | None = None,
-                image_bytes: bytes | None = None, image_mime: str = "image/jpeg"):
+                image_bytes: bytes | None = None, image_mime: str = "image/jpeg",
+                audio_bytes: bytes | None = None, audio_mime: str = "audio/webm"):
     """Yield incremental text chunks for the chat UI (Gemini only).
 
     Raises :class:`UnavailableError` when no usable API key is configured or the
@@ -454,14 +455,18 @@ def chat_stream(user: str | None, messages: list[dict[str, str]],
         f"{'User' if m['role'] == 'user' else 'Assistant'}: {m['content']}"
         for m in messages
     )
+    contents = [system, history_text]
     if image_bytes:
         from google.genai import types
-        img_part = types.Part.from_bytes(data=image_bytes, mime_type=image_mime)
-        contents = [system, history_text,
-                    "The user has also attached an image. Analyse it carefully.",
-                    img_part]
-    else:
-        contents = [system, history_text]
+        contents.append("The user has also attached an image. Analyse it carefully.")
+        contents.append(types.Part.from_bytes(data=image_bytes, mime_type=image_mime))
+    if audio_bytes:
+        from google.genai import types
+        contents.append(
+            "The user sent a VOICE MESSAGE. Transcribe what they said, then answer it "
+            "as their AI mechanic. Start your reply with a short line: 'You said: \"…\"' "
+            "containing the transcription, then give your helpful answer.")
+        contents.append(types.Part.from_bytes(data=audio_bytes, mime_type=audio_mime))
     # Try the selected model first, then supported fallbacks. Only retry when
     # nothing has been streamed yet so partial output is never duplicated.
     last_err: Exception | None = None
@@ -489,7 +494,8 @@ def chat_stream(user: str | None, messages: list[dict[str, str]],
 async def stream_sse(user: str | None, messages: list[dict[str, str]],
                      lang: str = "en", msg_lang: str | None = None,
                      delay: float = 0.02,
-                     image_bytes: bytes | None = None, image_mime: str = "image/jpeg"):
+                     image_bytes: bytes | None = None, image_mime: str = "image/jpeg",
+                     audio_bytes: bytes | None = None, audio_mime: str = "audio/webm"):
     """Async wrapper that yields SSE events from the sync generator, one chunk at a time.
 
     If the AI service is unavailable an error event with the **exact** reason is
@@ -498,7 +504,8 @@ async def stream_sse(user: str | None, messages: list[dict[str, str]],
     try:
         loop = asyncio.get_running_loop()
         gen = chat_stream(user, messages, lang=lang, msg_lang=msg_lang,
-                          image_bytes=image_bytes, image_mime=image_mime)
+                          image_bytes=image_bytes, image_mime=image_mime,
+                          audio_bytes=audio_bytes, audio_mime=audio_mime)
         while True:
             chunk = await loop.run_in_executor(None, _next_or_none, gen)
             if chunk is None:
