@@ -313,17 +313,17 @@
    base/media-query `.gpt-main` rules so it wins even with !important. */
 .gpt-wrap--no-side .gpt-main { margin-left: 0 !important; }
 
-/* --- 3. TOPBAR — Clean single header --- */
+/* --- 3. TOPBAR — Clean single header (matches AI Diagnosis chat header) --- */
 .gpt-topbar {
   display: flex !important;
   align-items: center !important;
-  gap: 12px !important;
-  padding: 0 24px !important;
-  background: rgba(4, 8, 16, 0.85) !important;
-  border-bottom: 1px solid rgba(var(--accent-rgb), 0.06) !important;
+  gap: 10px !important;
+  padding: 0 20px !important;
+  background: rgba(4, 8, 16, 0.4) !important;
+  border-bottom: 1px solid rgba(var(--accent-rgb), 0.04) !important;
   backdrop-filter: blur(12px);
   flex-shrink: 0 !important;
-  min-height: 60px !important;
+  min-height: 52px !important;
 }
 .gpt-topbar-toggle {
   display: none;
@@ -338,25 +338,25 @@
 .gpt-topbar-toggle:hover { background: rgba(255, 255, 255, 0.05); color: rgba(255, 255, 255, 0.6); }
 .gpt-topbar-title { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
 .gpt-topbar-icon {
-  width: 40px; height: 40px;
-  border-radius: 12px;
+  width: 32px; height: 32px;
+  border-radius: 9px;
   background: rgba(var(--accent-rgb), 0.06);
-  border: 1px solid rgba(var(--accent-rgb), 0.08);
+  border: 1px solid rgba(var(--accent-rgb), 0.1);
   display: flex; align-items: center; justify-content: center;
-  color: rgba(var(--accent-rgb), 0.5); font-size: 1rem; flex-shrink: 0;
+  color: rgba(var(--accent-rgb), 0.5); font-size: 0.8rem; flex-shrink: 0;
 }
 .gpt-topbar-name {
-  font-weight: 700 !important; font-size: 0.95rem; letter-spacing: 2px !important;
+  font-weight: 700 !important; font-size: 0.8rem; letter-spacing: 0.5px !important;
   color: rgba(255, 255, 255, 0.7);
 }
 .gpt-topbar-status {
-  font-size: 0.72rem; color: rgba(255, 255, 255, 0.3);
-  display: flex; align-items: center; gap: 6px; margin-top: 1px;
+  font-size: 0.65rem; color: rgba(255, 255, 255, 0.3);
+  display: flex; align-items: center; gap: 5px; margin-top: 1px;
 }
 .gpt-status-dot {
-  width: 7px; height: 7px; border-radius: 50%;
+  width: 6px; height: 6px; border-radius: 50%;
   background: rgba(34, 197, 94, 0.6) !important;
-  box-shadow: 0 0 8px rgba(34, 197, 94, 0.4) !important;
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.4) !important;
   animation: status-pulse 2s ease-in-out infinite;
 }
 @keyframes status-pulse {
@@ -368,9 +368,9 @@
 .gpt-model-btn {
   background: rgba(255, 255, 255, 0.03) !important;
   border: 1px solid rgba(255, 255, 255, 0.06) !important;
-  border-radius: 10px !important;
-  padding: 8px 14px !important;
-  color: rgba(255, 255, 255, 0.5) !important; font-size: 0.85rem;
+  border-radius: 9px !important;
+  padding: 6px 12px !important;
+  color: rgba(255, 255, 255, 0.5) !important; font-size: 0.8rem;
   display: flex; align-items: center; gap: 6px;
   transition: all 0.2s ease !important; cursor: pointer;
 }
@@ -397,12 +397,12 @@
 .gpt-model-option.active { background: rgba(var(--accent-rgb), 0.06); color: rgba(var(--accent-rgb), 0.6); }
 .gpt-model-option i { font-size: 1rem; width: 18px; text-align: center; }
 .gpt-topbar-btn {
-  width: 40px; height: 40px; border-radius: 10px !important;
+  width: 34px; height: 34px; border-radius: 9px !important;
   background: rgba(255, 255, 255, 0.03) !important;
   border: 1px solid rgba(255, 255, 255, 0.05) !important;
   color: rgba(255, 255, 255, 0.35) !important;
   display: flex; align-items: center; justify-content: center;
-  font-size: 1rem; transition: all 0.2s ease !important;
+  font-size: 0.9rem; transition: all 0.2s ease !important;
 }
 .gpt-topbar-btn:hover { background: rgba(255, 255, 255, 0.05) !important; border-color: rgba(255, 255, 255, 0.1) !important; color: rgba(255, 255, 255, 0.5) !important; }
 
@@ -539,50 +539,50 @@
 #gpt-chat-visual.chat-active { display: none !important; }
 .gpt-chat-layout.chat-active { grid-template-columns: 1fr !important; }
 
-/* --- 7. COMPOSER — Premium large input --- */
-.gpt-composer { padding: 16px 28px 20px !important; background: rgba(4, 8, 16, 0.4) !important; border-top: 1px solid rgba(var(--accent-rgb), 0.04) !important; }
+/* --- 7. COMPOSER — Compact like AI Diagnosis workspace --- */
+.gpt-composer { padding: 12px 20px 16px !important; background: rgba(4, 8, 16, 0.4) !important; border-top: 1px solid rgba(var(--accent-rgb), 0.04) !important; }
 .gpt-composer-inner {
-  background: rgba(255, 255, 255, 0.03) !important;
-  border: 1px solid rgba(var(--accent-rgb), 0.08) !important;
-  border-radius: 18px !important; padding: 14px 16px !important;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease !important;
+  background: rgba(255, 255, 255, 0.02) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  border-radius: 14px !important; padding: 10px 12px !important;
+  transition: border-color 0.3s ease !important;
 }
 .gpt-composer-inner:focus-within {
-  border-color: rgba(var(--accent-rgb), 0.2) !important;
-  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.04) !important;
+  border-color: rgba(var(--accent-rgb), 0.12) !important;
+  box-shadow: none !important;
 }
-.gpt-composer-row { display: flex; align-items: flex-end; gap: 10px; }
+.gpt-composer-row { display: flex; align-items: flex-end; gap: 6px; }
 .gpt-composer-row textarea {
-  flex: 1; background: transparent; border: none; color: rgba(255, 255, 255, 0.7);
-  font-size: 1rem; resize: none; outline: none; padding: 10px 6px;
-  min-height: 28px; max-height: 160px; line-height: 1.6;
+  flex: 1; background: transparent; border: none; color: rgba(255, 255, 255, 0.55);
+  font-size: 0.88rem; resize: none; outline: none; padding: 6px 4px;
+  min-height: 24px; max-height: 120px; line-height: 1.5;
   font-family: 'Inter', sans-serif;
 }
-.gpt-composer-row textarea::placeholder { color: rgba(255, 255, 255, 0.25); }
+.gpt-composer-row textarea::placeholder { color: rgba(255, 255, 255, 0.2); }
 .gpt-composer-btn {
-  width: 42px; height: 42px; border-radius: 12px;
-  background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.06);
+  width: 34px; height: 34px; border-radius: 9px;
+  background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05);
   color: rgba(255, 255, 255, 0.3); display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0; transition: all 0.2s ease; cursor: pointer; font-size: 1.05rem;
+  flex-shrink: 0; transition: all 0.2s ease; cursor: pointer; font-size: 0.9rem;
 }
-.gpt-composer-btn:hover { background: rgba(255, 255, 255, 0.06); color: rgba(255, 255, 255, 0.5); border-color: rgba(255, 255, 255, 0.1); }
+.gpt-composer-btn:hover { background: rgba(255, 255, 255, 0.06); color: rgba(255, 255, 255, 0.5); border-color: rgba(255, 255, 255, 0.08); }
 .gpt-send-btn {
-  background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.2), rgba(var(--accent-rgb), 0.15)) !important;
-  border: 1px solid rgba(var(--accent-rgb), 0.15) !important; border-radius: 12px !important;
-  width: 42px; height: 42px; display: flex; align-items: center; justify-content: center;
-  color: rgba(var(--accent-rgb), 0.7) !important; font-size: 1.1rem; transition: all 0.2s ease !important;
+  background: rgba(var(--accent-rgb), 0.12) !important;
+  border: 1px solid rgba(var(--accent-rgb), 0.1) !important; border-radius: 9px !important;
+  width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
+  color: rgba(var(--accent-rgb), 0.6) !important; font-size: 0.9rem; transition: all 0.2s ease !important;
   flex-shrink: 0;
 }
-.gpt-send-btn:hover { background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.25), rgba(var(--accent-rgb), 0.2)) !important; color: rgba(var(--accent-rgb), 0.9) !important; transform: translateY(-1px); }
+.gpt-send-btn:hover { background: rgba(var(--accent-rgb), 0.18) !important; color: var(--accent) !important; transform: none; }
 .gpt-send-btn:disabled { opacity: 0.3; transform: none; }
 .chat-stop {
-  display: none; width: 42px; height: 42px; border-radius: 12px;
-  background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.12);
-  color: rgba(239, 68, 68, 0.6); align-items: center; justify-content: center;
-  flex-shrink: 0; transition: all 0.2s ease; cursor: pointer; font-size: 1.05rem;
+  display: none; width: 34px; height: 34px; border-radius: 9px;
+  background: rgba(239, 68, 68, 0.06); border: 1px solid rgba(239, 68, 68, 0.1);
+  color: rgba(239, 68, 68, 0.5); align-items: center; justify-content: center;
+  flex-shrink: 0; transition: all 0.2s ease; cursor: pointer; font-size: 0.9rem;
 }
 .chat-stop.visible { display: flex; }
-.chat-stop:hover { background: rgba(239, 68, 68, 0.12); }
+.chat-stop:hover { background: rgba(239, 68, 68, 0.1); color: rgba(239, 68, 68, 0.7); }
 .gpt-mic-btn.recording {
   background: rgba(239, 68, 68, 0.1) !important;
   border-color: rgba(239, 68, 68, 0.18) !important;
@@ -593,13 +593,13 @@
   0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.1); }
   50% { box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
 }
-.gpt-composer-hint { text-align: center; font-size: 0.72rem; color: rgba(255, 255, 255, 0.15); margin-top: 10px; }
+.gpt-composer-hint { text-align: center; font-size: 0.68rem; color: rgba(255, 255, 255, 0.15); margin-top: 8px; }
 .gpt-img-preview {
-  padding: 10px; margin-bottom: 10px; border-radius: 12px;
-  background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05);
-  display: flex; align-items: center; gap: 10px;
+  padding: 8px; margin-bottom: 8px; border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.04);
+  display: flex; align-items: center; gap: 8px;
 }
-.gpt-img-preview img { width: 56px; height: 56px; object-fit: cover; border-radius: 10px; }
+.gpt-img-preview img { width: 48px; height: 48px; object-fit: cover; border-radius: 8px; }
 .gpt-img-remove {
   background: rgba(239, 68, 68, 0.06); border: 1px solid rgba(239, 68, 68, 0.1);
   border-radius: 8px; color: rgba(239, 68, 68, 0.5); padding: 5px 10px; font-size: 0.78rem;
@@ -607,89 +607,92 @@
 }
 .gpt-img-remove:hover { background: rgba(239, 68, 68, 0.1); }
 
-/* --- 8. MESSAGES — Large, readable, distinct --- */
+/* --- 8. MESSAGES — Compact like AI Diagnosis workspace --- */
 .gpt-msgs {
-  padding: 24px 32px !important; display: flex !important;
-  flex-direction: column !important; gap: 20px !important;
+  padding: 16px 20px !important; display: flex !important;
+  flex-direction: column !important; gap: 14px !important;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(var(--accent-rgb), 0.1) transparent;
 }
 .gpt-msg {
-  display: flex !important; gap: 14px !important; max-width: 85% !important;
+  display: flex !important; gap: 10px !important; max-width: 88% !important;
   width: auto !important; margin: 0 !important; padding: 0 !important;
   border-top: none !important; animation: msg-in 0.3s ease;
 }
-@keyframes msg-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes msg-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 .gpt-msg-assistant { align-self: flex-start; }
-.gpt-msg-user { align-self: flex-end; flex-direction: row-reverse; max-width: 75% !important; }
+.gpt-msg-user { align-self: flex-end; flex-direction: row-reverse; max-width: 88% !important; }
 .gpt-msg-avatar {
-  width: 38px !important; height: 38px !important; border-radius: 12px !important;
+  width: 30px !important; height: 30px !important; border-radius: 9px !important;
   display: flex !important; align-items: center !important; justify-content: center !important;
-  flex-shrink: 0 !important; font-size: 0.9rem !important; margin-top: 2px !important;
+  flex-shrink: 0 !important; font-size: 0.75rem !important; margin-top: 2px !important;
 }
 .gpt-msg-avatar.ai {
-  background: rgba(var(--accent-rgb), 0.06);
-  border: 1px solid rgba(var(--accent-rgb), 0.08);
-  color: rgba(var(--accent-rgb), 0.45);
+  background: rgba(var(--accent-rgb), 0.04);
+  border: 1px solid rgba(var(--accent-rgb), 0.06);
+  color: rgba(var(--accent-rgb), 0.35);
 }
 .gpt-msg-avatar.user {
-  background: rgba(var(--accent-rgb), 0.08);
-  border: 1px solid rgba(var(--accent-rgb), 0.10);
-  color: rgba(96, 165, 250, 0.6);
+  background: rgba(var(--accent-rgb), 0.06);
+  border: 1px solid rgba(var(--accent-rgb), 0.08);
+  color: rgba(96, 165, 250, 0.5);
 }
 .gpt-msg-body {
-  background: rgba(10, 18, 32, 0.7) !important;
-  border: 1px solid rgba(var(--accent-rgb), 0.06) !important;
-  border-radius: 18px !important; padding: 16px 20px !important;
+  background: rgba(255, 255, 255, 0.02) !important;
+  border: 1px solid rgba(255, 255, 255, 0.04) !important;
+  border-radius: 12px !important; padding: 10px 14px !important;
   min-width: 0 !important; flex: 1 !important;
-  backdrop-filter: blur(8px) !important;
 }
 .gpt-msg-user .gpt-msg-body {
-  background: rgba(var(--accent-rgb), 0.06) !important;
-  border-color: rgba(var(--accent-rgb), 0.08) !important;
+  background: rgba(var(--accent-rgb), 0.04) !important;
+  border-color: rgba(var(--accent-rgb), 0.06) !important;
 }
 .gpt-msg-role {
-  font-size: 0.75rem !important; font-weight: 600 !important;
-  color: rgba(255, 255, 255, 0.3) !important; margin-bottom: 6px !important; letter-spacing: 0.3px;
+  font-size: 0.68rem !important; font-weight: 700 !important;
+  color: rgba(255, 255, 255, 0.4) !important; margin-bottom: 4px !important; letter-spacing: 0.3px;
 }
 .gpt-msg-text {
-  font-size: 0.95rem !important; line-height: 1.7 !important; color: rgba(255, 255, 255, 0.7) !important; word-break: break-word;
+  font-size: 0.85rem !important; line-height: 1.6 !important; color: rgba(255, 255, 255, 0.65) !important;
+  overflow-wrap: anywhere; word-break: break-word; min-width: 0;
 }
-.gpt-msg-text p { margin: 0 0 10px; }
+.gpt-msg-text p { margin: 0 0 8px; }
 .gpt-msg-text p:last-child { margin-bottom: 0; }
 .gpt-msg-text code {
-  background: rgba(var(--accent-rgb), 0.04); border: 1px solid rgba(var(--accent-rgb), 0.06);
-  border-radius: 6px; padding: 2px 6px; font-size: 0.88rem;
+  background: rgba(var(--accent-rgb), 0.06); border: 1px solid rgba(var(--accent-rgb), 0.08);
+  border-radius: 4px; padding: 1px 5px; font-size: 0.8rem;
   font-family: 'JetBrains Mono', monospace;
+  color: rgba(var(--accent-rgb), 0.7);
 }
 .gpt-msg-text pre {
-  background: rgba(0, 0, 0, 0.35); border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 12px; padding: 14px; overflow-x: auto; margin: 10px 0;
+  background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px; padding: 10px 12px; overflow-x: auto; margin: 6px 0;
 }
 .gpt-msg-text pre code {
   background: none; border: none; padding: 0;
 }
 .gpt-msg-text ul, .gpt-msg-text ol {
-  padding-left: 1.3em; margin: 6px 0;
+  margin: 4px 0 8px 18px; padding: 0;
 }
-.gpt-msg-text li { margin-bottom: 4px; }
-.gpt-msg-text strong { color: rgba(255, 255, 255, 0.8); }
+.gpt-msg-text li { margin-bottom: 3px; }
+.gpt-msg-text strong { color: rgba(255, 255, 255, 0.85); }
 .gpt-msg-text h1, .gpt-msg-text h2, .gpt-msg-text h3, .gpt-msg-text h4 {
-  color: rgba(255, 255, 255, 0.8); margin: 14px 0 8px;
+  color: rgba(255, 255, 255, 0.85); margin: 10px 0 6px;
 }
-.gpt-msg-text h1 { font-size: 1.2rem; }
-.gpt-msg-text h2 { font-size: 1.1rem; }
-.gpt-msg-text h3 { font-size: 1rem; }
+.gpt-msg-text h1 { font-size: 1.1rem; }
+.gpt-msg-text h2 { font-size: 1rem; }
+.gpt-msg-text h3 { font-size: 0.92rem; }
 .gpt-msg-text blockquote {
   border-left: 3px solid rgba(var(--accent-rgb), 0.2);
-  padding-left: 14px; margin: 10px 0;
+  padding-left: 12px; margin: 8px 0;
   color: rgba(255, 255, 255, 0.4);
 }
-.gpt-msg-time { font-size: 0.68rem !important; color: rgba(255, 255, 255, 0.18) !important; margin-top: 8px; }
-.gpt-msg-actions { display: flex; gap: 6px; margin-top: 10px; }
+.gpt-msg-time { font-size: 0.62rem !important; color: rgba(255, 255, 255, 0.18) !important; margin-top: 4px; }
+.gpt-msg-actions { display: flex; gap: 6px; margin-top: 8px; }
 .gpt-action-btn {
   background: rgba(255, 255, 255, 0.03) !important;
   border: 1px solid rgba(255, 255, 255, 0.05) !important;
-  border-radius: 8px !important; padding: 5px 10px !important;
-  color: rgba(255, 255, 255, 0.3) !important; font-size: 0.78rem; transition: all 0.2s ease !important;
+  border-radius: 8px !important; padding: 4px 8px !important;
+  color: rgba(255, 255, 255, 0.3) !important; font-size: 0.72rem; transition: all 0.2s ease !important;
 }
 .gpt-action-btn:hover {
   background: rgba(255, 255, 255, 0.06) !important;
@@ -1321,18 +1324,18 @@
 }
 .gpt-side-overlay.visible { display: block; }
 @media (max-width: 767.98px) {
-  .gpt-topbar { padding: 12px 16px !important; min-height: 52px !important; }
-  .gpt-topbar-icon { width: 36px; height: 36px; font-size: 0.9rem; }
-  .gpt-topbar-name { font-size: 0.85rem; letter-spacing: 1.5px; }
+  .gpt-topbar { padding: 10px 16px !important; min-height: 48px !important; }
+  .gpt-topbar-icon { width: 28px; height: 28px; font-size: 0.75rem; }
+  .gpt-topbar-name { font-size: 0.75rem; letter-spacing: 0.3px; }
   .gpt-mode-tabs { padding: 0 12px !important; gap: 1px; overflow-x: auto; }
   .gpt-mode-tab { padding: 10px 10px !important; font-size: 0.82rem; white-space: nowrap; }
   .gpt-welcome { padding: 32px 16px; }
   .gpt-welcome-title { font-size: 1.5rem; }
   .gpt-welcome-grid { grid-template-columns: 1fr; gap: 10px; }
-  .gpt-composer { padding: 12px 14px 16px !important; }
-  .gpt-msgs { padding: 16px 16px !important; gap: 14px; }
-  .gpt-msg { max-width: 90%; }
-  .gpt-msg-text { font-size: 0.92rem !important; }
+  .gpt-composer { padding: 10px 14px 12px !important; }
+  .gpt-msgs { padding: 12px 14px !important; gap: 12px; }
+  .gpt-msg { max-width: 92%; }
+  .gpt-msg-text { font-size: 0.82rem !important; }
   .diag-input-col, .diag-output-col { padding: 16px !important; }
   .diag-input-panel { padding: 18px; }
   .dt-chips { grid-template-columns: repeat(2, 1fr); gap: 6px; }
@@ -1348,14 +1351,14 @@
   .gpt-nav-item { padding: 9px 10px; font-size: 0.85rem; }
 }
 @media (max-width: 430px) {
-  .gpt-topbar-name { font-size: 0.78rem; letter-spacing: 1px; }
+  .gpt-topbar-name { font-size: 0.72rem; letter-spacing: 0.3px; }
   .gpt-topbar-status { display: none; }
   .gpt-model-label { display: none; }
-  .gpt-msgs { padding: 14px 12px !important; }
-  .gpt-composer { padding: 10px 12px 14px !important; }
-  .gpt-composer-inner { border-radius: 16px !important; padding: 12px !important; }
+  .gpt-msgs { padding: 12px 12px !important; }
+  .gpt-composer { padding: 10px 12px 12px !important; }
+  .gpt-composer-inner { border-radius: 12px !important; padding: 8px 10px !important; }
   .gpt-msg { max-width: 92%; }
-  .gpt-msg-text { font-size: 0.9rem !important; }
+  .gpt-msg-text { font-size: 0.8rem !important; }
 }
 @media (max-width: 390px) {
   .gpt-topbar-name { font-size: 0.72rem; letter-spacing: 0.8px; }
@@ -1363,11 +1366,8 @@
   .diag-preview-cards { grid-template-columns: repeat(2, 1fr); }
 }
 @media (min-width: 1440px) {
-  /* NOTE: no `.gpt-main { margin-left: 260px }` here — `.layout-main` already
-     offsets for the fixed 260px sidebar. Adding it again double-offset the chat,
-     leaving a ~260px black gap on the left (the "layout breaks on chat" bug). */
-  .gpt-msgs { padding: 28px 40px !important; }
-  .gpt-composer { padding: 18px 40px 22px !important; }
+  .gpt-msgs { padding: 20px 28px !important; }
+  .gpt-composer { padding: 14px 28px 18px !important; }
   .gpt-chat-layout { grid-template-columns: 1fr 360px !important; }
 }
 

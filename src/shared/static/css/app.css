@@ -1931,10 +1931,10 @@ a {
 }
 
 .thinking span {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background: var(--brand);
+  background: rgba(var(--accent-rgb), 0.3);
   animation: think 1.2s ease-in-out infinite;
 }
 
