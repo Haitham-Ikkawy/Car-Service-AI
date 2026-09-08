@@ -427,6 +427,20 @@ to the code.
     ≤992px. Verified all pages render at each breakpoint with no unguarded fixed-min
     tracks remaining.
 
+### Login logo + workspace chat audio
+60. **Login logo fixed.** `.auth-logo` is an accent-gradient chip; the masked
+    `.cs-logo-icon` inside was filled with `var(--accent)` — the **same colour as the
+    chip** — so the car icon was invisible and it looked like a blank orange square.
+    Forced the icon white inside the chip (`.auth-logo/.splash-logo .cs-logo-icon
+    { background-color:#fff }`).
+61. **Workspace chat audio fixed (final diagnosis stage).** The diagnosis **workspace**
+    chat (`wsBindEvents` in `diagnose.js`) never wired its mic (`#dz-ws-mic`) — only
+    the standalone `/chat` page had recording — so audio "stopped working" at the final
+    stage and only returned after exiting to the list and re-entering (which loads the
+    `/chat` controller). Ported the MediaRecorder flow into the workspace: mic records →
+    `wsSendVoiceNote()` → `wsAddBubble` shows a playable `<audio>` note → `wsStream`
+    sends `audio_url` to Gemini (transcribe + answer). Now continuous, no re-entry.
+
 > **Outstanding from the audit (not yet done):** split the 8.6k-line `app.css`
 > monolith + de-dupe the doubled `.page`/`.sidebar`/`.layout-main` rules; finish or
 > remove the half-applied i18n (`diagnose.html` uses `t()` 0×, `resolve_lang` still

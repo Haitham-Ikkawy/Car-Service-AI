@@ -8652,3 +8652,9 @@ pre, table { max-width: 100%; overflow-x: auto; }
 @media (max-width: 480px) {
   .page { padding: 14px 12px; }
 }
+
+/* The login/about logo chip has an accent-gradient background; the masked
+   cs-logo-icon inside must be WHITE (not accent) or it's invisible on the same
+   colour, which made it look like a blank orange square (login logo bug). */
+.auth-logo .cs-logo-icon,
+.splash-logo .cs-logo-icon { background-color: #fff; }

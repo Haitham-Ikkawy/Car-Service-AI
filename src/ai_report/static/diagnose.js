@@ -3446,7 +3446,7 @@
     wsBindEvents();
   }
 
-  function wsAddBubble(role, content) {
+  function wsAddBubble(role, content, audioUrl) {
     const history = $("#dz-ws-chat-history");
     if (!history) return null;
     const wrap = document.createElement("div");
@@ -3456,10 +3456,16 @@
     const roleLabel = role === "assistant" ? "AI Mechanic" : "You";
     const id = "wsm" + Date.now() + Math.floor(Math.random() * 1e4);
     const textClass = role === "assistant" ? "dz-ws-msg-text md-body" : "dz-ws-msg-text";
-    const textContent = role === "user" ? esc(content) : wsRenderMarkdown(content);
+    const audioHtml = audioUrl
+      ? `<div class="gpt-msg-audio" style="margin-bottom:6px"><audio controls preload="metadata" src="${esc(audioUrl)}" style="max-width:100%;height:38px"></audio></div>`
+      : "";
+    const textContent = role === "user"
+      ? (esc(content) || (audioUrl ? '<span style="opacity:.55"><i class="bi bi-mic-fill"></i> Voice message</span>' : ""))
+      : wsRenderMarkdown(content);
     wrap.innerHTML = `<div class="dz-ws-msg-avatar ${avatarClass}">${avatarIcon}</div>
       <div class="dz-ws-msg-body" data-id="${id}">
         <div class="dz-ws-msg-role">${roleLabel}</div>
+        ${audioHtml}
         <div class="${textClass}">${textContent}</div>
       </div>`;
     history.appendChild(wrap);
@@ -3514,7 +3520,16 @@
     await wsStream(message);
   }
 
-  async function wsStream(message) {
+  /* Voice note in the diagnosis workspace chat: record → attach playable audio →
+     send to Gemini (transcribe + answer). Mirrors the /chat page behaviour so the
+     mic keeps working at the final diagnosis stage (no re-entry needed). */
+  function wsSendVoiceNote(dataUrl) {
+    if (!dataUrl || _wsStreaming) return;
+    wsAddBubble("user", "", dataUrl);
+    wsStream("", dataUrl);
+  }
+
+  async function wsStream(message, audioUrl) {
     if (_wsStreaming) return;
     _wsStreaming = true;
     _wsController = new AbortController();
@@ -3532,7 +3547,8 @@
     let firstChunk = true;
 
     try {
-      const payload = { message, chat_id: _wsChatId, provider: "gemini" };
+      const payload = { message: message || "", chat_id: _wsChatId, provider: "gemini" };
+      if (audioUrl) payload.audio_url = audioUrl;
       const res = await fetch("/api/chat/stream", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -3637,6 +3653,53 @@
       _wsChatId = "";
       $("#dz-new-diag").click();
     });
+
+    /* Mic — voice notes in the workspace chat (was previously unwired, so audio
+       "stopped working" at the final diagnosis stage). */
+    const micBtn = $("#dz-ws-mic");
+    if (micBtn) {
+      const secure = window.isSecureContext ||
+        ["localhost", "127.0.0.1", "[::1]"].indexOf(location.hostname) >= 0;
+      const canRec = secure && navigator.mediaDevices &&
+        typeof navigator.mediaDevices.getUserMedia === "function" && window.MediaRecorder;
+      if (canRec) {
+        let mr = null, chunks = [], micStream = null;
+        micBtn.addEventListener("click", async (e) => {
+          e.preventDefault();
+          if (micBtn.classList.contains("recording")) {
+            try { if (mr && mr.state !== "inactive") mr.stop(); } catch (_) {}
+            return;
+          }
+          if (_wsStreaming) return;
+          try { micStream = await navigator.mediaDevices.getUserMedia({ audio: true }); }
+          catch (_) { if (window.CS && CS.toast) CS.toast("error", "Microphone blocked", "Allow microphone access in your browser."); return; }
+          chunks = [];
+          const prefs = ["audio/webm;codecs=opus", "audio/webm", "audio/mp4", "audio/ogg"];
+          let mime = "";
+          if (window.MediaRecorder && MediaRecorder.isTypeSupported) mime = prefs.find((t) => MediaRecorder.isTypeSupported(t)) || "";
+          try { mr = mime ? new MediaRecorder(micStream, { mimeType: mime }) : new MediaRecorder(micStream); }
+          catch (_) { mr = new MediaRecorder(micStream); }
+          mr.ondataavailable = (ev) => { if (ev.data && ev.data.size) chunks.push(ev.data); };
+          mr.onstop = () => {
+            if (micStream) { micStream.getTracks().forEach((t) => t.stop()); micStream = null; }
+            micBtn.classList.remove("recording");
+            const i = micBtn.querySelector("i"); if (i) i.className = "bi bi-mic";
+            if (!chunks.length) return;
+            const blob = new Blob(chunks, { type: (mr && mr.mimeType) || "audio/webm" });
+            const reader = new FileReader();
+            reader.onload = () => wsSendVoiceNote(String(reader.result));
+            reader.readAsDataURL(blob);
+          };
+          mr.start();
+          micBtn.classList.add("recording");
+          const i = micBtn.querySelector("i"); if (i) i.className = "bi bi-record-circle";
+        });
+      } else {
+        micBtn.title = "Voice recording needs a secure connection (HTTPS) or localhost";
+        micBtn.style.opacity = "0.4";
+        micBtn.addEventListener("click", () => { if (window.CS && CS.toast) CS.toast("warning", "Voice unavailable", micBtn.title); });
+      }
+    }
   }
 
   /* ---- Helpers ---- */
