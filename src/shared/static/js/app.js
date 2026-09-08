@@ -683,12 +683,12 @@
       return d.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" });
     };
     const toggleStop = (show) => {
-      if (stopBtn) stopBtn.classList.toggle("show", show);
+      if (stopBtn) stopBtn.classList.toggle("d-none", !show);
       if (sendBtn) sendBtn.classList.toggle("d-none", show);
     };
 
     const actionsRow = (id, includeRegen = true) => `
-      <div class="gpt-msg-actions">
+      <div class="gpt-msg-actions" style="display:flex;gap:6px;margin-top:8px;">
         <button class="gpt-action-btn" title="${esc(CS.t("Copy response"))}" data-act="copy" data-id="${id}"><i class="bi bi-clipboard"></i></button>
         <button class="gpt-action-btn" title="${esc(CS.t("Download response"))}" data-act="download" data-id="${id}"><i class="bi bi-download"></i></button>
         ${includeRegen ? `<button class="gpt-action-btn" title="${esc(CS.t("Regenerate response"))}" data-act="regen" data-id="${id}"><i class="bi bi-arrow-repeat"></i></button>` : ""}
@@ -696,19 +696,19 @@
 
     function addBubble(role, content, { ts = "", regen = role === "assistant", image = null } = {}) {
       const wrap = document.createElement("div");
-      wrap.className = `gpt-msg gpt-msg-${role}`;
+      wrap.className = `dz-ws-msg dz-ws-msg-${role}`;
       const avatar = role === "user"
-        ? `<div class="gpt-msg-avatar user"><i class="bi bi-person-fill"></i></div>`
-        : `<div class="gpt-msg-avatar ai"><i class="bi bi-stars"></i></div>`;
+        ? `<div class="dz-ws-msg-avatar user"><i class="bi bi-person-fill"></i></div>`
+        : `<div class="dz-ws-msg-avatar ai"><i class="bi bi-stars"></i></div>`;
       const id = "m" + Date.now() + Math.floor(Math.random() * 1e4);
       const imgHtml = image ? `<div class="gpt-msg-image"><img src="${esc(image)}" alt="Attached image" style="max-height:180px;border-radius:10px;margin-bottom:6px"></div>` : "";
       const roleLabel = role === "assistant" ? CS.t("AI Mechanic") : CS.t("You");
       wrap.innerHTML = `${avatar}
-        <div class="gpt-msg-body" data-id="${id}">
-          <div class="gpt-msg-role">${esc(roleLabel)}</div>
+        <div class="dz-ws-msg-body" data-id="${id}">
+          <div class="dz-ws-msg-role">${esc(roleLabel)}</div>
           ${imgHtml}
-          <div class="gpt-msg-text ${role === "assistant" ? "md-body" : ""}">${role === "user" ? esc(content) : renderMarkdown(content)}</div>
-          ${ts ? `<div class="gpt-msg-time always">${esc(fmtTime(ts))}</div>` : ""}
+          <div class="dz-ws-msg-text ${role === "assistant" ? "md-body" : ""}">${role === "user" ? esc(content) : renderMarkdown(content)}</div>
+          ${ts ? `<div class="dz-ws-msg-time" style="font-size:0.62rem;color:rgba(255,255,255,0.18);margin-top:4px;">${esc(fmtTime(ts))}</div>` : ""}
           ${role === "assistant" ? actionsRow(id, regen) : ""}
         </div>`;
       historyEl.appendChild(wrap);
@@ -718,24 +718,28 @@
 
     function addThinking() {
       const wrap = document.createElement("div");
-      wrap.className = "gpt-msg gpt-msg-ai";
+      wrap.className = "dz-ws-thinking";
       wrap.id = "thinking-msg";
-      wrap.innerHTML = `<div class="gpt-msg-avatar ai"><i class="bi bi-stars"></i></div>
-        <div class="gpt-msg-body"><div class="gpt-msg-role">${esc(CS.t("AI Mechanic"))}</div><div class="gpt-msg-text"><div class="thinking"><span></span><span></span><span></span></div></div></div>`;
+      wrap.innerHTML = `<div class="dz-ws-msg-avatar ai"><i class="bi bi-stars"></i></div>
+        <div class="dz-ws-thinking-body">
+          <div class="dz-ws-thinking-dot"></div>
+          <div class="dz-ws-thinking-dot"></div>
+          <div class="dz-ws-thinking-dot"></div>
+        </div>`;
       historyEl.appendChild(wrap);
       scrollBottom();
       return wrap;
     }
 
     function setActions(id, show) {
-      const body = historyEl.querySelector(`.gpt-msg-body[data-id="${id}"]`);
+      const body = historyEl.querySelector(`.dz-ws-msg-body[data-id="${id}"]`);
       if (!body) return;
       const row = body.querySelector(".gpt-msg-actions");
       if (row) row.style.opacity = show ? "1" : "";
     }
 
     function markLatestRegen() {
-      const ais = $$(".gpt-msg-ai .gpt-msg-body", historyEl);
+      const ais = $$(".dz-ws-msg-assistant .dz-ws-msg-body", historyEl);
       ais.forEach((b) => {
         const btn = b.querySelector('[data-act="regen"]');
         if (btn) btn.classList.toggle("d-none", b !== ais[ais.length - 1]);
@@ -883,7 +887,7 @@
         thinking.remove();
         if (firstChunk) firstChunk = false;
         const wrap = addBubble("assistant", md);
-        aiId = wrap.querySelector(".gpt-msg-body").dataset.id;
+        aiId = wrap.querySelector(".dz-ws-msg-body").dataset.id;
         setActions(aiId, true);
         scrollBottom();
       };
@@ -936,11 +940,11 @@
                     firstChunk = false;
                     thinking.remove();
                     const wrap = addBubble("assistant", md);
-                    const body = wrap.querySelector(".gpt-msg-body");
+                    const body = wrap.querySelector(".dz-ws-msg-body");
                     aiId = body.dataset.id;
                     setActions(aiId, true);
                   } else if (aiId) {
-                    const bubble = historyEl.querySelector(`.gpt-msg-body[data-id="${aiId}"] .gpt-msg-text`);
+                    const bubble = historyEl.querySelector(`.dz-ws-msg-body[data-id="${aiId}"] .dz-ws-msg-text`);
                     if (bubble) bubble.innerHTML = renderMarkdown(md);
                   }
                 } else if (firstChunk) {
@@ -970,19 +974,10 @@
 
     /* --- Submit --- */
     function hideVisualPanel() {
-      const visual = $("#gpt-chat-visual");
-      /* Keep the panel when it shows a diagnosis result — the result must stay
-         visible alongside the ongoing conversation (continue-chat from a diagnosis). */
-      if (visual && visual.dataset.hasDiagnosis === "1") return;
-      const layout = $(".gpt-chat-layout");
-      if (visual) visual.classList.add("chat-active");
-      if (layout) layout.classList.add("chat-active");
+      /* No-op in new dz-ws layout — visual panel is not present */
     }
     function showVisualPanel() {
-      const visual = $("#gpt-chat-visual");
-      const layout = $(".gpt-chat-layout");
-      if (visual) visual.classList.remove("chat-active");
-      if (layout) layout.classList.remove("chat-active");
+      /* No-op in new dz-ws layout — visual panel is not present */
     }
     function sendMessage() {
       const message = input.value.trim();
@@ -1018,8 +1013,8 @@
       const btn = e.target.closest("[data-act]");
       if (!btn) return;
       const id = btn.dataset.id;
-      const body = historyEl.querySelector(`.gpt-msg-body[data-id="${id}"]`);
-      const bubble = body?.querySelector(".gpt-msg-text");
+      const body = historyEl.querySelector(`.dz-ws-msg-body[data-id="${id}"]`);
+      const bubble = body?.querySelector(".dz-ws-msg-text");
       const text = bubble ? bubble.innerText : "";
       if (btn.dataset.act === "copy") {
         navigator.clipboard?.writeText(text).then(() => toast("success", CS.t("Copied"), CS.t("Response copied to clipboard."))).catch(() => toast("error", CS.t("Copy failed")));
@@ -1032,7 +1027,7 @@
         URL.revokeObjectURL(a.href);
         toast("success", CS.t("Downloaded"), CS.t("Response saved as Markdown."));
       } else if (btn.dataset.act === "regen") {
-        const aiMsg = body?.closest(".gpt-msg-ai");
+        const aiMsg = body?.closest(".dz-ws-msg-assistant");
         if (aiMsg) aiMsg.remove();
         stream({ message: "", chat_id: chatId, regenerate: true });
       }
