@@ -1377,6 +1377,18 @@
     });
   }
 
+  /* ---------------- Login ---------------- */
+  function initLogin() {
+    const toggle = $("#login-pass-toggle");
+    const input = $("#login-password");
+    if (!toggle || !input) return;
+    toggle.addEventListener("click", () => {
+      const shown = input.type === "text";
+      input.type = shown ? "password" : "text";
+      toggle.innerHTML = `<i class="bi ${shown ? "bi-eye" : "bi-eye-slash"}"></i>`;
+    });
+  }
+
   /* ---------------- Diagnosis: image ---------------- */
   function initDiagnoseImage() {
     const zone = $("#image-zone");
@@ -2533,6 +2545,7 @@
     initSidebarTooltips();
     initSplash();
     initCountUp();
+    initLogin();
     initChat();
     initChatModal();
     initDiagnoseText();

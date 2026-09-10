@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import threading
 from pathlib import Path
+from urllib.parse import quote
 
 import uvicorn
 from fastapi import FastAPI, Form, Request
@@ -144,8 +145,20 @@ async def login_page(request: Request):
 
 
 @app.post("/login")
-async def login(request: Request):
-    return RedirectResponse("/login", status_code=303)
+async def login(request: Request, email: str = Form(""), password: str = Form("")):
+    lang = resolve_lang(request)
+    email = email.strip().lower()
+    if "@" not in email or len(password) < 6:
+        error = i18n.tr(lang, "Please enter a valid email and a password of at least 6 characters.")
+        return RedirectResponse(f"/login?error={quote(error)}", status_code=303)
+
+    profile = store.login(email, email.split("@")[0])
+    request.session["user"] = email
+    request.session["name"] = profile["name"]
+    request.session["lang"] = lang
+    store.set_lang(email, lang)
+    _seed(email, lang)
+    return RedirectResponse("/diagnose", status_code=303)
 
 
 @app.post("/logout")

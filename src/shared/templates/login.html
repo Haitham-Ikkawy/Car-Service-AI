@@ -123,6 +123,43 @@
         </div>
         {% endif %}
 
+        <!-- Email / password sign-in -->
+        <form class="auth-form" action="/login" method="post">
+          <div class="auth-field">
+            <label class="auth-label" for="login-email">{{ t('Email address') }}</label>
+            <div class="auth-input-wrap">
+              <i class="bi bi-envelope"></i>
+              <input type="email" id="login-email" name="email" placeholder="{{ t('you@example.com') }}" autocomplete="email" required>
+            </div>
+          </div>
+          <div class="auth-field">
+            <div class="auth-label-row">
+              <label class="auth-label" for="login-password">{{ t('Password') }}</label>
+              <a href="#" class="auth-link" tabindex="-1">{{ t('Forgot password?') }}</a>
+            </div>
+            <div class="auth-input-wrap">
+              <i class="bi bi-lock"></i>
+              <input type="password" id="login-password" name="password" placeholder="••••••••" autocomplete="current-password" minlength="6" required>
+              <button type="button" class="auth-pass-toggle" id="login-pass-toggle" aria-label="{{ t('Password') }}">
+                <i class="bi bi-eye"></i>
+              </button>
+            </div>
+          </div>
+          <label class="auth-remember">
+            <input type="checkbox" name="remember">
+            {{ t('Remember me') }}
+          </label>
+          <button type="submit" class="auth-submit">
+            <i class="bi bi-box-arrow-in-right"></i> {{ t('Sign in') }}
+          </button>
+        </form>
+
+        <div class="auth-demo-hint">
+          <i class="bi bi-info-circle"></i> {{ t('Demo — any valid email + 6+ char password works.') }}
+        </div>
+
+        <div class="auth-divider">{{ t('— or continue with —') }}</div>
+
         <!-- Google Sign-In -->
         <a href="/auth/google" class="auth-google-btn" role="button">
           <svg viewBox="0 0 24 24" width="20" height="20">
