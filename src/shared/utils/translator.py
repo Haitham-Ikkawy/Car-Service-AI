@@ -193,6 +193,28 @@ AR: dict[str, str] = {
     "Audio analysis panel": "لوحة التحليل الصوتي",
     "Transcribed sound, AI diagnosis and repair suggestions.": "الصوت المحوَّل إلى نص وتشخيص الذكاء الاصطناعي واقتراحات الإصلاح.",
 
+    # ---- diagnose by video ----
+    "Diagnose by Video": "التشخيص بالفيديو",
+    "Video AI": "ذكاء اصطناعي للفيديو",
+    "Drag & drop a short video": "اسحب وأفلت فيديو قصير هنا",
+    "MP4, WebM, MOV or MKV · up to 20 MB": "MP4 أو WebM أو MOV أو MKV · حتى 20 ميجابايت",
+    "Optional: describe when it happens": "اختياري: صف متى يحدث ذلك",
+    "e.g. rattling noise from the engine bay when accelerating": "مثال: صوت خشخشة من حجرة المحرك عند التسارع",
+    "Analyze video": "تحليل الفيديو",
+    "Video analysis panel": "لوحة تحليل الفيديو",
+    "Video is larger than 20 MB.": "الفيديو أكبر من 20 ميجابايت.",
+    "Please upload an MP4, WebM, MOV or MKV video.": "يرجى رفع فيديو بصيغة MP4 أو WebM أو MOV أو MKV.",
+
+    # ---- identify vehicle by photo ----
+    "Identify Vehicle": "التعرف على السيارة",
+    "Drag & drop a photo of the car": "اسحب وأفلت صورة السيارة هنا",
+    "Identify vehicle": "تحديد السيارة",
+    "Identification panel": "لوحة التعرف",
+    "Detected make, model, year and confidence score.": "الماركة والطراز والسنة ونسبة الثقة المكتشفة.",
+    "Body style": "نوع الهيكل",
+    "Color": "اللون",
+    "Notes": "ملاحظات",
+
     # ---- vehicle ----
     "Add your car so every diagnosis is personalised.": "أضف سيارتك ليكون كل تشخيص مخصصاً لها.",
     "Auto-detect from message": "كشف تلقائي من رسالة",
@@ -620,6 +642,12 @@ AR_JS: dict[str, str] = {
     "Invalid file": "ملف غير صالح",
     "Please choose an image.": "يرجى اختيار صورة.",
     "Please choose an audio file.": "يرجى اختيار ملف صوتي.",
+    "Please choose a video.": "يرجى اختيار فيديو.",
+    "Watching and analyzing…": "جارٍ المشاهدة والتحليل…",
+    "Analyze video": "تحليل الفيديو",
+    "Body style": "نوع الهيكل",
+    "Color": "اللون",
+    "Notes": "ملاحظات",
     "Remove": "إزالة",
     "Analyze image": "تحليل الصورة",
     "Analysis failed": "فشل التحليل",

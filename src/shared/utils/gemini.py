@@ -187,6 +187,28 @@ def ask_gemini(prompt: str, user: str | None = None, model: str | None = None) -
     return raw
 
 
+def ask_gemini_image(prompt: str, image_bytes: bytes, image_mime: str = "image/jpeg",
+                     user: str | None = None, model: str | None = None) -> str:
+    """Ask Gemini a question about an attached image and return its text answer.
+
+    Raises :class:`UnavailableError` when no API key is configured or the call fails.
+    """
+    client_info = _client_for(user, model)
+    if client_info is None:
+        raise UnavailableError("Gemini API key is missing.")
+    client, model_name = client_info
+    try:
+        from google.genai import types
+
+        img_part = types.Part.from_bytes(data=image_bytes, mime_type=image_mime)
+        raw = _run_generation(client, model_name, [prompt, img_part])
+    except Exception as exc:  # noqa: BLE001
+        logger.error("ask_gemini_image failed (user=%r, model=%s): %s: %s",
+                     user, model_name, type(exc).__name__, exc, exc_info=True)
+        raise UnavailableError(_error_message(exc)) from None
+    return raw
+
+
 def analyze_image(user: str | None = None, description: str = "",
                   image_bytes: bytes | None = None,
                   image_mime: str = "image/jpeg") -> dict[str, Any]:
@@ -201,6 +223,14 @@ def analyze_audio(user: str | None = None, description: str = "",
     """AI analysis of a vehicle sound recording → structured diagnosis report."""
     return diagnose(user, "audio", description=description,
                     audio_bytes=audio_bytes, audio_mime=audio_mime)
+
+
+def analyze_video(user: str | None = None, description: str = "",
+                  video_bytes: bytes | None = None,
+                  video_mime: str = "video/mp4") -> dict[str, Any]:
+    """AI analysis of a vehicle problem video → structured diagnosis report."""
+    return diagnose(user, "video", description=description,
+                    video_bytes=video_bytes, video_mime=video_mime)
 
 
 def _model_chain(model: str) -> list[str]:
@@ -555,6 +585,8 @@ def diagnose(
     image_mime: str = "image/jpeg",
     audio_bytes: bytes | None = None,
     audio_mime: str = "audio/mpeg",
+    video_bytes: bytes | None = None,
+    video_mime: str = "video/mp4",
     lang: str = "en",
     vehicle_override: dict[str, str] | None = None,
     image_data_original: str | None = None,
@@ -581,7 +613,8 @@ def diagnose(
     logger.info("[GEMINI] Request started (user=%r, model=%s, mode=%s)", user, model, mode)
     try:
         parts: list[Any] = []
-        mode_word = {"text": "text description", "image": "vehicle image", "audio": "audio recording"}[mode]
+        mode_word = {"text": "text description", "image": "vehicle image",
+                    "audio": "audio recording", "video": "video recording"}[mode]
         prompt = _DIAG_PROMPT.format(mode=mode_word)
         prompt += f"\nVehicle: {vehicle}.\n"
         if description:
@@ -596,6 +629,13 @@ def diagnose(
 
             parts.append(types.Part.from_bytes(data=audio_bytes, mime_type=audio_mime))
             prompt += "\nTranscribe the sound, identify the fault pattern, and diagnose."
+        if mode == "video" and video_bytes:
+            from google.genai import types
+
+            parts.append(types.Part.from_bytes(data=video_bytes, mime_type=video_mime))
+            prompt += ("\nWatch the video carefully — visible symptoms (leaks, smoke, warning "
+                      "lights, unusual movement) as well as any audible sound (knocking, "
+                      "squealing, rattling) — and narrow down the probable cause.")
         prompt += _lang_instruction(lang)
         parts.append(prompt)
         raw = _run_generation(client, model, parts)
@@ -636,6 +676,9 @@ def diagnose(
     if audio_bytes:
         result["audio_data"] = "data:{0};base64,{1}".format(
             audio_mime, base64.b64encode(audio_bytes).decode("ascii"))
+    if video_bytes:
+        result["video_data"] = "data:{0};base64,{1}".format(
+            video_mime, base64.b64encode(video_bytes).decode("ascii"))
     if mode == "audio":
         result["transcript"] = str(data.get("transcript") or "").strip()
     if mode == "text":

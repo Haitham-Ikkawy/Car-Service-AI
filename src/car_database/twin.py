@@ -126,6 +126,46 @@ def detect_vehicle(text: str, user: str | None = None) -> dict[str, Any]:
     return result
 
 
+_IDENTIFY_PROMPT = """You are an automotive expert with strong visual vehicle-recognition
+skills. Look at the attached photo of a car and identify it as precisely as you can.
+Return a strict JSON object (no markdown) with ONLY these fields:
+{
+  "manufacturer": "best-guess brand, else null",
+  "model": "best-guess model, else null",
+  "year": "best-guess model year or a range like '2019-2022', else null",
+  "body_style": "sedan|suv|hatchback|coupe|pickup|van|wagon|convertible or null",
+  "color": "dominant exterior color, else null",
+  "confidence": 0..1 (how confident you are in the manufacturer/model guess),
+  "notes": "one short sentence on visual cues used (badges, headlight shape, grille, etc.), or null"
+}
+If the image does not clearly show a car, set manufacturer/model to null and confidence to 0."""
+
+_IDENTIFY_FALLBACK: dict[str, Any] = {
+    "manufacturer": None, "model": None, "year": None,
+    "body_style": None, "color": None, "confidence": 0.0,
+    "notes": None, "unavailable": True,
+}
+
+
+def identify_vehicle_image(image_bytes: bytes, image_mime: str, user: str | None = None) -> dict[str, Any]:
+    """Best-effort AI identification of a vehicle's make/model from a photo."""
+    try:
+        raw = gemini.ask_gemini_image(_IDENTIFY_PROMPT, image_bytes, image_mime, user)
+    except gemini.UnavailableError as exc:  # noqa: PERF203
+        logger.info("identify_vehicle_image unavailable for user=%r: %s", user, exc)
+        return dict(_IDENTIFY_FALLBACK)
+    data = gemini._extract_json(raw)
+    if not data:
+        return dict(_IDENTIFY_FALLBACK)
+    result = {k: data.get(k) for k in _IDENTIFY_FALLBACK if k != "unavailable"}
+    try:
+        result["confidence"] = max(0.0, min(1.0, float(result.get("confidence") or 0)))
+    except (TypeError, ValueError):
+        result["confidence"] = 0.0
+    result["unavailable"] = False
+    return result
+
+
 def part_report(user: str, key: str, vehicle_label: str) -> dict[str, Any]:
     """Static part specs merged with an optional short AI insight."""
     from src.car_database.parts import part

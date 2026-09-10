@@ -13,6 +13,8 @@
       <div class="nav-group-label">{{ t('Main') }}</div>
       <a class="sidebar-link {{ 'active' if active == 'diagnose' }}" href="/diagnose" data-label="{{ t('AI Diagnosis') }}"{% if active == 'diagnose' %} aria-current="page"{% endif %}><i class="bi bi-heart-pulse"></i><span class="s-label">{{ t('AI Diagnosis') }}</span></a>
       <a class="sidebar-link {{ 'active' if active == 'my_diagnoses' }}" href="/my-diagnoses" data-label="{{ t('My Diagnoses') }}"{% if active == 'my_diagnoses' %} aria-current="page"{% endif %}><i class="bi bi-clipboard2-pulse"></i><span class="s-label">{{ t('My Diagnoses') }}</span></a>
+      <a class="sidebar-link {{ 'active' if active == 'identify_vehicle' }}" href="/vehicle/identify" data-label="{{ t('Identify Vehicle') }}"{% if active == 'identify_vehicle' %} aria-current="page"{% endif %}><i class="bi bi-camera"></i><span class="s-label">{{ t('Identify Vehicle') }}</span></a>
+      <a class="sidebar-link {{ 'active' if active == 'video' }}" href="/diagnose/video" data-label="{{ t('Diagnose by Video') }}"{% if active == 'video' %} aria-current="page"{% endif %}><i class="bi bi-camera-reels"></i><span class="s-label">{{ t('Diagnose by Video') }}</span></a>
 {#      <a class="sidebar-link {{ 'active' if active == 'sound' }}" href="/diagnose/audio" data-label="{{ t('Sound Diagnosis') }}"{% if active == 'sound' %} aria-current="page"{% endif %}><i class="bi bi-mic"></i><span class="s-label">{{ t('Sound Diagnosis') }}</span></a>#}
     </div>
     <div class="nav-group">

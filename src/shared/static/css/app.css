@@ -3833,12 +3833,21 @@ h1, h2, h3, h4, h5, h6 {
 /* --- Hero --- */
 .hp-hero {
   position: relative;
+  /* 100vh on mobile browsers includes the area hidden behind the address bar;
+     svh/dvh reflect the *actually visible* viewport so the hero never gets cut
+     off or leaves the user needing to scroll to see the CTA buttons. The plain
+     100vh stays first as a fallback for browsers without svh/dvh support. */
   min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: url('/image/ai-services.png') center center / cover no-repeat;
+  /* The car in ai-services.png sits in the right ~40% of the frame with the
+     left side mostly empty — anchoring the crop to the right keeps the car
+     visible as the viewport narrows/tallens instead of "cover" cropping in
+     from a dead-center point that loses the subject on phones. */
+  background: url('/image/ai-services.png') right center / cover no-repeat;
   background-color: var(--bg-primary);
 }
 
@@ -3870,6 +3879,19 @@ h1, h2, h3, h4, h5, h6 {
   );
   pointer-events: none;
   z-index: 1;
+}
+
+/* Base layout for the hero content block — previously only defined inside
+   breakpoint media queries, so on desktop/tablet it had no padding/max-width
+   and (lacking a z-index) painted BELOW .hp-hero-overlay, dimming the title
+   and subtitle under the gradient scrim. */
+.hp-hero-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 760px;
+  padding: 80px 24px 40px;
+  text-align: center;
 }
 
 /* Splash top logo */
@@ -4035,7 +4057,10 @@ h1, h2, h3, h4, h5, h6 {
   background: rgba(255, 255, 255, 0.02);
 }
 
-/* Full-page background from features down */
+/* Full-page background from features down — a warm accent-tinted radial glow
+   layered over the graphite panel gradient, built from the existing theme
+   tokens (--accent-rgb / --c-panel) so it stays on-brand and adapts
+   automatically across the light/dark/auto theme and custom accent colors. */
 body.splash-bg::after {
   content: "";
   position: fixed;
@@ -4043,7 +4068,9 @@ body.splash-bg::after {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(180deg, transparent 0%, rgba(var(--c-panel), 0.5) 30%, rgba(var(--c-panel), 0.8) 100%);
+  background:
+    radial-gradient(1100px 620px at 50% 0%, rgba(var(--accent-rgb), 0.14), transparent 60%),
+    linear-gradient(180deg, transparent 0%, rgba(var(--c-panel), 0.5) 30%, rgba(var(--c-panel), 0.8) 100%);
   pointer-events: none;
   z-index: -1;
 }

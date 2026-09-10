@@ -1625,6 +1625,66 @@
     });
   }
 
+  /* ---------------- Diagnosis: video ---------------- */
+  function initDiagnoseVideo() {
+    const zone = $("#video-zone");
+    if (!zone) return;
+    const fileInput = $("#video-file");
+    const preview = $("#video-preview");
+    const analyzeBtn = $("#video-analyze");
+    const output = $("#diagnose-video-output") || $("#diagnose-output");
+    let currentFile = null;
+
+    const show = (file) => {
+      if (!file.type.startsWith("video/")) { toast("warning", CS.t("Invalid file"), CS.t("Please choose a video.")); return; }
+      currentFile = file;
+      zone.classList.add("d-none");
+      preview.innerHTML = `<div class="d-flex flex-column align-items-center gap-3">
+        <div class="d-flex align-items-center gap-2 text-soft"><i class="bi bi-camera-reels fs-4"></i><span class="small">${esc(file.name)} · ${(file.size / 1024 / 1024).toFixed(2)} MB</span></div>
+        <video controls class="w-100 rounded-3" style="max-height:280px" src="${URL.createObjectURL(file)}"></video>
+        <div class="d-flex gap-2">
+          <button class="btn btn-sm btn-ghost" type="button" data-clear-video><i class="bi bi-x-lg"></i> ${esc(CS.t("Remove"))}</button>
+          <button class="btn btn-sm btn-primary" type="button" id="video-go"><i class="bi bi-stars"></i> ${esc(CS.t("Analyze video"))}</button>
+        </div></div>`;
+      $("#video-go")?.addEventListener("click", analyze);
+    };
+    const clear = () => { currentFile = null; preview.innerHTML = ""; zone.classList.remove("d-none"); };
+    const analyze = async () => {
+      if (!currentFile) return;
+      output.innerHTML = loadingPanel(CS.t("Watching and analyzing…"));
+      const fd = new FormData();
+      fd.append("file", currentFile);
+      fd.append("description", $("#video-desc")?.value || "");
+      const res = await fetch("/api/diagnose/video", { method: "POST", body: fd });
+      const data = await res.json();
+      if (!res.ok) { output.innerHTML = ""; toast("error", CS.t("Analysis failed"), data.error); return; }
+      output.innerHTML = renderReport(data.result);
+      wireReport();
+      output.scrollIntoView({ behavior: "smooth" });
+      const desc = $("#video-desc")?.value || currentFile.name;
+      saveDiagToChat("video", desc, data.result);
+    };
+
+    zone.addEventListener("click", () => fileInput.click());
+    zone.addEventListener("dragover", (e) => { e.preventDefault(); zone.classList.add("dragover"); });
+    zone.addEventListener("dragleave", () => zone.classList.remove("dragover"));
+    zone.addEventListener("drop", (e) => {
+      e.preventDefault(); zone.classList.remove("dragover");
+      if (e.dataTransfer.files.length) show(e.dataTransfer.files[0]);
+    });
+    fileInput.addEventListener("change", () => { if (fileInput.files.length) show(fileInput.files[0]); });
+    preview.addEventListener("click", (e) => { if (e.target.closest("[data-clear-video]")) clear(); });
+    if (analyzeBtn) analyzeBtn.addEventListener("click", analyze);
+
+    /* Enter in description triggers analyze */
+    $("#video-desc")?.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        if (currentFile) analyze();
+      }
+    });
+  }
+
   /* ---------------- Report rendering ---------------- */
   function loadingPanel(text) {
     return `<div class="card fade-up"><div class="card-body d-flex flex-column align-items-center gap-3 py-5">
@@ -2480,6 +2540,7 @@
     initDiagnoseText();
     initDiagnoseImage();
     initDiagnoseAudio();
+    initDiagnoseVideo();
     initMaintenance();
     initSettings();
     initContact();

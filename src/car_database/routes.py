@@ -4,11 +4,12 @@ from __future__ import annotations
 import logging
 from typing import Any
 
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, UploadFile
 from fastapi.responses import JSONResponse
 
 from ..shared.store import store
-from ..shared.utils import translator as i18n
+from ..shared.utils import gemini, translator as i18n
+from ..shared.utils.image_ai import validate_image
 from ..shared.utils.language import resolve_lang
 from ..shared.utils.templating import render, require
 from . import guides, twin, vehicle_api
@@ -30,6 +31,13 @@ async def repair_guide_page(request: Request):
     require(request)
     return render(request, "repair_guide.html", active="repair-guide",
                   page_title="Repair Guide", categories=guides.CATEGORIES, guides=guides.GUIDES)
+
+
+@router.get("/vehicle/identify")
+async def identify_vehicle_page(request: Request):
+    require(request)
+    return render(request, "identify_vehicle.html", active="identify_vehicle",
+                  page_title="Identify Vehicle")
 
 
 @router.get("/repair-guide/{slug}")
@@ -136,6 +144,18 @@ async def vehicle_save(request: Request):
 
     store.set_vehicle(user, data)
     return JSONResponse({"ok": True, "vehicle": store.vehicle(user)})
+
+
+@router.post("/api/vehicle/identify-image")
+async def vehicle_identify_image(request: Request, file: UploadFile):
+    user = require(request)
+    lang = _lang(request)
+    content = await file.read()
+    mime = file.content_type or gemini.guess_mime(file.filename or "")
+    error = validate_image(file, content, mime, lang)
+    if error:
+        return JSONResponse({"error": error}, status_code=400)
+    return JSONResponse(twin.identify_vehicle_image(content, mime, user))
 
 
 @router.post("/api/vehicle/detect")

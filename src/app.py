@@ -29,6 +29,7 @@ from .image_diagnosis.routes import router as image_diagnosis_router
 from .maintenance.routes import router as maintenance_router
 from .settings.routes import router as settings_router
 from .sound_diagnosis.routes import router as sound_diagnosis_router
+from .video_diagnosis.routes import router as video_diagnosis_router
 
 BASE_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = BASE_DIR.parent
@@ -39,7 +40,7 @@ app.add_middleware(SessionMiddleware, secret_key=config.SESSION_SECRET, same_sit
 
 # Module-specific static folders are served under /static/<module>/ before the
 # shared assets (which live in shared/static) are mounted at /static.
-for _name in ("chat_ai", "image_diagnosis", "sound_diagnosis",
+for _name in ("chat_ai", "image_diagnosis", "sound_diagnosis", "video_diagnosis",
               "ai_report", "maintenance", "settings", "car_database"):
     _dir = BASE_DIR / _name / "static"
     app.mount(f"/static/{_name}", StaticFiles(directory=str(_dir)), name=f"static-{_name}")
@@ -49,8 +50,8 @@ app.mount("/image", StaticFiles(directory=str(PROJECT_ROOT / "image")), name="im
 app.mount("/img", StaticFiles(directory=str(PROJECT_ROOT / "image")), name="img")
 
 for _router in (dashboard_router, chat_router, image_diagnosis_router,
-                sound_diagnosis_router, ai_report_router, maintenance_router,
-                settings_router, car_database_router, auth_router):
+                sound_diagnosis_router, video_diagnosis_router, ai_report_router,
+                maintenance_router, settings_router, car_database_router, auth_router):
     app.include_router(_router)
 
 

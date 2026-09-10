@@ -1,4 +1,4 @@
-# Changelog — Car Service AI redesign & enhancements
+♂# Changelog — Car Service AI redesign & enhancements
 
 This document records every change, feature, and fix made during the
 UI/UX-redesign + flow-enhancement effort. It is grouped by the numbered
@@ -72,7 +72,7 @@ unreachable; there was **no nav entry**; and browser recordings are
   and auto-selects it **as the user types** — unless they pick one manually
   (`_categoryAuto` guard; a saved category on resume is treated as manual).
 
----
+
 
 ## Fixes & theming (post-Phase-2)
 
@@ -210,9 +210,46 @@ top-level template compiles; `/splash` & `/login` render 200 and the served
 - Swept the remaining stray cyan/blue variants (`#22d3ee`, `#38bdf8`, `#0ea5e9`,
   `#06b6d4`, `#2563eb`) across all CSS/HTML/JS to zero.
 
-## Phase 3 — Multi-modal & voice (pending)
-- Req 7 — video + image + audio upload across the service, and a browser-native
-  (Web Speech API) ChatGPT-style voice conversation mode.
+## Phase 3 — Multi-modal & voice
+
+### ✅ Req 7 (part 1) — Video upload diagnosis + image-based vehicle ID
+- **New `src/video_diagnosis/` module** — mirrors the sound-diagnosis module
+  shape: `GET /diagnose/video` page, `POST /api/diagnose/video` API, sidebar
+  link. Accepts MP4/WebM/MOV/MKV up to 20 MB (`shared/utils/video.py:
+  validate_video`), with drag-and-drop, live `<video>` preview, a loading
+  state while Gemini analyses the clip, and the same structured report/PDF
+  pipeline as image and audio diagnoses (`gemini.diagnose(mode="video")` now
+  sends the clip inline via `Part.from_bytes` and prompts Gemini to reason
+  about both visible symptoms — leaks, smoke, warning lights — and audible
+  ones — knocking, squealing).
+- **New "Identify Vehicle" tool** (`/vehicle/identify`, `car_database` module)
+  — upload a photo of a car and get back a best-guess manufacturer/model/year/
+  body style/color with a confidence score (`twin.identify_vehicle_image` +
+  new `gemini.ask_gemini_image` helper), with a one-click "Save vehicle"
+  action into the existing vehicle profile. Degrades gracefully (matches the
+  existing digital-twin/detect-vehicle pattern) when no AI key is configured.
+- Both flows validate file type/size before upload and surface clear,
+  localized error toasts (unsupported format, oversized file, empty file, AI
+  unavailable) rather than failing silently.
+- Still pending: a browser-native (Web Speech API) ChatGPT-style voice
+  conversation mode (req 7, part 2).
+
+### ✅ Splash — responsiveness + background fixes
+- `.hp-hero-content` had **no base rule**, only breakpoint overrides — on
+  desktop/tablet it had no padding/max-width, and (lacking a `z-index`) was
+  painted *below* `.hp-hero-overlay` in the stacking order, dimming the hero
+  title/subtitle under the gradient scrim. Added a proper base rule.
+  `.hp-hero` used bare `100vh`, which on mobile Safari/Chrome includes the
+  area hidden behind the address bar; added an `svh` fallback so the hero
+  never renders taller than the visible viewport.
+- The hero photo (`ai-services.png`) has its subject (car headlight/wheel) in
+  the right ~40% of the frame; `background-position: center center` cropped
+  it out entirely on narrow/tall phone screens. Repositioned to `right
+  center` so the car stays in frame as the viewport narrows.
+- Layered a warm accent-tinted radial glow over the existing graphite panel
+  gradient on `body.splash-bg::after`, built from the theme's own
+  `--accent-rgb`/`--c-panel` tokens so it follows the light/dark/auto theme
+  and any custom accent color automatically.
 
 ---
 
@@ -381,8 +418,8 @@ Driven by a full responsive audit (mobile ≤576 / tablet 577–991 / desktop �
 
 ## Not yet done (later phases from the brief)
 - Req 1 (full brand redesign), 2 (splash animation), 3 (diagnosis-step alignment),
-  6 (severity indicator redesign), 7 (multi-modal + voice mode), 8 (last-diagnosis
-  screen), 11 (sidebar/nav redesign), 12 (scroll behaviour) — to be delivered in
-  subsequent phases. Brand-search box could also be wired to the live `makes`
-  endpoint (currently the popular-brands grid is curated; models + engines are
-  fully live).
+  6 (severity indicator redesign), 7 (voice conversation mode — video/image
+  upload is now done, see Phase 3), 8 (last-diagnosis screen), 11 (sidebar/nav
+  redesign), 12 (scroll behaviour) — to be delivered in subsequent phases.
+  Brand-search box could also be wired to the live `makes` endpoint (currently
+  the popular-brands grid is curated; models + engines are fully live).
