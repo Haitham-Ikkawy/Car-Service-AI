@@ -440,6 +440,19 @@ to the code.
     `/chat` controller). Ported the MediaRecorder flow into the workspace: mic records →
     `wsSendVoiceNote()` → `wsAddBubble` shows a playable `<audio>` note → `wsStream`
     sends `audio_url` to Gemini (transcribe + answer). Now continuous, no re-entry.
+62. **My-Diagnoses empty state centring fixed (post-delete).** Deleting the last
+    diagnosis injects `.md-empty` **into** `#md-grid` (a CSS grid), so it landed in the
+    first column track (left-aligned); a refresh renders it as a sibling **outside** the
+    grid (full-width, centred). Added `grid-column: 1 / -1` to `.md-empty` so it spans
+    every column and centres in both paths — no refresh needed.
+63. **Splash `/splash` waves + hero→features seam fixed.** (a) The ambient waves had
+    `#ff7a1a` baked into the inline SVG (a `<defs>` gradient + direct fills), rendering a
+    muddy brown band. Changed all three wave paths to `fill="currentColor"` (removed the
+    orange gradient def) and set `.splash-wave { color: var(--accent) }`, so the waves now
+    follow the theme accent dynamically. (b) There was a hard black seam where the hero
+    photo cut off. Faded `.hp-hero-overlay`'s bottom to `rgba(--c-deep, 0.96)` and gave
+    `.hp-section--alt` a matching opaque dark gradient (`--c-deep 0.96 → --c-panel 0.97`,
+    was transparent rgba white 0.02) so the hero dissolves seamlessly into the section.
 
 > **Outstanding from the audit (not yet done):** split the 8.6k-line `app.css`
 > monolith + de-dupe the doubled `.page`/`.sidebar`/`.layout-main` rules; finish or

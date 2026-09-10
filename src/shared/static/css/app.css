@@ -143,7 +143,7 @@ a {
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #ffa24d, var(--accent));
+      background:  var(--accent);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -3865,8 +3865,9 @@ h1, h2, h3, h4, h5, h6 {
     180deg,
     rgba(var(--c-deep), 0.22) 0%,
     rgba(var(--c-deep), 0.10) 40%,
-    rgba(var(--c-deep), 0.22) 70%,
-    rgba(var(--c-deep), 0.65) 100%
+    rgba(var(--c-deep), 0.30) 68%,
+    rgba(var(--c-deep), 0.80) 90%,
+    rgba(var(--c-deep), 0.96) 100%
   );
   pointer-events: none;
   z-index: 1;
@@ -4032,7 +4033,10 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
 }
 .hp-section--alt {
-  background: rgba(255, 255, 255, 0.02);
+  /* Opaque dark backdrop whose top matches the hero overlay's faded bottom
+     (rgba(--c-deep) ~0.96), so the hero photo blends seamlessly into this
+     section with no hard black seam. Was rgba white 0.02 (transparent). */
+  background: linear-gradient(180deg, rgba(var(--c-deep), 0.96) 0%, rgba(var(--c-panel), 0.97) 100%);
 }
 
 /* Full-page background from features down */
@@ -4067,6 +4071,9 @@ body.splash-bg::after {
   width: 120%;
   height: 100%;
   opacity: 0.08;
+  /* Waves paint in the theme accent (SVG paths use fill:currentColor) instead
+     of the old hard-coded muddy orange. */
+  color: var(--accent);
 }
 
 .splash-wave svg {
