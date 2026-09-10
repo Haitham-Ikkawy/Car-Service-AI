@@ -301,6 +301,159 @@ to the code.
       `data-has-diagnosis` is set, so it survives sending messages. Plain chats are
       unchanged (marketing panel still collapses). Covered by two tests.
 
+### Vehicle image mapping fix (top priority) + UI cleanups
+44. **Root cause of "all Honda models show the Civic image".** The shipped local
+    `image/vehicles/<brand>/<model>.webp` files are **broken duplicates** — all 6 Honda
+    files are byte-identical, Toyota Camry == Audi A4, only **78 unique images across
+    215 files**. So when the dynamic (Wikipedia) source was unavailable, the fallback
+    to these identical files showed one image for every model.
+45. **Fix — per-model authoritative resolution, no cross-model fallback.**
+    `vehicle_api.photo_url()` resolves **Brand + exact Model** via Wikipedia
+    `pageimages` (redirects normalise CR-V/CRV/Cr-v) with a full-text **search
+    fallback** for odd variants; the unreliable local duplicates are **no longer used
+    as a fallback** (they were the bug) — it falls back only to a licensed CGI render
+    if configured, else "" → the UI shows a neutral icon, **never another model's
+    photo**. Client-side, `getModelImage()` now returns `null` (single-point
+    neutralisation of the duplicate files), so the Selected Vehicle card, model cards
+    and "Why select your vehicle?" preview all use the per-model API image and update
+    immediately on model switch. Verified: Honda Civic/Accord/CR-V/HR-V/City/Fit →
+    **6 distinct correct photos**; CRV resolves to CR-V; Toyota/BMW/Ford samples correct.
+46. **Favicon = sign-in logo (item 12).** `base.html` favicon now points to
+    `/static/images/logo-icon.svg` (same steel logo used at sign-in / `base_auth.html`).
+47. **VIN text removed from the UI (item 13).** The "or find your car by VIN" divider
+    and the VIN explanation are commented out in `diagnose.html` (kept as future work).
+48. **Circular avatar (item 14).** Added a rule forcing the account profile picture to
+    a perfect circle (`aspect-ratio:1/1; overflow:hidden; border-radius:50%`).
+49. **Centered empty state (item 15).** `.md-empty` in `my_diagnoses.html` now
+    flex-centers (vertical + horizontal) so "No diagnoses yet" is centered.
+
+### Voice chat + structured-result + branded background (item 1 & 16)
+50. **Voice chat (record → send audio → play back).** The chat mic now records real
+    audio via **MediaRecorder** (not just Web Speech): on stop it attaches the clip as a
+    base64 **`audio_url`** in the chat payload. `chat_ai/routes.py` decodes it and
+    `gemini.chat_stream`/`stream_sse` send the audio to Gemini as a `Part` (transcribe +
+    answer); OpenAI provider is guarded (audio is Gemini-only). The user's note renders
+    as a playable `<audio>` bubble, and every AI reply gets a **"Listen" (TTS) button**
+    (SpeechSynthesis) to play the response back. Graceful fallback when the browser
+    can't record. Verified end-to-end (audio reaches Gemini; empty payloads still 400).
+    *(The chat page itself was restyled to the AI-Diagnosis `dz-ws-*` workspace look in a
+    parallel edit — item 1 visual match.)*
+51. **Consistent branded background (item 16).** Added a subtle, theme-aware accent-glow
+    background at `body` level (two low-opacity radial gradients over `--page-bg`,
+    `background-attachment: fixed`) shared across all app pages; `.dz-wrap` and
+    `.dz-workspace` are now `transparent` so the treatment shows on AI Diagnosis /
+    Analyzing / Workspace too. About & Login already carry the logo icon; added a small
+    **automation icon** (`bi-robot`) to the sidebar brand tagline.
+
+### AI Diagnosis ↔ My Diagnoses layout unification
+52. **Same header, container & card on both pages (items 1 & 3).** `my_diagnoses.html`
+    now loads `diagnose.css` and reuses the **exact** AI-Diagnosis structure —
+    `.dz-wizard-header` (icon + title + "Smart vehicle problem analysis" + status pill,
+    no stepper), `.dz-main-grid` (single column) and `.dz-card` — instead of its own
+    `.md-wrap`/`.md-header`/`.app-card`. So the two pages share identical width,
+    padding, radius, shadows and header treatment. The wizard stepper on AI Diagnosis
+    is untouched (item 2).
+53. **Header ↔ content edge alignment (item 4).** The wizard header bar's content was
+    ~32px wider than the cards below it (header inner had no horizontal padding while
+    the grid had 32px). Moved the 32px inset onto `.dz-wizard-header-inner` (bar bg
+    stays full-width) and drove both the header inner and `.dz-main-grid` from one
+    shared `--dz-gutter` variable (32 / 20 / 16px by breakpoint) so their left/right
+    edges align exactly everywhere — and this alignment now applies to My Diagnoses too
+    (same structure).
+54. **Google avatar always refreshed (item 5).** `Store.login` now updates the profile
+    `picture` on every login (was: only when absent), so the top-right avatar shows the
+    real Google photo and back-fills accounts created before avatars were captured.
+    *(Requires one Google re-login to populate an existing session that had none.)*
+
+### Chat UI fixes (duplicate label, input icons, audio playback)
+55. **Three chat fixes.** (1) **Duplicate "AI Mechanic"** — `chat.html` rendered the
+    label in both the workspace header (`dz-ws-title`) and the chat sub-header
+    (`dz-ws-chat-title`); removed the redundant `.dz-ws-chat-header` (the workspace
+    header already shows it + status). (2) **Misaligned mic/clear icons** in the
+    diagnosis "What's wrong…" textarea — it inherited `.dz-textarea`'s `resize:vertical`
+    (a drag handle overlapping the icons) and `margin-bottom:20px` (which pushed the
+    absolutely-positioned `.dz-problem-actions` off the textarea's true bottom); set
+    `resize:none; margin-bottom:0` so the icons anchor bottom-right. (3) **Audio
+    playback post-diagnosis** — the server-rendered assistant messages (a chat opened
+    from a diagnosis) had copy/download/regen but **no "Listen" (TTS) button** (that
+    lived only in the JS `actionsRow`), so the diagnosis reply couldn't be played back;
+    added it to the template, and the TTS now strips markdown symbols for clean speech.
+
+### Polish: profile avatar + chat header
+56. **Two CSS polish fixes.** (1) **Top-bar profile avatar** — was a 26px circle
+    floating inside a 38px rounded-*square* button (unpolished). New `.topbar-account`
+    makes the button a 40px **circular** frame the avatar fills (`object-fit:cover`,
+    `aspect-ratio:1/1`, accent ring that brightens on hover); the initials/icon
+    fallback gets a matching circular accent chip. (2) **Chat "AI Mechanic" top bar**
+    — bumped the title 0.88→1.05rem (brighter, tighter tracking) and subtitle
+    0.72→0.76rem, enlarged the header icon to a 42px gradient chip, added header gap +
+    padding and a token-based background; and fixed the header being **clipped** on the
+    chat page (the shared `.dz-workspace` `-22px` top margin, meant for the diagnose
+    page, is reset to 0 inside `.gpt-wrap`).
+
+### Chat audio ReferenceError + manufacture-year support
+57. **AI Chat audio fixed (real root cause).** When the mic was switched to
+    MediaRecorder, the `_voiceSecure` **definition** was removed but the new code still
+    referenced it — a runtime `ReferenceError` (not caught by `node --check`) that
+    aborted `initChat()` at that line, breaking the mic *and* everything wired after it.
+    Restored `const _voiceSecure = …` before its use; recording/playback + the "Listen"
+    TTS now work again.
+58. **Manufacture year is respected (item 1).** Root cause: the wizard had **no year
+    field**, so `state.vehicle.year` was always empty and every lookup defaulted to the
+    latest model. Added a **Model year** selector to the vehicle step (populated from
+    `config.VEHICLE_YEARS`, all supported years), wired to `state.vehicle.year`,
+    persisted/restored with the session, and reset on vehicle change. The year now flows
+    into: the **diagnosis** (`gemini.diagnose` builds the vehicle label as
+    `"{year} {make} {model}"`, so a 2001 Civic gets 2001-specific analysis) and the
+    **image** request (`/api/vehicles/image?make=&model=&year=` → `photo_url(…, year)`,
+    which tries a year-qualified title and passes `modelYear` to the CGI fallback).
+    *Note:* free real-photo sources (Wikipedia) key on the model page, so a truly
+    year-accurate **photo** is best-effort (a licensed `IMAGIN_CUSTOMER` key renders the
+    exact year); the **data/diagnosis** is now fully year-specific.
+
+### Responsiveness pass (no horizontal overflow)
+59. **Fixed the real mobile overflow + hardened responsiveness app-wide.** The visible
+    "cards cut off on the right" was caused by CSS grids using `minmax(NNNpx, 1fr)`
+    (e.g. `.md-grid`'s `minmax(300px,1fr)`): on a ~360px screen the inner container is
+    smaller than the fixed min, so the track overflowed (and `html{overflow-x:hidden}`
+    merely clipped it). Guarded **all 5** such tracks with `minmax(min(NNNpx,100%),1fr)`
+    (my_diagnoses grid, brands grid, model-parts grid, engine grid, an app.css grid) so
+    a track never exceeds its container. Also: `.md-card-actions` now `flex-wrap`s;
+    added a global safety net (`img/svg/video{max-width:100%}`, `pre/table{overflow-x:
+    auto}`, long-word wrapping on titles, tighter `.page` padding ≤480px). The wizard
+    containers (`.dz-wrap`, `.dz-wizard-header(-inner)`, `.dz-main-grid`) were already
+    fluid (max-width + shared `--dz-gutter` 32/20/16px + `1fr`, collapsing to one column
+    ≤1024px); the chat `.dz-ws-grid` stacks ≤900px; `--navbar-height` scales 62→54px
+    ≤992px. Verified all pages render at each breakpoint with no unguarded fixed-min
+    tracks remaining.
+
+### Login logo + workspace chat audio
+60. **Login logo fixed.** `.auth-logo` is an accent-gradient chip; the masked
+    `.cs-logo-icon` inside was filled with `var(--accent)` — the **same colour as the
+    chip** — so the car icon was invisible and it looked like a blank orange square.
+    Forced the icon white inside the chip (`.auth-logo/.splash-logo .cs-logo-icon
+    { background-color:#fff }`).
+61. **Workspace chat audio fixed (final diagnosis stage).** The diagnosis **workspace**
+    chat (`wsBindEvents` in `diagnose.js`) never wired its mic (`#dz-ws-mic`) — only
+    the standalone `/chat` page had recording — so audio "stopped working" at the final
+    stage and only returned after exiting to the list and re-entering (which loads the
+    `/chat` controller). Ported the MediaRecorder flow into the workspace: mic records →
+    `wsSendVoiceNote()` → `wsAddBubble` shows a playable `<audio>` note → `wsStream`
+    sends `audio_url` to Gemini (transcribe + answer). Now continuous, no re-entry.
+62. **My-Diagnoses empty state centring fixed (post-delete).** Deleting the last
+    diagnosis injects `.md-empty` **into** `#md-grid` (a CSS grid), so it landed in the
+    first column track (left-aligned); a refresh renders it as a sibling **outside** the
+    grid (full-width, centred). Added `grid-column: 1 / -1` to `.md-empty` so it spans
+    every column and centres in both paths — no refresh needed.
+63. **Splash `/splash` waves + hero→features seam fixed.** (a) The ambient waves had
+    `#ff7a1a` baked into the inline SVG (a `<defs>` gradient + direct fills), rendering a
+    muddy brown band. Changed all three wave paths to `fill="currentColor"` (removed the
+    orange gradient def) and set `.splash-wave { color: var(--accent) }`, so the waves now
+    follow the theme accent dynamically. (b) There was a hard black seam where the hero
+    photo cut off. Faded `.hp-hero-overlay`'s bottom to `rgba(--c-deep, 0.96)` and gave
+    `.hp-section--alt` a matching opaque dark gradient (`--c-deep 0.96 → --c-panel 0.97`,
+    was transparent rgba white 0.02) so the hero dissolves seamlessly into the section.
+
 > **Outstanding from the audit (not yet done):** split the 8.6k-line `app.css`
 > monolith + de-dupe the doubled `.page`/`.sidebar`/`.layout-main` rules; finish or
 > remove the half-applied i18n (`diagnose.html` uses `t()` 0×, `resolve_lang` still

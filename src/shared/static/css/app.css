@@ -143,7 +143,7 @@ a {
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #ffa24d, var(--accent));
+      background:  var(--accent);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -1496,7 +1496,7 @@ a {
 
 .gpt-welcome-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
   gap: 8px;
   max-width: 640px;
   width: 100%;
@@ -3874,8 +3874,9 @@ h1, h2, h3, h4, h5, h6 {
     180deg,
     rgba(var(--c-deep), 0.22) 0%,
     rgba(var(--c-deep), 0.10) 40%,
-    rgba(var(--c-deep), 0.22) 70%,
-    rgba(var(--c-deep), 0.65) 100%
+    rgba(var(--c-deep), 0.30) 68%,
+    rgba(var(--c-deep), 0.80) 90%,
+    rgba(var(--c-deep), 0.96) 100%
   );
   pointer-events: none;
   z-index: 1;
@@ -4054,7 +4055,10 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
 }
 .hp-section--alt {
-  background: rgba(255, 255, 255, 0.02);
+  /* Opaque dark backdrop whose top matches the hero overlay's faded bottom
+     (rgba(--c-deep) ~0.96), so the hero photo blends seamlessly into this
+     section with no hard black seam. Was rgba white 0.02 (transparent). */
+  background: linear-gradient(180deg, rgba(var(--c-deep), 0.96) 0%, rgba(var(--c-panel), 0.97) 100%);
 }
 
 /* Full-page background from features down — a warm accent-tinted radial glow
@@ -4094,6 +4098,9 @@ body.splash-bg::after {
   width: 120%;
   height: 100%;
   opacity: 0.08;
+  /* Waves paint in the theme accent (SVG paths use fill:currentColor) instead
+     of the old hard-coded muddy orange. */
+  color: var(--accent);
 }
 
 .splash-wave svg {
@@ -8620,3 +8627,68 @@ html[data-font-size="xlarge"] { font-size: 20px; }
 .app-page-header h1 { font-size: 1.35rem; font-weight: 700; color: var(--text); margin: 0; }
 .app-page-header p { color: rgba(var(--c-muted), 0.75); font-size: 0.85rem; margin: 2px 0 0; }
 @media (max-width: 640px) { .app-card { padding: 16px; } }
+
+/* Account profile picture — always a perfect circle, never oval (item 14). */
+.sidebar-user .avatar { aspect-ratio: 1 / 1; overflow: hidden; border-radius: 50% !important; }
+.sidebar-user .avatar img,
+.topbar .dropdown img { border-radius: 50% !important; object-fit: cover; aspect-ratio: 1 / 1; display: block; }
+
+/* ============================================================
+   Consistent branded background treatment (item 16) — a subtle, theme-aware
+   accent glow layered over --page-bg, shared across all app pages (AI Diagnosis,
+   My Diagnoses, Settings, About, Analyzing, Workspace). Very low opacity so it
+   never changes the colour scheme, just adds a consistent branded texture.
+   ============================================================ */
+body {
+  background:
+    radial-gradient(900px 520px at 12% -8%, rgba(var(--accent-rgb), 0.055), transparent 58%),
+    radial-gradient(820px 480px at 100% 0%, rgba(var(--accent-rgb), 0.035), transparent 55%),
+    var(--page-bg);
+  background-attachment: fixed;
+}
+
+/* ============================================================
+   Top-bar account avatar — a clean circular frame with the Google avatar
+   filling it (replaces the small circle floating in a rounded-square button).
+   ============================================================ */
+.topbar-account {
+  width: 40px; height: 40px; min-width: 40px; padding: 0;
+  border-radius: 50%; overflow: hidden; flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.topbar-account:hover { background: transparent; }
+.topbar-avatar {
+  width: 100%; height: 100%; object-fit: cover; aspect-ratio: 1 / 1;
+  border-radius: 50%; display: block; box-sizing: border-box;
+  border: 1.5px solid rgba(var(--accent-rgb), 0.4);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.topbar-account:hover .topbar-avatar {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.18);
+}
+.topbar-avatar-fallback {
+  width: 100%; height: 100%; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.55rem; line-height: 1; color: var(--accent);
+  background: rgba(var(--accent-rgb), 0.1);
+  border: 1.5px solid rgba(var(--accent-rgb), 0.3);
+}
+
+/* ============================================================
+   Responsive safety net (all pages) — prevents horizontal overflow at narrow
+   widths without relying solely on html{overflow-x:hidden} clipping.
+   ============================================================ */
+img, svg, video, canvas { max-width: 100%; }
+pre, table { max-width: 100%; overflow-x: auto; }
+/* Long unbroken words/URLs in content areas wrap instead of overflowing. */
+.md-card-title, .md-card-problem, .dz-card-title, .dz-card-subtitle { overflow-wrap: anywhere; }
+@media (max-width: 480px) {
+  .page { padding: 14px 12px; }
+}
+
+/* The login/about logo chip has an accent-gradient background; the masked
+   cs-logo-icon inside must be WHITE (not accent) or it's invisible on the same
+   colour, which made it look like a blank orange square (login logo bug). */
+.auth-logo .cs-logo-icon,
+.splash-logo .cs-logo-icon { background-color: #fff; }

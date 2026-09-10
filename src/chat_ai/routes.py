@@ -68,7 +68,19 @@ async def chat_stream(request: Request):
         except Exception:
             image_bytes = None  # gracefully ignore malformed data
 
-    if not message and not regenerate and not image_bytes:
+    # --- optional voice note (data-URL from the recorder) ---
+    audio_bytes: bytes | None = None
+    audio_mime = "audio/webm"
+    audio_url = body.get("audio_url") or ""
+    if audio_url and audio_url.startswith("data:"):
+        try:
+            header, encoded = audio_url.split(",", 1)
+            audio_bytes = base64.b64decode(encoded)
+            audio_mime = header.split(";")[0].split(":")[1] or "audio/webm"
+        except Exception:
+            audio_bytes = None  # gracefully ignore malformed data
+
+    if not message and not regenerate and not image_bytes and not audio_bytes:
         return JSONResponse({"error": i18n.tr(lang, "Message is empty")}, status_code=400)
 
     chat = store.chat(user, chat_id) if chat_id else store.active_chat(user)
@@ -76,8 +88,8 @@ async def chat_stream(request: Request):
         return JSONResponse({"error": i18n.tr(lang, "Conversation not found")}, status_code=404)
     chat_id = chat["id"]
 
-    if message or image_bytes:
-        label = message or "[image]"
+    if message or image_bytes or audio_bytes:
+        label = message or ("[Voice message]" if audio_bytes else "[image]")
         store.append_message(user, chat_id, "user", label)
     if regenerate:
         # remove the previous assistant reply so we can re-answer
@@ -92,13 +104,18 @@ async def chat_stream(request: Request):
 
     # Select the AI provider
     ai_provider = openai_provider if provider == "openai" else gemini
+    # Audio is a Gemini-only capability here; don't pass it to the OpenAI provider.
+    extra = {}
+    if audio_bytes and ai_provider is gemini:
+        extra = {"audio_bytes": audio_bytes, "audio_mime": audio_mime}
 
     async def gen():
         full = ""
         failed = False
         try:
             async for chunk in ai_provider.stream_sse(user, history, lang=lang, msg_lang=msg_lang,
-                                                      image_bytes=image_bytes, image_mime=image_mime):
+                                                      image_bytes=image_bytes, image_mime=image_mime,
+                                                      **extra):
                 if chunk.startswith("data: [DONE]"):
                     yield chunk
                     return

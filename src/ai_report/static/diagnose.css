@@ -3,14 +3,17 @@
    Car Service AI
    ============================================================ */
 *, *::before, *::after { box-sizing: border-box; }
-.dz-wrap { min-height: calc(100vh - var(--navbar-height, 56px) - 44px); background: var(--page-bg); color: var(--text); position: relative; padding: 0; }
+.dz-wrap { min-height: calc(100vh - var(--navbar-height, 56px) - 44px); background: transparent; color: var(--text); position: relative; padding: 0; }
 
 /* WIZARD HEADER */
-.dz-wizard-header { background: rgba(var(--c-deep), 0.85); border-bottom: 1px solid rgba(var(--accent-rgb), 0.1); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); padding: 20px 32px 16px; position: sticky; top: 0; z-index: 50; }
+/* The header BAR spans full width (bg + sticky), but its horizontal padding is 0 —
+   the 32px inset lives on .dz-wizard-header-inner instead, so the header CONTENT
+   shares the exact same left/right edges as .dz-main-grid's content (item 4). */
+.dz-wizard-header { background: rgba(var(--c-deep), 0.85); border-bottom: 1px solid rgba(var(--accent-rgb), 0.1); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); padding: 20px 0 16px; position: sticky; top: 0; z-index: 50; border-radius: 18px;}
 /* Shared content width so the header bar, the card grid and the benefits bar all
    line up on the same left/right edges at every breakpoint (var, so they can't drift). */
-.dz-wrap { --dz-content-max: 1280px; }
-.dz-wizard-header-inner { max-width: var(--dz-content-max); margin: 0 auto; }
+.dz-wrap { --dz-content-max: 1280px; --dz-gutter: 32px; }
+.dz-wizard-header-inner { max-width: var(--dz-content-max); margin: 0 auto; padding: 0 var(--dz-gutter); }
 .dz-wizard-title-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
 .dz-wizard-title-group { display: flex; align-items: center; gap: 14px; }
 .dz-wizard-icon { width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.12), rgba(var(--accent-rgb), 0.08)); border: 1px solid rgba(var(--accent-rgb), 0.2); display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 1.2rem; }
@@ -34,7 +37,7 @@
 .dz-stepper-line.active { background: linear-gradient(90deg, rgba(var(--accent-rgb), 0.3), rgba(var(--accent-rgb), 0.1)); }
 
 /* MAIN GRID */
-.dz-main-grid { display: grid; grid-template-columns: 1fr 300px; gap: 24px; max-width: var(--dz-content-max); margin: 0 auto; padding: 24px 32px; align-items: start; }
+.dz-main-grid { display: grid; grid-template-columns: 1fr 300px; gap: 24px; max-width: var(--dz-content-max); margin: 0 auto; padding: 10px 0px 0px 0px; align-items: start; }
 .dz-grid-left { min-width: 0; }
 .dz-grid-right { position: sticky; top: 140px; }
 
@@ -120,7 +123,7 @@
 .dz-brands-title { font-size: 0.85rem; font-weight: 600; color: rgba(var(--c-muted), 0.7); margin: 0; }
 .dz-brands-view-all { font-size: 0.78rem; color: rgba(var(--accent-rgb), 0.6); background: none; border: none; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 500; display: flex; align-items: center; gap: 4px; transition: color 0.2s; }
 .dz-brands-view-all:hover { color: var(--accent); }
-.dz-brands-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; }
+.dz-brands-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100px, 100%), 1fr)); gap: 10px; }
 .dz-brand-card { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 14px 8px 12px; background: rgba(var(--c-panel), 0.6); border: 1px solid rgba(var(--accent-rgb), 0.06); border-radius: 12px; cursor: pointer; transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1); position: relative; text-align: center; }
 .dz-brand-card:hover { border-color: rgba(var(--accent-rgb), 0.2); background: rgba(var(--c-panel), 0.85); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2); }
 .dz-brand-card.selected { border-color: rgba(var(--accent-rgb), 0.4); background: rgba(var(--accent-rgb), 0.06); box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.08); }
@@ -217,8 +220,12 @@
 /* PROBLEM */
 .dz-problem-wrap { position: relative; width: 100%; margin-bottom: 20px; }
 .dz-problem-input-row { position: relative; }
-.dz-problem-textarea { min-height: 110px; padding-bottom: 40px; }
-.dz-problem-actions { position: absolute; bottom: 8px; right: 10px; display: flex; gap: 6px; z-index: 2; }
+/* resize:none removes the drag handle that overlapped the mic/clear icons;
+   margin-bottom:0 cancels the inherited .dz-textarea margin so the absolutely
+   positioned actions anchor to the textarea's true bottom-right (the wrapper
+   already provides spacing). The textarea auto-grows via JS. */
+.dz-problem-textarea { min-height: 110px; padding-bottom: 40px; resize: none; margin-bottom: 0; }
+.dz-problem-actions { position: absolute; bottom: 10px; right: 10px; display: flex; align-items: center; gap: 6px; z-index: 2; }
 .dz-problem-voice-btn, .dz-problem-clear-btn { width: 34px; height: 34px; border-radius: 10px; border: 1px solid rgba(var(--accent-rgb), 0.12); background: rgba(var(--c-panel), 0.8); color: rgba(var(--accent-rgb), 0.6); font-size: 0.95rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; }
 .dz-problem-voice-btn:hover, .dz-problem-clear-btn:hover { background: rgba(var(--accent-rgb), 0.1); color: var(--accent); }
 .dz-problem-voice-btn.recording { background: rgba(239, 68, 68, 0.12); border-color: rgba(239, 68, 68, 0.3); color: #ef4444; animation: dzVoicePulse 1.5s ease-in-out infinite; }
@@ -420,7 +427,7 @@
 .dz-info-panel-tip p { font-size: 0.8rem; color: rgba(var(--c-muted), 0.6); line-height: 1.5; margin: 0; }
 
 /* BENEFITS */
-.dz-benefits { max-width: var(--dz-content-max); margin: 0 auto; padding: 0 32px 32px; }
+.dz-benefits { max-width: var(--dz-content-max); margin: 0 auto;    padding: 10px 0px 0px; }
 .dz-benefits-inner { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
 .dz-benefit-item { display: flex; align-items: flex-start; gap: 12px; padding: 16px; background: rgba(var(--c-deep), 0.6); border: 1px solid rgba(var(--accent-rgb), 0.06); border-radius: 14px; }
 .dz-benefit-icon { width: 40px; height: 40px; min-width: 40px; border-radius: 10px; background: rgba(var(--accent-rgb), 0.08); border: 1px solid rgba(var(--accent-rgb), 0.12); display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 1rem; flex-shrink: 0; }
@@ -441,15 +448,17 @@
 }
 
 @media (max-width: 1024px) {
-  .dz-main-grid { grid-template-columns: 1fr; padding: 20px; }
+  .dz-wrap { --dz-gutter: 20px; }
+  .dz-main-grid { grid-template-columns: 1fr; padding: 20px var(--dz-gutter); }
   .dz-grid-right { position: static; order: 2; }
   .dz-stepper { max-width: 500px; }
   .dz-benefits-inner { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 767.98px) {
-  .dz-wizard-header { padding: 16px 16px 12px; }
-  .dz-main-grid { padding: 16px; gap: 16px; }
+  .dz-wrap { --dz-gutter: 16px; }
+  .dz-wizard-header { padding: 16px 0 12px; }
+  .dz-main-grid { padding: 16px var(--dz-gutter); gap: 16px; }
   .dz-card { padding: 24px 20px; border-radius: 14px; }
   .dz-stepper { max-width: 100%; }
   .dz-stepper-circle { width: 30px; height: 30px; font-size: 0.68rem; }
@@ -460,7 +469,7 @@
   .dz-problem-categories { grid-template-columns: repeat(2, 1fr); }
   .dz-selected-card { flex-direction: column; gap: 16px; }
   .dz-selected-right { width: 100%; max-height: 180px; }
-  .dz-brands-grid { grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)); gap: 8px; }
+  .dz-brands-grid { grid-template-columns: repeat(auto-fill, minmax(min(85px, 100%), 1fr)); gap: 8px; }
   .dz-brand-card { padding: 10px 6px 8px; }
   .dz-brand-card-icon { width: 38px; height: 38px; }
   .dz-brand-card-icon img { width: 38px; height: 38px; }
@@ -879,7 +888,7 @@
 .dz-modal-tl-item:last-child .dz-modal-tl-content { padding-bottom: 0; }
 
 /* Parts grid */
-.dz-modal-parts { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; }
+.dz-modal-parts { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(160px, 100%), 1fr)); gap: 8px; }
 .dz-modal-part { display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: rgba(var(--c-panel), 0.4); border: 1px solid rgba(var(--accent-rgb), 0.04); border-radius: 10px; font-size: 0.82rem; color: rgba(226, 232, 240, 0.8); }
 .dz-modal-part i { color: rgba(var(--accent-rgb), 0.4); font-size: 0.82rem; flex-shrink: 0; }
 
@@ -1130,7 +1139,7 @@
   display: flex; flex-direction: column;
   height: calc(100vh - var(--navbar-height, 56px) - 44px);
   margin: -22px 0 0 0; overflow: hidden;
-  background: var(--bg-primary, var(--page-bg));
+  background: transparent;
   animation: dzFadeIn 0.4s ease;
 }
 .dz-workspace-inner {
@@ -1141,22 +1150,23 @@
 /* Workspace header */
 .dz-ws-header {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 14px 28px;
-  background: rgba(4, 8, 16, 0.6);
-  border-bottom: 1px solid rgba(var(--accent-rgb), 0.06);
+  gap: 16px;
+  padding: 16px 28px;
+  background: rgba(var(--c-deep), 0.7);
+  border-bottom: 1px solid rgba(var(--accent-rgb), 0.08);
   flex-shrink: 0;
 }
-.dz-ws-header-left { display: flex; align-items: center; gap: 12px; }
+.dz-ws-header-left { display: flex; align-items: center; gap: 13px; min-width: 0; }
 .dz-ws-header-icon {
-  width: 38px; height: 38px; border-radius: 10px;
-  background: rgba(var(--accent-rgb), 0.06);
-  border: 1px solid rgba(var(--accent-rgb), 0.1);
+  width: 42px; height: 42px; min-width: 42px; border-radius: 12px;
+  background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.16), rgba(var(--accent-rgb), 0.07));
+  border: 1px solid rgba(var(--accent-rgb), 0.22);
   display: flex; align-items: center; justify-content: center;
-  color: var(--accent); font-size: 1rem;
+  color: var(--accent); font-size: 1.15rem;
 }
-.dz-ws-title { font-size: 0.88rem; font-weight: 700; color: rgba(255, 255, 255, 0.85); letter-spacing: 0.5px; }
-.dz-ws-sub { font-size: 0.72rem; color: rgba(255, 255, 255, 0.35); margin: 0; }
-.dz-ws-header-right { display: flex; align-items: center; gap: 14px; }
+.dz-ws-title { font-size: 1.05rem; font-weight: 700; color: rgba(255, 255, 255, 0.95); letter-spacing: 0.1px; line-height: 1.25; }
+.dz-ws-sub { font-size: 0.76rem; color: rgba(255, 255, 255, 0.45); margin: 2px 0 0; line-height: 1.3; }
+.dz-ws-header-right { display: flex; align-items: center; gap: 12px; }
 .dz-ws-status {
   display: flex; align-items: center; gap: 6px;
   font-size: 0.72rem; color: rgba(255, 255, 255, 0.3);
@@ -1746,3 +1756,18 @@
 @media (max-width: 480px) {
   .dz-vin-btn { flex: 1; justify-content: center; }
 }
+
+/* Model year selector (vehicle step) — respected by the diagnosis + image lookup. */
+.dz-car-year { margin-top: 16px; }
+.dz-year-select-wrap { position: relative; max-width: 260px; }
+.dz-year-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: rgba(var(--accent-rgb), 0.6); pointer-events: none; font-size: 0.9rem; }
+.dz-year-select {
+  width: 100%; height: 46px; padding: 0 34px 0 38px; border-radius: 12px;
+  border: 1px solid rgba(var(--accent-rgb), 0.15); background: rgba(var(--c-panel), 0.8);
+  color: var(--text); font-size: 0.9rem; outline: none; cursor: pointer;
+  -webkit-appearance: none; appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 16 16' fill='none' stroke='%239aa3ad' stroke-width='2'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 12px center;
+}
+.dz-year-select:focus { border-color: rgba(var(--accent-rgb), 0.4); }
+.dz-year-select option { background: var(--surface); color: var(--text); }

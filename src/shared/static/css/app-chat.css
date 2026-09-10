@@ -1383,3 +1383,8 @@
 }
 .gpt-chat-visual--result { padding: 0 !important; overflow: hidden !important; }
 .gpt-chat-visual--result .dz-ws-result-inner { flex: 1 !important; }
+
+/* On the CHAT page the dz-workspace lives inside .gpt-main (no .page padding to
+   break out of), so the -22px top margin the diagnose page uses just pulls the
+   "AI Mechanic" header up under the topbar and clips it. Reset it here. */
+.gpt-wrap .dz-workspace { margin: 0 !important; }

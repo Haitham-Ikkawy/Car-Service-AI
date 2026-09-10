@@ -9,14 +9,13 @@
 
   <div class="ms-auto">
     <div class="dropdown">
-      <button class="btn btn-icon" data-bs-toggle="dropdown" aria-label="{{ t('Account') }}" title="{{ t('Account') }}">
+      <button class="btn btn-icon topbar-account" data-bs-toggle="dropdown" aria-label="{{ t('Account') }}" title="{{ t('Account') }}">
         {% if user_picture %}
-          <img src="{{ user_picture }}" alt="{{ user_name or current_user }}" referrerpolicy="no-referrer"
-               style="width:26px;height:26px;border-radius:50%;object-fit:cover"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='inline-block'">
-          <i class="bi bi-person-circle" style="display:none"></i>
+          <img class="topbar-avatar" src="{{ user_picture }}" alt="{{ user_name or current_user }}" referrerpolicy="no-referrer"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <i class="bi bi-person-circle topbar-avatar-fallback" style="display:none"></i>
         {% else %}
-          <i class="bi bi-person-circle"></i>
+          <i class="bi bi-person-circle topbar-avatar-fallback"></i>
         {% endif %}
       </button>
       <div class="dropdown-menu dropdown-menu-end p-2 shadow-lg" style="min-width:200px;background:var(--glass-strong);border:1px solid var(--glass-border);border-radius:16px">
