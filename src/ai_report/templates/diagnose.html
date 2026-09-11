@@ -108,6 +108,15 @@
             </div>
           </div>
 
+          <!-- Identify vehicle from a photo (reuses /api/vehicle/identify-image) -->
+          <div class="mt-2 d-flex align-items-center gap-2 flex-wrap" id="dz-photo-detect-row">
+            <button class="dz-btn-outline-sm" type="button" id="dz-photo-detect-btn">
+              <i class="bi bi-camera"></i> Identify from a photo
+            </button>
+            <input type="file" id="dz-photo-detect-input" accept="image/*" class="d-none">
+          </div>
+          <div class="mt-2 d-none" id="dz-photo-detect-status"></div>
+
           {# VIN lookup removed from the UI (item 13). Feature kept as future work —
              see VIN_LOOKUP_ENABLED in diagnose.js and the commented route in
              car_database/routes.py. To restore, un-comment this block. #}

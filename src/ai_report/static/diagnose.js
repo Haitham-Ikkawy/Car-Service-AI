@@ -1706,6 +1706,105 @@
     scheduleSave();
   }
 
+  /* ============================================================
+     IDENTIFY VEHICLE FROM A PHOTO — reuses the existing
+     /api/vehicle/identify-image endpoint (car_database module) and the
+     VIN-lookup's applyDecodedVehicle() to fill in the vehicle selector.
+     ============================================================ */
+  const DZ_PHOTO_CONFIDENCE_THRESHOLD = 0.6;
+
+  function matchKnownBrand(name) {
+    if (!name) return null;
+    const n = String(name).trim().toLowerCase();
+    return CAR_BRANDS.find((b) => b.name.toLowerCase() === n) || null;
+  }
+
+  function applyPhotoDetectedVehicle(result) {
+    const known = matchKnownBrand(result.manufacturer);
+    applyDecodedVehicle({
+      make: known ? known.name : (result.manufacturer || ""),
+      model: result.model || "",
+      year: result.year || "",
+      logo: known ? known.logo : null,
+    });
+    if (window.CS && CS.toast) {
+      CS.toast("success", "Vehicle detected",
+        [result.manufacturer, result.model].filter(Boolean).join(" ") || "Vehicle selected.");
+    }
+  }
+
+  function initPhotoDetectVehicle() {
+    const btn = $("#dz-photo-detect-btn");
+    const input = $("#dz-photo-detect-input");
+    const status = $("#dz-photo-detect-status");
+    if (!btn || !input) return;
+
+    function setStatus(html) {
+      if (!status) return;
+      if (!html) { status.classList.add("d-none"); status.innerHTML = ""; return; }
+      status.classList.remove("d-none");
+      status.innerHTML = html;
+    }
+
+    async function analyze(file) {
+      if (!file || !file.type || file.type.indexOf("image/") !== 0) {
+        if (window.CS && CS.toast) CS.toast("warning", "Invalid file", "Please choose an image.");
+        return;
+      }
+      const original = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '<span class="dz-spinner"></span> Analyzing photo…';
+      setStatus("");
+      try {
+        const fd = new FormData();
+        fd.append("file", file);
+        const res = await fetch("/api/vehicle/identify-image", { method: "POST", body: fd });
+        const data = await res.json();
+        if (!res.ok) {
+          if (window.CS && CS.toast) CS.toast("error", "Detection failed", data.error || "Please try again.");
+          return;
+        }
+        if (data.unavailable || (!data.manufacturer && !data.model)) {
+          if (window.CS && CS.toast) {
+            CS.toast("warning", "Couldn't identify the vehicle", "Please select it manually below.");
+          }
+          return;
+        }
+        const confidence = typeof data.confidence === "number" ? data.confidence : 0;
+        if (confidence >= DZ_PHOTO_CONFIDENCE_THRESHOLD) {
+          applyPhotoDetectedVehicle(data);
+        } else {
+          const label = [data.manufacturer, data.model].filter(Boolean).join(" ") || "vehicle";
+          setStatus(`
+            <div class="d-flex align-items-center gap-2 flex-wrap">
+              <span>Detected: <strong>${esc(label)}</strong> (${Math.round(confidence * 100)}% confidence)</span>
+              <button class="dz-btn-outline-sm" type="button" id="dz-photo-detect-confirm"><i class="bi bi-check2"></i> Use this</button>
+              <button class="dz-btn-outline-sm" type="button" id="dz-photo-detect-retry"><i class="bi bi-arrow-repeat"></i> Try another</button>
+            </div>`);
+          $("#dz-photo-detect-confirm")?.addEventListener("click", () => {
+            applyPhotoDetectedVehicle(data);
+            setStatus("");
+          });
+          $("#dz-photo-detect-retry")?.addEventListener("click", () => {
+            setStatus("");
+            input.click();
+          });
+        }
+      } catch (_) {
+        if (window.CS && CS.toast) CS.toast("error", "Detection failed", "Please try again.");
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = original;
+        input.value = "";
+      }
+    }
+
+    btn.addEventListener("click", () => input.click());
+    input.addEventListener("change", () => {
+      if (input.files && input.files[0]) analyze(input.files[0]);
+    });
+  }
+
   function initVinLookup() {
     const input = $("#dz-vin-input");
     const btn = $("#dz-vin-btn");
@@ -2140,6 +2239,7 @@
       });
     }
     initVehicleSearch();
+    initPhotoDetectVehicle();
     initYearSelect();
     /* item 2: VIN lookup is gated off — hide the section and skip its wiring.
        Flip VIN_LOOKUP_ENABLED (top of file) to re-enable; no code was removed. */
