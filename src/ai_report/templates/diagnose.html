@@ -108,11 +108,12 @@
             </div>
           </div>
 
-          <!-- Identify vehicle from a photo (reuses /api/vehicle/identify-image) -->
-          <div class="mt-3 mb-1 d-flex align-items-center gap-2 flex-wrap" id="dz-photo-detect-row">
-            <button class="dz-btn-change-vehicle" type="button" id="dz-photo-detect-btn">
-              <i class="bi bi-camera-fill"></i> Identify vehicle from a photo
-            </button>
+          <!-- Upload Car Image — identifies the vehicle via the existing
+               /api/vehicle/identify-image endpoint (car_database module) -->
+          <div class="upload-zone dz-photo-detect-zone mt-3" id="dz-photo-detect-zone">
+            <div class="up-icon"><i class="bi bi-camera-fill"></i></div>
+            <h5 class="mb-1" id="dz-photo-detect-title">Upload Car Image</h5>
+            <p class="text-soft small mb-0" id="dz-photo-detect-hint">Upload a photo of your car and we'll detect the brand &amp; model</p>
             <input type="file" id="dz-photo-detect-input" accept="image/*" class="d-none">
           </div>
           <div class="mt-2 d-none" id="dz-photo-detect-status"></div>

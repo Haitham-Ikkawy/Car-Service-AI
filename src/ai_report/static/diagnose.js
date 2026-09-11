@@ -1734,10 +1734,15 @@
   }
 
   function initPhotoDetectVehicle() {
-    const btn = $("#dz-photo-detect-btn");
+    const zone = $("#dz-photo-detect-zone");
     const input = $("#dz-photo-detect-input");
     const status = $("#dz-photo-detect-status");
-    if (!btn || !input) return;
+    const title = $("#dz-photo-detect-title");
+    const hint = $("#dz-photo-detect-hint");
+    if (!zone || !input) return;
+
+    const defaultTitle = title ? title.textContent : "Upload Car Image";
+    const defaultHint = hint ? hint.textContent : "";
 
     function setStatus(html) {
       if (!status) return;
@@ -1746,14 +1751,18 @@
       status.innerHTML = html;
     }
 
+    function setBusy(busy) {
+      zone.classList.toggle("dz-photo-detect-busy", busy);
+      if (title) title.textContent = busy ? "Analyzing photo…" : defaultTitle;
+      if (hint) hint.textContent = busy ? "Detecting the brand and model…" : defaultHint;
+    }
+
     async function analyze(file) {
       if (!file || !file.type || file.type.indexOf("image/") !== 0) {
         if (window.CS && CS.toast) CS.toast("warning", "Invalid file", "Please choose an image.");
         return;
       }
-      const original = btn.innerHTML;
-      btn.disabled = true;
-      btn.innerHTML = '<span class="dz-spinner"></span> Analyzing photo…';
+      setBusy(true);
       setStatus("");
       try {
         const fd = new FormData();
@@ -1793,13 +1802,19 @@
       } catch (_) {
         if (window.CS && CS.toast) CS.toast("error", "Detection failed", "Please try again.");
       } finally {
-        btn.disabled = false;
-        btn.innerHTML = original;
+        setBusy(false);
         input.value = "";
       }
     }
 
-    btn.addEventListener("click", () => input.click());
+    zone.addEventListener("click", () => input.click());
+    zone.addEventListener("dragover", (e) => { e.preventDefault(); zone.classList.add("dragover"); });
+    zone.addEventListener("dragleave", () => zone.classList.remove("dragover"));
+    zone.addEventListener("drop", (e) => {
+      e.preventDefault();
+      zone.classList.remove("dragover");
+      if (e.dataTransfer.files && e.dataTransfer.files[0]) analyze(e.dataTransfer.files[0]);
+    });
     input.addEventListener("change", () => {
       if (input.files && input.files[0]) analyze(input.files[0]);
     });

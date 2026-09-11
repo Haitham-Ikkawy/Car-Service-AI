@@ -151,6 +151,10 @@
 .dz-selected-image img { width: 100%; height: 100%; object-fit: contain; }
 .dz-btn-change-vehicle { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; padding: 8px 16px; background: rgba(var(--accent-rgb), 0.06); border: 1px solid rgba(var(--accent-rgb), 0.12); border-radius: 8px; color: rgba(var(--accent-rgb), 0.6); font-size: 0.78rem; font-weight: 500; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.2s ease; }
 .dz-btn-change-vehicle:hover { background: rgba(var(--accent-rgb), 0.12); border-color: rgba(var(--accent-rgb), 0.22); color: var(--accent); }
+/* Upload Car Image — compact variant of the shared .upload-zone (app.css) so it
+   sits neatly next to the vehicle search field instead of a full-height block. */
+.dz-photo-detect-zone { padding: 18px 20px; margin-bottom: 4px; }
+.dz-photo-detect-zone.dz-photo-detect-busy { opacity: 0.6; pointer-events: none; }
 .dz-car-selected-card { display: none; }
 .dz-car-trigger { display: none; }
 .dz-car-trigger-icon { display: none; }
