@@ -1788,7 +1788,7 @@
     /* Auto-select if exactly one unique model match */
     if (modelResults.length === 1 && brandMatches.length === 0) {
       const only = modelResults[0];
-      const input = $("#dz-car-input");
+      const input = $("#dz-vehicle-search");
       if (input && normalizeModel(input.value) === only._norm) {
         /* Unique exact match — auto-select */
         selectBrand(only.brand);
@@ -1818,7 +1818,7 @@
     const logo = brand ? brand.logo : null;
 
     /* Update UI — hide search/brands, show selected card */
-    const input = $("#dz-car-input");
+    const input = $("#dz-vehicle-search");
     if (input) input.value = "";
     const suggestions = $("#dz-car-suggestions");
     if (suggestions) { suggestions.classList.add("d-none"); suggestions.innerHTML = ""; }
@@ -2337,7 +2337,7 @@
     if (searchBar) searchBar.style.display = "";
 
     /* Clear search input */
-    const input = $("#dz-car-input");
+    const input = $("#dz-vehicle-search");
     if (input) input.value = "";
     const suggestions = $("#dz-car-suggestions");
     if (suggestions) { suggestions.classList.add("d-none"); suggestions.innerHTML = ""; }
@@ -2366,7 +2366,7 @@
     if (q.length < 2) return;
     let makes = [];
     try { makes = await VehicleAPI.makes(q, 8); } catch (_) { return; }
-    const input = $("#dz-car-input");
+    const input = $("#dz-vehicle-search");
     if (!input || input.value.trim() !== q) return;   /* stale query */
     const container = $("#dz-car-suggestions");
     if (!container) return;
@@ -2401,7 +2401,7 @@
   }, 300);
 
   function initVehicleSearch() {
-    const input = $("#dz-car-input");
+    const input = $("#dz-vehicle-search");
     const dropdown = $("#dz-car-dropdown");
     const clearBtn = $("#dz-car-clear");
 
@@ -2485,7 +2485,7 @@
     });
 
     /* Change vehicle button */
-    const changeBtn = $("#dz-car-change");
+    const changeBtn = $("#dz-change-vehicle");
     if (changeBtn) changeBtn.addEventListener("click", resetVehicleSelection);
   }
 
@@ -2556,16 +2556,16 @@
       _showAllBrands = !_showAllBrands;
       if (_showAllBrands) {
         btn.disabled = true;
-        btn.innerHTML = 'Loading… <i class="bi bi-hourglass-split"></i>';
+        btn.innerHTML = tr("loadingTitle") + ' <i class="bi bi-hourglass-split"></i>';
         const all = await ensureAllBrands();
         renderBrandList(all);
         btn.disabled = false;
-        btn.innerHTML = 'Show popular only <i class="bi bi-arrow-up"></i>';
-        if (title) title.textContent = 'All Brands (' + all.length + ')';
+        btn.innerHTML = tr("viewAllBrands") + ' <i class="bi bi-arrow-up"></i>';
+        if (title) title.textContent = tr("viewAllBrands") + ' (' + all.length + ')';
       } else {
         renderBrandGrid();
-        btn.innerHTML = 'View all brands <i class="bi bi-arrow-right"></i>';
-        if (title) title.textContent = 'Popular Brands';
+        btn.innerHTML = tr("viewAllBrands") + ' <i class="bi bi-arrow-right"></i>';
+        if (title) title.textContent = tr("popularBrands");
       }
     });
   }
