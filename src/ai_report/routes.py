@@ -13,6 +13,7 @@ from fastapi.responses import JSONResponse, RedirectResponse
 
 from ..shared.store import store
 from ..shared.utils import gemini, translator as i18n
+from ..shared.utils.gemini import ask_gemini, UnavailableError, _extract_json
 from ..shared.utils.language import is_arabic, resolve_lang
 from ..shared.utils.templating import render, require
 
@@ -534,6 +535,91 @@ Return ONLY the JSON array, no markdown, no commentary."""
             {"error": "Failed to generate questions", "error_type": "ai_error"},
             status_code=500,
         )
+
+
+# ---------------------------------------------------------------------------
+# Text Parsing — Vehicle + Fault extraction from natural language
+# ---------------------------------------------------------------------------
+
+@router.post("/api/diagnose/parse-text")
+async def parse_text_api(request: Request):
+    """Parse natural language text to extract vehicle info or fault description.
+
+    Used by voice input and chat-based vehicle/fault selection. Accepts Arabic
+    or English text and returns structured data via Gemini.
+    """
+    user = require(request)
+    body = await request.json()
+    text = (body.get("text") or "").strip()
+    parse_type = body.get("type") or "vehicle"  # "vehicle" or "fault"
+
+    if not text or len(text) < 3:
+        return JSONResponse({"ok": True, "parsed": None})
+
+    # Detect dialect for context
+    dialect = ""
+    dialect_confidence = 0.0
+    user_terms = {}
+    if is_arabic(text):
+        dialect_result = detect_language_and_dialect(text)
+        dialect = dialect_result.dialect
+        dialect_confidence = dialect_result.dialect_confidence
+        user_terms = {c["id"]: c["local"] for c in dialect_result.canonical_concepts}
+
+    if parse_type == "vehicle":
+        prompt = f"""Extract vehicle information from this text. Return a JSON object with these fields:
+{{
+  "brand": "vehicle manufacturer/brand name in English (e.g. Toyota, BMW, Ford)",
+  "model": "model name in English (e.g. Camry, Corolla, Civic)",
+  "year": "model year as a 4-digit number (e.g. 2020) or null if not mentioned",
+  "engine": "engine specification if mentioned (e.g. 2.0L, V6) or empty string"
+}}
+
+IMPORTANT RULES:
+- Translate Arabic brand/model names to English (e.g. "تويوتا" → "Toyota", "كامري" → "Camry")
+- Common Arabic→English mappings: تويوتا→Toyota, هوندا→Honda, نيسان→Nissan, كيا→Kia, هيونداي→Hyundai, فورد→Ford, بي ام دبليو→BMW, مرسيدس→Mercedes-Benz, لاند روفر→Land Rover, توسون→Tucson,لاند كروزر→Land Cruiser
+- If the user says only a brand, return brand with null model
+- If no year mentioned, return null for year
+- Return ONLY the JSON object, no commentary
+
+User text: {text}"""
+    else:
+        prompt = f"""Extract fault/problem information from this text. Return a JSON object with these fields:
+{{
+  "problem": "concise problem description in English (e.g. Engine overheating, Brake noise, Car won't start)",
+  "symptoms": ["list", "of", "specific symptoms mentioned"],
+  "location": "where the issue is felt (e.g. front, rear, engine bay, cabin) or empty string",
+  "when": "when the issue occurs (e.g. always, when braking, at startup) or empty string"
+}}
+
+IMPORTANT RULES:
+- Translate Arabic automotive terms to English
+- Common Arabic→English mappings: فرامل→brakes, محرّك→engine, تكييف→AC, بطارية→battery, حرارة→temperature, صوت→sound, اهتزاز→vibration, دخان→smoke, تسريب→leak
+- Keep the problem description concise (under 60 chars)
+- If no specific symptoms mentioned, return an empty array
+- Return ONLY the JSON object, no commentary
+
+User text: {text}"""
+
+    try:
+        raw = await asyncio.to_thread(ask_gemini, prompt, user)
+        parsed = _extract_json(raw)
+        if not parsed:
+            return JSONResponse({"ok": True, "parsed": None})
+        return JSONResponse({
+            "ok": True,
+            "parsed": parsed,
+            "dialect": dialect,
+            "dialect_confidence": dialect_confidence,
+        })
+    except UnavailableError as exc:
+        return JSONResponse(
+            {"error": exc.detail or "AI unavailable", "error_type": "ai_unavailable"},
+            status_code=503,
+        )
+    except Exception as exc:
+        log.error("[PARSE-TEXT] Error: %s", exc, exc_info=True)
+        return JSONResponse({"ok": True, "parsed": None})
 
 
 # ---------------------------------------------------------------------------

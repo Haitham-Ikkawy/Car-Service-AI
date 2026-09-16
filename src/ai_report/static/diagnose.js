@@ -2431,10 +2431,85 @@
     }
 
     /* Keyboard navigation */
-    input.addEventListener("keydown", (e) => {
+    input.addEventListener("keydown", async (e) => {
       if (!dropdown) return;
       const items = dropdown.querySelectorAll(".dz-car-item");
-      if (items.length === 0) {
+      if (items.length === 0 && e.key !== "Escape") {
+        /* No suggestions — check if Enter was pressed with Arabic/non-ASCII text
+           to trigger AI vehicle parsing (chat vehicle selection) */
+        if (e.key === "Enter" && input.value.trim().length >= 3) {
+          const val = input.value.trim();
+          const _isArabicInput = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/.test(val);
+          if (_isArabicInput) {
+            e.preventDefault();
+            input.disabled = true;
+            const _origPlaceholder = input.placeholder;
+            input.placeholder = tr("loadingTitle") + "...";
+            try {
+              const parsed = await parseTextWithAI(val, "vehicle");
+              if (parsed && parsed.brand) {
+                const known = CAR_BRANDS.find((b) => b.name.toLowerCase() === parsed.brand.toLowerCase());
+                if (known) {
+                  selectBrand(known.name);
+                  if (parsed.model) {
+                    const matchedModel = known.models.find(m => m.toLowerCase() === parsed.model.toLowerCase());
+                    if (matchedModel) {
+                      state.vehicle.model = matchedModel;
+                      const modelCard = document.querySelector(`.dz-car-model-card[data-model="${matchedModel}"]`);
+                      if (modelCard) {
+                        document.querySelectorAll(".dz-car-model-card").forEach(c => c.classList.remove("selected"));
+                        modelCard.classList.add("selected");
+                        const mEl = $("#dz-car-selected-model");
+                        if (mEl) mEl.textContent = matchedModel;
+                        updateSelectedVehicleImage(known.name, matchedModel);
+                        updateInfoPanelVehicleImage(known.name, matchedModel);
+                      }
+                    } else {
+                      state.vehicle.model = parsed.model;
+                      const mEl = $("#dz-car-selected-model");
+                      if (mEl) mEl.textContent = parsed.model;
+                    }
+                  }
+                  if (parsed.year) {
+                    state.vehicle.year = String(parsed.year);
+                    const yearSel = $("#dz-year-select");
+                    if (yearSel) yearSel.value = String(parsed.year);
+                  }
+                  if (parsed.engine) {
+                    state.vehicle.engine = parsed.engine;
+                    const eLine = $("#dz-car-selected-engine");
+                    if (eLine) { eLine.textContent = parsed.engine; eLine.classList.remove("d-none"); }
+                  }
+                  scheduleSave();
+                  if (window.CS && CS.toast) CS.toast("success", tr("selectedVehicle"), [parsed.brand, parsed.model].filter(Boolean).join(" "));
+                } else if (parsed.brand) {
+                  /* Brand not in curated list — try to select it anyway */
+                  selectBrand(parsed.brand);
+                  if (parsed.model) {
+                    state.vehicle.model = parsed.model;
+                    const mEl = $("#dz-car-selected-model");
+                    if (mEl) mEl.textContent = parsed.model;
+                  }
+                  if (parsed.year) state.vehicle.year = String(parsed.year);
+                  scheduleSave();
+                  if (window.CS && CS.toast) CS.toast("success", tr("selectedVehicle"), [parsed.brand, parsed.model].filter(Boolean).join(" "));
+                }
+              } else if (parsed && parsed.brand) {
+                selectBrand(parsed.brand);
+                scheduleSave();
+              } else {
+                if (window.CS && CS.toast) CS.toast("warning", "Vehicle not recognized", "Please try again or select from the list.");
+              }
+            } catch (err) {
+              if (window.CS && CS.toast) CS.toast("error", "Parse failed", "Please try again.");
+            } finally {
+              input.disabled = false;
+              input.placeholder = _origPlaceholder;
+              input.value = "";
+              input.focus();
+            }
+          }
+        }
         if (e.key === "Escape") { dropdown.classList.add("d-none"); }
         return;
       }
@@ -3079,13 +3154,16 @@
       recognition = new SpeechRecognition();
       recognition.continuous = false;
       recognition.interimResults = true;
-      recognition.lang = "en-US";
+      /* Auto-detect Arabic if the user has typed Arabic text, otherwise default to English */
+      const _curText = (textarea.value || "").trim();
+      const _hasArabic = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/.test(_curText);
+      recognition.lang = _hasArabic ? "ar-SA" : "en-US";
 
       recognition.onstart = () => {
         isRecording = true;
         voiceBtn.classList.add("recording");
         recordingEl.classList.remove("d-none");
-        recordingEl.querySelector(".dz-problem-voice-label").textContent = "Listening...";
+        recordingEl.querySelector(".dz-problem-voice-label").textContent = _hasArabic ? "جاري الاستماع..." : "Listening...";
         voiceTextEl.textContent = "";
       };
 
@@ -4297,6 +4375,25 @@
   }
 
   /* ============================================================
+     AI TEXT PARSING — vehicle / fault extraction via backend
+     ============================================================ */
+  async function parseTextWithAI(text, parseType) {
+    if (!text || text.length < 3) return null;
+    try {
+      const resp = await fetch("/api/diagnose/parse-text", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text, type: parseType }),
+      });
+      const data = await resp.json();
+      if (data.ok && data.parsed) return data.parsed;
+    } catch (e) {
+      console.warn("[PARSE-TEXT] AI parse failed:", e);
+    }
+    return null;
+  }
+
+  /* ============================================================
      VOICE VEHICLE DETECTION
      ============================================================ */
   function normalizeText(text) {
@@ -4354,7 +4451,7 @@
     return { brand: detectedBrand, model: detectedModel };
   }
 
-  function applyVoiceDetection(transcript) {
+  async function applyVoiceDetection(transcript) {
     const recordingEl = $("#dz-car-voice-recording");
     const labelEl = recordingEl ? recordingEl.querySelector(".dz-voice-label") : null;
     const textEl = $("#dz-car-voice-text");
@@ -4362,6 +4459,66 @@
     if (labelEl) labelEl.textContent = "Searching vehicle...";
     if (textEl) textEl.textContent = transcript;
 
+    /* Detect if text is Arabic — if so, use AI parser for accurate extraction */
+    const isArabic = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/.test(transcript);
+
+    if (isArabic) {
+      /* Use AI backend to parse Arabic vehicle text */
+      if (labelEl) labelEl.textContent = "Analyzing your words...";
+      const parsed = await parseTextWithAI(transcript, "vehicle");
+      if (parsed && parsed.brand) {
+        const known = CAR_BRANDS.find((b) => b.name.toLowerCase() === parsed.brand.toLowerCase());
+        if (known) {
+          selectBrand(known.name);
+          if (parsed.model) {
+            /* Try to find model in known list, or set it directly */
+            const matchedModel = known.models.find(m => m.toLowerCase() === parsed.model.toLowerCase());
+            if (matchedModel) {
+              state.vehicle.model = matchedModel;
+              const modelCard = document.querySelector(`.dz-car-model-card[data-model="${matchedModel}"]`);
+              if (modelCard) {
+                document.querySelectorAll(".dz-car-model-card").forEach(c => c.classList.remove("selected"));
+                modelCard.classList.add("selected");
+                const mEl = $("#dz-car-selected-model");
+                if (mEl) mEl.textContent = matchedModel;
+                updateSelectedVehicleImage(known.name, matchedModel);
+                updateInfoPanelVehicleImage(known.name, matchedModel);
+              }
+            } else {
+              state.vehicle.model = parsed.model;
+              const mEl = $("#dz-car-selected-model");
+              if (mEl) mEl.textContent = parsed.model;
+            }
+          }
+          if (parsed.year) {
+            state.vehicle.year = String(parsed.year);
+            const yearSel = $("#dz-year-select");
+            if (yearSel) yearSel.value = String(parsed.year);
+          }
+          if (parsed.engine) {
+            state.vehicle.engine = parsed.engine;
+            const eLine = $("#dz-car-selected-engine");
+            if (eLine) { eLine.textContent = parsed.engine; eLine.classList.remove("d-none"); }
+          }
+          scheduleSave();
+          if (labelEl) labelEl.textContent = "Vehicle found!";
+          setTimeout(() => {
+            if (recordingEl) recordingEl.classList.add("d-none");
+          }, 1200);
+          return;
+        }
+      }
+      /* Fallback: no match */
+      if (labelEl) labelEl.textContent = "Vehicle not recognized. Try again.";
+      if (textEl) textEl.textContent = "";
+      setTimeout(() => {
+        if (recordingEl) recordingEl.classList.add("d-none");
+        if (voiceBtn) voiceBtn.classList.remove("recording");
+      }, 2000);
+      return;
+    }
+
+    /* English — use existing regex-based detection */
     const result = detectVehicleFromSpeech(transcript);
 
     if (result.brand) {
@@ -4389,7 +4546,32 @@
         if (voiceBtn) voiceBtn.classList.remove("recording");
       }, 1200);
     } else {
-      /* No match found */
+      /* No match found — try AI parser as fallback */
+      if (labelEl) labelEl.textContent = "Analyzing your words...";
+      const parsed = await parseTextWithAI(transcript, "vehicle");
+      if (parsed && parsed.brand) {
+        const known = CAR_BRANDS.find((b) => b.name.toLowerCase() === parsed.brand.toLowerCase());
+        if (known) {
+          selectBrand(known.name);
+          if (parsed.model) {
+            state.vehicle.model = parsed.model;
+            const mEl = $("#dz-car-selected-model");
+            if (mEl) mEl.textContent = parsed.model;
+          }
+          if (parsed.year) {
+            state.vehicle.year = String(parsed.year);
+            const yearSel = $("#dz-year-select");
+            if (yearSel) yearSel.value = String(parsed.year);
+          }
+          scheduleSave();
+          if (labelEl) labelEl.textContent = "Vehicle found!";
+          setTimeout(() => {
+            if (recordingEl) recordingEl.classList.add("d-none");
+          }, 1200);
+          return;
+        }
+      }
+      /* No match at all */
       if (labelEl) labelEl.textContent = "Vehicle not recognized. Try again.";
       if (textEl) textEl.textContent = "";
       setTimeout(() => {
@@ -4436,14 +4618,18 @@
       recognition = new SpeechRecognition();
       recognition.continuous = false;
       recognition.interimResults = true;
-      recognition.lang = "en-US";
+      /* Auto-detect Arabic dialect if user has typed Arabic text, otherwise default to English.
+         This lets Arabic speakers say their vehicle info naturally. */
+      const _prevProblem = (state.problem || "").trim();
+      const _isArabicText = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/.test(_prevProblem);
+      recognition.lang = _isArabicText ? "ar-SA" : "en-US";
 
       recognition.onstart = () => {
         isRecording = true;
         voiceBtn.classList.add("recording");
         if (recordingEl) recordingEl.classList.remove("d-none");
         const labelEl = recordingEl ? recordingEl.querySelector(".dz-voice-label") : null;
-        if (labelEl) labelEl.textContent = "Listening...";
+        if (labelEl) labelEl.textContent = _isArabicText ? "جاري الاستماع..." : "Listening...";
         if (textEl) textEl.textContent = "";
       };
 
