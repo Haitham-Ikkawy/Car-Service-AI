@@ -22,6 +22,8 @@
     where: "",
     answers: {},
     image: null,
+    video: null,
+    videoFile: null,
     questionIndex: 0,
     questions: [],
   };
@@ -408,6 +410,11 @@
         payload.image = state.image;
         state._imageDirty = false;
       }
+      /* Only send video if it changed */
+      if (state._videoDirty) {
+        payload.video = state.video;
+        state._videoDirty = false;
+      }
       await fetch(`/api/diag-sessions/${state.sessionId}/update`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -563,14 +570,23 @@
         const thumb = document.getElementById("dz-img-thumb");
         const preview = document.getElementById("dz-img-preview");
         const zone = document.getElementById("dz-upload-zone");
-        const continueImg = document.getElementById("dz-continue-img");
-        const skipImg = document.getElementById("dz-skip-img");
         if (thumb) thumb.src = state.image;
         if (preview) preview.style.display = "inline-block";
         if (zone) zone.style.display = "none";
-        if (continueImg) continueImg.style.display = "";
-        if (skipImg) skipImg.style.display = "none";
       }
+
+      /* Restore video preview */
+      if (state.video) {
+        const videoThumb = document.getElementById("dz-video-thumb");
+        const videoPreview = document.getElementById("dz-video-preview");
+        const videoZone = document.getElementById("dz-video-zone");
+        if (videoThumb) { videoThumb.src = state.video; videoThumb.load(); }
+        if (videoPreview) videoPreview.style.display = "inline-block";
+        if (videoZone) videoZone.style.display = "none";
+      }
+
+      /* Update continue button visibility */
+      updateContinueButton();
 
       /* Navigate to the saved step */
       if (state.step === "questions" && state.questions.length > 0) {
@@ -2330,7 +2346,7 @@
       }
     });
 
-    /* Image */
+    /* Image & Video */
     $("#dz-back-img").addEventListener("click", () => showStep("questions"));
     $("#dz-skip-img").addEventListener("click", () => {
       showReview();
@@ -2348,12 +2364,27 @@
       $("#dz-file-input").value = "";
       $("#dz-img-preview").style.display = "none";
       $("#dz-upload-zone").style.display = "";
-      $("#dz-continue-img").style.display = "none";
-      $("#dz-skip-img").style.display = "";
+      updateContinueButton();
       scheduleSave();
     });
 
-    /* Drag & drop */
+    /* Video */
+    $("#dz-video-zone").addEventListener("click", () => $("#dz-video-input").click());
+    $("#dz-video-input").addEventListener("change", handleVideo);
+    $("#dz-video-remove").addEventListener("click", () => {
+      state.video = null;
+      state.videoFile = null;
+      state._videoDirty = true;
+      $("#dz-video-input").value = "";
+      $("#dz-video-preview").style.display = "none";
+      $("#dz-video-zone").style.display = "";
+      const videoEl = $("#dz-video-thumb");
+      if (videoEl) { videoEl.src = ""; videoEl.load(); }
+      updateContinueButton();
+      scheduleSave();
+    });
+
+    /* Drag & drop for photo */
     const zone = $("#dz-upload-zone");
     zone.addEventListener("dragover", (e) => { e.preventDefault(); zone.style.borderColor = "rgba(var(--accent-rgb), 0.4)"; });
     zone.addEventListener("dragleave", () => { zone.style.borderColor = ""; });
@@ -2362,6 +2393,18 @@
       zone.style.borderColor = "";
       if (e.dataTransfer.files.length) {
         processImage(e.dataTransfer.files[0]);
+      }
+    });
+
+    /* Drag & drop for video */
+    const videoZone = $("#dz-video-zone");
+    videoZone.addEventListener("dragover", (e) => { e.preventDefault(); videoZone.style.borderColor = "rgba(var(--accent-rgb), 0.4)"; });
+    videoZone.addEventListener("dragleave", () => { videoZone.style.borderColor = ""; });
+    videoZone.addEventListener("drop", (e) => {
+      e.preventDefault();
+      videoZone.style.borderColor = "";
+      if (e.dataTransfer.files.length) {
+        processVideo(e.dataTransfer.files[0]);
       }
     });
 
@@ -2387,6 +2430,8 @@
       state.where = "";
       state.answers = {};
       state.image = null;
+      state.video = null;
+      state.videoFile = null;
       state.questionIndex = 0;
       state.questions = [];
       $("#dz-problem").value = "";
@@ -2404,6 +2449,11 @@
       $("#dz-file-input").value = "";
       $("#dz-img-preview").style.display = "none";
       $("#dz-upload-zone").style.display = "";
+      $("#dz-video-input").value = "";
+      $("#dz-video-preview").style.display = "none";
+      $("#dz-video-zone").style.display = "";
+      const videoEl = $("#dz-video-thumb");
+      if (videoEl) { videoEl.src = ""; videoEl.load(); }
       $("#dz-continue-img").style.display = "none";
       $("#dz-skip-img").style.display = "";
       resetVehicleSelection();
@@ -2913,10 +2963,78 @@
       $("#dz-img-thumb").src = state.image;
       $("#dz-img-preview").style.display = "inline-block";
       $("#dz-upload-zone").style.display = "none";
-      $("#dz-continue-img").style.display = "";
-      $("#dz-skip-img").style.display = "none";
+      updateContinueButton();
     };
     reader.readAsDataURL(file);
+  }
+
+  /* ---- Video handling ---- */
+  const VIDEO_MAX_SIZE = 20 * 1024 * 1024; /* 20 MB */
+  const VIDEO_ALLOWED_TYPES = ["video/mp4", "video/webm", "video/quicktime", "video/x-matroska"];
+  const VIDEO_ALLOWED_EXTS = ["mp4", "webm", "mov", "mkv", "3gp"];
+
+  function handleVideo() {
+    const file = $("#dz-video-input").files[0];
+    if (file) processVideo(file);
+  }
+
+  function processVideo(file) {
+    /* Validate file type */
+    const ext = (file.name || "").split(".").pop().toLowerCase();
+    const isValidType = VIDEO_ALLOWED_TYPES.includes(file.type) || VIDEO_ALLOWED_EXTS.includes(ext);
+    if (!isValidType) {
+      if (window.CS && CS.toast) CS.toast("warning", "Invalid file type", "Please upload an MP4, WebM, MOV or MKV video.");
+      return;
+    }
+
+    /* Validate file size */
+    if (file.size > VIDEO_MAX_SIZE) {
+      if (window.CS && CS.toast) CS.toast("warning", "File too large", "Video must be under 20 MB.");
+      return;
+    }
+
+    /* Store file reference */
+    state.videoFile = file;
+
+    /* Read as base64 */
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      state.video = e.target.result;
+      state._videoDirty = true;
+
+      /* Show video preview */
+      const videoEl = $("#dz-video-thumb");
+      if (videoEl) {
+        videoEl.src = state.video;
+        videoEl.load();
+      }
+
+      /* Show filename and size */
+      const filenameEl = $("#dz-video-filename");
+      const sizeEl = $("#dz-video-size");
+      if (filenameEl) filenameEl.textContent = file.name || "video";
+      if (sizeEl) sizeEl.textContent = formatFileSize(file.size);
+
+      /* Toggle UI */
+      $("#dz-video-preview").style.display = "inline-block";
+      $("#dz-video-zone").style.display = "none";
+      updateContinueButton();
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function formatFileSize(bytes) {
+    if (bytes < 1024) return bytes + " B";
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
+    return (bytes / (1024 * 1024)).toFixed(1) + " MB";
+  }
+
+  function updateContinueButton() {
+    const hasMedia = state.image || state.video;
+    const continueBtn = $("#dz-continue-img");
+    const skipBtn = $("#dz-skip-img");
+    if (continueBtn) continueBtn.style.display = hasMedia ? "" : "none";
+    if (skipBtn) skipBtn.style.display = hasMedia ? "none" : "";
   }
 
   /* ---- Ready (Step 6: Diagnose) ---- */
@@ -2960,8 +3078,16 @@
     /* Media */
     const mediaSection = $("#dz-ready-media-section");
     const mediaEl = $("#dz-ready-media");
-    if (state.image) {
-      mediaEl.innerHTML = `<div class="dz-ready-media-item"><i class="bi bi-image"></i> <span>1 image attached</span></div>`;
+    if (state.image || state.video) {
+      let mediaHtml = "";
+      if (state.image) {
+        mediaHtml += `<div class="dz-ready-media-item"><i class="bi bi-image"></i> <span>1 image attached</span></div>`;
+      }
+      if (state.video) {
+        const videoName = state.videoFile ? state.videoFile.name : "video";
+        mediaHtml += `<div class="dz-ready-media-item"><i class="bi bi-camera-reels"></i> <span>${esc(videoName)}</span></div>`;
+      }
+      mediaEl.innerHTML = mediaHtml;
       mediaSection.classList.remove("d-none");
     } else {
       mediaSection.classList.add("d-none");
@@ -2998,6 +3124,9 @@
     }
     if (state.image) {
       items.push({ label: "Photo", value: "Added", edit: "image" });
+    }
+    if (state.video) {
+      items.push({ label: "Video", value: state.videoFile ? state.videoFile.name : "Added", edit: "image" });
     }
 
     items.forEach((item) => {
@@ -3049,6 +3178,7 @@
         problem: fullProblem,
         answers: state.answers,
         image: state.image,
+        video: state.video,
         vehicle: state.vehicle.brand ? state.vehicle : null,
       };
       if (state.sessionId) payload.session_id = state.sessionId;

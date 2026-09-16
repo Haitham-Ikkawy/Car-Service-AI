@@ -89,7 +89,7 @@ async def diag_session_get(request: Request, session_id: str):
     session = store.diag_session(user, session_id)
     if not session:
         return JSONResponse({"error": "Session not found"}, status_code=404)
-    # Return full session data (image is base64, include it)
+    # Return full session data (image and video are base64, include them)
     return JSONResponse({"ok": True, "session": {
         "id": session["id"],
         "title": session["title"],
@@ -106,6 +106,7 @@ async def diag_session_get(request: Request, session_id: str):
         "questions": session.get("questions", []),
         "question_index": session.get("question_index", 0),
         "image": session.get("image"),
+        "video": session.get("video"),
         "step": session.get("step", "welcome"),
         "diagnosis": session.get("diagnosis"),
         "chat_id": session.get("chat_id"),
@@ -123,7 +124,7 @@ async def diag_session_update(request: Request, session_id: str):
 
     # Only update fields that are provided
     allowed = {"vehicle", "problem", "notice", "category", "when", "where",
-               "answers", "questions", "question_index", "image", "step",
+               "answers", "questions", "question_index", "image", "video", "step",
                "status", "title", "diagnosis", "chat_id", "locked", "service_request"}
     updates = {k: v for k, v in body.items() if k in allowed}
     updated = store.update_diag_session(user, session_id, updates)
@@ -236,6 +237,7 @@ async def diagnose_complete(request: Request):
     problem = (body.get("problem") or "").strip()
     answers = body.get("answers") or {}
     image_data = body.get("image") or ""
+    video_data = body.get("video") or ""
     vehicle_data = body.get("vehicle") or None
 
     log.info("[PERF] T3: Backend received request (%.0f ms after gateway)", (_t_backend_recv - _t_backend_recv) * 1000)
@@ -245,6 +247,8 @@ async def diagnose_complete(request: Request):
     log.info("[DIAGNOSIS] Problem: %s", problem[:200])
     if image_data:
         log.info("[DIAGNOSIS] Image payload: ~%d KB", len(image_data) // 1024)
+    if video_data:
+        log.info("[DIAGNOSIS] Video payload: ~%d KB", len(video_data) // 1024)
 
     if len(problem) < 5:
         log.warning("[DIAGNOSIS] Rejected: problem too short (len=%d)", len(problem))
@@ -291,7 +295,24 @@ async def diagnose_complete(request: Request):
         except Exception:
             image_bytes = None
 
-    mode = "image" if image_bytes else "text"
+    # Handle optional video — decode in thread pool to avoid blocking event loop
+    video_bytes = None
+    video_mime = "video/mp4"
+    if video_data and video_data.startswith("data:"):
+        try:
+            header, encoded = video_data.split(",", 1)
+            video_mime = header.split(";")[0].split(":")[1] or "video/mp4"
+            _t_video_decode_start = time.perf_counter()
+            video_bytes = await asyncio.to_thread(base64.b64decode, encoded)
+            _t_video_decode_end = time.perf_counter()
+            log.info("[PERF] Video base64 decode: %.1f ms (%d KB → %d KB)",
+                     (_t_video_decode_end - _t_video_decode_start) * 1000,
+                     len(encoded) // 1024, len(video_bytes) // 1024)
+        except Exception:
+            video_bytes = None
+
+    # Determine mode: video takes priority over image
+    mode = "video" if video_bytes else ("image" if image_bytes else "text")
     log.info("[DIAGNOSIS] Sending request to Gemini (mode=%s)...", mode)
     _t_gemini_start = time.perf_counter()
     log.info("[PERF] T4: Gemini request starts (%.0f ms after backend recv)",
@@ -307,6 +328,8 @@ async def diagnose_complete(request: Request):
             description=description,
             image_bytes=image_bytes,
             image_mime=image_mime,
+            video_bytes=video_bytes,
+            video_mime=video_mime,
             lang=msg_lang,
             vehicle_override=vehicle_data,
             image_data_original=image_data if image_bytes else None,

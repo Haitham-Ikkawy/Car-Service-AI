@@ -308,6 +308,17 @@
 .dz-img-preview img { max-width: 280px; max-height: 200px; border-radius: 12px; border: 1px solid rgba(var(--accent-rgb), 0.1); display: block; }
 .dz-btn-icon { position: absolute; top: -8px; right: -8px; width: 28px; height: 28px; border-radius: 50%; background: #ef4444; border: 2px solid var(--page-bg); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; cursor: pointer; }
 
+/* MEDIA SECTION */
+.dz-media-section { margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid rgba(var(--accent-rgb), 0.06); }
+.dz-media-section:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.dz-media-label { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 600; color: rgba(var(--accent-rgb), 0.7); margin-bottom: 12px; }
+.dz-media-label i { font-size: 1rem; }
+
+/* VIDEO PREVIEW */
+.dz-video-info { display: flex; align-items: center; gap: 12px; margin-top: 8px; padding: 8px 12px; background: rgba(var(--c-panel), 0.7); border-radius: 8px; }
+.dz-video-filename { font-size: 0.82rem; color: var(--text); font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 200px; }
+.dz-video-size { font-size: 0.75rem; color: rgba(var(--c-muted), 0.6); margin-left: auto; }
+
 /* REVIEW */
 .dz-review { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; width: 100%; }
 .dz-review-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; background: rgba(var(--c-panel), 0.7); border: 1px solid rgba(var(--accent-rgb), 0.06); border-radius: 10px; }

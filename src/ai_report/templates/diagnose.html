@@ -43,7 +43,7 @@
         <div class="dz-stepper-line"></div>
         <div class="dz-stepper-item" data-step-num="4">
           <div class="dz-stepper-circle">4</div>
-          <div class="dz-stepper-label">Image</div>
+          <div class="dz-stepper-label">Media</div>
         </div>
         <div class="dz-stepper-line"></div>
         <div class="dz-stepper-item" data-step-num="5">
@@ -351,21 +351,46 @@
         </div>
       </div>
 
-      <!-- Step 5: Optional Image -->
+      <!-- Step 5: Optional Image / Video -->
       <div class="dz-step" data-step="image">
         <div class="dz-card">
-          <h2 class="dz-card-title">Do you have a photo?</h2>
-          <p class="dz-card-subtitle">A photo can help the AI identify visible issues.</p>
-          <div class="dz-upload-zone" id="dz-upload-zone">
-            <i class="bi bi-cloud-arrow-up"></i>
-            <p>Click or drag to upload</p>
-            <span>JPG, PNG or WebP · up to 10 MB</span>
-            <input type="file" id="dz-file-input" accept="image/*" class="d-none">
+          <h2 class="dz-card-title">Do you have a photo or video?</h2>
+          <p class="dz-card-subtitle">A photo or video can help the AI identify visible issues.</p>
+
+          <!-- Photo Upload -->
+          <div class="dz-media-section">
+            <div class="dz-media-label"><i class="bi bi-image"></i> Upload Photo</div>
+            <div class="dz-upload-zone" id="dz-upload-zone">
+              <i class="bi bi-cloud-arrow-up"></i>
+              <p>Click or drag to upload</p>
+              <span>JPG, PNG or WebP · up to 10 MB</span>
+              <input type="file" id="dz-file-input" accept="image/*" class="d-none">
+            </div>
+            <div class="dz-img-preview" id="dz-img-preview" style="display:none">
+              <img id="dz-img-thumb" src="" alt="Preview">
+              <button class="dz-btn-icon" id="dz-img-remove" title="Remove"><i class="bi bi-x-lg"></i></button>
+            </div>
           </div>
-          <div class="dz-img-preview" id="dz-img-preview" style="display:none">
-            <img id="dz-img-thumb" src="" alt="Preview">
-            <button class="dz-btn-icon" id="dz-img-remove" title="Remove"><i class="bi bi-x-lg"></i></button>
+
+          <!-- Video Upload -->
+          <div class="dz-media-section">
+            <div class="dz-media-label"><i class="bi bi-camera-reels"></i> Upload Video</div>
+            <div class="dz-upload-zone" id="dz-video-zone">
+              <i class="bi bi-camera-reels"></i>
+              <p>Click or drag to upload</p>
+              <span>MP4, WebM, MOV or MKV · up to 20 MB</span>
+              <input type="file" id="dz-video-input" accept="video/mp4,video/webm,video/quicktime,video/x-matroska,video/*" class="d-none">
+            </div>
+            <div class="dz-img-preview" id="dz-video-preview" style="display:none">
+              <video id="dz-video-thumb" controls style="max-width:100%;max-height:200px;border-radius:8px"></video>
+              <div class="dz-video-info">
+                <span class="dz-video-filename" id="dz-video-filename"></span>
+                <span class="dz-video-size" id="dz-video-size"></span>
+              </div>
+              <button class="dz-btn-icon" id="dz-video-remove" title="Remove"><i class="bi bi-x-lg"></i></button>
+            </div>
           </div>
+
           <div class="dz-nav">
             <button class="dz-btn dz-btn-ghost" id="dz-back-img"><i class="bi bi-arrow-left"></i> Back</button>
             <div class="dz-nav-right">
