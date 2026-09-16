@@ -1016,7 +1016,7 @@
     return `linear-gradient(135deg, ${c.from}, ${c.to})`;
   }
 
-  /* ---- Smart question banks ---- */
+  /* ---- Smart question banks (English) ---- */
   const QUESTIONS通用 = [
     {
       key: "when",
@@ -1209,6 +1209,198 @@
     ],
   };
 
+  /* ---- Arabic fallback question banks ---- */
+  const QUESTIONS_AR = {
+    general: [
+      {
+        key: "when",
+        title: "إيمتى بتصير المشكلة؟",
+        subtitle: "اختار الوصف يللي يناسبك",
+        options: [
+          "لما شغّل السيارة",
+          "وإنا عم سوق",
+          "لما لفّ الدّركسيون",
+          "لما دوّس الفرامل",
+          "لما دوّس البنزين",
+          "دوماً",
+          "ما بعرف",
+        ],
+      },
+      {
+        key: "started",
+        title: "لما صارت المشكلة لأول مرة؟",
+        subtitle: "",
+        options: ["اليوم", "من كم يوم", "من كم أسبوع", "من فترة طويلة", "ما بعرف"],
+      },
+      {
+        key: "severity",
+        title: "شو مستوى المشكلة؟",
+        subtitle: "",
+        options: [
+          "خفيفة — لسا جديد عليها",
+          "متوسطة — بحسّ فيها وأنا عم سوق",
+          "قوية — عم تأثّر عالسياقة",
+          "حرجة — ممكن تكون خطر",
+        ],
+      },
+    ],
+    overheating: [
+      {
+        key: "temperature",
+        title: "شو بيّن عالسبورة عن الحرارة؟",
+        subtitle: "",
+        options: ["بالأحمر", "بتتذبذب", "تتدرج طالعة", "عادي بس في بخار", "ما بعرف"],
+      },
+      {
+        key: "warning_light",
+        title: "في ضوء تحذير شغّل عالسبورة؟",
+        subtitle: "",
+        options: ["ضوء الحرارة", "ضوء CHECK ENGINE", "الاثنين", "ما في شي", "ما بعرف"],
+      },
+      {
+        key: "driving_condition",
+        title: "لما صارت المشكلة بالزبط؟",
+        subtitle: "",
+        options: ["بالزحمة", "عالطريق السريع", "لما واقفة", "لما طالعة عتلّة", "دوماً", "ما بعرف"],
+      },
+    ],
+    brakes: [
+      {
+        key: "noise_type",
+        title: "شو نوع الصوت يللي عم يطلع من الفرامل؟",
+        subtitle: "",
+        options: ["صرير", "طنين", "طقّ", "نبض", "ما في صوت بس اهتزاز", "ما بعرف"],
+      },
+      {
+        key: "location",
+        title: "أيّ عجلات متأثّرة؟",
+        subtitle: "",
+        options: ["الأمامية", "الخلفية", "كلهم", "الجهة اليسرى", "الجهة اليمنى", "ما بعرف"],
+      },
+      {
+        key: "dashboard",
+        title: "في ضوء تحذير الفرامل شغّل؟",
+        subtitle: "",
+        options: ["إيه", "لا", "ما بعرف"],
+      },
+    ],
+    no_start: [
+      {
+        key: "dashboard",
+        title: "شو بيصير لما تلف المفتاح؟",
+        subtitle: "",
+        options: [
+          "المحرّك بيلف بس ما بيشتغل",
+          "طقّ بس ما بيلف",
+          "صمت تام",
+          "بيشتغل لحظة وبعدين بيقفل",
+          "ما بعرف",
+        ],
+      },
+      {
+        key: "fuel_level",
+        title: "شو مستوى البنزين؟",
+        subtitle: "",
+        options: ["مليان", "نص", "قليل", " gần hết", "ما بعرف"],
+      },
+      {
+        key: "recent_work",
+        title: "في شي اشتُغل عالسيارة مؤخّراً؟",
+        subtitle: "",
+        options: ["تغيير زيت", "بطارية جديدة", "صيانة", "ما في شي", "ما بعرف"],
+      },
+    ],
+    ac: [
+      {
+        key: "temperature",
+        title: "شو مشكلة المكيف؟",
+        subtitle: "",
+        options: [
+          "بيطّلع هوا حار",
+          "الهوا ضعيف",
+          "يشتغل بس بعدين بيقفل",
+          "ريحة غريبة من الفتحات",
+          "ما بعرف",
+        ],
+      },
+      {
+        key: "driving_condition",
+        title: "بيتغيّر لما تسيّر؟",
+        subtitle: "",
+        options: [
+          "أسوأ لما واقفة",
+          "أحسن لما عم تسيّر",
+          "دوماً نفس الشي",
+          "ما بعرف",
+        ],
+      },
+    ],
+    noise: [
+      {
+        key: "noise_type",
+        title: "وصفلي الصوت.",
+        subtitle: "",
+        options: [
+          "دقّ أو طقطقة",
+          "صرير أو شخير",
+          "قرقرة",
+          "هسهس",
+          "نبض",
+          "ما بعرف",
+        ],
+      },
+      {
+        key: "location",
+        title: "من وين عم يطلع الصوت؟",
+        subtitle: "",
+        options: ["الأمام", "الخلف", "الجهة اليسرى", "الجهة اليمنى", "تحت الكبوت", "تحت السيارة", "ما بعرف"],
+      },
+      {
+        key: "when",
+        title: "لما بسمع الصوت؟",
+        subtitle: "",
+        options: [
+          "لما شغّل",
+          "لما دوّس البنزين",
+          "لما لفّ",
+          "لما دوّس الفرامل",
+          "ع سرعة وطيّة",
+          "ع سرعة عالية",
+          "دوماً",
+          "ما بعرف",
+        ],
+      },
+    ],
+    shake: [
+      {
+        key: "when",
+        title: "لما عم ترج السيارة؟",
+        subtitle: "",
+        options: [
+          "لما واقفة عالناصّة",
+          "لما دوّس البنزين",
+          "بعض السرعات",
+          "لما دوّس الفرامل",
+          "لما لفّ",
+          "دوماً",
+          "ما بعرف",
+        ],
+      },
+      {
+        key: "location",
+        title: "من وين بتحسّس بالرجّة؟",
+        subtitle: "",
+        options: [
+          "الدّركسيون",
+          "الكرسي",
+          "الأرضية",
+          "السيارة كلها",
+          "ما بعرف",
+        ],
+      },
+    ],
+  };
+
   /* ---- Problem classification ---- */
   function classifyProblem(text) {
     const t = text.toLowerCase();
@@ -1221,8 +1413,16 @@
     return "general";
   }
 
-  function getQuestions(problem) {
+  function getQuestions(problem, dialect) {
     const cat = classifyProblem(problem);
+    /* Use Arabic fallback if dialect is detected */
+    if (dialect && dialect !== "en" && QUESTIONS_AR[cat]) {
+      const specific = QUESTIONS_AR[cat] || [];
+      const general = QUESTIONS_AR.general;
+      const used = new Set(specific.map((q) => q.key));
+      const merged = [...specific, ...general.filter((q) => !used.has(q.key))];
+      return merged.slice(0, 6);
+    }
     const specific = QUESTIONS_BY_CATEGORY[cat] || [];
     const general = QUESTIONS通用;
     const used = new Set(specific.map((q) => q.key));
@@ -2567,7 +2767,7 @@
       applyDialect(dialectResult);
 
       /* Generate questions — server-side for Arabic, client-side for English */
-      if (dialectResult.language === "ar" && dialectResult.dialect_confidence > 0.3) {
+      if (dialectResult.language === "ar" && dialectResult.dialect_confidence > 0.15) {
         const serverQuestions = await fetchServerQuestions(
           fullProblem,
           state.vehicle,
@@ -2584,11 +2784,12 @@
           state.questions = Array.isArray(serverQuestions) ? serverQuestions : [serverQuestions];
           state.questionsFromServer = true;
         } else {
-          state.questions = getQuestions(fullProblem);
+          /* Gemini failed — use dialect-aware fallback */
+          state.questions = getQuestions(fullProblem, dialectResult.dialect || "ar");
           state.questionsFromServer = false;
         }
       } else {
-        state.questions = getQuestions(fullProblem);
+        state.questions = getQuestions(fullProblem, dialectResult.language === "ar" ? "ar" : "en");
         state.questionsFromServer = false;
       }
       state.questionIndex = 0;
