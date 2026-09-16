@@ -126,7 +126,8 @@ async def diag_session_update(request: Request, session_id: str):
     # Only update fields that are provided
     allowed = {"vehicle", "problem", "notice", "category", "when", "where",
                "answers", "questions", "question_index", "image", "video", "step",
-               "status", "title", "diagnosis", "chat_id", "locked", "service_request"}
+               "status", "title", "diagnosis", "chat_id", "locked", "service_request",
+               "questions_from_server"}
     updates = {k: v for k, v in body.items() if k in allowed}
     updated = store.update_diag_session(user, session_id, updates)
     return JSONResponse({"ok": True, "title": updated["title"] if updated else session["title"]})
@@ -429,8 +430,12 @@ async def detect_dialect_api(request: Request):
 async def generate_questions_api(request: Request):
     """Generate dialect-aware diagnostic questions using Gemini.
 
-    This endpoint uses the existing Gemini architecture to generate natural
-    diagnostic questions in the user's detected dialect.
+    Supports two modes:
+    - mode="initial": Generate the first batch of 2-3 questions (called once when problem is submitted)
+    - mode="followup": Generate the next single question based on previous Q&A (called after each answer)
+
+    The follow-up mode enables truly dynamic, conversation-like diagnostic flows
+    where each question depends on the user's previous answers.
     """
     user = require(request)
     body = await request.json()
@@ -445,6 +450,8 @@ async def generate_questions_api(request: Request):
     category = body.get("category") or ""
     when = body.get("when") or ""
     where = body.get("where") or ""
+    mode = body.get("mode") or "initial"
+    previous_questions = body.get("previous_questions") or []
 
     if len(problem) < 3:
         return JSONResponse({"error": "Problem description too short"}, status_code=400)
@@ -465,15 +472,71 @@ async def generate_questions_api(request: Request):
         concepts_str = ", ".join([f"{c.get('local', '')} → {c.get('en', '')}" for c in canonical_concepts])
         vocab_context += f"\nCanonical mappings: {concepts_str}"
 
-    # Build answers context
+    # Build answers context (all previous answers)
     answers_context = ""
     if answers:
         for key, value in answers.items():
             if value and value != "Not sure":
                 answers_context += f"\n- {key}: {value}"
 
-    # Create the prompt for Gemini
-    prompt = f"""You are a senior automotive diagnostic expert helping a car owner diagnose their vehicle problem.
+    # Build previous questions context
+    prev_q_context = ""
+    if previous_questions:
+        prev_q_context = "\nPREVIOUS QUESTIONS AND ANSWERS:"
+        for pq in previous_questions:
+            q_title = pq.get("title", "")
+            q_answer = pq.get("answer", "")
+            prev_q_context += f"\n- Question: {q_title}"
+            if q_answer:
+                prev_q_context += f"\n  Answer: {q_answer}"
+
+    if mode == "followup":
+        # Generate a single follow-up question based on all context
+        prompt = f"""You are a senior automotive diagnostic expert helping a car owner diagnose their vehicle problem.
+
+VEHICLE: {vehicle_label or 'Not specified'}
+PROBLEM: {problem}
+CATEGORY: {category or 'General'}
+WHEN: {when or 'Not specified'}
+WHERE: {where or 'Not specified'}
+{vocab_context}
+{answers_context}
+{prev_q_context}
+
+LANGUAGE/DIALECT CONTEXT:
+- Detected dialect: {dialect}
+- Dialect confidence: {dialect_confidence:.0%}
+- You MUST generate the NEXT question in the SAME dialect as the user.
+- Use the user's natural automotive terminology when possible.
+- Do NOT use Modern Standard Arabic unless dialect confidence is very low.
+- Do NOT mechanically translate from English.
+- Preserve technical diagnostic meaning while adapting to the dialect.
+
+TASK:
+Generate exactly ONE follow-up diagnostic question that would be most useful RIGHT NOW based on the information gathered so far.
+
+RULES:
+1. The question must be in natural {dialect} Arabic (or neutral Arabic if confidence is low).
+2. Use the user's automotive terms when available (e.g., if user says "السكان", use "السكان" not "عجلة القيادة").
+3. Do NOT repeat any question already asked (check PREVIOUS QUESTIONS AND ANSWERS).
+4. Focus on the MOST IMPORTANT missing diagnostic information.
+5. The question should be short, natural, and conversational.
+6. Generate 3-5 answer options that are natural in {dialect} Arabic.
+7. Include "Not sure" as the last option if appropriate.
+8. Each question must advance the diagnosis — no filler questions.
+
+Return a JSON object (NOT an array) with EXACTLY these keys:
+{{
+  "key": "unique_diagnostic_key",
+  "title": "The question in {dialect} Arabic",
+  "subtitle": "Brief explanation if needed (in {dialect} Arabic), or empty string",
+  "options": ["Option 1 in {dialect} Arabic", "Option 2", "Option 3", "Not sure"]
+}}
+
+Return ONLY the JSON object, no markdown, no commentary."""
+    else:
+        # Initial mode: generate 2-3 questions
+        prompt = f"""You are a senior automotive diagnostic expert helping a car owner diagnose their vehicle problem.
 
 VEHICLE: {vehicle_label or 'Not specified'}
 PROBLEM: {problem}
@@ -493,7 +556,7 @@ LANGUAGE/DIALECT CONTEXT:
 - Preserve technical diagnostic meaning while adapting to the dialect.
 
 TASK:
-Generate 3-5 follow-up diagnostic questions to better understand the vehicle problem.
+Generate 2-3 initial diagnostic questions to start understanding the vehicle problem.
 
 RULES:
 1. Questions must be in natural {dialect} Arabic (or neutral Arabic if confidence is low).
@@ -501,8 +564,8 @@ RULES:
 3. Each question should target a specific diagnostic need.
 4. Questions should be short, natural, and conversational.
 5. Include the question key (for programmatic use).
-6. Do NOT repeat questions already answered.
-7. Focus on the most important missing information.
+6. Focus on the most important missing information.
+7. Generate 3-5 answer options per question that are natural in {dialect} Arabic.
 
 Return a JSON array of question objects:
 [
@@ -523,7 +586,15 @@ Return ONLY the JSON array, no markdown, no commentary."""
             user,
             prompt,
         )
-        return JSONResponse({"ok": True, "questions": result})
+        if mode == "followup":
+            # result should be a single dict; wrap in list if needed
+            if isinstance(result, list) and len(result) > 0:
+                result = result[0]
+            elif not isinstance(result, dict):
+                result = None
+            return JSONResponse({"ok": True, "question": result})
+        else:
+            return JSONResponse({"ok": True, "questions": result})
     except gemini.UnavailableError as exc:
         return JSONResponse(
             {"error": exc.detail or "AI unavailable", "error_type": "ai_unavailable"},

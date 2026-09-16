@@ -32,6 +32,7 @@
     dialectDetected: "",        /* raw detected dialect name */
     userTerms: {},              /* canonical_id → user's local term */
     dialectResult: null,        /* full dialect detection result from server */
+    questionsFromServer: false, /* true when questions come from Gemini (dynamic) */
   };
 
   /* ---- Step mapping: wizard step name -> step number (1-6) ---- */
@@ -638,6 +639,7 @@
         question_index: state.questionIndex,
         step: state.step,
         dialect_result: state.dialectResult || state._dialectResult || null,
+        questions_from_server: state.questionsFromServer,
       };
       /* Only send image if it changed (avoid sending large base64 on every save) */
       if (state._imageDirty) {
@@ -697,6 +699,7 @@
       state.questionIndex = s.question_index || 0;
       state.image = s.image || null;
       state.step = s.step || "welcome";
+      state.questionsFromServer = s.questions_from_server || false;
 
       /* Restore dialect state */
       if (s.dialect_result) {
@@ -1430,28 +1433,40 @@
    * @param {string} category - Problem category
    * @param {string} when - When problem occurs
    * @param {string} where - Where problem occurs
-   * @returns {Promise<object[]>} Array of question objects
+   * @param {string} mode - "initial" for first batch, "followup" for next single question
+   * @param {object[]} previous_questions - Array of {title, answer} for follow-up mode
+   * @returns {Promise<object[]|object|null>} Array of question objects (initial) or single question (followup)
    */
-  async function fetchServerQuestions(problem, vehicle, dialect, dialect_confidence, detected_terms, canonical_concepts, category, when, where) {
+  async function fetchServerQuestions(problem, vehicle, dialect, dialect_confidence, detected_terms, canonical_concepts, category, when, where, mode, previous_questions) {
     try {
+      const payload = {
+        problem,
+        vehicle,
+        dialect,
+        dialect_confidence,
+        detected_terms,
+        canonical_concepts,
+        category: category || "",
+        when: when || "",
+        where: where || "",
+        mode: mode || "initial",
+      };
+      if (mode === "followup" && previous_questions) {
+        payload.previous_questions = previous_questions;
+      }
       const resp = await fetch("/api/diagnose/questions", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          problem,
-          vehicle,
-          dialect,
-          dialect_confidence,
-          detected_terms,
-          canonical_concepts,
-          category: category || "",
-          when: when || "",
-          where: where || "",
-        }),
+        body: JSON.stringify(payload),
       });
       const data = await resp.json();
-      if (data.ok && Array.isArray(data.questions) && data.questions.length > 0) {
-        return data.questions;
+      if (data.ok) {
+        if (mode === "followup") {
+          return data.question || null;
+        }
+        if (Array.isArray(data.questions) && data.questions.length > 0) {
+          return data.questions;
+        }
       }
     } catch (e) {
       console.warn("[QUESTIONS] Server-side generation failed:", e);
@@ -2723,15 +2738,19 @@
           dialectResult.canonical_concepts || [],
           state.category,
           state.when,
-          state.where
+          state.where,
+          "initial"
         );
         if (serverQuestions) {
-          state.questions = serverQuestions;
+          state.questions = Array.isArray(serverQuestions) ? serverQuestions : [serverQuestions];
+          state.questionsFromServer = true;
         } else {
           state.questions = getQuestions(fullProblem);
+          state.questionsFromServer = false;
         }
       } else {
         state.questions = getQuestions(fullProblem);
+        state.questionsFromServer = false;
       }
       state.questionIndex = 0;
       state.answers = {};
@@ -2749,10 +2768,56 @@
         showStep("describe");
       }
     });
-    $("#dz-continue-q").addEventListener("click", () => {
+    $("#dz-continue-q").addEventListener("click", async () => {
       const q = state.questions[state.questionIndex];
       if (q && state.answers[q.key]) {
         state.questionIndex++;
+
+        /* If questions are from server (dynamic), check if we need the next one */
+        if (state.questionsFromServer) {
+          const hasMorePreloaded = state.questionIndex < state.questions.length;
+          if (!hasMorePreloaded) {
+            /* Exhausted preloaded questions — fetch the next one from Gemini */
+            const btn = $("#dz-continue-q");
+            if (btn) { btn.disabled = true; btn.innerHTML = '<i class="bi bi-hourglass-split"></i> ' + tr("loadingTitle") + '...'; }
+            try {
+              /* Build previous Q&A context for follow-up */
+              const previousQA = state.questions.slice(0, state.questionIndex).map((pq) => ({
+                title: pq.title,
+                answer: state.answers[pq.key] || "",
+              }));
+              const nextQ = await fetchServerQuestions(
+                buildFullProblem(),
+                state.vehicle,
+                state.dialectDetected || "Arabic",
+                state.dialectConfidence,
+                Object.values(state.userTerms),
+                [],
+                state.category,
+                state.when,
+                state.where,
+                "followup",
+                previousQA
+              );
+              if (nextQ && nextQ.key) {
+                state.questions.push(nextQ);
+              } else {
+                /* No more questions — move to next step */
+                if (btn) { btn.innerHTML = 'Continue <i class="bi bi-arrow-right"></i>'; }
+                showStep("image");
+                scheduleSave();
+                return;
+              }
+            } catch (err) {
+              console.warn("[QUESTIONS] Follow-up generation failed:", err);
+              /* Move to next step on failure */
+              showStep("image");
+              scheduleSave();
+              return;
+            }
+          }
+        }
+
         if (state.questionIndex >= state.questions.length) {
           showStep("image");
         } else {
@@ -2850,6 +2915,7 @@
       state.videoFile = null;
       state.questionIndex = 0;
       state.questions = [];
+      state.questionsFromServer = false;
       $("#dz-problem").value = "";
       $("#dz-problem-count").textContent = "0";
       $("#dz-problem-validation").classList.add("d-none");
