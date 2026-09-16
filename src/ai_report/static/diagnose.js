@@ -97,7 +97,9 @@
     return "neutral";
   }
 
-  /** Apply the detected dialect and update the entire UI. */
+  /** Apply the detected dialect for diagnostic questions only.
+   *  Does NOT change static UI text — the website stays in English.
+   *  Only dialect state and user vocabulary are updated. */
   function applyDialect(dialectResult) {
     if (!dialectResult || dialectResult.language !== "ar") {
       state.dialect = "neutral";
@@ -126,8 +128,8 @@
       });
     }
 
-    /* Apply UI text */
-    applyDialectUI();
+    /* Do NOT call applyDialectUI() — the website stays in English.
+       Dialect is only used for generating diagnostic questions via Gemini. */
   }
 
   /** Apply dialect UI to all static elements in the DOM. */
@@ -271,12 +273,9 @@
   /** Get the loading message for the current dialect (rotates). */
   let _loadingMsgIdx = 0;
   function nextLoadingMessage() {
-    const msgs = tr("loadingMessages");
-    if (Array.isArray(msgs) && msgs.length > 0) {
-      _loadingMsgIdx = (_loadingMsgIdx + 1) % msgs.length;
-      return msgs[_loadingMsgIdx];
-    }
-    return tr("loadingTitle");
+    const msgs = ["Reading vehicle information...", "Reviewing reported symptoms...", "Analyzing possible causes...", "Checking repair recommendations...", "Preparing your diagnosis..."];
+    _loadingMsgIdx = (_loadingMsgIdx + 1) % msgs.length;
+    return msgs[_loadingMsgIdx];
   }
   function resetLoadingMessages() { _loadingMsgIdx = 0; }
 
@@ -452,11 +451,14 @@
     let idx = 0;
     const el = document.getElementById("dz-loading-status-text");
     if (!el) return;
-    /* Use dialect-aware messages */
-    const msgs = tr("loadingMessages");
-    const loadingMessages = Array.isArray(msgs) && msgs.length > 0
-      ? msgs
-      : ["Reading vehicle information...", "Reviewing reported symptoms...", "Analyzing possible causes...", "Checking repair recommendations...", "Preparing your diagnosis..."];
+    /* Always use English loading messages — UI stays in English */
+    const loadingMessages = [
+      "Reading vehicle information...",
+      "Reviewing reported symptoms...",
+      "Analyzing possible causes...",
+      "Checking repair recommendations...",
+      "Preparing your diagnosis..."
+    ];
     el.textContent = loadingMessages[0];
     _loadingStatusTimer = setInterval(() => {
       idx = (idx + 1) % loadingMessages.length;
@@ -2459,7 +2461,7 @@
             e.preventDefault();
             input.disabled = true;
             const _origPlaceholder = input.placeholder;
-            input.placeholder = tr("loadingTitle") + "...";
+            input.placeholder = "Analyzing...";
             try {
               const parsed = await parseTextWithAI(val, "vehicle");
               if (parsed && parsed.brand) {
@@ -2496,7 +2498,7 @@
                     if (eLine) { eLine.textContent = parsed.engine; eLine.classList.remove("d-none"); }
                   }
                   scheduleSave();
-                  if (window.CS && CS.toast) CS.toast("success", tr("selectedVehicle"), [parsed.brand, parsed.model].filter(Boolean).join(" "));
+                  if (window.CS && CS.toast) CS.toast("success", "Vehicle selected", [parsed.brand, parsed.model].filter(Boolean).join(" "));
                 } else if (parsed.brand) {
                   /* Brand not in curated list — try to select it anyway */
                   selectBrand(parsed.brand);
@@ -2507,7 +2509,7 @@
                   }
                   if (parsed.year) state.vehicle.year = String(parsed.year);
                   scheduleSave();
-                  if (window.CS && CS.toast) CS.toast("success", tr("selectedVehicle"), [parsed.brand, parsed.model].filter(Boolean).join(" "));
+                  if (window.CS && CS.toast) CS.toast("success", "Vehicle selected", [parsed.brand, parsed.model].filter(Boolean).join(" "));
                 }
               } else if (parsed && parsed.brand) {
                 selectBrand(parsed.brand);
@@ -2646,16 +2648,16 @@
       _showAllBrands = !_showAllBrands;
       if (_showAllBrands) {
         btn.disabled = true;
-        btn.innerHTML = tr("loadingTitle") + ' <i class="bi bi-hourglass-split"></i>';
+        btn.innerHTML = 'Loading... <i class="bi bi-hourglass-split"></i>';
         const all = await ensureAllBrands();
         renderBrandList(all);
         btn.disabled = false;
-        btn.innerHTML = tr("viewAllBrands") + ' <i class="bi bi-arrow-up"></i>';
-        if (title) title.textContent = tr("viewAllBrands") + ' (' + all.length + ')';
+        btn.innerHTML = 'View all brands <i class="bi bi-arrow-up"></i>';
+        if (title) title.textContent = 'View all brands (' + all.length + ')';
       } else {
         renderBrandGrid();
-        btn.innerHTML = tr("viewAllBrands") + ' <i class="bi bi-arrow-right"></i>';
-        if (title) title.textContent = tr("popularBrands");
+        btn.innerHTML = 'View all brands <i class="bi bi-arrow-right"></i>';
+        if (title) title.textContent = 'Popular Brands';
       }
     });
   }
@@ -2779,7 +2781,7 @@
           if (!hasMorePreloaded) {
             /* Exhausted preloaded questions — fetch the next one from Gemini */
             const btn = $("#dz-continue-q");
-            if (btn) { btn.disabled = true; btn.innerHTML = '<i class="bi bi-hourglass-split"></i> ' + tr("loadingTitle") + '...'; }
+            if (btn) { btn.disabled = true; btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Loading...'; }
             try {
               /* Build previous Q&A context for follow-up */
               const previousQA = state.questions.slice(0, state.questionIndex).map((pq) => ({
@@ -3410,7 +3412,7 @@
     if (!q) return;
     const total = state.questions.length;
     const idx = state.questionIndex;
-    const counter = trFmt("stepCounter", { current: idx + 1, total: total });
+    const counter = `Question ${idx + 1} of ${total}`;
 
     $("#dz-q-title").textContent = q.title;
     $("#dz-q-subtitle").textContent = q.subtitle || "";
@@ -3543,12 +3545,12 @@
     } else {
       logoEl.classList.add("d-none");
     }
-    brandEl.textContent = brandName || tr("noVehicleSelected");
+    brandEl.textContent = brandName || "No vehicle selected";
     modelEl.textContent = modelName || "";
 
     /* Problem */
     const problemEl = $("#dz-ready-problem");
-    problemEl.textContent = state.problem || tr("noProblemDescribed");
+    problemEl.textContent = state.problem || "No problem described";
 
     /* Notice */
     const noticeSection = $("#dz-ready-notice-section");
@@ -3566,7 +3568,7 @@
     if (state.image || state.video) {
       let mediaHtml = "";
       if (state.image) {
-        mediaHtml += `<div class="dz-ready-media-item"><i class="bi bi-image"></i> <span>${tr("oneImageAttached")}</span></div>`;
+        mediaHtml += `<div class="dz-ready-media-item"><i class="bi bi-image"></i> <span>1 image attached</span></div>`;
       }
       if (state.video) {
         const videoName = state.videoFile ? state.videoFile.name : "video";
@@ -3586,22 +3588,22 @@
     const container = $("#dz-review");
     container.innerHTML = "";
 
-    const vehicleText = ([state.vehicle.brand, state.vehicle.model].filter(Boolean).join(" ") + (state.vehicle.engine ? " · " + state.vehicle.engine : "")) || tr("valueNotSpecified");
+    const vehicleText = ([state.vehicle.brand, state.vehicle.model].filter(Boolean).join(" ") + (state.vehicle.engine ? " · " + state.vehicle.engine : "")) || "Not specified";
     const items = [
-      { label: tr("labelVehicle"), value: vehicleText, edit: "vehicle" },
-      { label: tr("labelProblem"), value: state.problem, edit: "describe" },
+      { label: "Vehicle", value: vehicleText, edit: "vehicle" },
+      { label: "Problem", value: state.problem, edit: "describe" },
     ];
     if (state.category) {
-      items.push({ label: tr("labelCategory"), value: state.category.charAt(0).toUpperCase() + state.category.slice(1), edit: "describe" });
+      items.push({ label: "Category", value: state.category.charAt(0).toUpperCase() + state.category.slice(1), edit: "describe" });
     }
     if (state.when) {
-      items.push({ label: tr("labelWhen"), value: state.when, edit: "describe" });
+      items.push({ label: "When", value: state.when, edit: "describe" });
     }
     if (state.where) {
-      items.push({ label: tr("labelWhere"), value: state.where, edit: "describe" });
+      items.push({ label: "Where", value: state.where, edit: "describe" });
     }
     if (state.notice) {
-      items.push({ label: tr("labelNotice"), value: state.notice, edit: "describe" });
+      items.push({ label: "Notice", value: state.notice, edit: "describe" });
     }
     for (const q of state.questions) {
       if (state.answers[q.key]) {
@@ -3609,10 +3611,10 @@
       }
     }
     if (state.image) {
-      items.push({ label: tr("labelPhoto"), value: tr("valueAdded"), edit: "image" });
+      items.push({ label: "Photo", value: "Added", edit: "image" });
     }
     if (state.video) {
-      items.push({ label: tr("labelVideo"), value: state.videoFile ? state.videoFile.name : tr("valueAdded"), edit: "image" });
+      items.push({ label: "Video", value: state.videoFile ? state.videoFile.name : "Added", edit: "image" });
     }
 
     items.forEach((item) => {
@@ -3623,7 +3625,7 @@
           <div class="dz-review-label">${esc(item.label)}</div>
           <div class="dz-review-value">${esc(item.value)}</div>
         </div>
-        <span class="dz-review-edit" data-goto="${item.edit}">${tr("reviewEdit")}</span>
+          <span class="dz-review-edit" data-goto="${item.edit}">Edit</span>
       `;
       div.querySelector(".dz-review-edit").addEventListener("click", () => {
         if (item.edit === "vehicle") showStep("vehicle");
@@ -3677,14 +3679,14 @@
       const data = await res.json();
 
       if (!res.ok) {
-        showError(data.error || tr("errorMsgDefault"));
+        showError(data.error || "An error occurred. Please try again.");
         return;
       }
 
       showWorkspace(data.result);
       _completed = true;
     } catch (err) {
-      showError(tr("errorMsgDefault"));
+      showError("An error occurred. Please try again.");
     } finally {
       state._diagnosing = false;
       if (diagBtn) { diagBtn.disabled = false; diagBtn.style.opacity = ""; }
@@ -3708,11 +3710,11 @@
     body.innerHTML = `
       <div class="dz-modal-error">
         <div class="dz-modal-error-icon"><i class="bi bi-exclamation-triangle"></i></div>
-        <div class="dz-modal-error-title">${tr("errorTitle")}</div>
-        <div class="dz-modal-error-msg">${esc(msg || tr("errorMsgDefault"))}</div>
-        <button class="dz-btn dz-btn-primary" id="dz-modal-retry"><i class="bi bi-arrow-repeat"></i> ${tr("tryAgain")}</button>
+        <div class="dz-modal-error-title">Diagnosis Failed</div>
+        <div class="dz-modal-error-msg">${esc(msg || "An error occurred. Please try again.")}</div>
+        <button class="dz-btn dz-btn-primary" id="dz-modal-retry"><i class="bi bi-arrow-repeat"></i> Try Again</button>
       </div>`;
-    if (footer) footer.innerHTML = `<button class="dz-btn dz-btn-ghost" id="dz-modal-close-err"><i class="bi bi-x-lg"></i> ${tr("close")}</button>`;
+    if (footer) footer.innerHTML = `<button class="dz-btn dz-btn-ghost" id="dz-modal-close-err"><i class="bi bi-x-lg"></i> Close</button>`;
     const retryBtn = $("#dz-modal-retry");
     if (retryBtn) retryBtn.addEventListener("click", () => { closeModal(); setTimeout(() => runDiagnosis(), 200); });
     const closeErrBtn = $("#dz-modal-close-err");
