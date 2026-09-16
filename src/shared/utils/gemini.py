@@ -293,6 +293,7 @@ def _generate_question(user: str | None, prompt: str) -> list[dict[str, Any]]:
     This function uses the existing Gemini architecture to generate natural
     diagnostic questions in the user's detected dialect.
 
+    Handles both array responses (initial batch) and object responses (follow-up).
     Returns a list of question objects with keys: key, title, subtitle, options.
     """
     client_info = _client_for(user)
@@ -305,14 +306,18 @@ def _generate_question(user: str | None, prompt: str) -> list[dict[str, Any]]:
 
     try:
         raw = _run_generation(client, model, [prompt])
-        # Try to parse as JSON array
+        # Try to parse as JSON array (initial batch mode)
         questions = _extract_json_array(raw)
         if questions:
             logger.info("[GEMINI] Question generation completed (%d questions)", len(questions))
             return questions
-        else:
-            logger.warning("[GEMINI] Question generation returned invalid JSON")
-            return []
+        # Try to parse as single JSON object (follow-up mode)
+        single = _extract_json_object(raw)
+        if single:
+            logger.info("[GEMINI] Question generation completed (1 follow-up question)")
+            return [single]
+        logger.warning("[GEMINI] Question generation returned invalid JSON")
+        return []
     except Exception as exc:
         logger.error("Gemini question generation failed (user=%r): %s: %s",
                      user, type(exc).__name__, exc, exc_info=True)
@@ -339,6 +344,32 @@ def _extract_json_array(text: str) -> list[dict[str, Any]] | None:
         try:
             data = json.loads(m.group(0))
             return data if isinstance(data, list) else None
+        except Exception:
+            pass
+
+    return None
+
+
+def _extract_json_object(text: str) -> dict[str, Any] | None:
+    """Extract a JSON object from text, handling markdown fences."""
+    if not text:
+        return None
+
+    # Try to find JSON object in markdown code block
+    m = re.search(r"```(?:json)?\s*(\{.*?\})\s*```", text, re.S)
+    if m:
+        try:
+            data = json.loads(m.group(1))
+            return data if isinstance(data, dict) else None
+        except Exception:
+            pass
+
+    # Try to find raw JSON object (greedy match for nested braces)
+    m = re.search(r"\{.*\}", text, re.S)
+    if m:
+        try:
+            data = json.loads(m.group(0))
+            return data if isinstance(data, dict) else None
         except Exception:
             pass
 

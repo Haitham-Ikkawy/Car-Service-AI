@@ -53,36 +53,11 @@
   let _navGuard = false;   /* true while we are programmatic pushState/popstate handling */
 
   /* ============================================================
-     DIALECT-AWARE UI SYSTEM
+     DIALECT-AWARE QUESTION SYSTEM
      ============================================================
-     Provides tr() for getting localized strings, applyDialectUI()
-     for updating all static DOM text, and dialect-aware question/answer
-     handling for dynamic content.
+     Dialect state and user vocabulary are tracked here for generating
+     diagnostic questions via Gemini. The website UI stays in English.
      ============================================================ */
-
-  /** Get the current dialect profile. Falls back to neutral. */
-  function dialectProfile() {
-    return (window.DIALECT_PROFILES && window.DIALECT_PROFILES[state.dialect])
-      || (window.DIALECT_PROFILES && window.DIALECT_PROFILES.neutral)
-      || {};
-  }
-
-  /** Get a translated UI string by key. Falls back to key itself if missing. */
-  function tr(key) {
-    const p = dialectProfile();
-    return p[key] || key;
-  }
-
-  /** Get a translated string with placeholder replacement. */
-  function trFmt(key, vars) {
-    let s = tr(key);
-    if (vars) {
-      Object.keys(vars).forEach((k) => {
-        s = s.replace(new RegExp("\\{" + k + "\\}", "g"), vars[k]);
-      });
-    }
-    return s;
-  }
 
   /** Resolve a dialect name from the server result to a profile key. */
   function resolveDialectKey(dialectName) {
@@ -130,144 +105,6 @@
 
     /* Do NOT call applyDialectUI() — the website stays in English.
        Dialect is only used for generating diagnostic questions via Gemini. */
-  }
-
-  /** Apply dialect UI to all static elements in the DOM. */
-  function applyDialectUI() {
-    const p = dialectProfile();
-    if (!p || !p.wizardTitle) return;
-
-    /* Wizard header */
-    _setText("#dz-wizard-title", p.wizardTitle);
-    _setText("#dz-wizard-subtitle", p.wizardSubtitle);
-    _setText("#dz-status-text", p.statusOnline);
-
-    /* Stepper labels */
-    _setText("[data-step-label='vehicle']", p.stepVehicle);
-    _setText("[data-step-label='describe']", p.stepProblem);
-    _setText("[data-step-label='questions']", p.stepQuestions);
-    _setText("[data-step-label='image']", p.stepMedia);
-    _setText("[data-step-label='review']", p.stepReview);
-    _setText("[data-step-label='ready']", p.stepDiagnose);
-
-    /* Step 1 — Vehicle */
-    _setText("#dz-vehicle-title", p.vehicleTitle);
-    _setText("#dz-vehicle-subtitle", p.vehicleSubtitle);
-    _setAttr("#dz-vehicle-search", "placeholder", p.searchPlaceholder);
-    _setText("#dz-popular-label", p.popularBrands);
-    _setText("#dz-view-all-label", p.viewAllBrands);
-    _setText("#dz-vehicle-badge-label", p.selectedVehicle);
-    _setText("#dz-change-vehicle", p.changeVehicle);
-    _setText("#dz-model-title", p.selectModel);
-    _setText("#dz-engine-title", p.selectEngine);
-    _setAttr("#dz-engine-input", "placeholder", p.enginePlaceholder);
-    _setText("#dz-year-label", p.modelYear);
-    _setAttr("#dz-year-select", "data-default", p.yearDefault);
-    _setText("#dz-vehicle-validation", p.vehicleValidation);
-
-    /* Step 2 — Problem */
-    _setText("#dz-problem-title", p.problemTitle);
-    _setText("#dz-problem-subtitle", p.problemSubtitle);
-    _setAttr("#dz-problem", "placeholder", p.problemPlaceholder);
-    _setText("#dz-problem-count-label", p.characters);
-    _setText("#dz-problem-validation", p.problemValidation);
-    _setText("#dz-notice-title", p.noticeTitle);
-    _setText("#dz-notice-subtitle", p.noticeSubtitle);
-    _setAttr("#dz-notice", "placeholder", p.noticePlaceholder);
-    _setText("#dz-notice-label", p.optionalDetails);
-    _setText("#dz-when-title", p.whenTitle);
-    _setText("#dz-where-title", p.whereTitle);
-
-    /* Category buttons */
-    _setText("[data-cat='engine']", p.catEngine);
-    _setText("[data-cat='brakes']", p.catBrakes);
-    _setText("[data-cat='battery']", p.catBattery);
-    _setText("[data-cat='ac']", p.catAc);
-    _setText("[data-cat='electrical']", p.catElectrical);
-    _setText("[data-cat='transmission']", p.catTransmission);
-    _setText("[data-cat='suspension']", p.catSuspension);
-    _setText("[data-cat='other']", p.catOther);
-
-    /* When chips */
-    _setText("[data-when='always']", p.whenAlways);
-    _setText("[data-when='sometimes']", p.whenSometimes);
-    _setText("[data-when='starting']", p.whenStarting);
-    _setText("[data-when='driving']", p.whenDriving);
-    _setText("[data-when='braking']", p.whenBraking);
-    _setText("[data-when='turning']", p.whenTurning);
-
-    /* Where chips */
-    _setText("[data-where='front']", p.whereFront);
-    _setText("[data-where='rear']", p.whereRear);
-    _setText("[data-where='left']", p.whereLeft);
-    _setText("[data-where='right']", p.whereRight);
-    _setText("[data-where='engine']", p.whereEngine);
-    _setText("[data-where='cabin']", p.whereCabin);
-
-    /* Step 4 — Media */
-    _setText("#dz-photo-label", p.photoLabel);
-    _setText("#dz-photo-text", p.photoText);
-    _setText("#dz-photo-formats", p.photoFormats);
-    _setText("#dz-video-label", p.videoLabel);
-    _setText("#dz-video-text", p.videoText);
-    _setText("#dz-video-formats", p.videoFormats);
-
-    /* Step 5 — Review */
-    _setText("#dz-review-title", p.reviewTitle);
-    _setText("#dz-review-subtitle", p.reviewSubtitle);
-
-    /* Step 6 — Ready */
-    _setText("#dz-ready-title", p.readyTitle);
-    _setText("#dz-ready-subtitle", p.readySubtitle);
-    _setText("#dz-diagnose", p.startDiagnosis);
-
-    /* Loading */
-    _setText("#dz-loading-title", p.loadingTitle);
-    _setText("#dz-loading-subtitle", p.loadingSubtitle);
-
-    /* Result modal */
-    _setText("#dz-modal-title", p.modalTitle);
-    _setText("#dz-modal-subtitle", p.modalSubtitle);
-    _setText("#dz-new-diagnosis", p.newDiagnosis);
-
-    /* Benefits */
-    _setText("#dz-benefit-secure-title", p.benefitSecure);
-    _setText("#dz-benefit-secure-desc", p.benefitSecureDesc);
-    _setText("#dz-benefit-ai-title", p.benefitAi);
-    _setText("#dz-benefit-ai-desc", p.benefitAiDesc);
-    _setText("#dz-benefit-fast-title", p.benefitFast);
-    _setText("#dz-benefit-fast-desc", p.benefitFastDesc);
-    _setText("#dz-benefit-trusted-title", p.benefitTrusted);
-    _setText("#dz-benefit-trusted-desc", p.benefitTrustedDesc);
-
-    /* Info panel */
-    _setText("#dz-info-title", p.infoTitle);
-    _setText("#dz-info-text", p.infoText);
-    _setText("#dz-info-specs", p.infoSpecs);
-    _setText("#dz-info-issues", p.infoIssues);
-    _setText("#dz-info-mfr", p.infoMfrData);
-    _setText("#dz-info-bulletins", p.infoBulletins);
-    _setText("#dz-info-tip", p.infoTip);
-
-    /* Chat modal */
-    _setText("#dz-chat-confirm-title", p.chatConfirmTitle);
-    _setText("#dz-chat-confirm-desc", p.chatConfirmDesc);
-    _setText("#dz-chat-cancel", p.chatConfirmCancel);
-    _setText("#dz-chat-ok", p.chatConfirmOk);
-  }
-
-  /** Helper: set textContent if element exists. */
-  function _setText(sel, text) {
-    if (text == null) return;
-    const el = $(sel);
-    if (el) el.textContent = text;
-  }
-
-  /** Helper: set attribute if element exists. */
-  function _setAttr(sel, attr, val) {
-    if (val == null) return;
-    const el = $(sel);
-    if (el) el.setAttribute(attr, val);
   }
 
   /** Get the loading message for the current dialect (rotates). */
