@@ -26,6 +26,12 @@
     videoFile: null,
     questionIndex: 0,
     questions: [],
+    /* Dialect state */
+    dialect: "neutral",         /* active dialect profile key */
+    dialectConfidence: 0.0,     /* detection confidence 0.0–1.0 */
+    dialectDetected: "",        /* raw detected dialect name */
+    userTerms: {},              /* canonical_id → user's local term */
+    dialectResult: null,        /* full dialect detection result from server */
   };
 
   /* ---- Step mapping: wizard step name -> step number (1-6) ---- */
@@ -44,6 +50,234 @@
   const WIZARD_STEPS = ["vehicle", "describe", "questions", "image", "review", "ready"];
   let _wizIdx = -1;        /* current position in WIZARD_STEPS; -1 = not in wizard */
   let _navGuard = false;   /* true while we are programmatic pushState/popstate handling */
+
+  /* ============================================================
+     DIALECT-AWARE UI SYSTEM
+     ============================================================
+     Provides tr() for getting localized strings, applyDialectUI()
+     for updating all static DOM text, and dialect-aware question/answer
+     handling for dynamic content.
+     ============================================================ */
+
+  /** Get the current dialect profile. Falls back to neutral. */
+  function dialectProfile() {
+    return (window.DIALECT_PROFILES && window.DIALECT_PROFILES[state.dialect])
+      || (window.DIALECT_PROFILES && window.DIALECT_PROFILES.neutral)
+      || {};
+  }
+
+  /** Get a translated UI string by key. Falls back to key itself if missing. */
+  function tr(key) {
+    const p = dialectProfile();
+    return p[key] || key;
+  }
+
+  /** Get a translated string with placeholder replacement. */
+  function trFmt(key, vars) {
+    let s = tr(key);
+    if (vars) {
+      Object.keys(vars).forEach((k) => {
+        s = s.replace(new RegExp("\\{" + k + "\\}", "g"), vars[k]);
+      });
+    }
+    return s;
+  }
+
+  /** Resolve a dialect name from the server result to a profile key. */
+  function resolveDialectKey(dialectName) {
+    if (!dialectName) return "neutral";
+    if (window.DIALECT_MAP && window.DIALECT_MAP[dialectName]) return window.DIALECT_MAP[dialectName];
+    const lower = dialectName.toLowerCase();
+    if (window.DIALECT_MAP) {
+      for (const [key, val] of Object.entries(window.DIALECT_MAP)) {
+        if (key.toLowerCase() === lower) return val;
+      }
+    }
+    return "neutral";
+  }
+
+  /** Apply the detected dialect and update the entire UI. */
+  function applyDialect(dialectResult) {
+    if (!dialectResult || dialectResult.language !== "ar") {
+      state.dialect = "neutral";
+      state.dialectConfidence = 0;
+      state.dialectDetected = "";
+      state.dialectResult = null;
+      state.userTerms = {};
+      return;
+    }
+    const conf = dialectResult.dialect_confidence || 0;
+    state.dialectDetected = dialectResult.dialect || "";
+    state.dialectConfidence = conf;
+    state.dialectResult = dialectResult;
+
+    /* Only apply a specific dialect if confidence > 0.25, otherwise stay neutral */
+    if (conf > 0.25 && dialectResult.dialect) {
+      state.dialect = resolveDialectKey(dialectResult.dialect);
+    } else {
+      state.dialect = "neutral";
+    }
+
+    /* Remember user's automotive vocabulary */
+    if (dialectResult.canonical_concepts) {
+      dialectResult.canonical_concepts.forEach((c) => {
+        if (c.id && c.local) state.userTerms[c.id] = c.local;
+      });
+    }
+
+    /* Apply UI text */
+    applyDialectUI();
+  }
+
+  /** Apply dialect UI to all static elements in the DOM. */
+  function applyDialectUI() {
+    const p = dialectProfile();
+    if (!p || !p.wizardTitle) return;
+
+    /* Wizard header */
+    _setText("#dz-wizard-title", p.wizardTitle);
+    _setText("#dz-wizard-subtitle", p.wizardSubtitle);
+    _setText("#dz-status-text", p.statusOnline);
+
+    /* Stepper labels */
+    _setText("[data-step-label='vehicle']", p.stepVehicle);
+    _setText("[data-step-label='describe']", p.stepProblem);
+    _setText("[data-step-label='questions']", p.stepQuestions);
+    _setText("[data-step-label='image']", p.stepMedia);
+    _setText("[data-step-label='review']", p.stepReview);
+    _setText("[data-step-label='ready']", p.stepDiagnose);
+
+    /* Step 1 — Vehicle */
+    _setText("#dz-vehicle-title", p.vehicleTitle);
+    _setText("#dz-vehicle-subtitle", p.vehicleSubtitle);
+    _setAttr("#dz-vehicle-search", "placeholder", p.searchPlaceholder);
+    _setText("#dz-popular-label", p.popularBrands);
+    _setText("#dz-view-all-label", p.viewAllBrands);
+    _setText("#dz-vehicle-badge-label", p.selectedVehicle);
+    _setText("#dz-change-vehicle", p.changeVehicle);
+    _setText("#dz-model-title", p.selectModel);
+    _setText("#dz-engine-title", p.selectEngine);
+    _setAttr("#dz-engine-input", "placeholder", p.enginePlaceholder);
+    _setText("#dz-year-label", p.modelYear);
+    _setAttr("#dz-year-select", "data-default", p.yearDefault);
+    _setText("#dz-vehicle-validation", p.vehicleValidation);
+
+    /* Step 2 — Problem */
+    _setText("#dz-problem-title", p.problemTitle);
+    _setText("#dz-problem-subtitle", p.problemSubtitle);
+    _setAttr("#dz-problem", "placeholder", p.problemPlaceholder);
+    _setText("#dz-problem-count-label", p.characters);
+    _setText("#dz-problem-validation", p.problemValidation);
+    _setText("#dz-notice-title", p.noticeTitle);
+    _setText("#dz-notice-subtitle", p.noticeSubtitle);
+    _setAttr("#dz-notice", "placeholder", p.noticePlaceholder);
+    _setText("#dz-notice-label", p.optionalDetails);
+    _setText("#dz-when-title", p.whenTitle);
+    _setText("#dz-where-title", p.whereTitle);
+
+    /* Category buttons */
+    _setText("[data-cat='engine']", p.catEngine);
+    _setText("[data-cat='brakes']", p.catBrakes);
+    _setText("[data-cat='battery']", p.catBattery);
+    _setText("[data-cat='ac']", p.catAc);
+    _setText("[data-cat='electrical']", p.catElectrical);
+    _setText("[data-cat='transmission']", p.catTransmission);
+    _setText("[data-cat='suspension']", p.catSuspension);
+    _setText("[data-cat='other']", p.catOther);
+
+    /* When chips */
+    _setText("[data-when='always']", p.whenAlways);
+    _setText("[data-when='sometimes']", p.whenSometimes);
+    _setText("[data-when='starting']", p.whenStarting);
+    _setText("[data-when='driving']", p.whenDriving);
+    _setText("[data-when='braking']", p.whenBraking);
+    _setText("[data-when='turning']", p.whenTurning);
+
+    /* Where chips */
+    _setText("[data-where='front']", p.whereFront);
+    _setText("[data-where='rear']", p.whereRear);
+    _setText("[data-where='left']", p.whereLeft);
+    _setText("[data-where='right']", p.whereRight);
+    _setText("[data-where='engine']", p.whereEngine);
+    _setText("[data-where='cabin']", p.whereCabin);
+
+    /* Step 4 — Media */
+    _setText("#dz-photo-label", p.photoLabel);
+    _setText("#dz-photo-text", p.photoText);
+    _setText("#dz-photo-formats", p.photoFormats);
+    _setText("#dz-video-label", p.videoLabel);
+    _setText("#dz-video-text", p.videoText);
+    _setText("#dz-video-formats", p.videoFormats);
+
+    /* Step 5 — Review */
+    _setText("#dz-review-title", p.reviewTitle);
+    _setText("#dz-review-subtitle", p.reviewSubtitle);
+
+    /* Step 6 — Ready */
+    _setText("#dz-ready-title", p.readyTitle);
+    _setText("#dz-ready-subtitle", p.readySubtitle);
+    _setText("#dz-diagnose", p.startDiagnosis);
+
+    /* Loading */
+    _setText("#dz-loading-title", p.loadingTitle);
+    _setText("#dz-loading-subtitle", p.loadingSubtitle);
+
+    /* Result modal */
+    _setText("#dz-modal-title", p.modalTitle);
+    _setText("#dz-modal-subtitle", p.modalSubtitle);
+    _setText("#dz-new-diagnosis", p.newDiagnosis);
+
+    /* Benefits */
+    _setText("#dz-benefit-secure-title", p.benefitSecure);
+    _setText("#dz-benefit-secure-desc", p.benefitSecureDesc);
+    _setText("#dz-benefit-ai-title", p.benefitAi);
+    _setText("#dz-benefit-ai-desc", p.benefitAiDesc);
+    _setText("#dz-benefit-fast-title", p.benefitFast);
+    _setText("#dz-benefit-fast-desc", p.benefitFastDesc);
+    _setText("#dz-benefit-trusted-title", p.benefitTrusted);
+    _setText("#dz-benefit-trusted-desc", p.benefitTrustedDesc);
+
+    /* Info panel */
+    _setText("#dz-info-title", p.infoTitle);
+    _setText("#dz-info-text", p.infoText);
+    _setText("#dz-info-specs", p.infoSpecs);
+    _setText("#dz-info-issues", p.infoIssues);
+    _setText("#dz-info-mfr", p.infoMfrData);
+    _setText("#dz-info-bulletins", p.infoBulletins);
+    _setText("#dz-info-tip", p.infoTip);
+
+    /* Chat modal */
+    _setText("#dz-chat-confirm-title", p.chatConfirmTitle);
+    _setText("#dz-chat-confirm-desc", p.chatConfirmDesc);
+    _setText("#dz-chat-cancel", p.chatConfirmCancel);
+    _setText("#dz-chat-ok", p.chatConfirmOk);
+  }
+
+  /** Helper: set textContent if element exists. */
+  function _setText(sel, text) {
+    if (text == null) return;
+    const el = $(sel);
+    if (el) el.textContent = text;
+  }
+
+  /** Helper: set attribute if element exists. */
+  function _setAttr(sel, attr, val) {
+    if (val == null) return;
+    const el = $(sel);
+    if (el) el.setAttribute(attr, val);
+  }
+
+  /** Get the loading message for the current dialect (rotates). */
+  let _loadingMsgIdx = 0;
+  function nextLoadingMessage() {
+    const msgs = tr("loadingMessages");
+    if (Array.isArray(msgs) && msgs.length > 0) {
+      _loadingMsgIdx = (_loadingMsgIdx + 1) % msgs.length;
+      return msgs[_loadingMsgIdx];
+    }
+    return tr("loadingTitle");
+  }
+  function resetLoadingMessages() { _loadingMsgIdx = 0; }
 
   /* ============================================================
      RESULT MODAL — open / close / scroll lock
@@ -211,24 +445,23 @@
 
   /* ---- Live status messages (visual only, does NOT control request) ---- */
   let _loadingStatusTimer = null;
-  const _loadingMessages = [
-    "Reading vehicle information...",
-    "Reviewing reported symptoms...",
-    "Analyzing possible causes...",
-    "Checking repair recommendations...",
-    "Preparing your diagnosis...",
-  ];
 
   function _startLoadingStatus() {
     _stopLoadingStatus();
     let idx = 0;
     const el = document.getElementById("dz-loading-status-text");
     if (!el) return;
+    /* Use dialect-aware messages */
+    const msgs = tr("loadingMessages");
+    const loadingMessages = Array.isArray(msgs) && msgs.length > 0
+      ? msgs
+      : ["Reading vehicle information...", "Reviewing reported symptoms...", "Analyzing possible causes...", "Checking repair recommendations...", "Preparing your diagnosis..."];
+    el.textContent = loadingMessages[0];
     _loadingStatusTimer = setInterval(() => {
-      idx = (idx + 1) % _loadingMessages.length;
+      idx = (idx + 1) % loadingMessages.length;
       el.style.opacity = "0";
       setTimeout(() => {
-        el.textContent = _loadingMessages[idx];
+        el.textContent = loadingMessages[idx];
         el.style.opacity = "1";
       }, 150);
     }, 2500);
@@ -404,6 +637,7 @@
         questions: state.questions,
         question_index: state.questionIndex,
         step: state.step,
+        dialect_result: state.dialectResult || state._dialectResult || null,
       };
       /* Only send image if it changed (avoid sending large base64 on every save) */
       if (state._imageDirty) {
@@ -463,6 +697,16 @@
       state.questionIndex = s.question_index || 0;
       state.image = s.image || null;
       state.step = s.step || "welcome";
+
+      /* Restore dialect state */
+      if (s.dialect_result) {
+        state.dialectResult = s.dialect_result;
+        applyDialect(s.dialect_result);
+      } else if (state.problem) {
+        /* Re-detect dialect from saved problem */
+        const dialectResult = await detectDialect(state.problem);
+        applyDialect(dialectResult);
+      }
 
       /* A session can be autosaved on a transient, non-wizard step
          ("loading" / "workspace" / "result") if the user navigated away
@@ -1142,6 +1386,77 @@
     const used = new Set(specific.map((q) => q.key));
     const merged = [...specific, ...general.filter((q) => !used.has(q.key))];
     return merged.slice(0, 6);
+  }
+
+  /* ---- Dialect detection & server-side questions ---- */
+  const _dialectCache = {};
+
+  /**
+   * Detect Arabic dialect from user input text.
+   * @param {string} text - User input text
+   * @returns {Promise<{language: string, dialect: string, dialect_confidence: number, detected_terms: string[], canonical_concepts: object[]}>}
+   */
+  async function detectDialect(text) {
+    if (!text || text.length < 3) {
+      return { language: "en", dialect: "", dialect_confidence: 0.0, detected_terms: [], canonical_concepts: [] };
+    }
+    const cacheKey = text.toLowerCase().trim();
+    if (_dialectCache[cacheKey]) return _dialectCache[cacheKey];
+    try {
+      const resp = await fetch("/api/diagnose/detect-dialect", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text }),
+      });
+      const data = await resp.json();
+      if (data.ok) {
+        _dialectCache[cacheKey] = data;
+        return data;
+      }
+    } catch (e) {
+      console.warn("[DIALECT] Detection failed:", e);
+    }
+    return { language: "en", dialect: "", dialect_confidence: 0.0, detected_terms: [], canonical_concepts: [] };
+  }
+
+  /**
+   * Fetch dialect-aware questions from server using Gemini.
+   * @param {string} problem - Problem description
+   * @param {object} vehicle - Vehicle info {brand, model, engine, year}
+   * @param {string} dialect - Detected dialect
+   * @param {number} dialect_confidence - Dialect confidence 0.0-1.0
+   * @param {string[]} detected_terms - Detected automotive terms
+   * @param {object[]} canonical_concepts - Canonical concept mappings
+   * @param {string} category - Problem category
+   * @param {string} when - When problem occurs
+   * @param {string} where - Where problem occurs
+   * @returns {Promise<object[]>} Array of question objects
+   */
+  async function fetchServerQuestions(problem, vehicle, dialect, dialect_confidence, detected_terms, canonical_concepts, category, when, where) {
+    try {
+      const resp = await fetch("/api/diagnose/questions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          problem,
+          vehicle,
+          dialect,
+          dialect_confidence,
+          detected_terms,
+          canonical_concepts,
+          category: category || "",
+          when: when || "",
+          where: where || "",
+        }),
+      });
+      const data = await resp.json();
+      if (data.ok && Array.isArray(data.questions) && data.questions.length > 0) {
+        return data.questions;
+      }
+    } catch (e) {
+      console.warn("[QUESTIONS] Server-side generation failed:", e);
+    }
+    return null;
   }
 
   /* ---- Problem suggestions (smart completion) ---- */
@@ -2304,7 +2619,7 @@
 
     /* Describe */
     $("#dz-back-describe").addEventListener("click", () => showStep("vehicle"));
-    $("#dz-continue-describe").addEventListener("click", () => {
+    $("#dz-continue-describe").addEventListener("click", async () => {
       const val = $("#dz-problem").value.trim();
       if (val.length < 5) {
         $("#dz-problem-validation").classList.remove("d-none");
@@ -2316,7 +2631,33 @@
       state.when = getSelectedWhen();
       state.where = getSelectedWhere();
       const fullProblem = buildFullProblem();
-      state.questions = getQuestions(fullProblem);
+
+      /* Detect dialect from user's problem description */
+      const dialectResult = await detectDialect(fullProblem);
+      /* Apply dialect to the ENTIRE UI — this updates all visible text */
+      applyDialect(dialectResult);
+
+      /* Generate questions — server-side for Arabic, client-side for English */
+      if (dialectResult.language === "ar" && dialectResult.dialect_confidence > 0.3) {
+        const serverQuestions = await fetchServerQuestions(
+          fullProblem,
+          state.vehicle,
+          dialectResult.dialect,
+          dialectResult.dialect_confidence,
+          dialectResult.detected_terms || [],
+          dialectResult.canonical_concepts || [],
+          state.category,
+          state.when,
+          state.where
+        );
+        if (serverQuestions) {
+          state.questions = serverQuestions;
+        } else {
+          state.questions = getQuestions(fullProblem);
+        }
+      } else {
+        state.questions = getQuestions(fullProblem);
+      }
       state.questionIndex = 0;
       state.answers = {};
       showQuestion();
@@ -2925,7 +3266,7 @@
     if (!q) return;
     const total = state.questions.length;
     const idx = state.questionIndex;
-    const counter = `Step ${idx + 1} of ${total}`;
+    const counter = trFmt("stepCounter", { current: idx + 1, total: total });
 
     $("#dz-q-title").textContent = q.title;
     $("#dz-q-subtitle").textContent = q.subtitle || "";
@@ -3058,12 +3399,12 @@
     } else {
       logoEl.classList.add("d-none");
     }
-    brandEl.textContent = brandName || "No vehicle selected";
+    brandEl.textContent = brandName || tr("noVehicleSelected");
     modelEl.textContent = modelName || "";
 
     /* Problem */
     const problemEl = $("#dz-ready-problem");
-    problemEl.textContent = state.problem || "No problem described";
+    problemEl.textContent = state.problem || tr("noProblemDescribed");
 
     /* Notice */
     const noticeSection = $("#dz-ready-notice-section");
@@ -3081,7 +3422,7 @@
     if (state.image || state.video) {
       let mediaHtml = "";
       if (state.image) {
-        mediaHtml += `<div class="dz-ready-media-item"><i class="bi bi-image"></i> <span>1 image attached</span></div>`;
+        mediaHtml += `<div class="dz-ready-media-item"><i class="bi bi-image"></i> <span>${tr("oneImageAttached")}</span></div>`;
       }
       if (state.video) {
         const videoName = state.videoFile ? state.videoFile.name : "video";
@@ -3101,21 +3442,22 @@
     const container = $("#dz-review");
     container.innerHTML = "";
 
+    const vehicleText = ([state.vehicle.brand, state.vehicle.model].filter(Boolean).join(" ") + (state.vehicle.engine ? " · " + state.vehicle.engine : "")) || tr("valueNotSpecified");
     const items = [
-      { label: "Vehicle", value: ([state.vehicle.brand, state.vehicle.model].filter(Boolean).join(" ") + (state.vehicle.engine ? " · " + state.vehicle.engine : "")) || "Not specified", edit: "vehicle" },
-      { label: "Problem", value: state.problem, edit: "describe" },
+      { label: tr("labelVehicle"), value: vehicleText, edit: "vehicle" },
+      { label: tr("labelProblem"), value: state.problem, edit: "describe" },
     ];
     if (state.category) {
-      items.push({ label: "Category", value: state.category.charAt(0).toUpperCase() + state.category.slice(1), edit: "describe" });
+      items.push({ label: tr("labelCategory"), value: state.category.charAt(0).toUpperCase() + state.category.slice(1), edit: "describe" });
     }
     if (state.when) {
-      items.push({ label: "When", value: state.when, edit: "describe" });
+      items.push({ label: tr("labelWhen"), value: state.when, edit: "describe" });
     }
     if (state.where) {
-      items.push({ label: "Location", value: state.where, edit: "describe" });
+      items.push({ label: tr("labelWhere"), value: state.where, edit: "describe" });
     }
     if (state.notice) {
-      items.push({ label: "Notice", value: state.notice, edit: "describe" });
+      items.push({ label: tr("labelNotice"), value: state.notice, edit: "describe" });
     }
     for (const q of state.questions) {
       if (state.answers[q.key]) {
@@ -3123,10 +3465,10 @@
       }
     }
     if (state.image) {
-      items.push({ label: "Photo", value: "Added", edit: "image" });
+      items.push({ label: tr("labelPhoto"), value: tr("valueAdded"), edit: "image" });
     }
     if (state.video) {
-      items.push({ label: "Video", value: state.videoFile ? state.videoFile.name : "Added", edit: "image" });
+      items.push({ label: tr("labelVideo"), value: state.videoFile ? state.videoFile.name : tr("valueAdded"), edit: "image" });
     }
 
     items.forEach((item) => {
@@ -3137,7 +3479,7 @@
           <div class="dz-review-label">${esc(item.label)}</div>
           <div class="dz-review-value">${esc(item.value)}</div>
         </div>
-        <span class="dz-review-edit" data-goto="${item.edit}">Edit</span>
+        <span class="dz-review-edit" data-goto="${item.edit}">${tr("reviewEdit")}</span>
       `;
       div.querySelector(".dz-review-edit").addEventListener("click", () => {
         if (item.edit === "vehicle") showStep("vehicle");
@@ -3191,14 +3533,14 @@
       const data = await res.json();
 
       if (!res.ok) {
-        showError(data.error || "Diagnosis failed. Please try again.");
+        showError(data.error || tr("errorMsgDefault"));
         return;
       }
 
       showWorkspace(data.result);
       _completed = true;
     } catch (err) {
-      showError("We couldn't complete the diagnosis right now. Please try again.");
+      showError(tr("errorMsgDefault"));
     } finally {
       state._diagnosing = false;
       if (diagBtn) { diagBtn.disabled = false; diagBtn.style.opacity = ""; }
@@ -3222,11 +3564,11 @@
     body.innerHTML = `
       <div class="dz-modal-error">
         <div class="dz-modal-error-icon"><i class="bi bi-exclamation-triangle"></i></div>
-        <div class="dz-modal-error-title">Unable to Complete Diagnosis</div>
-        <div class="dz-modal-error-msg">${esc(msg)}</div>
-        <button class="dz-btn dz-btn-primary" id="dz-modal-retry"><i class="bi bi-arrow-repeat"></i> Try Again</button>
+        <div class="dz-modal-error-title">${tr("errorTitle")}</div>
+        <div class="dz-modal-error-msg">${esc(msg || tr("errorMsgDefault"))}</div>
+        <button class="dz-btn dz-btn-primary" id="dz-modal-retry"><i class="bi bi-arrow-repeat"></i> ${tr("tryAgain")}</button>
       </div>`;
-    if (footer) footer.innerHTML = `<button class="dz-btn dz-btn-ghost" id="dz-modal-close-err"><i class="bi bi-x-lg"></i> Close</button>`;
+    if (footer) footer.innerHTML = `<button class="dz-btn dz-btn-ghost" id="dz-modal-close-err"><i class="bi bi-x-lg"></i> ${tr("close")}</button>`;
     const retryBtn = $("#dz-modal-retry");
     if (retryBtn) retryBtn.addEventListener("click", () => { closeModal(); setTimeout(() => runDiagnosis(), 200); });
     const closeErrBtn = $("#dz-modal-close-err");

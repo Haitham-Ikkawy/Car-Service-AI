@@ -287,6 +287,64 @@ def _run_generation(client: Any, model: str, contents: Any) -> str:
     raise RuntimeError("Gemini returned an empty response")
 
 
+def _generate_question(user: str | None, prompt: str) -> list[dict[str, Any]]:
+    """Generate diagnostic questions using Gemini.
+
+    This function uses the existing Gemini architecture to generate natural
+    diagnostic questions in the user's detected dialect.
+
+    Returns a list of question objects with keys: key, title, subtitle, options.
+    """
+    client_info = _client_for(user)
+    if client_info is None:
+        logger.warning("Gemini question generation skipped for user=%r: no usable API key.", user)
+        raise UnavailableError(_ai_unavailable("en"))
+
+    client, model = client_info
+    logger.info("[GEMINI] Question generation started (user=%r, model=%s)", user, model)
+
+    try:
+        raw = _run_generation(client, model, [prompt])
+        # Try to parse as JSON array
+        questions = _extract_json_array(raw)
+        if questions:
+            logger.info("[GEMINI] Question generation completed (%d questions)", len(questions))
+            return questions
+        else:
+            logger.warning("[GEMINI] Question generation returned invalid JSON")
+            return []
+    except Exception as exc:
+        logger.error("Gemini question generation failed (user=%r): %s: %s",
+                     user, type(exc).__name__, exc, exc_info=True)
+        raise UnavailableError(_friendly_error(exc)) from None
+
+
+def _extract_json_array(text: str) -> list[dict[str, Any]] | None:
+    """Extract a JSON array from text, handling markdown fences."""
+    if not text:
+        return None
+
+    # Try to find JSON array in markdown code block
+    m = re.search(r"```(?:json)?\s*(\[.*?\])\s*```", text, re.S)
+    if m:
+        try:
+            data = json.loads(m.group(1))
+            return data if isinstance(data, list) else None
+        except Exception:
+            pass
+
+    # Try to find raw JSON array
+    m = re.search(r"\[.*\]", text, re.S)
+    if m:
+        try:
+            data = json.loads(m.group(0))
+            return data if isinstance(data, list) else None
+        except Exception:
+            pass
+
+    return None
+
+
 # ---------------------------------------------------------------------------
 # Parsing helpers
 # ---------------------------------------------------------------------------
@@ -371,11 +429,29 @@ def _vehicle_context(user: str | None) -> str:
     return "\n".join(lines)
 
 
-def _lang_instruction(lang: str) -> str:
-    """A prompt suffix telling Gemini which language to answer in."""
+def _lang_instruction(lang: str, dialect: str = "", dialect_confidence: float = 0.0,
+                       user_terms: dict[str, str] | None = None) -> str:
+    """A prompt suffix telling Gemini which language and dialect to answer in."""
     if lang == "ar":
-        return ("\nWrite every field value in Arabic (العربية). "
+        base = ("\nWrite every field value in Arabic. "
                 "Use Arabic text for all names, descriptions and steps.")
+        if dialect and dialect_confidence > 0.25:
+            base += (f"\n\nLANGUAGE/DIALECT CONTEXT:\n"
+                     f"- Detected dialect: {dialect}\n"
+                     f"- Dialect confidence: {dialect_confidence:.0%}\n"
+                     f"- You MUST write all user-facing text in natural {dialect} Arabic.\n"
+                     f"- Do NOT use Modern Standard Arabic unless dialect confidence is very low.\n"
+                     f"- Do NOT mechanically translate from English.\n"
+                     f"- Preserve technical diagnostic meaning while adapting to the dialect.\n"
+                     f"- If technical automotive terms have local dialect equivalents, use the local term "
+                     f"followed by the technical term in parentheses.\n"
+                     f"- The explanation should sound like a natural conversation in {dialect} Arabic.")
+        if user_terms:
+            terms_str = ", ".join([f"{v} ({k})" for k, v in user_terms.items()])
+            base += f"\n\nUser's automotive vocabulary: {terms_str}"
+            base += "\n- Reuse the user's natural automotive vocabulary when appropriate."
+            base += "\n- Do NOT replace the user's terms with different Arabic terms."
+        return base
     return "\nWrite every field value in English."
 
 
@@ -597,6 +673,9 @@ def diagnose(
     lang: str = "en",
     vehicle_override: dict[str, str] | None = None,
     image_data_original: str | None = None,
+    dialect: str = "",
+    dialect_confidence: float = 0.0,
+    user_terms: dict[str, str] | None = None,
 ) -> dict[str, Any]:
     """Run an AI diagnosis and return a structured report dict.
 
@@ -643,7 +722,7 @@ def diagnose(
             prompt += ("\nWatch the video carefully — visible symptoms (leaks, smoke, warning "
                       "lights, unusual movement) as well as any audible sound (knocking, "
                       "squealing, rattling) — and narrow down the probable cause.")
-        prompt += _lang_instruction(lang)
+        prompt += _lang_instruction(lang, dialect, dialect_confidence, user_terms)
         parts.append(prompt)
         raw = _run_generation(client, model, parts)
         data = _extract_json(raw)

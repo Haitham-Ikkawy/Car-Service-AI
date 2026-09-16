@@ -14,13 +14,13 @@
         <div class="dz-wizard-title-group">
           <div class="dz-wizard-icon"><i class="bi bi-heart-pulse"></i></div>
           <div>
-            <h1 class="dz-wizard-page-title">AI Diagnosis</h1>
-            <p class="dz-wizard-page-sub">Smart vehicle problem analysis</p>
+            <h1 class="dz-wizard-page-title" id="dz-wizard-title">AI Diagnosis</h1>
+            <p class="dz-wizard-page-sub" id="dz-wizard-subtitle">Smart vehicle problem analysis</p>
           </div>
         </div>
         <div class="dz-wizard-status">
           <span class="dz-wizard-status-dot"></span>
-          <span>AI System Online</span>
+          <span id="dz-status-text">AI System Online</span>
         </div>
       </div>
 
@@ -28,32 +28,32 @@
       <div class="dz-stepper" id="dz-stepper">
         <div class="dz-stepper-item active" data-step-num="1">
           <div class="dz-stepper-circle">1</div>
-          <div class="dz-stepper-label">Vehicle</div>
+          <div class="dz-stepper-label" data-step-label="vehicle">Vehicle</div>
         </div>
         <div class="dz-stepper-line"></div>
         <div class="dz-stepper-item" data-step-num="2">
           <div class="dz-stepper-circle">2</div>
-          <div class="dz-stepper-label">Problem</div>
+          <div class="dz-stepper-label" data-step-label="describe">Problem</div>
         </div>
         <div class="dz-stepper-line"></div>
         <div class="dz-stepper-item" data-step-num="3">
           <div class="dz-stepper-circle">3</div>
-          <div class="dz-stepper-label">Questions</div>
+          <div class="dz-stepper-label" data-step-label="questions">Questions</div>
         </div>
         <div class="dz-stepper-line"></div>
         <div class="dz-stepper-item" data-step-num="4">
           <div class="dz-stepper-circle">4</div>
-          <div class="dz-stepper-label">Media</div>
+          <div class="dz-stepper-label" data-step-label="image">Media</div>
         </div>
         <div class="dz-stepper-line"></div>
         <div class="dz-stepper-item" data-step-num="5">
           <div class="dz-stepper-circle">5</div>
-          <div class="dz-stepper-label">Review</div>
+          <div class="dz-stepper-label" data-step-label="review">Review</div>
         </div>
         <div class="dz-stepper-line"></div>
         <div class="dz-stepper-item" data-step-num="6">
           <div class="dz-stepper-circle">6</div>
-          <div class="dz-stepper-label">Diagnose</div>
+          <div class="dz-stepper-label" data-step-label="ready">Diagnose</div>
         </div>
       </div>
     </div>
@@ -73,8 +73,8 @@
           <div class="dz-card-header">
             <div class="dz-card-header-icon"><i class="bi bi-car-front-fill"></i></div>
             <div class="dz-card-header-text">
-              <h2 class="dz-card-title">Select your vehicle</h2>
-              <p class="dz-card-subtitle">Choose your car so we can provide a more accurate diagnosis.</p>
+              <h2 class="dz-card-title" id="dz-vehicle-title">Select your vehicle</h2>
+              <p class="dz-card-subtitle" id="dz-vehicle-subtitle">Choose your car so we can provide a more accurate diagnosis.</p>
             </div>
             <button class="dz-btn-outline-sm" type="button" id="dz-vehicle-help" title="How to pick your vehicle"><i class="bi bi-question-circle"></i> Need help?</button>
           </div>
@@ -83,7 +83,7 @@
           <div class="dz-search-bar" id="dz-car-search">
             <div class="dz-search-input-wrap">
               <i class="bi bi-search dz-search-icon"></i>
-               <input type="text" class="dz-search-input" id="dz-car-input"
+               <input type="text" class="dz-search-input" id="dz-vehicle-search"
                      placeholder="Search brand or model (e.g. Toyota, Civic, CR-V...)"
                      autocomplete="off" autocapitalize="off" spellcheck="false">
               <button class="dz-search-clear d-none" id="dz-car-clear" title="Clear">
@@ -146,15 +146,15 @@
           <!-- Popular Brands -->
           <div class="dz-brands-section" id="dz-brands-section">
             <div class="dz-brands-header">
-              <h3 class="dz-brands-title">Popular Brands</h3>
-              <button class="dz-brands-view-all" id="dz-brands-view-all" type="button">View all brands <i class="bi bi-arrow-right"></i></button>
+              <h3 class="dz-brands-title" id="dz-popular-label">Popular Brands</h3>
+              <button class="dz-brands-view-all" id="dz-brands-view-all" type="button"><span id="dz-view-all-label">View all brands</span> <i class="bi bi-arrow-right"></i></button>
             </div>
             <div class="dz-brands-grid" id="dz-brands-grid"></div>
           </div>
 
           <!-- Selected brand (after selection) -->
           <div class="dz-car-selected d-none" id="dz-car-selected">
-            <div class="dz-selected-badge"><i class="bi bi-check-circle-fill"></i> Selected Vehicle</div>
+            <div class="dz-selected-badge"><i class="bi bi-check-circle-fill"></i> <span id="dz-vehicle-badge-label">Selected Vehicle</span></div>
             <div class="dz-selected-card">
               <div class="dz-selected-left">
                 <div class="dz-selected-icon" id="dz-car-selected-icon"><i class="bi bi-car-front-fill"></i></div>
@@ -170,20 +170,20 @@
                 </div>
               </div>
             </div>
-            <button class="dz-btn-change-vehicle" id="dz-car-change" type="button">
-              <i class="bi bi-arrow-left-right"></i> Change Vehicle
+            <button class="dz-btn-change-vehicle" id="dz-change-vehicle" type="button">
+              <i class="bi bi-arrow-left-right"></i> <span id="dz-change-vehicle-text">Change Vehicle</span>
             </button>
           </div>
 
           <!-- Model selection -->
           <div class="dz-car-models d-none" id="dz-car-models">
-            <p class="dz-car-models-title">Select your model</p>
+            <p class="dz-car-models-title" id="dz-model-title">Select your model</p>
             <div class="dz-car-models-grid" id="dz-car-models-grid"></div>
           </div>
 
           <!-- Engine / motor selection (cascades from the selected model) -->
           <div class="dz-car-engines d-none" id="dz-car-engines">
-            <p class="dz-car-models-title">Select your engine <span class="dz-optional-tag">optional</span></p>
+            <p class="dz-car-models-title" id="dz-engine-title">Select your engine <span class="dz-optional-tag">optional</span></p>
             <div class="dz-engine-search">
               <i class="bi bi-fuel-pump dz-engine-search-icon"></i>
               <input type="text" class="dz-engine-input" id="dz-engine-input"
@@ -195,11 +195,11 @@
 
           <!-- Model year — makes the diagnosis + image specific to that year -->
           <div class="dz-car-year d-none" id="dz-car-year">
-            <p class="dz-car-models-title">Model year <span class="dz-optional-tag">recommended</span></p>
+            <p class="dz-car-models-title" id="dz-year-label">Model year <span class="dz-optional-tag">recommended</span></p>
             <div class="dz-year-select-wrap">
               <i class="bi bi-calendar3 dz-year-icon"></i>
               <select class="dz-year-select" id="dz-year-select">
-                <option value="">Select year…</option>
+                <option value="" data-default>Select year…</option>
                 {% for y in years %}<option value="{{ y }}">{{ y }}</option>{% endfor %}
               </select>
             </div>
@@ -226,8 +226,8 @@
             <span>Diagnosing: <strong id="dz-vehicle-badge-text"></strong></span>
           </div>
 
-          <h2 class="dz-card-title">What's wrong with your vehicle?</h2>
-          <p class="dz-card-subtitle">Describe the problem in your own words. The more details you provide, the better the diagnosis.</p>
+          <h2 class="dz-card-title" id="dz-problem-title">What's wrong with your vehicle?</h2>
+          <p class="dz-card-subtitle" id="dz-problem-subtitle">Describe the problem in your own words. The more details you provide, the better the diagnosis.</p>
 
           <!-- Problem input with voice + suggestions -->
           <div class="dz-problem-wrap">
@@ -243,7 +243,7 @@
                 </button>
               </div>
             </div>
-            <div class="dz-problem-counter"><span id="dz-problem-count">0</span> characters</div>
+            <div class="dz-problem-counter"><span id="dz-problem-count">0</span> <span id="dz-problem-count-label">characters</span></div>
             <div class="dz-problem-suggestions d-none" id="dz-problem-suggestions"></div>
             <div class="dz-problem-voice-recording d-none" id="dz-problem-voice-recording">
               <div class="dz-problem-voice-dot"></div>
@@ -263,28 +263,28 @@
           <div class="dz-problem-section">
             <p class="dz-problem-section-title">Quick problem categories</p>
             <div class="dz-problem-categories" id="dz-problem-categories">
-              <button class="dz-category-btn" data-category="engine" type="button">
+              <button class="dz-category-btn" data-category="engine" data-cat="engine" type="button">
                 <i class="bi bi-gear-wide-connected"></i> Engine
               </button>
-              <button class="dz-category-btn" data-category="brakes" type="button">
+              <button class="dz-category-btn" data-category="brakes" data-cat="brakes" type="button">
                 <i class="bi bi-disc"></i> Brakes
               </button>
-              <button class="dz-category-btn" data-category="battery" type="button">
+              <button class="dz-category-btn" data-category="battery" data-cat="battery" type="button">
                 <i class="bi bi-lightning-charge"></i> Battery
               </button>
-              <button class="dz-category-btn" data-category="ac" type="button">
+              <button class="dz-category-btn" data-category="ac" data-cat="ac" type="button">
                 <i class="bi bi-snow"></i> A/C
               </button>
-              <button class="dz-category-btn" data-category="electrical" type="button">
+              <button class="dz-category-btn" data-category="electrical" data-cat="electrical" type="button">
                 <i class="bi bi-lightbulb"></i> Electrical
               </button>
-              <button class="dz-category-btn" data-category="transmission" type="button">
+              <button class="dz-category-btn" data-category="transmission" data-cat="transmission" type="button">
                 <i class="bi bi-arrow-left-right"></i> Transmission
               </button>
-              <button class="dz-category-btn" data-category="suspension" type="button">
+              <button class="dz-category-btn" data-category="suspension" data-cat="suspension" type="button">
                 <i class="bi bi-upc-scan"></i> Suspension
               </button>
-              <button class="dz-category-btn" data-category="other" type="button">
+              <button class="dz-category-btn" data-category="other" data-cat="other" type="button">
                 <i class="bi bi-three-dots"></i> Other
               </button>
             </div>
@@ -295,8 +295,8 @@
             <div class="dz-notice-header">
               <div class="dz-notice-icon"><i class="bi bi-info-circle"></i></div>
               <div>
-                <p class="dz-notice-title">Notice</p>
-                <p class="dz-notice-subtitle">Add any additional information that may help with the diagnosis.</p>
+                <p class="dz-notice-title" id="dz-notice-title">Notice</p>
+                <p class="dz-notice-subtitle" id="dz-notice-subtitle">Add any additional information that may help with the diagnosis.</p>
               </div>
             </div>
             <textarea class="dz-textarea dz-notice-textarea" id="dz-notice" rows="2"
@@ -305,27 +305,27 @@
 
           <!-- Optional details -->
           <div class="dz-problem-section">
-            <p class="dz-problem-section-title">Optional details</p>
+            <p class="dz-problem-section-title" id="dz-notice-label">Optional details</p>
             <div class="dz-optional-group">
-              <p class="dz-optional-label">When does it happen?</p>
+              <p class="dz-optional-label" id="dz-when-title">When does it happen?</p>
               <div class="dz-optional-chips" id="dz-when-chips">
-                <button class="dz-chip-btn" data-when="Always" type="button">Always</button>
-                <button class="dz-chip-btn" data-when="Sometimes" type="button">Sometimes</button>
-                <button class="dz-chip-btn" data-when="Only when starting" type="button">Only when starting</button>
-                <button class="dz-chip-btn" data-when="While driving" type="button">While driving</button>
-                <button class="dz-chip-btn" data-when="When braking" type="button">When braking</button>
-                <button class="dz-chip-btn" data-when="When turning" type="button">When turning</button>
+                <button class="dz-chip-btn" data-when="always" type="button">Always</button>
+                <button class="dz-chip-btn" data-when="sometimes" type="button">Sometimes</button>
+                <button class="dz-chip-btn" data-when="starting" type="button">Only when starting</button>
+                <button class="dz-chip-btn" data-when="driving" type="button">While driving</button>
+                <button class="dz-chip-btn" data-when="braking" type="button">When braking</button>
+                <button class="dz-chip-btn" data-when="turning" type="button">When turning</button>
               </div>
             </div>
             <div class="dz-optional-group">
-              <p class="dz-optional-label">Where is it coming from?</p>
+              <p class="dz-optional-label" id="dz-where-title">Where is it coming from?</p>
               <div class="dz-optional-chips" id="dz-where-chips">
-                <button class="dz-chip-btn" data-where="Front" type="button">Front</button>
-                <button class="dz-chip-btn" data-where="Rear" type="button">Rear</button>
-                <button class="dz-chip-btn" data-where="Left" type="button">Left</button>
-                <button class="dz-chip-btn" data-where="Right" type="button">Right</button>
-                <button class="dz-chip-btn" data-where="Engine area" type="button">Engine area</button>
-                <button class="dz-chip-btn" data-where="Inside cabin" type="button">Inside cabin</button>
+                <button class="dz-chip-btn" data-where="front" type="button">Front</button>
+                <button class="dz-chip-btn" data-where="rear" type="button">Rear</button>
+                <button class="dz-chip-btn" data-where="left" type="button">Left</button>
+                <button class="dz-chip-btn" data-where="right" type="button">Right</button>
+                <button class="dz-chip-btn" data-where="engine" type="button">Engine area</button>
+                <button class="dz-chip-btn" data-where="cabin" type="button">Inside cabin</button>
               </div>
             </div>
           </div>
@@ -359,11 +359,11 @@
 
           <!-- Photo Upload -->
           <div class="dz-media-section">
-            <div class="dz-media-label"><i class="bi bi-image"></i> Upload Photo</div>
+            <div class="dz-media-label" id="dz-photo-label"><i class="bi bi-image"></i> Upload Photo</div>
             <div class="dz-upload-zone" id="dz-upload-zone">
               <i class="bi bi-cloud-arrow-up"></i>
-              <p>Click or drag to upload</p>
-              <span>JPG, PNG or WebP · up to 10 MB</span>
+              <p id="dz-photo-text">Click or drag to upload</p>
+              <span id="dz-photo-formats">JPG, PNG or WebP · up to 10 MB</span>
               <input type="file" id="dz-file-input" accept="image/*" class="d-none">
             </div>
             <div class="dz-img-preview" id="dz-img-preview" style="display:none">
@@ -374,11 +374,11 @@
 
           <!-- Video Upload -->
           <div class="dz-media-section">
-            <div class="dz-media-label"><i class="bi bi-camera-reels"></i> Upload Video</div>
+            <div class="dz-media-label" id="dz-video-label"><i class="bi bi-camera-reels"></i> Upload Video</div>
             <div class="dz-upload-zone" id="dz-video-zone">
               <i class="bi bi-camera-reels"></i>
-              <p>Click or drag to upload</p>
-              <span>MP4, WebM, MOV or MKV · up to 20 MB</span>
+              <p id="dz-video-text">Click or drag to upload</p>
+              <span id="dz-video-formats">MP4, WebM, MOV or MKV · up to 20 MB</span>
               <input type="file" id="dz-video-input" accept="video/mp4,video/webm,video/quicktime,video/x-matroska,video/*" class="d-none">
             </div>
             <div class="dz-img-preview" id="dz-video-preview" style="display:none">
@@ -404,8 +404,8 @@
       <!-- Step 6: Review -->
       <div class="dz-step" data-step="review">
         <div class="dz-card">
-          <h2 class="dz-card-title">Let's review your problem</h2>
-          <p class="dz-card-subtitle">Check that everything looks correct.</p>
+          <h2 class="dz-card-title" id="dz-review-title">Let's review your problem</h2>
+          <p class="dz-card-subtitle" id="dz-review-subtitle">Check that everything looks correct.</p>
           <div class="dz-review" id="dz-review"></div>
           <div class="dz-nav">
             <button class="dz-btn dz-btn-ghost" id="dz-back-review"><i class="bi bi-arrow-left"></i> Back</button>
@@ -417,8 +417,8 @@
       <!-- Step 7: Ready -->
       <div class="dz-step" data-step="ready">
         <div class="dz-card">
-          <h2 class="dz-card-title">Diagnose Your Vehicle</h2>
-          <p class="dz-card-subtitle">Review the summary below, then start the AI diagnosis.</p>
+          <h2 class="dz-card-title" id="dz-ready-title">Diagnose Your Vehicle</h2>
+          <p class="dz-card-subtitle" id="dz-ready-subtitle">Review the summary below, then start the AI diagnosis.</p>
 
           <div class="dz-ready-summary" id="dz-ready-summary">
             <div class="dz-ready-section">
@@ -459,11 +459,12 @@
             <div class="dz-loading-ring"></div>
             <div class="dz-loading-pulse"></div>
           </div>
-          <h2 class="dz-card-title">Analyzing your vehicle...</h2>
-          <p class="dz-card-subtitle">Our AI mechanic is reviewing the information you provided.</p>
+          <h2 class="dz-card-title" id="dz-loading-title">Analyzing your vehicle...</h2>
+          <p class="dz-card-subtitle" id="dz-loading-subtitle">Our AI mechanic is reviewing the information you provided.</p>
           <div class="dz-loading-dots">
             <span></span><span></span><span></span>
           </div>
+          <p class="dz-loading-status" id="dz-loading-status-text"></p>
         </div>
       </div>
 
@@ -471,8 +472,8 @@
       <div class="dz-step" data-step="result">
         <div class="dz-card">
           <div class="dz-result-header">
-            <h2 class="dz-card-title">AI Diagnosis</h2>
-            <button class="dz-btn dz-btn-ghost" id="dz-new-diag"><i class="bi bi-plus-lg"></i> New Diagnosis</button>
+            <h2 class="dz-card-title" id="dz-result-title">AI Diagnosis</h2>
+            <button class="dz-btn dz-btn-ghost" id="dz-new-diagnosis"><i class="bi bi-plus-lg"></i> New Diagnosis</button>
           </div>
           <div id="dz-result-content"></div>
         </div>
@@ -485,7 +486,7 @@
       <div class="dz-info-panel">
         <div class="dz-info-panel-header">
           <div class="dz-info-panel-icon"><i class="bi bi-shield-check"></i></div>
-          <h3>Why select your vehicle?</h3>
+          <h3 id="dz-info-title">Why select your vehicle?</h3>
         </div>
         <div class="dz-info-panel-image" id="dz-info-vehicle-image">
           <div class="dz-info-vehicle-img-wrap" id="dz-info-vehicle-img-wrap">
@@ -495,16 +496,16 @@
             </div>
           </div>
         </div>
-        <p class="dz-info-panel-text">Selecting your vehicle helps our AI provide more accurate diagnosis based on:</p>
+        <p class="dz-info-panel-text" id="dz-info-text">Selecting your vehicle helps our AI provide more accurate diagnosis based on:</p>
         <ul class="dz-info-panel-list">
-          <li><i class="bi bi-check-circle-fill"></i> Vehicle specifications</li>
-          <li><i class="bi bi-check-circle-fill"></i> Common issues</li>
-          <li><i class="bi bi-check-circle-fill"></i> Manufacturer data</li>
-          <li><i class="bi bi-check-circle-fill"></i> Technical bulletins</li>
+          <li id="dz-info-specs"><i class="bi bi-check-circle-fill"></i> Vehicle specifications</li>
+          <li id="dz-info-issues"><i class="bi bi-check-circle-fill"></i> Common issues</li>
+          <li id="dz-info-mfr"><i class="bi bi-check-circle-fill"></i> Manufacturer data</li>
+          <li id="dz-info-bulletins"><i class="bi bi-check-circle-fill"></i> Technical bulletins</li>
         </ul>
         <div class="dz-info-panel-tip">
           <div class="dz-info-panel-tip-icon"><i class="bi bi-lightbulb"></i></div>
-          <p>Search by brand, model, or even use voice search for faster results.</p>
+          <p id="dz-info-tip">Search by brand, model, or even use voice search for faster results.</p>
         </div>
       </div>
     </div>
@@ -522,14 +523,14 @@
         <div class="dz-ws-header-left">
           <div class="dz-ws-header-icon"><i class="bi bi-heart-pulse"></i></div>
           <div>
-            <h1 class="dz-ws-title">AI Diagnosis Workspace</h1>
+            <h1 class="dz-ws-title" id="dz-workspace-title">AI Diagnosis Workspace</h1>
             <p class="dz-ws-sub" id="dz-ws-sub">Diagnosis complete — ask follow-up questions</p>
           </div>
         </div>
         <div class="dz-ws-header-right">
           <div class="dz-ws-status">
             <span class="dz-wizard-status-dot"></span>
-            <span>AI System Online</span>
+            <span id="dz-workspace-status">AI System Online</span>
           </div>
           <button class="dz-btn dz-btn-ghost dz-btn-sm" id="dz-ws-new">
             <i class="bi bi-plus-lg"></i> New Diagnosis
@@ -546,8 +547,8 @@
             <div class="dz-ws-chat-header-left">
               <div class="dz-ws-chat-avatar"><i class="bi bi-stars"></i></div>
               <div>
-                <div class="dz-ws-chat-title">AI Mechanic</div>
-                <div class="dz-ws-chat-status"><span class="dz-ws-status-dot"></span> AI System Online</div>
+                <div class="dz-ws-chat-title" id="dz-chat-title">AI Mechanic</div>
+                <div class="dz-ws-chat-status"><span class="dz-ws-status-dot"></span> <span id="dz-chat-status">AI System Online</span></div>
               </div>
             </div>
             <div class="dz-ws-chat-context" id="dz-ws-chat-context">Discussing your diagnosis</div>
@@ -597,29 +598,29 @@
       <div class="dz-benefit-item">
         <div class="dz-benefit-icon"><i class="bi bi-shield-lock"></i></div>
         <div class="dz-benefit-text">
-          <strong>100% Secure</strong>
-          <span>Your data is encrypted and safe with us</span>
+          <strong id="dz-benefit-secure-title">100% Secure</strong>
+          <span id="dz-benefit-secure-desc">Your data is encrypted and safe with us</span>
         </div>
       </div>
       <div class="dz-benefit-item">
         <div class="dz-benefit-icon dz-benefit-icon--blue"><i class="bi bi-cpu"></i></div>
         <div class="dz-benefit-text">
-          <strong>AI-Powered</strong>
-          <span>Advanced AI analyzes thousands of cases</span>
+          <strong id="dz-benefit-ai-title">AI-Powered</strong>
+          <span id="dz-benefit-ai-desc">Advanced AI analyzes thousands of cases</span>
         </div>
       </div>
       <div class="dz-benefit-item">
         <div class="dz-benefit-icon dz-benefit-icon--green"><i class="bi bi-lightning-charge"></i></div>
         <div class="dz-benefit-text">
-          <strong>Fast & Accurate</strong>
-          <span>Get results in seconds not hours</span>
+          <strong id="dz-benefit-fast-title">Fast & Accurate</strong>
+          <span id="dz-benefit-fast-desc">Get results in seconds not hours</span>
         </div>
       </div>
       <div class="dz-benefit-item">
         <div class="dz-benefit-icon dz-benefit-icon--purple"><i class="bi bi-people"></i></div>
         <div class="dz-benefit-text">
-          <strong>Trusted by Pros</strong>
-          <span>Used by mechanics and car owners</span>
+          <strong id="dz-benefit-trusted-title">Trusted by Pros</strong>
+          <span id="dz-benefit-trusted-desc">Used by mechanics and car owners</span>
         </div>
       </div>
     </div>
@@ -638,12 +639,12 @@
         <div class="dz-modal-header-left">
           <div class="dz-modal-header-icon"><i class="bi bi-patch-check-fill"></i></div>
           <div>
-            <h2 class="dz-modal-title">AI Diagnosis Complete</h2>
-            <p class="dz-modal-subtitle">Your vehicle has been analyzed by AI</p>
+            <h2 class="dz-modal-title" id="dz-modal-title">AI Diagnosis Complete</h2>
+            <p class="dz-modal-subtitle" id="dz-modal-subtitle">Your vehicle has been analyzed by AI</p>
           </div>
         </div>
         <div class="dz-modal-header-right">
-          <span class="dz-modal-badge dz-modal-badge--verified"><i class="bi bi-check-circle-fill"></i> Verified</span>
+          <span class="dz-modal-badge dz-modal-badge--verified"><i class="bi bi-check-circle-fill"></i> <span id="dz-modal-badge">Verified</span></span>
           <button class="dz-modal-close" id="dz-modal-close" aria-label="Close" title="Close (ESC)">
             <i class="bi bi-x-lg"></i>
           </button>
@@ -684,10 +685,10 @@
         </div>
 
         <!-- Title -->
-        <h2 class="dz-chat-modal-title">Continue to AI Mechanic?</h2>
+        <h2 class="dz-chat-modal-title" id="dz-chat-confirm-title">Continue to AI Mechanic?</h2>
 
         <!-- Description -->
-        <p class="dz-chat-modal-desc">
+        <p class="dz-chat-modal-desc" id="dz-chat-confirm-desc">
           Your diagnosis is ready. Continue the conversation with AI Mechanic
           to ask more questions, add information, or discuss the diagnosis.
         </p>
@@ -706,16 +707,16 @@
         <!-- Error message (hidden by default) -->
         <div class="dz-chat-modal-error d-none" id="dz-chat-modal-error">
           <i class="bi bi-exclamation-circle"></i>
-          <span>Unable to continue to chat. Please try again.</span>
+          <span id="dz-chat-modal-error-text">Unable to continue to chat. Please try again.</span>
         </div>
 
         <!-- Buttons -->
         <div class="dz-chat-modal-actions">
           <button class="dz-btn dz-btn-ghost" id="dz-chat-modal-cancel">
-            <i class="bi bi-x-lg"></i> Cancel
+            <i class="bi bi-x-lg"></i> <span id="dz-chat-cancel">Cancel</span>
           </button>
           <button class="dz-btn dz-btn-primary" id="dz-chat-modal-confirm">
-            <i class="bi bi-chat-right-text"></i> Continue to Chat <i class="bi bi-arrow-right"></i>
+            <i class="bi bi-chat-right-text"></i> <span id="dz-chat-ok">Continue to Chat</span> <i class="bi bi-arrow-right"></i>
           </button>
         </div>
 
@@ -731,5 +732,6 @@
 <script>
   window.__CSAI_VEHICLE__ = {{ vehicle | tojson if vehicle else 'null' }};
 </script>
+<script src="/static/ai_report/dialect.js"></script>
 <script src="/static/ai_report/diagnose.js"></script>
 {% endblock %}

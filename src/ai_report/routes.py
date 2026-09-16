@@ -319,6 +319,18 @@ async def diagnose_complete(request: Request):
              (_t_gemini_start - _t_backend_recv) * 1000)
     try:
         msg_lang = "ar" if is_arabic(description) else "en"
+        # Detect dialect for Arabic users
+        dialect = ""
+        dialect_confidence = 0.0
+        user_terms = {}
+        if msg_lang == "ar":
+            from ..shared.utils.arabic_dialect import detect_language_and_dialect
+            dialect_result = detect_language_and_dialect(problem)
+            dialect = dialect_result.dialect
+            dialect_confidence = dialect_result.dialect_confidence
+            user_terms = {c["id"]: c["local"] for c in dialect_result.canonical_concepts}
+            log.info("[DIALECT] Detected: %s (confidence: %.2f)", dialect, dialect_confidence)
+
         # Run the BLOCKING Gemini call off the event loop. Called directly it froze
         # the single event loop for the whole diagnosis (10-30s), which is why chat
         # streaming "stopped working" during/after a diagnosis (item 2).
@@ -333,6 +345,9 @@ async def diagnose_complete(request: Request):
             lang=msg_lang,
             vehicle_override=vehicle_data,
             image_data_original=image_data if image_bytes else None,
+            dialect=dialect,
+            dialect_confidence=dialect_confidence,
+            user_terms=user_terms,
         )
         _t_gemini_end = time.perf_counter()
         log.info("[PERF] T5: Gemini response received (%.1f ms)", (_t_gemini_end - _t_gemini_start) * 1000)
@@ -378,6 +393,147 @@ async def diagnose_complete(request: Request):
     log.info("[PERF] ────────────────────────────────────")
 
     return JSONResponse({"ok": True, "result": saved})
+
+
+# ---------------------------------------------------------------------------
+# Dialect Detection & Dialect-Aware Questions
+# ---------------------------------------------------------------------------
+
+from ..shared.utils.arabic_dialect import detect_language_and_dialect, find_automotive_terms
+
+
+@router.post("/api/diagnose/detect-dialect")
+async def detect_dialect_api(request: Request):
+    """Detect Arabic dialect from user input text."""
+    user = require(request)
+    body = await request.json()
+    text = (body.get("text") or "").strip()
+
+    if not text:
+        return JSONResponse({"ok": True, "language": "en", "dialect": "", "dialect_confidence": 0.0})
+
+    result = detect_language_and_dialect(text)
+
+    return JSONResponse({
+        "ok": True,
+        "language": result.language,
+        "dialect": result.dialect,
+        "dialect_confidence": result.dialect_confidence,
+        "detected_terms": result.detected_terms,
+        "canonical_concepts": result.canonical_concepts,
+    })
+
+
+@router.post("/api/diagnose/questions")
+async def generate_questions_api(request: Request):
+    """Generate dialect-aware diagnostic questions using Gemini.
+
+    This endpoint uses the existing Gemini architecture to generate natural
+    diagnostic questions in the user's detected dialect.
+    """
+    user = require(request)
+    body = await request.json()
+
+    problem = (body.get("problem") or "").strip()
+    vehicle = body.get("vehicle") or {}
+    dialect = body.get("dialect") or "Arabic"
+    dialect_confidence = body.get("dialect_confidence") or 0.0
+    detected_terms = body.get("detected_terms") or []
+    canonical_concepts = body.get("canonical_concepts") or []
+    answers = body.get("answers") or {}
+    category = body.get("category") or ""
+    when = body.get("when") or ""
+    where = body.get("where") or ""
+
+    if len(problem) < 3:
+        return JSONResponse({"error": "Problem description too short"}, status_code=400)
+
+    # Build the question generation prompt
+    vehicle_label = ""
+    if vehicle:
+        parts = [vehicle.get("year"), vehicle.get("brand"), vehicle.get("model")]
+        vehicle_label = " ".join(str(p) for p in parts if p)
+        if vehicle.get("engine"):
+            vehicle_label += f" · {vehicle['engine']}"
+
+    # Build user vocabulary context
+    vocab_context = ""
+    if detected_terms:
+        vocab_context = f"\nUser's automotive vocabulary: {', '.join(detected_terms)}"
+    if canonical_concepts:
+        concepts_str = ", ".join([f"{c.get('local', '')} → {c.get('en', '')}" for c in canonical_concepts])
+        vocab_context += f"\nCanonical mappings: {concepts_str}"
+
+    # Build answers context
+    answers_context = ""
+    if answers:
+        for key, value in answers.items():
+            if value and value != "Not sure":
+                answers_context += f"\n- {key}: {value}"
+
+    # Create the prompt for Gemini
+    prompt = f"""You are a senior automotive diagnostic expert helping a car owner diagnose their vehicle problem.
+
+VEHICLE: {vehicle_label or 'Not specified'}
+PROBLEM: {problem}
+CATEGORY: {category or 'General'}
+WHEN: {when or 'Not specified'}
+WHERE: {where or 'Not specified'}
+{vocab_context}
+{answers_context}
+
+LANGUAGE/DIALECT CONTEXT:
+- Detected dialect: {dialect}
+- Dialect confidence: {dialect_confidence:.0%}
+- The user writes in Arabic. You MUST generate questions in the SAME dialect.
+- Use the user's natural automotive terminology when possible.
+- Do NOT use Modern Standard Arabic unless the dialect confidence is very low.
+- Do NOT mechanically translate from English.
+- Preserve technical diagnostic meaning while adapting to the dialect.
+
+TASK:
+Generate 3-5 follow-up diagnostic questions to better understand the vehicle problem.
+
+RULES:
+1. Questions must be in natural {dialect} Arabic (or neutral Arabic if confidence is low).
+2. Use the user's automotive terms when available (e.g., if user says "السكان", use "السكان" not "عجلة القيادة").
+3. Each question should target a specific diagnostic need.
+4. Questions should be short, natural, and conversational.
+5. Include the question key (for programmatic use).
+6. Do NOT repeat questions already answered.
+7. Focus on the most important missing information.
+
+Return a JSON array of question objects:
+[
+  {{
+    "key": "unique_key",
+    "title": "Question in {dialect} Arabic",
+    "subtitle": "Brief explanation if needed (in {dialect} Arabic)",
+    "options": ["Option 1", "Option 2", "Option 3", "Not sure"]
+  }}
+]
+
+Return ONLY the JSON array, no markdown, no commentary."""
+
+    try:
+        # Use existing Gemini architecture
+        result = await asyncio.to_thread(
+            gemini._generate_question,
+            user,
+            prompt,
+        )
+        return JSONResponse({"ok": True, "questions": result})
+    except gemini.UnavailableError as exc:
+        return JSONResponse(
+            {"error": exc.detail or "AI unavailable", "error_type": "ai_unavailable"},
+            status_code=503,
+        )
+    except Exception as exc:
+        log.error("[QUESTIONS] Error generating questions: %s", exc, exc_info=True)
+        return JSONResponse(
+            {"error": "Failed to generate questions", "error_type": "ai_error"},
+            status_code=500,
+        )
 
 
 # ---------------------------------------------------------------------------
