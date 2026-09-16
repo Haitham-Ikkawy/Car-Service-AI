@@ -125,6 +125,13 @@
 .md-page-btn.disabled { opacity: 0.4; pointer-events: none; color: rgba(var(--c-muted), 0.6); background: transparent; border-color: rgba(var(--c-muted), 0.15); }
 .md-page-info { font-size: 0.82rem; color: rgba(var(--c-muted), 0.7); }
 
+/* Delete All button */
+.md-delete-all-btn { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); color: #ef4444; }
+.md-delete-all-btn:hover { background: rgba(239,68,68,0.2); border-color: rgba(239,68,68,0.5); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(239,68,68,0.2); }
+
+/* Delete All modal */
+.md-modal-delete-all .md-modal { border: 1px solid rgba(239,68,68,0.2); }
+
 /* Delete modal */
 .md-modal-overlay {
   position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
@@ -194,6 +201,11 @@
       <input type="text" name="q" id="md-search-input" value="{{ q }}"
              placeholder="Search by vehicle, problem, or name..." autocomplete="off">
     </form>
+    {% if total > 0 %}
+    <button class="md-new-btn md-delete-all-btn" id="md-delete-all-btn" onclick="mdConfirmDeleteAll()">
+      <i class="bi bi-trash3"></i> Delete All
+    </button>
+    {% endif %}
     <a href="/diagnose" class="md-new-btn" id="md-new-btn">
       <i class="bi bi-plus-lg"></i> New Diagnosis
     </a>
@@ -331,6 +343,18 @@
     <div class="md-modal-btns">
       <button class="md-modal-btn md-modal-cancel" onclick="mdCloseModal()">Cancel</button>
       <button class="md-modal-btn md-modal-delete" id="md-delete-confirm">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete All confirmation modal -->
+<div class="md-modal-overlay md-modal-delete-all" id="md-delete-all-modal">
+  <div class="md-modal">
+    <h3>Delete all diagnoses?</h3>
+    <p>This will permanently delete all your diagnosis sessions and conversation data. This action cannot be undone.</p>
+    <div class="md-modal-btns">
+      <button class="md-modal-btn md-modal-cancel" onclick="mdCloseDeleteAllModal()">Cancel</button>
+      <button class="md-modal-btn md-modal-delete" id="md-delete-all-confirm">Delete All</button>
     </div>
   </div>
 </div>
@@ -528,6 +552,71 @@ window.mdImgFallback = function (img) {
   /* Close modal on overlay click */
   document.getElementById("md-delete-modal")?.addEventListener("click", function(e) {
     if (e.target === this) mdCloseModal();
+  });
+
+  /* ---- Delete All ---- */
+  window.mdConfirmDeleteAll = function() {
+    document.getElementById("md-delete-all-modal").classList.add("active");
+  };
+  window.mdCloseDeleteAllModal = function() {
+    document.getElementById("md-delete-all-modal").classList.remove("active");
+  };
+
+  const deleteAllConfirm = document.getElementById("md-delete-all-confirm");
+  if (deleteAllConfirm) {
+    deleteAllConfirm.addEventListener("click", function() {
+      deleteAllConfirm.disabled = true;
+      deleteAllConfirm.textContent = "Deleting...";
+
+      /* Get all card IDs */
+      const cards = document.querySelectorAll(".md-card");
+      const ids = Array.from(cards).map(c => c.dataset.id).filter(Boolean);
+
+      if (ids.length === 0) {
+        mdCloseDeleteAllModal();
+        deleteAllConfirm.disabled = false;
+        deleteAllConfirm.textContent = "Delete All";
+        return;
+      }
+
+      /* Delete each session sequentially */
+      let deleted = 0;
+      let failed = 0;
+
+      function deleteNext() {
+        if (deleted + failed >= ids.length) {
+          /* All done */
+          if (failed > 0) {
+            alert("Deleted " + deleted + " diagnoses. " + failed + " failed to delete.");
+          }
+          window.location.reload();
+          return;
+        }
+
+        const id = ids[deleted + failed];
+        fetch("/api/diag-sessions/" + id + "/delete", { method: "POST" })
+          .then(function(r) { return r.json().then(function(data) { return { ok: r.ok, data: data }; }); })
+          .then(function(res) {
+            if (res.ok) {
+              deleted++;
+            } else {
+              failed++;
+            }
+            deleteNext();
+          })
+          .catch(function() {
+            failed++;
+            deleteNext();
+          });
+      }
+
+      deleteNext();
+    });
+  }
+
+  /* Close delete-all modal on overlay click */
+  document.getElementById("md-delete-all-modal")?.addEventListener("click", function(e) {
+    if (e.target === this) mdCloseDeleteAllModal();
   });
 })();
 </script>
