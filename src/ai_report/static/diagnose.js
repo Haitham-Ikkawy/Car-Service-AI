@@ -14,7 +14,7 @@
   const state = {
     step: "vehicle",
     sessionId: null,  /* diagnosis session id for persistence */
-    vehicle: { brand: "", model: "", engine: "", year: "" },
+    vehicle: { brand: "", model: "", engine: "", year: "", market: "" },
     problem: "",
     notice: "",
     category: "",
@@ -45,7 +45,7 @@
     ready: 6,
   };
 
-  /* ---- Browser history tracking for wizard Back/Forward ---- */
+  /* ---- Wizard state within a single browser history entry ---- */
   /* The wizard now opens straight on "vehicle" — the old "welcome" splash step
      (with its duplicate "Start Diagnosis" button) was removed. */
   const WIZARD_STEPS = ["vehicle", "describe", "questions", "image", "review", "ready"];
@@ -138,10 +138,10 @@
     /* focus the modal container for keyboard access */
     const container = $("#dz-modal-container");
     if (container) container.focus();
-    /* Push history so Back closes modal before leaving the page */
+    /* Keep the modal in the current diagnosis history entry. */
     if (!_navGuard) {
       _navGuard = true;
-      window.history.pushState({ modal: true }, "", "");
+      window.history.replaceState({ modal: true }, "", "");
       _navGuard = false;
     }
   }
@@ -208,7 +208,11 @@
 
     /* Vehicle image */
     let vehicleImgHtml = "";
-    if (brand && model) {
+    const uploadedPhoto = $("#dz-photo-detect-preview");
+    const previewSource = uploadedPhoto && !uploadedPhoto.classList.contains("d-none") ? uploadedPhoto.src : state.image;
+    if (previewSource) {
+      vehicleImgHtml = `<img src="${esc(previewSource)}" alt="Uploaded car" class="dz-loading-vehicle-img">`;
+    } else if (brand && model) {
       const local = getModelImage(brand, model);
       const primary = getVehicleImageUrl(brand, model, state.vehicle.year) || local;
       if (primary) {
@@ -587,7 +591,10 @@
 
       /* Restore vehicle selection UI */
       if (state.vehicle.brand) {
+        const savedVehicle = {...state.vehicle};
         selectBrand(state.vehicle.brand);
+        Object.assign(state.vehicle, savedVehicle);
+        refreshVehicleIdentity();
         if (state.vehicle.model) {
           state.vehicle.model = state.vehicle.model;
           const modelCard = document.querySelector(
@@ -610,6 +617,7 @@
           /* Restore the model-year selector. */
           const yearWrap = $("#dz-car-year");
           if (yearWrap) yearWrap.classList.remove("d-none");
+    $("#dz-car-market")?.classList.remove("d-none");
           const yearSel = $("#dz-year-select");
           if (yearSel && state.vehicle.year) yearSel.value = String(state.vehicle.year);
         }
@@ -741,6 +749,15 @@
     { name: "Volvo", logo: "/image/car_logos/volvo.svg", models: ["S60", "S90", "XC40", "XC60", "XC90"] },
   ];
 
+  // Include every configured vehicle in the same resolver and selection list.
+  const configuredVehicles = JSON.parse(document.getElementById("dz-vehicle-catalogue")?.textContent || "{}");
+  for (const [rawName, models] of Object.entries(configuredVehicles)) {
+    const name = rawName === "Škoda" ? "Skoda" : rawName;
+    const known = CAR_BRANDS.find(b => b.name === name);
+    if (known) known.models = [...new Set(known.models.concat(models))];
+    else CAR_BRANDS.push({name, models, logo: null});
+  }
+
   /* ---- Vehicle image mapping: brand/model -> local image path ---- */
   const VEHICLE_IMAGES = {
     "Acura": {"ILX":"/image/vehicles/acura/ilx.webp","TLX":"/image/vehicles/acura/tlx.webp","RDX":"/image/vehicles/acura/rdx.webp","MDX":"/image/vehicles/acura/mdx.webp"},
@@ -809,7 +826,7 @@
      placeholder. Used as the primary <img> src; on error the UI falls back to a
      shipped image (getModelImage) and finally an icon — see dzImgFallback(). */
   function getVehicleImageUrl(brand, model, year) {
-    if (!brand) return "";
+    if (!brand || state.vehicle.market) return "";
     /* Route through the server proxy so the image-CDN key lives in one place
        (env IMAGIN_CUSTOMER) and can be swapped for a watermark-free licensed key
        without touching the client. The server 307-redirects to the CDN. */
@@ -1611,7 +1628,7 @@
       return;
     }
 
-    /* Push browser history when navigating between wizard steps */
+    /* Replace the diagnosis entry; browser Back returns to the previous page. */
     if (_pushHistory && !_navGuard) {
       const idx = WIZARD_STEPS.indexOf(name);
       if (idx >= 0) {
@@ -1623,10 +1640,10 @@
           window.history.replaceState({ wiz: true, idx: idx }, "", "#step-" + name);
           _navGuard = false;
         } else if (idx !== _wizIdx) {
-          /* Moving to a different step — push new entry */
+          /* Moving to a different step keeps the same browser entry. */
           _wizIdx = idx;
           _navGuard = true;
-          window.history.pushState({ wiz: true, idx: idx }, "", "#step-" + name);
+          window.history.replaceState({ wiz: true, idx: idx }, "", "#step-" + name);
           _navGuard = false;
         }
       }
@@ -1706,7 +1723,8 @@
   }
 
   function renderSuggestions(query) {
-    const container = $("#dz-car-dropdown");
+    const container = $("#dz-car-suggestions");
+    $("#dz-car-dropdown")?.classList.remove("d-none");
     highlightedIndex = -1;
     filteredModels = [];
     filteredBrands = [];
@@ -1989,6 +2007,8 @@
       if (key && !seen.has(key)) { seen.add(key); merged.push(m); }
     }
     renderModelGrid(brandName, logo, merged, imgMap);
+    const known = CAR_BRANDS.find(b => b.name === brandName);
+    if (known) known.models = merged;
   }
 
   function updateSelectedVehicleImage(brand, model) {
@@ -2047,7 +2067,8 @@
     state.vehicle.brand = brand;
     state.vehicle.model = model;
     state.vehicle.engine = d.engine || "";
-    state.vehicle.year = d.year || "";
+    state.vehicle.year = d.year ? Number(d.year) : "";
+    state.vehicle.market = d.market || "";
     if (!state.sessionId) createSession();
 
     const known = CAR_BRANDS.find((b) => b.name === brand);
@@ -2073,8 +2094,10 @@
 
     /* Fill in the exact model + engine from the VIN and hide the model grid. */
     state.vehicle.model = model;
+    $("#dz-car-year")?.classList.remove("d-none");
+    $("#dz-car-market")?.classList.remove("d-none");
+    refreshVehicleIdentity();
     const modelEl = $("#dz-car-selected-model");
-    if (modelEl) modelEl.textContent = model;
     const engEl = $("#dz-car-selected-engine");
     if (engEl && state.vehicle.engine) {
       engEl.textContent = state.vehicle.engine;
@@ -2110,6 +2133,7 @@
       make: known ? known.name : (result.manufacturer || ""),
       model: result.model || "",
       year: result.year || "",
+      market: result.market || "",
       logo: known ? known.logo : null,
     });
     if (window.CS && CS.toast) {
@@ -2138,15 +2162,25 @@
 
     function setBusy(busy) {
       zone.classList.toggle("dz-photo-detect-busy", busy);
-      if (title) title.textContent = busy ? "Analyzing photo…" : defaultTitle;
+      if (title) title.textContent = defaultTitle;
       if (hint) hint.textContent = busy ? "Detecting the brand and model…" : defaultHint;
     }
 
+    let previewUrl = "";
+    let photoBusy = false;
     async function analyze(file) {
+      if (photoBusy) return;
       if (!file || !file.type || file.type.indexOf("image/") !== 0) {
         if (window.CS && CS.toast) CS.toast("warning", "Invalid file", "Please choose an image.");
         return;
       }
+      photoBusy = true;
+      if (previewUrl) URL.revokeObjectURL(previewUrl);
+      previewUrl = URL.createObjectURL(file);
+      const preview = $("#dz-photo-detect-preview");
+      preview.src = previewUrl;
+      preview.classList.remove("d-none");
+      zone.querySelector(".up-icon")?.classList.add("d-none");
       setBusy(true);
       setStatus("");
       try {
@@ -2187,12 +2221,17 @@
       } catch (_) {
         if (window.CS && CS.toast) CS.toast("error", "Detection failed", "Please try again.");
       } finally {
+        photoBusy = false;
         setBusy(false);
         input.value = "";
       }
     }
 
-    zone.addEventListener("click", () => input.click());
+    input.addEventListener("click", e => e.stopPropagation());
+    zone.addEventListener("click", () => { if (!photoBusy) input.click(); });
+    zone.addEventListener("keydown", e => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); if (!photoBusy) input.click(); }
+    });
     zone.addEventListener("dragover", (e) => { e.preventDefault(); zone.classList.add("dragover"); });
     zone.addEventListener("dragleave", () => zone.classList.remove("dragover"));
     zone.addEventListener("drop", (e) => {
@@ -2274,6 +2313,7 @@
     /* Reveal the model-year selector once a model is chosen. */
     const yearWrap = $("#dz-car-year");
     if (yearWrap) yearWrap.classList.remove("d-none");
+    $("#dz-car-market")?.classList.remove("d-none");
     if (typeof scheduleSave === "function") scheduleSave();
   }
 
@@ -2282,7 +2322,8 @@
     const sel = $("#dz-year-select");
     if (!sel) return;
     sel.addEventListener("change", () => {
-      state.vehicle.year = sel.value || "";
+      state.vehicle.year = sel.value ? Number(sel.value) : "";
+      refreshVehicleIdentity();
       /* Re-fetch the image for the chosen year and update every image slot. */
       updateSelectedVehicleImage(state.vehicle.brand, state.vehicle.model);
       updateInfoPanelVehicleImage(state.vehicle.brand, state.vehicle.model);
@@ -2364,13 +2405,22 @@
   }
 
   function resetVehicleSelection() {
-    state.vehicle = { brand: "", model: "", engine: "", year: "" };
+    state.vehicle = { brand: "", model: "", engine: "", year: "", market: "" };
+    const photoPreview = $("#dz-photo-detect-preview");
+    if (photoPreview) {
+      if (photoPreview.src.startsWith("blob:")) URL.revokeObjectURL(photoPreview.src);
+      photoPreview.removeAttribute("src");
+      photoPreview.classList.add("d-none");
+    }
+    $("#dz-photo-detect-zone .up-icon")?.classList.remove("d-none");
     _engineItems = [];
     const enginesWrap = $("#dz-car-engines");
     if (enginesWrap) enginesWrap.classList.add("d-none");
     /* Reset + hide the year selector for the new vehicle. */
     const yearWrap = $("#dz-car-year");
     if (yearWrap) yearWrap.classList.add("d-none");
+    $("#dz-car-market")?.classList.add("d-none");
+    if ($("#dz-market-select")) $("#dz-market-select").value = "";
     const yearSel = $("#dz-year-select");
     if (yearSel) yearSel.value = "";
 
@@ -2461,6 +2511,22 @@
 
     if (!input) return;
 
+    input.addEventListener("input", debounce(() => {
+      const result = DiagnosisVehicleResolver.resolve(input.value, CAR_BRANDS);
+      if (result.confident && result.year && result.market) applyResolvedVehicle(result.vehicle);
+      else if (result.vehicle) {
+        const box = $("#dz-car-suggestions");
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "dz-btn-outline-sm";
+        button.textContent = [result.vehicle.brand, result.vehicle.model, result.year, result.market].filter(Boolean).join(" — ");
+        button.addEventListener("click", () => applyResolvedVehicle(result.vehicle));
+        box.replaceChildren(button);
+        box.classList.remove("d-none");
+        dropdown.classList.remove("d-none");
+      } else if (result.brand) renderSuggestions(result.brand);
+    }, 600));
+
     /* Live search */
     input.addEventListener("input", () => {
       const val = input.value.trim();
@@ -2479,7 +2545,8 @@
       clearBtn.addEventListener("click", () => {
         input.value = "";
         clearBtn.classList.add("d-none");
-        if (dropdown) { dropdown.classList.add("d-none"); dropdown.innerHTML = ""; }
+        if (dropdown) dropdown.classList.add("d-none");
+        if ($("#dz-car-suggestions")) $("#dz-car-suggestions").replaceChildren();
         input.focus();
       });
     }
@@ -2488,86 +2555,11 @@
     input.addEventListener("keydown", async (e) => {
       if (!dropdown) return;
       const items = dropdown.querySelectorAll(".dz-car-item");
-      if (items.length === 0 && e.key !== "Escape") {
-        /* No suggestions — check if Enter was pressed with Arabic/non-ASCII text
-           to trigger AI vehicle parsing (chat vehicle selection) */
-        if (e.key === "Enter" && input.value.trim().length >= 3) {
-          const val = input.value.trim();
-          const _isArabicInput = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/.test(val);
-          if (_isArabicInput) {
-            e.preventDefault();
-            input.disabled = true;
-            const _origPlaceholder = input.placeholder;
-            input.placeholder = "Analyzing...";
-            try {
-              const parsed = await parseTextWithAI(val, "vehicle");
-              if (parsed && parsed.brand) {
-                const known = CAR_BRANDS.find((b) => b.name.toLowerCase() === parsed.brand.toLowerCase());
-                if (known) {
-                  selectBrand(known.name);
-                  if (parsed.model) {
-                    const matchedModel = known.models.find(m => m.toLowerCase() === parsed.model.toLowerCase());
-                    if (matchedModel) {
-                      state.vehicle.model = matchedModel;
-                      const modelCard = document.querySelector(`.dz-car-model-card[data-model="${matchedModel}"]`);
-                      if (modelCard) {
-                        document.querySelectorAll(".dz-car-model-card").forEach(c => c.classList.remove("selected"));
-                        modelCard.classList.add("selected");
-                        const mEl = $("#dz-car-selected-model");
-                        if (mEl) mEl.textContent = matchedModel;
-                        updateSelectedVehicleImage(known.name, matchedModel);
-                        updateInfoPanelVehicleImage(known.name, matchedModel);
-                      }
-                    } else {
-                      state.vehicle.model = parsed.model;
-                      const mEl = $("#dz-car-selected-model");
-                      if (mEl) mEl.textContent = parsed.model;
-                    }
-                  }
-                  if (parsed.year) {
-                    state.vehicle.year = String(parsed.year);
-                    const yearSel = $("#dz-year-select");
-                    if (yearSel) yearSel.value = String(parsed.year);
-                  }
-                  if (parsed.engine) {
-                    state.vehicle.engine = parsed.engine;
-                    const eLine = $("#dz-car-selected-engine");
-                    if (eLine) { eLine.textContent = parsed.engine; eLine.classList.remove("d-none"); }
-                  }
-                  scheduleSave();
-                  if (window.CS && CS.toast) CS.toast("success", "Vehicle selected", [parsed.brand, parsed.model].filter(Boolean).join(" "));
-                } else if (parsed.brand) {
-                  /* Brand not in curated list — try to select it anyway */
-                  selectBrand(parsed.brand);
-                  if (parsed.model) {
-                    state.vehicle.model = parsed.model;
-                    const mEl = $("#dz-car-selected-model");
-                    if (mEl) mEl.textContent = parsed.model;
-                  }
-                  if (parsed.year) state.vehicle.year = String(parsed.year);
-                  scheduleSave();
-                  if (window.CS && CS.toast) CS.toast("success", "Vehicle selected", [parsed.brand, parsed.model].filter(Boolean).join(" "));
-                }
-              } else if (parsed && parsed.brand) {
-                selectBrand(parsed.brand);
-                scheduleSave();
-              } else {
-                if (window.CS && CS.toast) CS.toast("warning", "Vehicle not recognized", "Please try again or select from the list.");
-              }
-            } catch (err) {
-              if (window.CS && CS.toast) CS.toast("error", "Parse failed", "Please try again.");
-            } finally {
-              input.disabled = false;
-              input.placeholder = _origPlaceholder;
-              input.value = "";
-              input.focus();
-            }
-          }
-        }
-        if (e.key === "Escape") { dropdown.classList.add("d-none"); }
+      if (e.key === "Enter" && input.value.trim().length >= 3 && highlightedIndex < 0) {
+        e.preventDefault();
+        await applyVoiceDetection(input.value.trim());
         return;
       }
-
       if (e.key === "ArrowDown") {
         e.preventDefault();
         highlightedIndex = Math.min(highlightedIndex + 1, items.length - 1);
@@ -2607,7 +2599,7 @@
 
     /* Close dropdown on outside click */
     document.addEventListener("click", (e) => {
-      if (!e.target.closest("#dz-search-bar")) {
+      if (!e.target.closest("#dz-car-search")) {
         if (dropdown) dropdown.classList.add("d-none");
         highlightedIndex = -1;
       }
@@ -2673,6 +2665,9 @@
     }
     merged.sort((a, b) => a.name.localeCompare(b.name));
     _allBrandsList = merged;
+    for (const brand of merged) {
+      if (!CAR_BRANDS.some(b => b.name === brand.name)) CAR_BRANDS.push(brand);
+    }
     return merged;
   }
 
@@ -2716,6 +2711,11 @@
     initVehicleSearch();
     initPhotoDetectVehicle();
     initYearSelect();
+    $("#dz-market-select").addEventListener("change", (e) => {
+      state.vehicle.market = e.target.value;
+      refreshVehicleIdentity();
+      scheduleSave();
+    });
     /* item 2: VIN lookup is gated off — hide the section and skip its wiring.
        Flip VIN_LOOKUP_ENABLED (top of file) to re-enable; no code was removed. */
     if (VIN_LOOKUP_ENABLED) {
@@ -2732,9 +2732,16 @@
 
     /* ---- Bind ALL wizard navigation (always, regardless of session restore) ---- */
 
-    /* Vehicle — first step. "Back" leaves the wizard for the diagnoses list
-       (there is no longer a welcome splash to return to). */
-    $("#dz-back-vehicle").addEventListener("click", () => { window.location.href = "/my-diagnoses"; });
+    /* Use actual internal history; direct entry has an existing safe fallback. */
+    $("#dz-back-vehicle").addEventListener("click", () => {
+      const previous = window.navigation?.entries();
+      const index = window.navigation?.currentEntry?.index;
+      const previousUrl = previous && index > 0 ? previous[index - 1].url : document.referrer;
+      let internal = false;
+      try { const url = new URL(previousUrl); internal = url.origin === location.origin && url.pathname !== location.pathname; } catch (_) {}
+      if (internal && history.length > 1) history.back();
+      else location.replace("/my-diagnoses");
+    });
     $("#dz-continue-vehicle").addEventListener("click", () => {
       if (state.vehicle.brand) {
         $("#dz-vehicle-validation").classList.add("d-none");
@@ -2941,7 +2948,7 @@
     $("#dz-diagnose").addEventListener("click", runDiagnosis);
 
     /* New diagnosis */
-    $("#dz-new-diag").addEventListener("click", () => {
+    $("#dz-new-diagnosis").addEventListener("click", () => {
       state.sessionId = null;
       state.vehicle = { brand: "", model: "", engine: "" };
       state.problem = "";
@@ -3435,7 +3442,7 @@
     const badge = $("#dz-vehicle-badge");
     const text = $("#dz-vehicle-badge-text");
     if (state.vehicle.brand) {
-      const label = [state.vehicle.brand, state.vehicle.model].filter(Boolean).join(" ")
+      const label = [state.vehicle.brand, state.vehicle.model, state.vehicle.year, state.vehicle.market].filter(Boolean).join(" ")
         + (state.vehicle.engine ? " · " + state.vehicle.engine : "");
       text.textContent = label;
       badge.classList.remove("d-none");
@@ -3626,7 +3633,7 @@
     const container = $("#dz-review");
     container.innerHTML = "";
 
-    const vehicleText = ([state.vehicle.brand, state.vehicle.model].filter(Boolean).join(" ") + (state.vehicle.engine ? " · " + state.vehicle.engine : "")) || "Not specified";
+    const vehicleText = ([state.vehicle.brand, state.vehicle.model, state.vehicle.year, state.vehicle.market].filter(Boolean).join(" ") + (state.vehicle.engine ? " · " + state.vehicle.engine : "")) || "Not specified";
     const items = [
       { label: "Vehicle", value: vehicleText, edit: "vehicle" },
       { label: "Problem", value: state.problem, edit: "describe" },
@@ -3801,7 +3808,7 @@
     const footer = $("#dz-modal-footer");
     if (!body) return;
 
-    const vehicleLabel = [state.vehicle.brand, state.vehicle.model].filter(Boolean).join(" ") || r.vehicle || "Vehicle";
+    const vehicleLabel = [state.vehicle.brand, state.vehicle.model, state.vehicle.year, state.vehicle.market].filter(Boolean).join(" ") || r.vehicle || "Vehicle";
     const brandSlug = (state.vehicle.brand || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/-+$/, "");
     const conf = r.confidence || 0;
 
@@ -3988,15 +3995,15 @@
     workspace.classList.remove("d-none");
     state.step = "workspace";
 
-    /* Push history so Back button exits workspace */
+    /* Keep the workspace in the current diagnosis history entry. */
     if (!_navGuard) {
       _navGuard = true;
-      window.history.pushState({ workspace: true }, "", "#workspace");
+      window.history.replaceState({ workspace: true }, "", "#workspace");
       _navGuard = false;
     }
 
     /* Update context label */
-    const vehicleLabel = [state.vehicle.brand, state.vehicle.model].filter(Boolean).join(" ") || r.vehicle || "your vehicle";
+    const vehicleLabel = [state.vehicle.brand, state.vehicle.model, state.vehicle.year, state.vehicle.market].filter(Boolean).join(" ") || r.vehicle || "your vehicle";
     const ctx = $("#dz-ws-chat-context");
     if (ctx) ctx.textContent = "Discussing " + vehicleLabel + " diagnosis";
 
@@ -4202,7 +4209,7 @@
     }
 
     /* Render initial AI greeting with diagnosis summary */
-    const vehicleLabel = [state.vehicle.brand, state.vehicle.model].filter(Boolean).join(" ") || result.vehicle || "your vehicle";
+    const vehicleLabel = [state.vehicle.brand, state.vehicle.model, state.vehicle.year, state.vehicle.market].filter(Boolean).join(" ") || result.vehicle || "your vehicle";
     const summaryParts = [];
     if (result.problem) summaryParts.push("**Problem:** " + result.problem);
     if (result.urgency) summaryParts.push("**Severity:** " + result.urgency.charAt(0).toUpperCase() + result.urgency.slice(1));
@@ -4422,7 +4429,7 @@
       if (mainGrid) mainGrid.style.display = "";
       if (benefits) benefits.style.display = "";
       _wsChatId = "";
-      $("#dz-new-diag").click();
+      $("#dz-new-diagnosis").click();
     });
 
     /* Mic — voice notes in the workspace chat (was previously unwired, so audio
@@ -4502,190 +4509,71 @@
   /* ============================================================
      VOICE VEHICLE DETECTION
      ============================================================ */
-  function normalizeText(text) {
-    return text.toLowerCase().replace(/[^a-z0-9\s]/g, "").trim();
+  function refreshVehicleIdentity() {
+    const v = state.vehicle;
+    if ($("#dz-year-select")) $("#dz-year-select").value = String(v.year || "");
+    if ($("#dz-market-select")) $("#dz-market-select").value = v.market || "";
+    const marketLabel = $("#dz-market-select")?.selectedOptions[0]?.textContent;
+    const label = [v.model, v.year, v.market ? marketLabel : ""].filter(Boolean).join(" — ");
+    if ($("#dz-car-selected-model")) $("#dz-car-selected-model").textContent = label;
+    updateSelectedVehicleImage(v.brand, v.model);
+    updateInfoPanelVehicleImage(v.brand, v.model);
+    updateVehicleBadge();
   }
 
-  function detectVehicleFromSpeech(transcript) {
-    const text = normalizeText(transcript);
-    let detectedBrand = null;
-    let detectedModel = null;
-
-    /* Try to match brand (longest match first) */
-    const sortedBrands = [...CAR_BRANDS].sort((a, b) => b.name.length - a.name.length);
-    for (const brand of sortedBrands) {
-      const brandName = normalizeText(brand.name);
-      if (text.includes(brandName)) {
-        detectedBrand = brand;
-        /* Extract remaining text after brand name */
-        const brandIdx = text.indexOf(brandName);
-        const afterBrand = text.substring(brandIdx + brandName.length).trim();
-        if (afterBrand && brand.models.length) {
-          /* Try to match model (longest first, then exact) */
-          const sortedModels = [...brand.models].sort((a, b) => b.length - a.length);
-          for (const model of sortedModels) {
-            const modelNorm = normalizeModel(model);
-            if (normalizeText(model) === afterBrand || afterBrand.includes(normalizeText(model))) {
-              detectedModel = model;
-              break;
-            }
-            /* Partial match: e.g. "crv" matches "CR-V" */
-            const afterNorm = normalizeModel(afterBrand);
-            if (modelNorm && afterNorm && (afterNorm.includes(modelNorm) || modelNorm.includes(afterNorm))) {
-              detectedModel = model;
-              break;
-            }
-          }
-        }
-        break;
-      }
-    }
-
-    /* If no brand found, try matching model across all brands using MODEL_INDEX */
-    if (!detectedBrand) {
-      for (const entry of MODEL_INDEX) {
-        const modelNorm = normalizeModel(entry.model);
-        const textNorm = normalizeModel(text);
-        if (modelNorm && textNorm && (textNorm.includes(modelNorm) || modelNorm.includes(textNorm))) {
-          detectedBrand = CAR_BRANDS.find(b => b.name === entry.brand);
-          detectedModel = entry.model;
-          break;
-        }
-      }
-    }
-
-    return { brand: detectedBrand, model: detectedModel };
+  function applyResolvedVehicle(vehicle) {
+    selectBrand(vehicle.brand);
+    chooseModel(vehicle.brand, vehicle.model);
+    Object.assign(state.vehicle, vehicle);
+    refreshVehicleIdentity();
+    scheduleSave();
   }
 
   async function applyVoiceDetection(transcript) {
-    const recordingEl = $("#dz-car-voice-recording");
-    const labelEl = recordingEl ? recordingEl.querySelector(".dz-voice-label") : null;
-    const textEl = $("#dz-car-voice-text");
-
-    if (labelEl) labelEl.textContent = "Searching vehicle...";
-    if (textEl) textEl.textContent = transcript;
-
-    /* Detect if text is Arabic — if so, use AI parser for accurate extraction */
-    const isArabic = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/.test(transcript);
-
-    if (isArabic) {
-      /* Use AI backend to parse Arabic vehicle text */
-      if (labelEl) labelEl.textContent = "Analyzing your words...";
-      const parsed = await parseTextWithAI(transcript, "vehicle");
-      if (parsed && parsed.brand) {
-        const known = CAR_BRANDS.find((b) => b.name.toLowerCase() === parsed.brand.toLowerCase());
-        if (known) {
-          selectBrand(known.name);
-          if (parsed.model) {
-            /* Try to find model in known list, or set it directly */
-            const matchedModel = known.models.find(m => m.toLowerCase() === parsed.model.toLowerCase());
-            if (matchedModel) {
-              state.vehicle.model = matchedModel;
-              const modelCard = document.querySelector(`.dz-car-model-card[data-model="${matchedModel}"]`);
-              if (modelCard) {
-                document.querySelectorAll(".dz-car-model-card").forEach(c => c.classList.remove("selected"));
-                modelCard.classList.add("selected");
-                const mEl = $("#dz-car-selected-model");
-                if (mEl) mEl.textContent = matchedModel;
-                updateSelectedVehicleImage(known.name, matchedModel);
-                updateInfoPanelVehicleImage(known.name, matchedModel);
-              }
-            } else {
-              state.vehicle.model = parsed.model;
-              const mEl = $("#dz-car-selected-model");
-              if (mEl) mEl.textContent = parsed.model;
-            }
-          }
-          if (parsed.year) {
-            state.vehicle.year = String(parsed.year);
-            const yearSel = $("#dz-year-select");
-            if (yearSel) yearSel.value = String(parsed.year);
-          }
-          if (parsed.engine) {
-            state.vehicle.engine = parsed.engine;
-            const eLine = $("#dz-car-selected-engine");
-            if (eLine) { eLine.textContent = parsed.engine; eLine.classList.remove("d-none"); }
-          }
-          scheduleSave();
-          if (labelEl) labelEl.textContent = "Vehicle found!";
-          setTimeout(() => {
-            if (recordingEl) recordingEl.classList.add("d-none");
-          }, 1200);
-          return;
-        }
-      }
-      /* Fallback: no match */
-      if (labelEl) labelEl.textContent = "Vehicle not recognized. Try again.";
-      if (textEl) textEl.textContent = "";
-      setTimeout(() => {
-        if (recordingEl) recordingEl.classList.add("d-none");
-        if (voiceBtn) voiceBtn.classList.remove("recording");
-      }, 2000);
-      return;
-    }
-
-    /* English — use existing regex-based detection */
-    const result = detectVehicleFromSpeech(transcript);
-
-    if (result.brand) {
-      /* Auto-select the detected brand */
-      selectBrand(result.brand.name);
-
-      /* If model detected, auto-select it */
-      if (result.model) {
-        state.vehicle.model = result.model;
-        const modelCard = document.querySelector(`.dz-car-model-card[data-model="${result.model}"]`);
-        if (modelCard) {
-          document.querySelectorAll(".dz-car-model-card").forEach(c => c.classList.remove("selected"));
-          modelCard.classList.add("selected");
-          const mEl = $("#dz-car-selected-model");
-          if (mEl) mEl.textContent = result.model;
-          updateSelectedVehicleImage(result.brand.name, result.model);
-          updateInfoPanelVehicleImage(result.brand.name, result.model);
-        }
-      }
-
-      /* Hide voice UI after brief delay */
-      setTimeout(() => {
-        if (recordingEl) recordingEl.classList.add("d-none");
-        const voiceBtn = $("#dz-car-voice-btn");
-        if (voiceBtn) voiceBtn.classList.remove("recording");
-      }, 1200);
+    const input = $("#dz-vehicle-search");
+    const result = DiagnosisVehicleResolver.resolve(transcript, CAR_BRANDS);
+    if (result.confident) {
+      applyResolvedVehicle(result.vehicle);
+    } else if (result.brand && !result.candidates.length && DiagnosisVehicleResolver.normalize(transcript) === DiagnosisVehicleResolver.normalize(result.brand)) {
+      selectBrand(result.brand);
     } else {
-      /* No match found — try AI parser as fallback */
-      if (labelEl) labelEl.textContent = "Analyzing your words...";
-      const parsed = await parseTextWithAI(transcript, "vehicle");
-      if (parsed && parsed.brand) {
-        const known = CAR_BRANDS.find((b) => b.name.toLowerCase() === parsed.brand.toLowerCase());
-        if (known) {
-          selectBrand(known.name);
-          if (parsed.model) {
-            state.vehicle.model = parsed.model;
-            const mEl = $("#dz-car-selected-model");
-            if (mEl) mEl.textContent = parsed.model;
+      let candidates = result.candidates;
+      if (!candidates.length) {
+        const parsed = await parseTextWithAI(transcript, "vehicle");
+        // Ignore stale responses when the user edits the search during parsing.
+        if (input?.value && input.value.trim() !== transcript) return;
+        if (parsed?.brand) {
+          // Validate provider transliterations against the same live catalogue.
+          let known = CAR_BRANDS.find(b => b.name.toLowerCase() === parsed.brand.toLowerCase());
+          if (!known) {
+            await ensureAllBrands();
+            known = CAR_BRANDS.find(b => b.name.toLowerCase() === parsed.brand.toLowerCase());
           }
-          if (parsed.year) {
-            state.vehicle.year = String(parsed.year);
-            const yearSel = $("#dz-year-select");
-            if (yearSel) yearSel.value = String(parsed.year);
+          if (known && parsed.model && !known.models.some(m => m.toLowerCase() === parsed.model.toLowerCase())) {
+            const liveModels = await VehicleAPI.models(known.name, "").catch(() => []);
+            known.models = [...new Set(known.models.concat(liveModels.map(m => m.value).filter(Boolean)))];
           }
-          scheduleSave();
-          if (labelEl) labelEl.textContent = "Vehicle found!";
-          setTimeout(() => {
-            if (recordingEl) recordingEl.classList.add("d-none");
-          }, 1200);
-          return;
+          const checked = DiagnosisVehicleResolver.resolve([parsed.brand, parsed.model, parsed.year].filter(Boolean).join(" "), CAR_BRANDS);
+          const parsedMarket = DiagnosisVehicleResolver.resolve(parsed.market || "", []).market;
+          if (checked.vehicle) candidates = [{...checked.vehicle, market: result.market || parsedMarket}];
         }
       }
-      /* No match at all */
-      if (labelEl) labelEl.textContent = "Vehicle not recognized. Try again.";
-      if (textEl) textEl.textContent = "";
-      setTimeout(() => {
-        if (recordingEl) recordingEl.classList.add("d-none");
-        const voiceBtn = $("#dz-car-voice-btn");
-        if (voiceBtn) voiceBtn.classList.remove("recording");
-      }, 2000);
+      const box = $("#dz-car-suggestions");
+      if (box) {
+        box.innerHTML = candidates.length ? '<p>Confirm your vehicle:</p>' : '<p>Vehicle not recognized. Please select a brand or model.</p>';
+        candidates.forEach(v => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "dz-btn-outline-sm";
+          button.textContent = [v.brand, v.model, v.year, v.market].filter(Boolean).join(" — ");
+          button.addEventListener("click", () => applyResolvedVehicle(v));
+          box.appendChild(button);
+        });
+        box.classList.remove("d-none");
+        $("#dz-car-dropdown")?.classList.remove("d-none");
+      }
     }
+    $("#dz-car-voice-recording")?.classList.add("d-none");
   }
 
   function initVoiceInput() {
@@ -4726,9 +4614,11 @@
       recognition.interimResults = true;
       /* Auto-detect Arabic dialect if user has typed Arabic text, otherwise default to English.
          This lets Arabic speakers say their vehicle info naturally. */
-      const _prevProblem = (state.problem || "").trim();
+      const _prevProblem = ($("#dz-vehicle-search")?.value || "").trim();
       const _isArabicText = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/.test(_prevProblem);
-      recognition.lang = _isArabicText ? "ar-SA" : "en-US";
+      recognition.lang = _isArabicText || document.documentElement.lang.startsWith("ar") || navigator.language.startsWith("ar") ? "ar-LB" : "en-US";
+      const voiceLanguage = $("#dz-voice-language")?.value;
+      if (voiceLanguage && voiceLanguage !== "auto") recognition.lang = voiceLanguage;
 
       recognition.onstart = () => {
         isRecording = true;

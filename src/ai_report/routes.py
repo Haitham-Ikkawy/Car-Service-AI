@@ -459,7 +459,7 @@ async def generate_questions_api(request: Request):
     # Build the question generation prompt
     vehicle_label = ""
     if vehicle:
-        parts = [vehicle.get("year"), vehicle.get("brand"), vehicle.get("model")]
+        parts = [vehicle.get("year"), vehicle.get("brand"), vehicle.get("model"), vehicle.get("market")]
         vehicle_label = " ".join(str(p) for p in parts if p)
         if vehicle.get("engine"):
             vehicle_label += f" · {vehicle['engine']}"
@@ -643,6 +643,7 @@ async def parse_text_api(request: Request):
   "brand": "vehicle manufacturer/brand name in English (e.g. Toyota, BMW, Ford)",
   "model": "model name in English (e.g. Camry, Corolla, Civic)",
   "year": "model year as a 4-digit number (e.g. 2020) or null if not mentioned",
+  "market": "US, JP, EU, GCC, Other, or empty string if not mentioned",
   "engine": "engine specification if mentioned (e.g. 2.0L, V6) or empty string"
 }}
 

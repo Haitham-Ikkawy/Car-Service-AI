@@ -93,6 +93,13 @@
                 <i class="bi bi-mic"></i>
               </button>
             </div>
+            <label class="small text-soft" for="dz-voice-language">Voice language</label>
+            <select id="dz-voice-language" class="dz-year-select" aria-label="Voice language">
+              <option value="auto">Browser / page language</option>
+              <option value="ar-LB">العربية — لبنان / سوريا</option>
+              <option value="ar-SA">العربية — السعودية / الخليج</option>
+              <option value="en-US">English</option>
+            </select>
             <!-- Search suggestions dropdown -->
             <div class="dz-search-dropdown d-none" id="dz-car-dropdown">
               <div class="dz-search-suggestions d-none" id="dz-car-suggestions"></div>
@@ -110,8 +117,9 @@
 
           <!-- Upload Car Image — identifies the vehicle via the existing
                /api/vehicle/identify-image endpoint (car_database module) -->
-          <div class="upload-zone dz-photo-detect-zone mt-3" id="dz-photo-detect-zone">
-            <div class="up-icon"><i class="bi bi-camera-fill"></i></div>
+          <div class="upload-zone dz-photo-detect-zone mt-3" id="dz-photo-detect-zone" role="button" tabindex="0" aria-label="Upload Car Image">
+            <img id="dz-photo-detect-preview" class="d-none dz-photo-preview" alt="Uploaded car">
+            <div class="up-icon"><i class="bi bi-car-front-fill"></i></div>
             <h5 class="mb-1" id="dz-photo-detect-title">Upload Car Image</h5>
             <p class="text-soft small mb-0" id="dz-photo-detect-hint">Upload a photo of your car and we'll detect the brand &amp; model</p>
             <input type="file" id="dz-photo-detect-input" accept="image/*" class="d-none">
@@ -201,6 +209,21 @@
               <select class="dz-year-select" id="dz-year-select">
                 <option value="" data-default>Select year…</option>
                 {% for y in years %}<option value="{{ y }}">{{ y }}</option>{% endfor %}
+              </select>
+            </div>
+          </div>
+
+          <div class="dz-car-year d-none" id="dz-car-market">
+            <label class="dz-car-models-title" for="dz-market-select">Market / Specification</label>
+            <div class="dz-year-select-wrap">
+              <i class="bi bi-globe dz-year-icon"></i>
+              <select class="dz-year-select" id="dz-market-select">
+                <option value="">Select market…</option>
+                <option value="US">American (US)</option>
+                <option value="JP">Japanese</option>
+                <option value="EU">European (EU)</option>
+                <option value="GCC">GCC / Gulf</option>
+                <option value="Other">Other</option>
               </select>
             </div>
           </div>
@@ -733,5 +756,7 @@
   window.__CSAI_VEHICLE__ = {{ vehicle | tojson if vehicle else 'null' }};
 </script>
 <script src="/static/ai_report/dialect.js"></script>
+<script id="dz-vehicle-catalogue" type="application/json">{{ manufacturers | tojson }}</script>
+<script src="/static/ai_report/vehicle_resolver.js"></script>
 <script src="/static/ai_report/diagnose.js"></script>
 {% endblock %}

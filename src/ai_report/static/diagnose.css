@@ -154,7 +154,7 @@
 /* Upload Car Image — compact variant of the shared .upload-zone (app.css) so it
    sits neatly next to the vehicle search field instead of a full-height block. */
 .dz-photo-detect-zone { padding: 18px 20px; margin-bottom: 4px; }
-.dz-photo-detect-zone.dz-photo-detect-busy { opacity: 0.6; pointer-events: none; }
+.dz-photo-detect-zone.dz-photo-detect-busy { cursor: progress; }
 .dz-car-selected-card { display: none; }
 .dz-car-trigger { display: none; }
 .dz-car-trigger-icon { display: none; }
@@ -1786,3 +1786,6 @@
 }
 .dz-year-select:focus { border-color: rgba(var(--accent-rgb), 0.4); }
 .dz-year-select option { background: var(--surface); color: var(--text); }
+
+.dz-photo-preview { display: block; width: 100%; max-height: 220px; object-fit: contain; margin: 0 auto 12px; border-radius: 12px; }
+.dz-photo-detect-zone:focus-visible { outline: 2px solid var(--accent, #3b82f6); outline-offset: 3px; }

@@ -714,7 +714,7 @@ def diagnose(
     fails — there is **no** demo/fallback response.
     """
     if vehicle_override:
-        parts = [vehicle_override.get("year"), vehicle_override.get("brand"), vehicle_override.get("model")]
+        parts = [vehicle_override.get("year"), vehicle_override.get("brand"), vehicle_override.get("model"), vehicle_override.get("market")]
         vehicle = " ".join(str(p) for p in parts if p) or "Not specified"
         engine = (vehicle_override.get("engine") or "").strip()
         if engine and vehicle != "Not specified":
