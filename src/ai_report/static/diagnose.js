@@ -1895,7 +1895,7 @@
     updateInfoPanelVehicleImage("", "");
 
     /* Enable Continue button */
-    const continueBtn = $("#dz-continue-vehicle");
+    const continueBtn = $("#dz-open-vehicle-details");
     if (continueBtn) continueBtn.classList.remove("dz-btn-locked");
 
     /* Render the curated models instantly, then enrich from the live API so the
@@ -2066,10 +2066,14 @@
 
     updateSelectedVehicleImage(brand, model);
     updateInfoPanelVehicleImage(brand, model);
-    const cont = $("#dz-continue-vehicle");
+    const cont = $("#dz-open-vehicle-details");
     if (cont) cont.classList.remove("dz-btn-locked");
     updateVehicleBadge();
     scheduleSave();
+    loadEngines(brand, model).then(() => {
+      $("#dz-engine-input").value = state.vehicle.engine || "";
+    });
+    openVehicleDetails();
   }
 
   /* ============================================================
@@ -2273,6 +2277,38 @@
     if (yearWrap) yearWrap.classList.remove("d-none");
     $("#dz-car-market")?.classList.remove("d-none");
     if (typeof scheduleSave === "function") scheduleSave();
+    openVehicleDetails();
+  }
+
+  let vehicleDetailsReturnFocus = null;
+  function openVehicleDetails() {
+    if (!state.vehicle.brand || !state.vehicle.model) {
+      $("#dz-vehicle-validation").classList.remove("d-none");
+      return;
+    }
+    const dialog = $("#dz-vehicle-details-dialog");
+    $("#dz-vehicle-validation").classList.add("d-none");
+    $("#dz-vehicle-details-title").textContent = `${state.vehicle.brand} ${state.vehicle.model}`;
+    if (!dialog.open) {
+      vehicleDetailsReturnFocus = document.activeElement;
+      dialog.showModal();
+      document.body.classList.add("dz-vehicle-details-open");
+      $("#dz-engine-input").focus();
+    }
+  }
+
+  function initVehicleDetails() {
+    const dialog = $("#dz-vehicle-details-dialog");
+    $("#dz-open-vehicle-details").addEventListener("click", openVehicleDetails);
+    $("#dz-details-back").addEventListener("click", () => dialog.close());
+    dialog.addEventListener("close", () => {
+      document.body.classList.remove("dz-vehicle-details-open");
+      if (state.step === "vehicle") {
+        const target = vehicleDetailsReturnFocus?.isConnected
+          ? vehicleDetailsReturnFocus : $("#dz-open-vehicle-details");
+        target?.focus();
+      }
+    });
   }
 
   /* Model year → makes the diagnosis + image specific to that year. */
@@ -2335,6 +2371,7 @@
   function selectEngine(value) {
     value = (value || "").trim();
     state.vehicle.engine = value;
+    $("#dz-engine-input").value = value;
     const eLine = $("#dz-car-selected-engine");
     if (eLine) {
       eLine.textContent = value;
@@ -2407,7 +2444,7 @@
     if (dropdown) dropdown.classList.add("d-none");
 
     /* Lock continue button */
-    const continueBtn = $("#dz-continue-vehicle");
+    const continueBtn = $("#dz-open-vehicle-details");
     if (continueBtn) continueBtn.classList.add("dz-btn-locked");
 
     /* Clear selected brand in grid */
@@ -2683,6 +2720,7 @@
       if (vinSection) vinSection.style.display = "none";
     }
     initEngineInput();
+    initVehicleDetails();
     initVoiceInput();
     initProblemStep();
     initModal();
@@ -2702,6 +2740,8 @@
     });
     $("#dz-continue-vehicle").addEventListener("click", () => {
       if (state.vehicle.brand) {
+        selectEngine($("#dz-engine-input").value);
+        $("#dz-vehicle-details-dialog").close();
         $("#dz-vehicle-validation").classList.add("d-none");
         updateVehicleBadge();
         showStep("describe");

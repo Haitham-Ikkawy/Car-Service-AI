@@ -182,53 +182,14 @@
             <div class="dz-car-models-grid" id="dz-car-models-grid"></div>
           </div>
 
-          <!-- Engine / motor selection (cascades from the selected model) -->
-          <div class="dz-car-engines d-none" id="dz-car-engines">
-            <p class="dz-car-models-title" id="dz-engine-title">Select your engine <span class="dz-optional-tag">optional</span></p>
-            <div class="dz-engine-search">
-              <i class="bi bi-fuel-pump dz-engine-search-icon"></i>
-              <input type="text" class="dz-engine-input" id="dz-engine-input"
-                     placeholder="Search or type engine (e.g. 2.0L Petrol, Hybrid…)"
-                     autocomplete="off" spellcheck="false">
-            </div>
-            <div class="dz-engine-suggestions" id="dz-engine-suggestions"></div>
-          </div>
-
-          <!-- Model year — makes the diagnosis + image specific to that year -->
-          <div class="dz-car-year d-none" id="dz-car-year">
-            <p class="dz-car-models-title" id="dz-year-label">Model year <span class="dz-optional-tag">recommended</span></p>
-            <div class="dz-year-select-wrap">
-              <i class="bi bi-calendar3 dz-year-icon"></i>
-              <select class="dz-year-select" id="dz-year-select">
-                <option value="" data-default>Select year…</option>
-                {% for y in years %}<option value="{{ y }}">{{ y }}</option>{% endfor %}
-              </select>
-            </div>
-          </div>
-
-          <div class="dz-car-year d-none" id="dz-car-market">
-            <label class="dz-car-models-title" for="dz-market-select">Market / Specification</label>
-            <div class="dz-year-select-wrap">
-              <i class="bi bi-globe dz-year-icon"></i>
-              <select class="dz-year-select" id="dz-market-select">
-                <option value="">Select market…</option>
-                <option value="US">American (US)</option>
-                <option value="JP">Japanese</option>
-                <option value="EU">European (EU)</option>
-                <option value="GCC">GCC / Gulf</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-          </div>
-
           <!-- Validation message -->
           <div class="dz-validation-msg d-none" id="dz-vehicle-validation">
-            <i class="bi bi-exclamation-circle"></i> Please select a vehicle brand to continue.
+            <i class="bi bi-exclamation-circle"></i> Please select a vehicle model to continue.
           </div>
 
           <div class="dz-nav">
             <button class="dz-btn dz-btn-ghost" id="dz-back-vehicle"><i class="bi bi-arrow-left"></i> Back</button>
-            <button class="dz-btn dz-btn-primary dz-btn-locked" id="dz-continue-vehicle">Continue <i class="bi bi-arrow-right"></i></button>
+            <button class="dz-btn dz-btn-primary dz-btn-locked" id="dz-open-vehicle-details">Continue <i class="bi bi-arrow-right"></i></button>
           </div>
         </div>
       </div>
@@ -643,6 +604,56 @@
   </div>
 
 </div>
+
+<!-- Vehicle details reuse the existing selection controls. -->
+<dialog class="dz-vehicle-details-dialog" id="dz-vehicle-details-dialog" aria-labelledby="dz-vehicle-details-title">
+  <div class="dz-vehicle-details-content">
+    <h2 class="dz-card-title" id="dz-vehicle-details-title">Vehicle details</h2>
+    <!-- Engine / motor selection (cascades from the selected model) -->
+    <div class="dz-car-engines d-none" id="dz-car-engines">
+      <p class="dz-car-models-title" id="dz-engine-title">Select your engine <span class="dz-optional-tag">optional</span></p>
+      <div class="dz-engine-search">
+        <i class="bi bi-fuel-pump dz-engine-search-icon"></i>
+        <input type="text" class="dz-engine-input" id="dz-engine-input" aria-labelledby="dz-engine-title"
+               placeholder="Search or type engine (e.g. 2.0L Petrol, Hybrid…)"
+               autocomplete="off" spellcheck="false">
+      </div>
+      <div class="dz-engine-suggestions" id="dz-engine-suggestions"></div>
+    </div>
+
+    <!-- Model year — makes the diagnosis + image specific to that year -->
+    <div class="dz-car-year d-none" id="dz-car-year">
+      <p class="dz-car-models-title" id="dz-year-label">Model year <span class="dz-optional-tag">recommended</span></p>
+      <div class="dz-year-select-wrap">
+        <i class="bi bi-calendar3 dz-year-icon"></i>
+        <select class="dz-year-select" id="dz-year-select" aria-labelledby="dz-year-label">
+          <option value="" data-default>Select year…</option>
+          {% for y in years %}<option value="{{ y }}">{{ y }}</option>{% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <div class="dz-car-year d-none" id="dz-car-market">
+      <label class="dz-car-models-title" for="dz-market-select">Market / Specification</label>
+      <div class="dz-year-select-wrap">
+        <i class="bi bi-globe dz-year-icon"></i>
+        <select class="dz-year-select" id="dz-market-select">
+          <option value="">Select market…</option>
+          <option value="US">American (US)</option>
+          <option value="JP">Japanese</option>
+          <option value="EU">European (EU)</option>
+          <option value="GCC">GCC / Gulf</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="dz-nav">
+      <button type="button" class="dz-btn dz-btn-ghost" id="dz-details-back"><i class="bi bi-arrow-left"></i> Back</button>
+      <button type="button" class="dz-btn dz-btn-primary" id="dz-continue-vehicle">Continue <i class="bi bi-arrow-right"></i></button>
+    </div>
+  </div>
+</dialog>
 
 <!-- ====== RESULT MODAL ====== -->
 <div class="dz-modal-overlay" id="dz-modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Diagnosis Result">

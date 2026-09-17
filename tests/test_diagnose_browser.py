@@ -79,6 +79,7 @@ def test_history(browser_page):
     playwright.expect(page.locator('#dz-car-selected-brand')).to_have_text('Honda')
     page.locator('#dz-continue-vehicle').click()
     page.locator('#dz-back-describe').click()
+    page.locator('#dz-open-vehicle-details').click()
     page.locator('#dz-continue-vehicle').click()
     assert page.evaluate('history.length') == history_count
     page.go_back()
@@ -122,8 +123,8 @@ def test_vehicle_text(browser_page, text, brand, model, year, market):
 def test_manual_market_and_restore(browser_page):
     page, base = browser_page
     page.goto(base + '/diagnose')
-    page.locator('#dz-vehicle-search').fill('Honda')
-    page.locator('#dz-car-suggestions [data-brand="Honda"]').first.click()
+    page.locator('#dz-brands-view-all').click()
+    page.locator('#dz-brands-grid [data-brand="Honda"]').click()
     page.locator('[data-model="Accord"]').first.click()
     page.locator('#dz-year-select').select_option('2023')
     page.locator('#dz-market-select').select_option('US')
@@ -224,6 +225,7 @@ def test_selected_model_photos_and_keyboard_search(browser_page):
         brand_card.click()
         card = page.locator(f'#dz-car-models-grid [data-model="{model}"]')
         card.click()
+        page.locator("#dz-details-back").click()
         playwright.expect(page.locator('#dz-car-selected-brand')).to_have_text(brand)
         playwright.expect(page.locator('#dz-car-selected-model')).to_have_text(model)
         photo = page.locator('#dz-selected-image img')
@@ -251,6 +253,7 @@ def test_partial_arabic_and_confirmation(browser_page):
     playwright.expect(page.locator('#dz-car-suggestions button')).to_have_text('Honda — Accord')
     page.locator('#dz-vehicle-search').press('Enter')
     playwright.expect(page.locator('#dz-car-selected-model')).to_have_text('Accord')
+    page.locator('#dz-details-back').click()
     page.locator('#dz-change-vehicle').click()
     # Ambiguous identities require a choice, never silently pick the first brand.
     page.locator('#dz-vehicle-search').fill('Honda Accord Toyota Camry 2023 US')
@@ -259,6 +262,49 @@ def test_partial_arabic_and_confirmation(browser_page):
     playwright.expect(page.locator('#dz-car-selected')).to_be_hidden()
     page.locator('#dz-car-suggestions button').filter(has_text='Toyota').click()
     playwright.expect(page.locator('#dz-car-selected-brand')).to_have_text('Toyota')
+
+
+def test_vehicle_details_popup(browser_page):
+    page, base = browser_page
+    from src.car_database.vehicle_api import _FALLBACK_ENGINES
+    page.unroute('**/api/vehicles/engines*')
+    page.route('**/api/vehicles/engines*', lambda route: route.fulfill(json={'items': _FALLBACK_ENGINES}))
+    page.goto(base + '/diagnose', wait_until='domcontentloaded')
+    page.locator('#dz-brands-grid [data-brand="BMW"]').click()
+    page.locator('#dz-car-models-grid [data-model="X5"]').click()
+    dialog = page.locator('#dz-vehicle-details-dialog')
+    playwright.expect(dialog).to_be_visible()
+    playwright.expect(dialog.locator('#dz-vehicle-details-title')).to_have_text('BMW X5')
+    playwright.expect(dialog.locator('#dz-engine-input')).to_be_focused()
+    playwright.expect(dialog.locator('#dz-engine-suggestions')).to_contain_text('Electric (EV)')
+    assert page.locator('#dz-engine-input').count() == 1
+    page.locator('#dz-engine-input').fill('2.0L Petrol')
+    page.locator('#dz-year-select').select_option('2023')
+    page.locator('#dz-market-select').select_option('US')
+    page.locator('#dz-details-back').click()
+    playwright.expect(dialog).not_to_be_visible()
+    page.locator('#dz-open-vehicle-details').click()
+    playwright.expect(page.locator('#dz-engine-input')).to_have_value('2.0L Petrol')
+    playwright.expect(page.locator('#dz-year-select')).to_have_value('2023')
+    page.keyboard.press('Escape')
+    playwright.expect(dialog).not_to_be_visible()
+    page.set_viewport_size({'width': 390, 'height': 700})
+    page.locator('#dz-open-vehicle-details').click()
+    bounds = dialog.bounding_box()
+    assert bounds['x'] >= 0 and bounds['x'] + bounds['width'] <= 390
+    assert bounds['height'] <= 700
+    page.screenshot(path=str(Path('tmp/vehicle-details-popup-mobile.png')))
+    with page.expect_response(lambda response: response.url.endswith('/update') and response.status == 200
+                              and response.request.post_data_json.get('vehicle', {}).get('engine') == '2.0L Petrol'):
+        page.locator('#dz-continue-vehicle').click()
+    playwright.expect(dialog).not_to_be_visible()
+    playwright.expect(page.locator('#dz-problem')).to_be_visible()
+    from src.shared.store import store
+    assert any(session['vehicle'].get('model') == 'X5'
+               and session['vehicle'].get('year') == 2023
+               and session['vehicle'].get('market') == 'US'
+               and session['vehicle'].get('engine') == '2.0L Petrol'
+               for session in store.diag_sessions('tester@example.com'))
 
 
 def test_image_upload(browser_page):
