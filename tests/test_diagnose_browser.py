@@ -151,7 +151,9 @@ def test_voice_transcription(browser_page):
       stop() { this.onend(); }
     };''')
     page.goto(base + '/diagnose')
-    page.locator('#dz-voice-language').select_option('ar-LB')
+    assert page.locator('#dz-voice-language').count() == 0
+    assert page.get_by_text('Voice language', exact=False).count() == 0
+    page.evaluate("document.documentElement.lang = 'ar'")
     page.locator('#dz-car-voice-btn').click()
     playwright.expect(page.locator('#dz-car-selected-brand')).to_have_text('Honda')
     playwright.expect(page.locator('#dz-car-selected-model')).to_have_text('Accord — 2023 — American (US)')

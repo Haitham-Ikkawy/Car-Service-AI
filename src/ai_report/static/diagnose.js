@@ -4617,8 +4617,6 @@
       const _prevProblem = ($("#dz-vehicle-search")?.value || "").trim();
       const _isArabicText = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/.test(_prevProblem);
       recognition.lang = _isArabicText || document.documentElement.lang.startsWith("ar") || navigator.language.startsWith("ar") ? "ar-LB" : "en-US";
-      const voiceLanguage = $("#dz-voice-language")?.value;
-      if (voiceLanguage && voiceLanguage !== "auto") recognition.lang = voiceLanguage;
 
       recognition.onstart = () => {
         isRecording = true;
