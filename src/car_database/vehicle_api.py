@@ -23,6 +23,8 @@ import asyncio
 import json
 import logging
 import os
+import re
+import unicodedata
 import time
 from pathlib import Path
 from typing import Any
@@ -99,11 +101,20 @@ def _logo_for(make: str) -> str | None:
 
 
 def _image_for(make: str, model: str) -> str | None:
-    b, m = _slug(make), _slug(model)
-    for ext in (".webp", ".png", ".jpg"):
-        if (_VEHICLE_DIR / b / f"{m}{ext}").exists():
-            return f"/image/vehicles/{b}/{m}{ext}"
+    # These files were copied across model names; existence is not verification.
+    # Do not leak them back into the UI through API model-card image fallbacks.
     return None
+
+
+def _catalogue_key(value: str) -> str:
+    value = unicodedata.normalize('NFKD', value or '').casefold()
+    return ''.join(c for c in value if c.isalnum() and not unicodedata.combining(c))
+
+
+def _configured_models(make: str) -> list[str]:
+    from ..config import MANUFACTURERS
+    return [model for brand, models in MANUFACTURERS.items()
+            if _catalogue_key(brand) == _catalogue_key(make) for model in models]
 
 
 # Canonical display names for makes that title-casing would mangle (acronyms,
@@ -263,7 +274,7 @@ async def makes(q: str = "", limit: int = 12) -> list[dict]:
 
 
 async def models(make: str, q: str = "", limit: int = 12) -> list[dict]:
-    """Models for a given make (vPIC), enriched with a local image when present."""
+    """Configured models plus live passenger/SUV/pickup models for this make."""
     make = (make or "").strip()
     if not make:
         return []
@@ -286,14 +297,15 @@ async def models(make: str, q: str = "", limit: int = 12) -> list[dict]:
 
         try:
             groups = await asyncio.gather(_type("car"), _type("mpv"), _type("truck"))
+            groups.insert(0, [{'Model_Name': name} for name in _configured_models(make)])
             seen: set[str] = set()
             out: list[dict] = []
             for rows in groups:
                 for r in rows:
                     name = (r.get("Model_Name") or "").strip()
-                    if not name or "�" in name or name.lower() in seen:
+                    if not name or "�" in name or _catalogue_key(name) in seen:
                         continue
-                    seen.add(name.lower())
+                    seen.add(_catalogue_key(name))
                     out.append({
                         "value": name,
                         "label": name,
@@ -439,7 +451,7 @@ async def decode_vin(vin: str) -> dict[str, Any]:
 # ---------------------------------------------------------------------------
 
 def local_image(make: str, model: str) -> str:
-    """A shipped local image for this make/model, or empty string."""
+    """Return only verified local imagery; the current unverified set is excluded."""
     return _image_for(make, model) or ""
 
 
@@ -479,9 +491,15 @@ async def _wiki_photo(title: str) -> str | None:
     for pid, page in pages.items():
         if str(pid) == "-1":
             continue
+        # Redirects/searches can land on a different car (e.g. M4 -> M3).
+        # A model-family page also cannot establish a requested model year.
+        def title_key(value):
+            return _catalogue_key(re.sub(r'\s*\(car\)$', '', value or '', flags=re.I))
+        if title_key(page.get('title', '')) != title_key(title):
+            continue
         src = ((page.get("thumbnail") or {}).get("source")
                or (page.get("original") or {}).get("source"))
-        if src and not src.lower().split("?")[0].endswith(".svg"):
+        if src and src.startswith('https://') and '.svg' not in src.lower().split('?')[0]:
             return src
     return None
 
@@ -507,44 +525,24 @@ async def _wiki_search_photo(query: str) -> str | None:
 
 
 async def photo_url(make: str, model: str, year: str | int = "") -> str:
-    """Resolve a realistic PHOTO of the given vehicle (make/model[/year]).
-
-    Priority: a real photo from Wikipedia → a shipped local image → an optional
-    licensed CGI render → empty (the UI then shows an icon). Blueprint/schematic
-    (SVG) images are never returned. Cached per make/model/year.
-    """
+    """Resolve an exact model page photo; never broaden a requested identity."""
     make = (make or "").strip()
     model = (model or "").strip()
-    if not make and not model:
+    if not make or not model:
         return ""
     year = str(year or "").strip()
 
     async def _load() -> str:
-        # Try the most specific Wikipedia titles first, then broaden. Wikipedia's
-        # redirect handling normalises name variants (CR-V / CRV / Cr-v resolve to
-        # the same page).
-        titles: list[str] = []
-        if make and model:
-            if year:
-                titles.append(f"{make} {model} ({year})")
-            titles += [f"{make} {model}", f"{make} {model} (car)"]
-        elif make:
-            titles.append(make)
+        titles = [f"{make} {model} ({year})"] if year else [f"{make} {model}", f"{make} {model} (car)"]
         for title in titles:
             src = await _wiki_photo(title)
-            if src:
-                return src
-        # Full-text search as a last resort (handles odd model-name variants).
-        if make and model:
-            src = await _wiki_search_photo(f"{make} {model} car")
             if src:
                 return src
         # IMPORTANT: the shipped local .webp files are unreliable DUPLICATES — many
         # distinct models share one file (e.g. every Honda file is byte-identical),
         # so using them as a fallback is exactly what made every model show the same
-        # (e.g. Civic) image. They are therefore NOT used here. Fall back only to a
-        # licensed CGI render if configured, otherwise "" (the UI shows an icon —
-        # never another model's photo).
-        return _imagin_url(make, model, year)
+        # image. Neither those files nor an unverified model-family render can
+        # prove the requested identity. Return empty so the UI uses its icon.
+        return ""
 
     return await _cached(f"photo:{make.lower()}:{model.lower()}:{year}", _load)

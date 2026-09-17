@@ -879,7 +879,7 @@
         .join("&");
     return {
       makes: (q, limit) => fetchItems(`/api/vehicles/makes?${qp({ q, limit })}`),
-      models: (make, q) => fetchItems(`/api/vehicles/models?${qp({ make, q })}`),
+      models: (make, q) => fetchItems(`/api/vehicles/models?${qp({ make, q, limit: 1000 })}`),
       engines: (make, model, q) =>
         fetchItems(`/api/vehicles/engines?${qp({ make, model, q })}`),
     };
@@ -906,7 +906,8 @@
   const IMAGE_SOURCES = {
     "Toyota": { "Corolla": "Toyota USA Newsroom", "Camry": "Toyota USA Newsroom" },
   };
-  (function buildModelIndex() {
+  function buildModelIndex() {
+    MODEL_INDEX.length = 0;
     for (const brand of CAR_BRANDS) {
       for (const model of brand.models) {
         MODEL_INDEX.push({
@@ -920,7 +921,8 @@
         });
       }
     }
-  })();
+  }
+  buildModelIndex();
 
   /* Search models by query — returns array of matches sorted by relevance */
   function searchModels(query) {
@@ -2009,6 +2011,7 @@
     renderModelGrid(brandName, logo, merged, imgMap);
     const known = CAR_BRANDS.find(b => b.name === brandName);
     if (known) known.models = merged;
+    buildModelIndex();
   }
 
   function updateSelectedVehicleImage(brand, model) {

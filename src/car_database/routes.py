@@ -66,9 +66,9 @@ async def vehicles_makes(request: Request, q: str = "", limit: int = 12):
 
 
 @router.get("/api/vehicles/models")
-async def vehicles_models(request: Request, make: str = "", q: str = ""):
+async def vehicles_models(request: Request, make: str = "", q: str = "", limit: int = 12):
     require(request)
-    return JSONResponse({"items": await vehicle_api.models(make, q)})
+    return JSONResponse({"items": await vehicle_api.models(make, q, limit=max(1, min(limit, 1000)))})
 
 
 @router.get("/api/vehicles/engines")
@@ -91,7 +91,7 @@ async def vehicles_engines(request: Request, make: str = "", model: str = "", q:
 async def vehicles_image(request: Request, make: str = "", model: str = "", year: str = ""):
     """Redirect to a realistic PHOTO of the given vehicle.
 
-    Resolves a real photo (Wikipedia → shipped image → optional licensed render);
+    Resolves a photo from an exact model page; unverified fallback images and
     blueprint/schematic (SVG) images are excluded. The client uses this as an
     ``<img src>`` and falls back to an icon via ``onerror`` if nothing is found.
     """

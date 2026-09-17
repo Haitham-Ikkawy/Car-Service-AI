@@ -160,6 +160,25 @@ def test_voice_transcription(browser_page):
     assert page.evaluate('window.testSpeechLanguage') == 'ar-LB'
 
 
+def test_full_model_grid_and_live_search_index(browser_page):
+    page, base = browser_page
+    requested = []
+    def models(route):
+        requested.append(route.request.url)
+        route.fulfill(json={'items': [{'value': f'Model {i:02d}', 'image': None} for i in range(30)] + [{'value':'M4', 'image':None}]})
+    page.unroute('**/api/vehicles/models*')
+    page.route('**/api/vehicles/models*', models)
+    page.goto(base + '/diagnose')
+    page.locator('#dz-brands-grid [data-brand="BMW"]').click()
+    playwright.expect(page.locator('#dz-car-models-grid [data-model="Model 29"]')).to_be_visible()
+    playwright.expect(page.locator('#dz-car-models-grid [data-model="M4"]')).to_be_visible()
+    assert 'limit=1000' in requested[-1]
+    page.locator('#dz-change-vehicle').click()
+    page.locator('#dz-vehicle-search').fill('M4')
+    playwright.expect(page.locator('#dz-car-selected-brand')).to_have_text('BMW')
+    playwright.expect(page.locator('#dz-car-selected-model')).to_contain_text('M4')
+
+
 def test_partial_arabic_and_confirmation(browser_page):
     page, base = browser_page
     page.goto(base + '/diagnose')
