@@ -1,0 +1,350 @@
+{
+  "Acura": {
+    "path": "/image/car_logos/acura.svg",
+    "status": "existing"
+  },
+  "Alfa Romeo": {
+    "path": "/image/car_logos/alfa-romeo.svg",
+    "status": "existing"
+  },
+  "Aston Martin": {
+    "path": "/image/car_logos/aston-martin.svg",
+    "status": "existing"
+  },
+  "Audi": {
+    "path": "/image/car_logos/audi.svg",
+    "status": "existing"
+  },
+  "Bentley": {
+    "path": "/image/car_logos/bentley.svg",
+    "status": "existing"
+  },
+  "BMW": {
+    "path": "/image/car_logos/bmw.svg",
+    "status": "existing"
+  },
+  "Buick": {
+    "path": "/image/car_logos/buick.svg",
+    "status": "existing"
+  },
+  "Cadillac": {
+    "path": "/image/car_logos/cadillac.svg",
+    "status": "existing"
+  },
+  "Chevrolet": {
+    "path": "/image/car_logos/chevrolet.svg",
+    "status": "existing"
+  },
+  "Chrysler": {
+    "path": "/image/car_logos/chrysler.svg",
+    "status": "existing"
+  },
+  "Citroen": {
+    "path": "/image/car_logos/citroen.svg",
+    "status": "existing"
+  },
+  "Dodge": {
+    "path": "/image/car_logos/dodge.svg",
+    "status": "existing"
+  },
+  "Ferrari": {
+    "path": "/image/car_logos/ferrari.svg",
+    "status": "existing"
+  },
+  "Fiat": {
+    "path": "/image/car_logos/fiat.svg",
+    "status": "existing"
+  },
+  "Ford": {
+    "path": "/image/car_logos/ford.svg",
+    "status": "existing"
+  },
+  "Genesis": {
+    "path": "/image/car_logos/genesis.svg",
+    "status": "existing"
+  },
+  "GMC": {
+    "path": "/image/car_logos/gmc.svg",
+    "status": "existing"
+  },
+  "Honda": {
+    "path": "/image/car_logos/honda.svg",
+    "status": "existing"
+  },
+  "Hyundai": {
+    "path": "/image/car_logos/hyundai.svg",
+    "status": "existing"
+  },
+  "Infiniti": {
+    "path": "/image/car_logos/infiniti.svg",
+    "status": "existing"
+  },
+  "Jaguar": {
+    "path": "/image/car_logos/jaguar.svg",
+    "status": "existing"
+  },
+  "Jeep": {
+    "path": "/image/car_logos/jeep.svg",
+    "status": "existing"
+  },
+  "Kia": {
+    "path": "/image/car_logos/kia.svg",
+    "status": "existing"
+  },
+  "Lamborghini": {
+    "path": "/image/car_logos/lamborghini.svg",
+    "status": "existing"
+  },
+  "Land Rover": {
+    "path": "/image/car_logos/land-rover.svg",
+    "status": "existing"
+  },
+  "Lexus": {
+    "path": "/image/car_logos/lexus.svg",
+    "status": "existing"
+  },
+  "Lincoln": {
+    "path": "/image/car_logos/lincoln.svg",
+    "status": "existing"
+  },
+  "Maserati": {
+    "path": "/image/car_logos/maserati.svg",
+    "status": "existing"
+  },
+  "Mazda": {
+    "path": "/image/car_logos/mazda.svg",
+    "status": "existing"
+  },
+  "McLaren": {
+    "path": "/image/car_logos/mclaren.svg",
+    "status": "existing"
+  },
+  "Mercedes-Benz": {
+    "path": "/image/car_logos/mercedes-benz.svg",
+    "status": "existing"
+  },
+  "Mitsubishi": {
+    "path": "/image/car_logos/mitsubishi.svg",
+    "status": "existing"
+  },
+  "Nissan": {
+    "path": "/image/car_logos/nissan.svg",
+    "status": "existing"
+  },
+  "Opel": {
+    "path": "/image/car_logos/opel.svg",
+    "status": "existing"
+  },
+  "Peugeot": {
+    "path": "/image/car_logos/peugeot.svg",
+    "status": "existing"
+  },
+  "Porsche": {
+    "path": "/image/car_logos/porsche.svg",
+    "status": "existing"
+  },
+  "Ram": {
+    "path": "/image/car_logos/ram.svg",
+    "status": "existing"
+  },
+  "Renault": {
+    "path": "/image/car_logos/renault.svg",
+    "status": "existing"
+  },
+  "Rolls-Royce": {
+    "path": "/image/car_logos/rolls-royce.svg",
+    "status": "existing"
+  },
+  "Seat": {
+    "path": "/image/car_logos/seat.svg",
+    "status": "existing"
+  },
+  "Skoda": {
+    "path": "/image/car_logos/skoda.svg",
+    "status": "existing"
+  },
+  "Smart": {
+    "path": "/image/car_logos/smart.svg",
+    "status": "existing"
+  },
+  "Subaru": {
+    "path": "/image/car_logos/subaru.svg",
+    "status": "existing"
+  },
+  "Suzuki": {
+    "path": "/image/car_logos/suzuki.svg",
+    "status": "existing"
+  },
+  "Tesla": {
+    "path": "/image/car_logos/tesla.svg",
+    "status": "existing"
+  },
+  "Toyota": {
+    "path": "/image/car_logos/toyota.svg",
+    "status": "existing"
+  },
+  "Volkswagen": {
+    "path": "/image/car_logos/volkswagen.svg",
+    "status": "existing"
+  },
+  "Volvo": {
+    "path": "/image/car_logos/volvo.svg",
+    "status": "existing"
+  },
+  "Dacia": {
+    "path": "/image/car_logos/dacia.svg",
+    "status": "connected-existing"
+  },
+  "Mini": {
+    "path": "/image/car_logos/mini.svg",
+    "status": "connected-existing"
+  },
+  "Isuzu": {
+    "path": "/image/car_logos/isuzu.png",
+    "status": "connected-existing"
+  },
+  "Daihatsu": {
+    "path": "/image/car_logos/daihatsu.png",
+    "status": "connected-existing"
+  },
+  "DS": {
+    "path": "/image/car_logos/ds.png",
+    "status": "connected-existing"
+  },
+  "Lancia": {
+    "path": "/image/car_logos/lancia.png",
+    "status": "connected-existing"
+  },
+  "Bugatti": {
+    "path": "/image/car_logos/bugatti.svg",
+    "status": "connected-existing"
+  },
+  "Lotus": {
+    "path": "/image/car_logos/lotus.png",
+    "status": "connected-existing"
+  },
+  "Polestar": {
+    "path": "/image/car_logos/polestar.svg",
+    "status": "connected-existing"
+  },
+  "Saab": {
+    "path": "/image/car_logos/saab.png",
+    "status": "connected-existing"
+  },
+  "Rivian": {
+    "path": "/image/car_logos/rivian.png",
+    "status": "connected-existing"
+  },
+  "Lucid": {
+    "path": "/image/car_logos/lucid.svg",
+    "status": "connected-existing"
+  },
+  "Daewoo": {
+    "path": "/image/car_logos/daewoo.png",
+    "status": "connected-existing"
+  },
+  "BYD": {
+    "path": "/image/car_logos/byd.png",
+    "status": "connected-existing"
+  },
+  "Geely": {
+    "path": "/image/car_logos/geely.png",
+    "status": "connected-existing"
+  },
+  "Chery": {
+    "path": "/image/car_logos/chery.png",
+    "status": "connected-existing"
+  },
+  "Changan": {
+    "path": "/image/car_logos/changan.png",
+    "status": "connected-existing"
+  },
+  "Great Wall": {
+    "path": "/image/car_logos/great-wall.png",
+    "status": "connected-existing"
+  },
+  "Haval": {
+    "path": "/image/car_logos/haval.png",
+    "status": "connected-existing"
+  },
+  "Zeekr": {
+    "path": "/image/car_logos/zeekr.png",
+    "status": "connected-existing"
+  },
+  "NIO": {
+    "path": "/image/car_logos/nio.png",
+    "status": "connected-existing"
+  },
+  "XPeng": {
+    "path": "/image/car_logos/xpeng.png",
+    "status": "connected-existing"
+  },
+  "Hongqi": {
+    "path": "/image/car_logos/hongqi.png",
+    "status": "connected-existing"
+  },
+  "Li Auto": {
+    "path": "/image/car_logos/li-auto.png",
+    "status": "connected-existing"
+  },
+  "Leapmotor": {
+    "path": "/image/car_logos/leapmotor.png",
+    "status": "connected-existing"
+  },
+  "GAC": {
+    "path": "/image/car_logos/gac.png",
+    "status": "connected-existing"
+  },
+  "MG": {
+    "path": "/image/car_logos/mg.svg",
+    "status": "connected-existing"
+  },
+  "JAC": {
+    "path": "/image/car_logos/jac.png",
+    "status": "connected-existing"
+  },
+  "BAIC": {
+    "path": "/image/car_logos/baic.png",
+    "status": "connected-existing"
+  },
+  "FAW": {
+    "path": "/image/car_logos/faw.png",
+    "status": "connected-existing"
+  },
+  "Dongfeng": {
+    "path": "/image/car_logos/dongfeng.png",
+    "status": "connected-existing"
+  },
+  "Foton": {
+    "path": "/image/car_logos/foton.png",
+    "status": "connected-existing"
+  },
+  "Tata": {
+    "path": "/image/car_logos/tata.svg",
+    "status": "connected-existing"
+  },
+  "Mahindra": {
+    "path": "/image/car_logos/mahindra.svg",
+    "status": "connected-existing"
+  },
+  "Proton": {
+    "path": "/image/car_logos/proton.svg",
+    "status": "connected-existing"
+  },
+  "Perodua": {
+    "path": "/image/car_logos/perodua.png",
+    "status": "connected-existing"
+  },
+  "VinFast": {
+    "path": "/image/car_logos/vinfast.png",
+    "status": "connected-existing"
+  },
+  "Cupra": {
+    "path": "/image/car_logos/cupra.png",
+    "status": "connected-existing"
+  },
+  "Abarth": {
+    "path": "/image/car_logos/abarth.png",
+    "status": "connected-existing"
+  }
+}

@@ -1,0 +1,172 @@
+{
+  "counts": {
+    "new_photo_files": 536,
+    "existing_photo_files_replaced": 210,
+    "logo_path_issues_fixed": 9,
+    "brands_before": 50,
+    "brands_added": 37,
+    "logos_before": 50,
+    "logos_added": 39,
+    "logos_corrected": 7,
+    "models_before": 229,
+    "models_added": 542,
+    "photos_downloaded": 746,
+    "photos_connected": 746,
+    "duplicated_photo_files_replaced": 169,
+    "missing_photos": 25,
+    "missing_logos": 0
+  },
+  "missing": [
+    {
+      "brand": "Acura",
+      "model": "NSX",
+      "asset": "photo",
+      "reason": "Shared article; exact photograph still required"
+    },
+    {
+      "brand": "Alfa Romeo",
+      "model": "Junior",
+      "asset": "photo",
+      "reason": "No raster vehicle photograph on verified model page"
+    },
+    {
+      "brand": "Buick",
+      "model": "Verano",
+      "asset": "photo",
+      "reason": "No raster vehicle photograph on verified model page"
+    },
+    {
+      "brand": "Ram",
+      "model": "2500",
+      "asset": "photo",
+      "reason": "Exact model page not verified"
+    },
+    {
+      "brand": "Smart",
+      "model": "#1",
+      "asset": "photo",
+      "reason": "Shared article; exact photograph still required"
+    },
+    {
+      "brand": "Smart",
+      "model": "#3",
+      "asset": "photo",
+      "reason": "Shared article; exact photograph still required"
+    },
+    {
+      "brand": "Smart",
+      "model": "#5",
+      "asset": "photo",
+      "reason": "Shared article; exact photograph still required"
+    },
+    {
+      "brand": "Volvo",
+      "model": "EX40",
+      "asset": "photo",
+      "reason": "Shared article; exact photograph still required"
+    },
+    {
+      "brand": "Volvo",
+      "model": "EC40",
+      "asset": "photo",
+      "reason": "Shared article; exact photograph still required"
+    },
+    {
+      "brand": "Geely",
+      "model": "Atlas",
+      "asset": "photo",
+      "reason": "Shared article; exact photograph still required"
+    },
+    {
+      "brand": "Geely",
+      "model": "Okavango",
+      "asset": "photo",
+      "reason": "Shared article; exact photograph still required"
+    },
+    {
+      "brand": "Geely",
+      "model": "Tugella",
+      "asset": "photo",
+      "reason": "Shared article; exact photograph still required"
+    },
+    {
+      "brand": "Geely",
+      "model": "Geometry C",
+      "asset": "photo",
+      "reason": "Shared article; exact photograph still required"
+    },
+    {
+      "brand": "Chery",
+      "model": "Arrizo 6",
+      "asset": "photo",
+      "reason": "Shared article; exact photograph still required"
+    },
+    {
+      "brand": "Great Wall",
+      "model": "Poer",
+      "asset": "photo",
+      "reason": "Shared article; exact photograph still required"
+    },
+    {
+      "brand": "Li Auto",
+      "model": "One",
+      "asset": "photo",
+      "reason": "Shared article; exact photograph still required"
+    },
+    {
+      "brand": "GAC",
+      "model": "GN6",
+      "asset": "photo",
+      "reason": "Shared article; exact photograph still required"
+    },
+    {
+      "brand": "JAC",
+      "model": "J7",
+      "asset": "photo",
+      "reason": "Shared article; exact photograph still required"
+    },
+    {
+      "brand": "JAC",
+      "model": "JS4",
+      "asset": "photo",
+      "reason": "Shared article; exact photograph still required"
+    },
+    {
+      "brand": "JAC",
+      "model": "T8",
+      "asset": "photo",
+      "reason": "Shared article; exact photograph still required"
+    },
+    {
+      "brand": "JAC",
+      "model": "T9",
+      "asset": "photo",
+      "reason": "Shared article; exact photograph still required"
+    },
+    {
+      "brand": "BAIC",
+      "model": "X35",
+      "asset": "photo",
+      "reason": "Shared article; exact photograph still required"
+    },
+    {
+      "brand": "FAW",
+      "model": "Besturn B50",
+      "asset": "photo",
+      "reason": "Shared article; exact photograph still required"
+    },
+    {
+      "brand": "Mahindra",
+      "model": "XUV400",
+      "asset": "photo",
+      "reason": "Shared article; exact photograph still required"
+    },
+    {
+      "brand": "Abarth",
+      "model": "695",
+      "asset": "photo",
+      "reason": "Shared article; exact photograph still required"
+    }
+  ],
+  "duplicate_photo_groups": []
+}

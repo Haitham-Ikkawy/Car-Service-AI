@@ -1,0 +1,184 @@
+{
+  "batchcomplete": "",
+  "query": {
+    "redirects": [
+      {
+        "from": "Acura NSX (second generation)",
+        "to": "Honda NSX (second generation)"
+      },
+      {
+        "from": "Abarth 695",
+        "to": "Fiat 500",
+        "tofragment": "Abarth 695 SS (1964–1971)"
+      },
+      {
+        "from": "Volvo EX40",
+        "to": "Volvo XC40"
+      },
+      {
+        "from": "Volvo EC40",
+        "to": "Volvo XC40",
+        "tofragment": "EC40"
+      },
+      {
+        "from": "Mahindra XUV400",
+        "to": "Mahindra XUV300",
+        "tofragment": "Mahindra XUV400"
+      },
+      {
+        "from": "JAC T9",
+        "to": "JAC T9 Ute"
+      }
+    ],
+    "pages": {
+      "-1": {
+        "ns": 0,
+        "title": "Buick Verano (2015)",
+        "missing": ""
+      },
+      "2476248": {
+        "pageid": 2476248,
+        "ns": 0,
+        "title": "Alfa Romeo Junior (2024)",
+        "thumbnail": {
+          "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c9/Alfa_Romeo_Junior_Ibrida_DSC_7219.jpg/960px-Alfa_Romeo_Junior_Ibrida_DSC_7219.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+          "width": 640,
+          "height": 390
+        },
+        "pageimage": "Alfa_Romeo_Junior_Ibrida_DSC_7219.jpg"
+      },
+      "52955228": {
+        "pageid": 52955228,
+        "ns": 0,
+        "title": "Bestune B50",
+        "thumbnail": {
+          "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Besturn_B50_II_03.jpg/960px-Besturn_B50_II_03.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+          "width": 640,
+          "height": 480
+        },
+        "pageimage": "Besturn_B50_II_03.jpg"
+      },
+      "62855841": {
+        "pageid": 62855841,
+        "ns": 0,
+        "title": "Geometry C",
+        "thumbnail": {
+          "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a5/Geometry_C_012.jpg/960px-Geometry_C_012.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+          "width": 640,
+          "height": 472
+        },
+        "pageimage": "Geometry_C_012.jpg"
+      },
+      "65680146": {
+        "pageid": 65680146,
+        "ns": 0,
+        "title": "JAC Shuailing T8",
+        "thumbnail": {
+          "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2a/JAC_Frison.jpg/960px-JAC_Frison.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+          "width": 640,
+          "height": 480
+        },
+        "pageimage": "JAC_Frison.jpg"
+      },
+      "63353554": {
+        "pageid": 63353554,
+        "ns": 0,
+        "title": "Li One",
+        "thumbnail": {
+          "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/2020_Lixiang_ONE_%28front%29.jpg/960px-2020_Lixiang_ONE_%28front%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+          "width": 640,
+          "height": 367
+        },
+        "pageimage": "2020_Lixiang_ONE_(front).jpg"
+      },
+      "6664703": {
+        "pageid": 6664703,
+        "ns": 0,
+        "title": "Smart 1",
+        "thumbnail": {
+          "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4b/Smart_%E2%99%AF1_Pro_%E2%80%93_f_11102025.jpg/960px-Smart_%E2%99%AF1_Pro_%E2%80%93_f_11102025.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+          "width": 640,
+          "height": 346
+        },
+        "pageimage": "Smart_♯1_Pro_–_f_11102025.jpg"
+      },
+      "72276638": {
+        "pageid": 72276638,
+        "ns": 0,
+        "title": "Smart 3",
+        "thumbnail": {
+          "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/Smart_Hashtag_3_DSC_7992.jpg/960px-Smart_Hashtag_3_DSC_7992.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+          "width": 640,
+          "height": 378
+        },
+        "pageimage": "Smart_Hashtag_3_DSC_7992.jpg"
+      },
+      "77170940": {
+        "pageid": 77170940,
+        "ns": 0,
+        "title": "Smart 5",
+        "thumbnail": {
+          "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/69/Smart_Hashtag_5_Premium_autoMOBIL_T%C3%BCbingen_2025_DSC_2755_%28cropped%29.jpg/960px-Smart_Hashtag_5_Premium_autoMOBIL_T%C3%BCbingen_2025_DSC_2755_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+          "width": 640,
+          "height": 365
+        },
+        "pageimage": "Smart_Hashtag_5_Premium_autoMOBIL_Tübingen_2025_DSC_2755_(cropped).jpg"
+      },
+      "484016": {
+        "pageid": 484016,
+        "ns": 0,
+        "title": "Fiat 500",
+        "thumbnail": {
+          "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a1/1970_Fiat_500_L_--_2011_DC_1.jpg/960px-1970_Fiat_500_L_--_2011_DC_1.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+          "width": 640,
+          "height": 545
+        },
+        "pageimage": "1970_Fiat_500_L_--_2011_DC_1.jpg"
+      },
+      "49205905": {
+        "pageid": 49205905,
+        "ns": 0,
+        "title": "Honda NSX (second generation)",
+        "thumbnail": {
+          "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/80/Honda%2C_Paris_Motor_Show_2018%2C_Paris_%281Y7A1625%29_%28cropped%29.jpg/960px-Honda%2C_Paris_Motor_Show_2018%2C_Paris_%281Y7A1625%29_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+          "width": 640,
+          "height": 349
+        },
+        "pageimage": "Honda,_Paris_Motor_Show_2018,_Paris_(1Y7A1625)_(cropped).jpg"
+      },
+      "74835464": {
+        "pageid": 74835464,
+        "ns": 0,
+        "title": "JAC T9 Ute",
+        "thumbnail": {
+          "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2e/JAC_Hunter_facelift_001.jpg/960px-JAC_Hunter_facelift_001.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+          "width": 640,
+          "height": 480
+        },
+        "pageimage": "JAC_Hunter_facelift_001.jpg"
+      },
+      "59872404": {
+        "pageid": 59872404,
+        "ns": 0,
+        "title": "Mahindra XUV300",
+        "thumbnail": {
+          "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d4/Mahindra_XUV300.jpg/960px-Mahindra_XUV300.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+          "width": 640,
+          "height": 396
+        },
+        "pageimage": "Mahindra_XUV300.jpg"
+      },
+      "52091688": {
+        "pageid": 52091688,
+        "ns": 0,
+        "title": "Volvo XC40",
+        "thumbnail": {
+          "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/27/2019_Volvo_XC40_T5_Momentum_in_Bright_Silver_Metallic%2C_front_left%2C_2025-09-22.jpg/960px-2019_Volvo_XC40_T5_Momentum_in_Bright_Silver_Metallic%2C_front_left%2C_2025-09-22.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+          "width": 640,
+          "height": 376
+        },
+        "pageimage": "2019_Volvo_XC40_T5_Momentum_in_Bright_Silver_Metallic,_front_left,_2025-09-22.jpg"
+      }
+    }
+  }
+}

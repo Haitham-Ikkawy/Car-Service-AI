@@ -1,0 +1,456 @@
+{
+  "Acura": {
+    "path": "/image/car_logos/acura.svg",
+    "status": "existing"
+  },
+  "Alfa Romeo": {
+    "path": "/image/car_logos/alfa-romeo.svg",
+    "status": "existing"
+  },
+  "Aston Martin": {
+    "path": "/image/car_logos/aston-martin.svg",
+    "status": "existing"
+  },
+  "Audi": {
+    "path": "/image/car_logos/audi.svg",
+    "status": "existing"
+  },
+  "Bentley": {
+    "path": "/image/car_logos/bentley.svg",
+    "status": "existing"
+  },
+  "BMW": {
+    "path": "/image/car_logos/bmw.svg",
+    "status": "existing"
+  },
+  "Buick": {
+    "path": "/image/car_logos/buick.svg",
+    "status": "existing"
+  },
+  "Cadillac": {
+    "path": "/image/car_logos/cadillac.png",
+    "status": "corrected",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/cadillac.png",
+    "replaces": "/image/car_logos/cadillac.svg",
+    "reason": "Incorrect or unrelated existing artwork",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Chevrolet": {
+    "path": "/image/car_logos/chevrolet.svg",
+    "status": "existing"
+  },
+  "Chrysler": {
+    "path": "/image/car_logos/chrysler.svg",
+    "status": "existing"
+  },
+  "Citroen": {
+    "path": "/image/car_logos/citroen.svg",
+    "status": "existing"
+  },
+  "Dodge": {
+    "path": "/image/car_logos/dodge.svg",
+    "status": "existing"
+  },
+  "Ferrari": {
+    "path": "/image/car_logos/ferrari.svg",
+    "status": "existing"
+  },
+  "Fiat": {
+    "path": "/image/car_logos/fiat.svg",
+    "status": "existing"
+  },
+  "Ford": {
+    "path": "/image/car_logos/ford.svg",
+    "status": "existing"
+  },
+  "Genesis": {
+    "path": "/image/car_logos/genesis.svg",
+    "status": "existing"
+  },
+  "GMC": {
+    "path": "/image/car_logos/gmc.svg",
+    "status": "existing"
+  },
+  "Honda": {
+    "path": "/image/car_logos/honda.png",
+    "status": "corrected",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/honda.png",
+    "replaces": "/image/car_logos/honda.svg",
+    "reason": "Incorrect or unrelated existing artwork",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Hyundai": {
+    "path": "/image/car_logos/hyundai.svg",
+    "status": "existing"
+  },
+  "Infiniti": {
+    "path": "/image/car_logos/infiniti.svg",
+    "status": "existing"
+  },
+  "Jaguar": {
+    "path": "/image/car_logos/jaguar.png",
+    "status": "corrected",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/jaguar.png",
+    "replaces": "/image/car_logos/jaguar.svg",
+    "reason": "Incorrect or unrelated existing artwork",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Jeep": {
+    "path": "/image/car_logos/jeep.svg",
+    "status": "existing"
+  },
+  "Kia": {
+    "path": "/image/car_logos/kia.svg",
+    "status": "existing"
+  },
+  "Lamborghini": {
+    "path": "/image/car_logos/lamborghini.svg",
+    "status": "existing"
+  },
+  "Land Rover": {
+    "path": "/image/car_logos/land-rover.svg",
+    "status": "existing"
+  },
+  "Lexus": {
+    "path": "/image/car_logos/lexus.svg",
+    "status": "existing"
+  },
+  "Lincoln": {
+    "path": "/image/car_logos/lincoln.svg",
+    "status": "existing"
+  },
+  "Maserati": {
+    "path": "/image/car_logos/maserati.svg",
+    "status": "existing"
+  },
+  "Mazda": {
+    "path": "/image/car_logos/mazda.svg",
+    "status": "existing"
+  },
+  "McLaren": {
+    "path": "/image/car_logos/mclaren.svg",
+    "status": "existing"
+  },
+  "Mercedes-Benz": {
+    "path": "/image/car_logos/mercedes-benz.svg",
+    "status": "existing"
+  },
+  "Mitsubishi": {
+    "path": "/image/car_logos/mitsubishi.svg",
+    "status": "existing"
+  },
+  "Nissan": {
+    "path": "/image/car_logos/nissan.svg",
+    "status": "existing"
+  },
+  "Opel": {
+    "path": "/image/car_logos/opel.svg",
+    "status": "existing"
+  },
+  "Peugeot": {
+    "path": "/image/car_logos/peugeot.svg",
+    "status": "existing"
+  },
+  "Porsche": {
+    "path": "/image/car_logos/porsche.svg",
+    "status": "existing"
+  },
+  "Ram": {
+    "path": "/image/car_logos/ram.svg",
+    "status": "existing"
+  },
+  "Renault": {
+    "path": "/image/car_logos/renault.svg",
+    "status": "existing"
+  },
+  "Rolls-Royce": {
+    "path": "/image/car_logos/rolls-royce.svg",
+    "status": "existing"
+  },
+  "Seat": {
+    "path": "/image/car_logos/seat.svg",
+    "status": "existing"
+  },
+  "Skoda": {
+    "path": "/image/car_logos/skoda.svg",
+    "status": "existing"
+  },
+  "Smart": {
+    "path": "/image/car_logos/smart.png",
+    "status": "corrected",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/smart.png",
+    "replaces": "/image/car_logos/smart.svg",
+    "reason": "Incorrect or unrelated existing artwork",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Subaru": {
+    "path": "/image/car_logos/subaru.png",
+    "status": "corrected",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/subaru.png",
+    "replaces": "/image/car_logos/subaru.svg",
+    "reason": "Incorrect or unrelated existing artwork",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Suzuki": {
+    "path": "/image/car_logos/suzuki.svg",
+    "status": "existing"
+  },
+  "Tesla": {
+    "path": "/image/car_logos/tesla.png",
+    "status": "corrected",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/tesla.png",
+    "replaces": "/image/car_logos/tesla.svg",
+    "reason": "Incorrect or unrelated existing artwork",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Toyota": {
+    "path": "/image/car_logos/toyota.png",
+    "status": "corrected",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/toyota.png",
+    "replaces": "/image/car_logos/toyota.svg",
+    "reason": "Incorrect or unrelated existing artwork",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Volkswagen": {
+    "path": "/image/car_logos/volkswagen.svg",
+    "status": "existing"
+  },
+  "Volvo": {
+    "path": "/image/car_logos/volvo.svg",
+    "status": "existing"
+  },
+  "Dacia": {
+    "path": "/image/car_logos/dacia.svg",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/dacia.svg",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Mini": {
+    "path": "/image/car_logos/mini.svg",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/mini.svg",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Isuzu": {
+    "path": "/image/car_logos/isuzu.png",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/isuzu.png",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Daihatsu": {
+    "path": "/image/car_logos/daihatsu.png",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/daihatsu.png",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "DS": {
+    "path": "/image/car_logos/ds.png",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/ds.png",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Lancia": {
+    "path": "/image/car_logos/lancia.png",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/lancia.png",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Bugatti": {
+    "path": "/image/car_logos/bugatti.svg",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/bugatti.svg",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Lotus": {
+    "path": "/image/car_logos/lotus.png",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/lotus.png",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Polestar": {
+    "path": "/image/car_logos/polestar.svg",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/polestar.svg",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Saab": {
+    "path": "/image/car_logos/saab.png",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/saab.png",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Rivian": {
+    "path": "/image/car_logos/rivian.png",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/rivian.png",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Lucid": {
+    "path": "/image/car_logos/lucid.svg",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/lucid.svg",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Daewoo": {
+    "path": "/image/car_logos/daewoo.png",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/daewoo.png",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "BYD": {
+    "path": "/image/car_logos/byd.png",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/byd.png",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Geely": {
+    "path": "/image/car_logos/geely.png",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/geely.png",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Chery": {
+    "path": "/image/car_logos/chery.png",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/chery.png",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Changan": {
+    "path": "/image/car_logos/changan.png",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/changan.png",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Great Wall": {
+    "path": "/image/car_logos/great-wall.png",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/great-wall.png",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Haval": {
+    "path": "/image/car_logos/haval.png",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/haval.png",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Zeekr": {
+    "path": "/image/car_logos/zeekr.png",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/zeekr.png",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "NIO": {
+    "path": "/image/car_logos/nio.png",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/nio.png",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "XPeng": {
+    "path": "/image/car_logos/xpeng.png",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/xpeng.png",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Hongqi": {
+    "path": "/image/car_logos/hongqi.png",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/hongqi.png",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Li Auto": {
+    "path": "/image/car_logos/li-auto.png",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/li-auto.png",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Leapmotor": {
+    "path": "/image/car_logos/leapmotor.png",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/leapmotor.png",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "GAC": {
+    "path": "/image/car_logos/gac.png",
+    "status": "added",
+    "sourceUrl": "https://carimagesapi.com/brand-logo?make=GAC",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "MG": {
+    "path": "/image/car_logos/mg.svg",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/mg.svg",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "JAC": {
+    "path": "/image/car_logos/jac.png",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/jac.png",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "BAIC": {
+    "path": "/image/car_logos/baic.png",
+    "status": "added",
+    "sourceUrl": "https://carimagesapi.com/brand-logo?make=BAIC",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "FAW": {
+    "path": "/image/car_logos/faw.png",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/faw.png",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Dongfeng": {
+    "path": "/image/car_logos/dongfeng.png",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/dongfeng.png",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Foton": {
+    "path": "/image/car_logos/foton.png",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/foton.png",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Tata": {
+    "path": "/image/car_logos/tata.svg",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/tata.svg",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Mahindra": {
+    "path": "/image/car_logos/mahindra.svg",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/mahindra.svg",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Proton": {
+    "path": "/image/car_logos/proton.svg",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/proton.svg",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Perodua": {
+    "path": "/image/car_logos/perodua.png",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/perodua.png",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "VinFast": {
+    "path": "/image/car_logos/vinfast.png",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/vinfast.png",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Cupra": {
+    "path": "/image/car_logos/cupra.png",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/cupra.png",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  },
+  "Abarth": {
+    "path": "/image/car_logos/abarth.png",
+    "status": "added",
+    "sourceUrl": "https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/abarth.png",
+    "license": "Brand trademark; artwork rights remain with respective owners. See ASSET-SOURCES.md."
+  }
+}

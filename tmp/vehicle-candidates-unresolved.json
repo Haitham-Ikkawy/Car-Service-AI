@@ -1,0 +1,536 @@
+[
+  {
+    "brand": "BMW",
+    "model": "i5",
+    "reason": "Exact model page not verified",
+    "resolved": "BMW 5 Series (G60)"
+  },
+  {
+    "brand": "BMW",
+    "model": "i7",
+    "reason": "Exact model page not verified",
+    "resolved": "BMW 7 Series (G70)"
+  },
+  {
+    "brand": "BMW",
+    "model": "iX1",
+    "reason": "Exact model page not verified",
+    "resolved": "BMW X1 (U11)"
+  },
+  {
+    "brand": "BMW",
+    "model": "Z4",
+    "reason": "Exact model page not verified",
+    "resolved": "BMW Z"
+  },
+  {
+    "brand": "Mercedes-Benz",
+    "model": "V-Class",
+    "reason": "Exact model page not verified",
+    "resolved": "Mercedes-Benz Vito"
+  },
+  {
+    "brand": "Toyota",
+    "model": "GR86",
+    "reason": "Exact model page not verified",
+    "resolved": "Toyota 86"
+  },
+  {
+    "brand": "Toyota",
+    "model": "Rush",
+    "reason": "Exact model page not verified",
+    "resolved": "Daihatsu Terios"
+  },
+  {
+    "brand": "Nissan",
+    "model": "Z",
+    "reason": "Exact model page not verified",
+    "resolved": "Nissan Z-car"
+  },
+  {
+    "brand": "Ford",
+    "model": "F-150",
+    "reason": "Exact model page not verified",
+    "resolved": "Ford F-Series"
+  },
+  {
+    "brand": "Acura",
+    "model": "Integra",
+    "reason": "Exact model page not verified",
+    "resolved": "Honda Integra"
+  },
+  {
+    "brand": "Acura",
+    "model": "NSX",
+    "reason": "Exact model page not verified",
+    "resolved": "Honda NSX"
+  },
+  {
+    "brand": "Infiniti",
+    "model": "QX55",
+    "reason": "Exact model page not verified",
+    "resolved": "Infiniti QX50"
+  },
+  {
+    "brand": "Mazda",
+    "model": "CX-70",
+    "reason": "Exact model page not verified",
+    "resolved": "Mazda CX-90"
+  },
+  {
+    "brand": "Mitsubishi",
+    "model": "Montero Sport",
+    "reason": "Exact model page not verified",
+    "resolved": "Mitsubishi Pajero Sport"
+  },
+  {
+    "brand": "Subaru",
+    "model": "BRZ",
+    "reason": "Exact model page not verified",
+    "resolved": "Toyota 86"
+  },
+  {
+    "brand": "Subaru",
+    "model": "Solterra",
+    "reason": "Exact model page not verified",
+    "resolved": "Toyota bZ4X"
+  },
+  {
+    "brand": "Suzuki",
+    "model": "S-Cross",
+    "reason": "Exact model page not verified",
+    "resolved": "Suzuki SX4"
+  },
+  {
+    "brand": "Suzuki",
+    "model": "XL7",
+    "reason": "Exact model page not verified",
+    "resolved": "Suzuki Ertiga"
+  },
+  {
+    "brand": "Suzuki",
+    "model": "Grand Vitara",
+    "reason": "Exact model page not verified",
+    "resolved": "Suzuki Vitara"
+  },
+  {
+    "brand": "Volkswagen",
+    "model": "ID.5",
+    "reason": "Exact model page not verified",
+    "resolved": "Volkswagen ID.4"
+  },
+  {
+    "brand": "Porsche",
+    "model": "718 Boxster",
+    "reason": "Exact model page not verified",
+    "resolved": "Porsche 718 Boxster and Cayman (982)"
+  },
+  {
+    "brand": "Porsche",
+    "model": "718 Cayman",
+    "reason": "Exact model page not verified",
+    "resolved": "Porsche 718 Boxster and Cayman (982)"
+  },
+  {
+    "brand": "Porsche",
+    "model": "Boxster",
+    "reason": "Exact model page not verified",
+    "resolved": "Porsche Boxster and Cayman"
+  },
+  {
+    "brand": "Porsche",
+    "model": "Cayman",
+    "reason": "Exact model page not verified",
+    "resolved": "Porsche Boxster and Cayman"
+  },
+  {
+    "brand": "Peugeot",
+    "model": "Rifter",
+    "reason": "Exact model page not verified",
+    "resolved": "Citroën Berlingo"
+  },
+  {
+    "brand": "Peugeot",
+    "model": "Partner",
+    "reason": "Exact model page not verified",
+    "resolved": "Citroën Berlingo"
+  },
+  {
+    "brand": "Peugeot",
+    "model": "Traveller",
+    "reason": "Exact model page not verified",
+    "resolved": "Citroën Jumpy"
+  },
+  {
+    "brand": "Alfa Romeo",
+    "model": "Brera",
+    "reason": "Exact model page not verified",
+    "resolved": "Alfa Romeo Brera and Spider"
+  },
+  {
+    "brand": "Ferrari",
+    "model": "458 Italia",
+    "reason": "Exact model page not verified",
+    "resolved": "Ferrari 458"
+  },
+  {
+    "brand": "Maserati",
+    "model": "GranCabrio",
+    "reason": "Exact model page not verified",
+    "resolved": "Maserati GranTurismo"
+  },
+  {
+    "brand": "McLaren",
+    "model": "600LT",
+    "reason": "Exact model page not verified",
+    "resolved": "McLaren 570S"
+  },
+  {
+    "brand": "McLaren",
+    "model": "765LT",
+    "reason": "Exact model page not verified",
+    "resolved": "McLaren 720S"
+  },
+  {
+    "brand": "Volvo",
+    "model": "EX40",
+    "reason": "Exact model page not verified",
+    "resolved": "Volvo XC40"
+  },
+  {
+    "brand": "Volvo",
+    "model": "EC40",
+    "reason": "Exact model page not verified",
+    "resolved": "Volvo XC40"
+  },
+  {
+    "brand": "Volvo",
+    "model": "C40",
+    "reason": "Exact model page not verified",
+    "resolved": "Volvo XC40"
+  },
+  {
+    "brand": "GMC",
+    "model": "Canyon",
+    "reason": "Exact model page not verified",
+    "resolved": "Chevrolet Colorado"
+  },
+  {
+    "brand": "Ram",
+    "model": "ProMaster",
+    "reason": "Exact model page not verified",
+    "resolved": "Fiat Ducato"
+  },
+  {
+    "brand": "Genesis",
+    "model": "GV80 Coupe",
+    "reason": "Exact model page not verified",
+    "resolved": null
+  },
+  {
+    "brand": "Daewoo",
+    "model": "Matiz",
+    "reason": "Exact model page not verified",
+    "resolved": "Chevrolet Spark"
+  },
+  {
+    "brand": "BYD",
+    "model": "Seal U",
+    "reason": "Exact model page not verified",
+    "resolved": "BYD Song Plus"
+  },
+  {
+    "brand": "BYD",
+    "model": "Shark",
+    "reason": "Exact model page not verified",
+    "resolved": "BYD Shark 6"
+  },
+  {
+    "brand": "Geely",
+    "model": "Coolray",
+    "reason": "Exact model page not verified",
+    "resolved": "Geely Binyue"
+  },
+  {
+    "brand": "Geely",
+    "model": "Atlas",
+    "reason": "Exact model page not verified",
+    "resolved": "Geely Boyue"
+  },
+  {
+    "brand": "Geely",
+    "model": "Monjaro",
+    "reason": "Exact model page not verified",
+    "resolved": "Geely Xingyue L"
+  },
+  {
+    "brand": "Geely",
+    "model": "Okavango",
+    "reason": "Exact model page not verified",
+    "resolved": "Geely Haoyue"
+  },
+  {
+    "brand": "Geely",
+    "model": "Tugella",
+    "reason": "Exact model page not verified",
+    "resolved": "Geely Xingyue S"
+  },
+  {
+    "brand": "Geely",
+    "model": "Geometry C",
+    "reason": "Exact model page not verified",
+    "resolved": null
+  },
+  {
+    "brand": "Chery",
+    "model": "Tiggo 4",
+    "reason": "Exact model page not verified",
+    "resolved": "Chery Tiggo 5x"
+  },
+  {
+    "brand": "Chery",
+    "model": "Arrizo 6",
+    "reason": "Exact model page not verified",
+    "resolved": "Chery Arrizo 5 Plus"
+  },
+  {
+    "brand": "Great Wall",
+    "model": "Poer",
+    "reason": "Exact model page not verified",
+    "resolved": null
+  },
+  {
+    "brand": "Haval",
+    "model": "Dargo",
+    "reason": "Exact model page not verified",
+    "resolved": "Haval Big Dog"
+  },
+  {
+    "brand": "NIO",
+    "model": "EC7",
+    "reason": "Exact model page not verified",
+    "resolved": null
+  },
+  {
+    "brand": "Li Auto",
+    "model": "L6",
+    "reason": "Exact model page not verified",
+    "resolved": null
+  },
+  {
+    "brand": "Li Auto",
+    "model": "L7",
+    "reason": "Exact model page not verified",
+    "resolved": "Li L7"
+  },
+  {
+    "brand": "Li Auto",
+    "model": "L8",
+    "reason": "Exact model page not verified",
+    "resolved": "Li L8"
+  },
+  {
+    "brand": "Li Auto",
+    "model": "L9",
+    "reason": "Exact model page not verified",
+    "resolved": "Li L9"
+  },
+  {
+    "brand": "Li Auto",
+    "model": "Mega",
+    "reason": "Exact model page not verified",
+    "resolved": "Li Mega"
+  },
+  {
+    "brand": "Li Auto",
+    "model": "One",
+    "reason": "Exact model page not verified",
+    "resolved": "Li One"
+  },
+  {
+    "brand": "GAC",
+    "model": "GN6",
+    "reason": "Exact model page not verified",
+    "resolved": null
+  },
+  {
+    "brand": "GAC",
+    "model": "GN8",
+    "reason": "Exact model page not verified",
+    "resolved": null
+  },
+  {
+    "brand": "MG",
+    "model": "Marvel R",
+    "reason": "Exact model page not verified",
+    "resolved": "Roewe Marvel X"
+  },
+  {
+    "brand": "JAC",
+    "model": "J7",
+    "reason": "Exact model page not verified",
+    "resolved": "JAC Binyue"
+  },
+  {
+    "brand": "JAC",
+    "model": "JS4",
+    "reason": "Exact model page not verified",
+    "resolved": "Sehol X4"
+  },
+  {
+    "brand": "JAC",
+    "model": "S3",
+    "reason": "Exact model page not verified",
+    "resolved": null
+  },
+  {
+    "brand": "JAC",
+    "model": "T6",
+    "reason": "Exact model page not verified",
+    "resolved": "JAC Shuailing T6"
+  },
+  {
+    "brand": "JAC",
+    "model": "T8",
+    "reason": "Exact model page not verified",
+    "resolved": "JAC Shuailing T8"
+  },
+  {
+    "brand": "JAC",
+    "model": "T9",
+    "reason": "Exact model page not verified",
+    "resolved": "JAC T9 Ute"
+  },
+  {
+    "brand": "BAIC",
+    "model": "X35",
+    "reason": "Exact model page not verified",
+    "resolved": null
+  },
+  {
+    "brand": "BAIC",
+    "model": "X55",
+    "reason": "Exact model page not verified",
+    "resolved": "Beijing Mofang"
+  },
+  {
+    "brand": "FAW",
+    "model": "Besturn B50",
+    "reason": "Exact model page not verified",
+    "resolved": "Bestune B50"
+  },
+  {
+    "brand": "FAW",
+    "model": "Besturn B70",
+    "reason": "Exact model page not verified",
+    "resolved": "Bestune B70"
+  },
+  {
+    "brand": "FAW",
+    "model": "Besturn X40",
+    "reason": "Exact model page not verified",
+    "resolved": "Bestune X40"
+  },
+  {
+    "brand": "FAW",
+    "model": "Besturn X80",
+    "reason": "Exact model page not verified",
+    "resolved": "Bestune X80"
+  },
+  {
+    "brand": "Mahindra",
+    "model": "Scorpio N",
+    "reason": "Exact model page not verified",
+    "resolved": null
+  },
+  {
+    "brand": "Mahindra",
+    "model": "XUV400",
+    "reason": "Exact model page not verified",
+    "resolved": "Mahindra XUV300"
+  },
+  {
+    "brand": "Proton",
+    "model": "X90",
+    "reason": "Exact model page not verified",
+    "resolved": "Geely Haoyue"
+  },
+  {
+    "brand": "Perodua",
+    "model": "Ativa",
+    "reason": "Exact model page not verified",
+    "resolved": "Daihatsu Rocky (A200)"
+  },
+  {
+    "brand": "Perodua",
+    "model": "Aruz",
+    "reason": "Exact model page not verified",
+    "resolved": "Daihatsu Terios"
+  },
+  {
+    "brand": "Cupra",
+    "model": "Leon",
+    "reason": "Exact model page not verified",
+    "resolved": "SEAT León"
+  },
+  {
+    "brand": "Cupra",
+    "model": "Ateca",
+    "reason": "Exact model page not verified",
+    "resolved": "SEAT Ateca"
+  },
+  {
+    "brand": "Abarth",
+    "model": "595",
+    "reason": "Exact model page not verified",
+    "resolved": "Fiat 500 (2007)"
+  },
+  {
+    "brand": "Abarth",
+    "model": "695",
+    "reason": "Exact model page not verified",
+    "resolved": "Fiat 500"
+  },
+  {
+    "brand": "Abarth",
+    "model": "124 Spider",
+    "reason": "Exact model page not verified",
+    "resolved": "Fiat 124 Spider (2016)"
+  },
+  {
+    "brand": "Abarth",
+    "model": "500e",
+    "reason": "Exact model page not verified",
+    "resolved": "Fiat 500e"
+  },
+  {
+    "brand": "Smart",
+    "model": "#1",
+    "reason": "Exact model page not verified",
+    "resolved": "Smart"
+  },
+  {
+    "brand": "Smart",
+    "model": "#3",
+    "reason": "Exact model page not verified",
+    "resolved": "Smart"
+  },
+  {
+    "brand": "Smart",
+    "model": "#5",
+    "reason": "Exact model page not verified",
+    "resolved": "Smart"
+  },
+  {
+    "brand": "Land Rover",
+    "model": "Range Rover Sport",
+    "reason": "Exact model page not verified",
+    "resolved": "Range Rover Sport"
+  },
+  {
+    "brand": "Land Rover",
+    "model": "Range Rover Velar",
+    "reason": "Exact model page not verified",
+    "resolved": "Range Rover Velar"
+  }
+]

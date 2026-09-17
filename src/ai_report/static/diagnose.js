@@ -213,7 +213,7 @@
     if (previewSource) {
       vehicleImgHtml = `<img src="${esc(previewSource)}" alt="Uploaded car" class="dz-loading-vehicle-img">`;
     } else if (brand && model) {
-      const local = getModelImage(brand, model);
+      const local = getModelImage(brand, model, state.vehicle.year, state.vehicle.market);
       const primary = getVehicleImageUrl(brand, model, state.vehicle.year) || local;
       if (primary) {
         vehicleImgHtml = `<img src="${esc(primary)}" data-local="${esc(local || "")}" alt="${esc(brand)} ${esc(model)}" class="dz-loading-vehicle-img" onerror="dzImgFallback(this)">`;
@@ -342,7 +342,7 @@
 
     /* Vehicle image */
     if (imgEl) {
-      const local = getModelImage(brand, model);
+      const local = getModelImage(brand, model, state.vehicle.year, state.vehicle.market);
       const primary = getVehicleImageUrl(brand, model, state.vehicle.year) || local;
       if (primary) {
         const img = document.createElement("img");
@@ -706,7 +706,7 @@
     { name: "Bentley", logo: "/image/car_logos/bentley.svg", models: ["Continental GT", "Flying Spur", "Bentayga"] },
     { name: "BMW", logo: "/image/car_logos/bmw.svg", models: ["1 Series", "3 Series", "5 Series", "X1", "X3", "X5", "i4"] },
     { name: "Buick", logo: "/image/car_logos/buick.svg", models: ["Encore", "Envision", "LaCrosse"] },
-    { name: "Cadillac", logo: "/image/car_logos/cadillac.svg", models: ["CT4", "CT5", "XT4", "XT5", "Escalade"] },
+    { name: "Cadillac", logo: "/image/car_logos/cadillac.png", models: ["CT4", "CT5", "XT4", "XT5", "Escalade"] },
     { name: "Chevrolet", logo: "/image/car_logos/chevrolet.svg", models: ["Spark", "Cruze", "Malibu", "Trailblazer", "Equinox"] },
     { name: "Chrysler", logo: "/image/car_logos/chrysler.svg", models: ["300", "Pacifica"] },
     { name: "Citroen", logo: "/image/car_logos/citroen.svg", models: ["C1", "C3", "C4", "C5", "Berlingo"] },
@@ -716,10 +716,10 @@
     { name: "Ford", logo: "/image/car_logos/ford.svg", models: ["Fiesta", "Focus", "Mustang", "Ranger", "Escape", "Explorer"] },
     { name: "Genesis", logo: "/image/car_logos/genesis.svg", models: ["G70", "G80", "G90", "GV70", "GV80"] },
     { name: "GMC", logo: "/image/car_logos/gmc.svg", models: ["Terrain", "Acadia", "Yukon", "Sierra"] },
-    { name: "Honda", logo: "/image/car_logos/honda.svg", models: ["Civic", "Accord", "CR-V", "HR-V", "City", "Fit"] },
+    { name: "Honda", logo: "/image/car_logos/honda.png", models: ["Civic", "Accord", "CR-V", "HR-V", "City", "Fit"] },
     { name: "Hyundai", logo: "/image/car_logos/hyundai.svg", models: ["i20", "i30", "Tucson", "Santa Fe", "Elantra", "Kona"] },
     { name: "Infiniti", logo: "/image/car_logos/infiniti.svg", models: ["Q50", "Q60", "QX50", "QX60"] },
-    { name: "Jaguar", logo: "/image/car_logos/jaguar.svg", models: ["XE", "XF", "F-PACE", "E-PACE", "I-PACE"] },
+    { name: "Jaguar", logo: "/image/car_logos/jaguar.png", models: ["XE", "XF", "F-PACE", "E-PACE", "I-PACE"] },
     { name: "Jeep", logo: "/image/car_logos/jeep.svg", models: ["Renegade", "Compass", "Cherokee", "Wrangler", "Grand Cherokee"] },
     { name: "Kia", logo: "/image/car_logos/kia.svg", models: ["Rio", "Ceed", "Sportage", "Sorento", "Picanto", "EV6"] },
     { name: "Lamborghini", logo: "/image/car_logos/lamborghini.svg", models: ["Huracan", "Urus", "Revuelto"] },
@@ -740,96 +740,54 @@
     { name: "Rolls-Royce", logo: "/image/car_logos/rolls-royce.svg", models: ["Ghost", "Phantom", "Cullinan", "Spectre"] },
     { name: "Seat", logo: "/image/car_logos/seat.svg", models: ["Ibiza", "Leon", "Arona", "Ateca", "Tarraco"] },
     { name: "Skoda", logo: "/image/car_logos/skoda.svg", models: ["Fabia", "Octavia", "Superb", "Karoq", "Kodiaq"] },
-    { name: "Smart", logo: "/image/car_logos/smart.svg", models: ["ForTwo", "ForFour"] },
-    { name: "Subaru", logo: "/image/car_logos/subaru.svg", models: ["Impreza", "Forester", "Outback", "XV", "WRX"] },
+    { name: "Smart", logo: "/image/car_logos/smart.png", models: ["ForTwo", "ForFour"] },
+    { name: "Subaru", logo: "/image/car_logos/subaru.png", models: ["Impreza", "Forester", "Outback", "XV", "WRX"] },
     { name: "Suzuki", logo: "/image/car_logos/suzuki.svg", models: ["Swift", "Baleno", "Vitara", "Jimny", "Ertiga"] },
-    { name: "Tesla", logo: "/image/car_logos/tesla.svg", models: ["Model 3", "Model Y", "Model S", "Model X"] },
-    { name: "Toyota", logo: "/image/car_logos/toyota.svg", models: ["Corolla", "Camry", "RAV4", "Land Cruiser", "Yaris", "Prius", "Hilux"] },
+    { name: "Tesla", logo: "/image/car_logos/tesla.png", models: ["Model 3", "Model Y", "Model S", "Model X"] },
+    { name: "Toyota", logo: "/image/car_logos/toyota.png", models: ["Corolla", "Camry", "RAV4", "Land Cruiser", "Yaris", "Prius", "Hilux"] },
     { name: "Volkswagen", logo: "/image/car_logos/volkswagen.svg", models: ["Golf", "Passat", "Tiguan", "Polo", "Touareg", "Arteon"] },
     { name: "Volvo", logo: "/image/car_logos/volvo.svg", models: ["S60", "S90", "XC40", "XC60", "XC90"] },
   ];
 
-  // Include every configured vehicle in the same resolver and selection list.
+  // Merge the existing catalogue without accent/case/punctuation duplicates.
+  const vehicleAssets = window.CSAI_VEHICLE_ASSETS || {logos: {}, images: {}};
+  function catalogueKey(value) {
+    return (value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "");
+  }
   const configuredVehicles = JSON.parse(document.getElementById("dz-vehicle-catalogue")?.textContent || "{}");
-  for (const [rawName, models] of Object.entries(configuredVehicles)) {
-    const name = rawName === "Škoda" ? "Skoda" : rawName;
-    const known = CAR_BRANDS.find(b => b.name === name);
-    if (known) known.models = [...new Set(known.models.concat(models))];
-    else CAR_BRANDS.push({name, models, logo: null});
+  for (const [name, models] of Object.entries(configuredVehicles)) {
+    const known = CAR_BRANDS.find(b => catalogueKey(b.name) === catalogueKey(name));
+    if (known) {
+      const seen = new Set(known.models.map(catalogueKey));
+      for (const model of models) {
+        if (!seen.has(catalogueKey(model))) {
+          known.models.push(model);
+          seen.add(catalogueKey(model));
+        }
+      }
+    } else CAR_BRANDS.push({name, models: [...models], logo: null});
+  }
+  for (const brand of CAR_BRANDS) {
+    brand.logo = brand.logo || vehicleAssets.logos[catalogueKey(brand.name)] || null;
   }
 
-  /* ---- Vehicle image mapping: brand/model -> local image path ---- */
-  const VEHICLE_IMAGES = {
-    "Acura": {"ILX":"/image/vehicles/acura/ilx.webp","TLX":"/image/vehicles/acura/tlx.webp","RDX":"/image/vehicles/acura/rdx.webp","MDX":"/image/vehicles/acura/mdx.webp"},
-    "Alfa Romeo": {"Giulia":"/image/vehicles/alfa-romeo/giulia.webp","Stelvio":"/image/vehicles/alfa-romeo/stelvio.webp","Tonale":"/image/vehicles/alfa-romeo/tonale.webp"},
-    "Aston Martin": {"Vantage":"/image/vehicles/aston-martin/vantage.webp","DB12":"/image/vehicles/aston-martin/db12.webp","DBX":"/image/vehicles/aston-martin/dbx.webp"},
-    "Audi": {"A3":"/image/vehicles/audi/a3.webp","A4":"/image/vehicles/audi/a4.webp","A6":"/image/vehicles/audi/a6.webp","Q3":"/image/vehicles/audi/q3.webp","Q5":"/image/vehicles/audi/q5.webp","Q7":"/image/vehicles/audi/q7.webp","e-tron":"/image/vehicles/audi/e-tron.webp"},
-    "Bentley": {"Continental GT":"/image/vehicles/bentley/continental-gt.webp","Flying Spur":"/image/vehicles/bentley/flying-spur.webp","Bentayga":"/image/vehicles/bentley/bentayga.webp"},
-    "BMW": {"1 Series":"/image/vehicles/bmw/1-series.webp","3 Series":"/image/vehicles/bmw/3-series.webp","5 Series":"/image/vehicles/bmw/5-series.webp","X1":"/image/vehicles/bmw/x1.webp","X3":"/image/vehicles/bmw/x3.webp","X5":"/image/vehicles/bmw/x5.webp","i4":"/image/vehicles/bmw/i4.webp"},
-    "Buick": {"Encore":"/image/vehicles/buick/encore.webp","Envision":"/image/vehicles/buick/envision.webp","LaCrosse":"/image/vehicles/buick/lacrosse.webp"},
-    "Cadillac": {"CT4":"/image/vehicles/cadillac/ct4.webp","CT5":"/image/vehicles/cadillac/ct5.webp","XT4":"/image/vehicles/cadillac/xt4.webp","XT5":"/image/vehicles/cadillac/xt5.webp","Escalade":"/image/vehicles/cadillac/escalade.webp"},
-    "Chevrolet": {"Spark":"/image/vehicles/chevrolet/spark.webp","Cruze":"/image/vehicles/chevrolet/cruze.webp","Malibu":"/image/vehicles/chevrolet/malibu.webp","Trailblazer":"/image/vehicles/chevrolet/trailblazer.webp","Equinox":"/image/vehicles/chevrolet/equinox.webp"},
-    "Chrysler": {"300":"/image/vehicles/chrysler/300.webp","Pacifica":"/image/vehicles/chrysler/pacifica.webp"},
-    "Citroen": {"C1":"/image/vehicles/citroen/c1.webp","C3":"/image/vehicles/citroen/c3.webp","C4":"/image/vehicles/citroen/c4.webp","C5":"/image/vehicles/citroen/c5.webp","Berlingo":"/image/vehicles/citroen/berlingo.webp"},
-    "Dodge": {"Challenger":"/image/vehicles/dodge/challenger.webp","Charger":"/image/vehicles/dodge/charger.webp","Durango":"/image/vehicles/dodge/durango.webp"},
-    "Ferrari": {"Roma":"/image/vehicles/ferrari/roma.webp","SF90":"/image/vehicles/ferrari/sf90-stradale.webp","296":"/image/vehicles/ferrari/296-gtb.webp","812":"/image/vehicles/ferrari/812-superfast.webp","F8":"/image/vehicles/ferrari/f8-tributo.webp"},
-    "Fiat": {"500":"/image/vehicles/fiat/500.webp","Panda":"/image/vehicles/fiat/panda.webp","Punto":"/image/vehicles/fiat/punto.webp","Tipo":"/image/vehicles/fiat/tipo.webp"},
-    "Ford": {"Fiesta":"/image/vehicles/ford/fiesta.webp","Focus":"/image/vehicles/ford/focus.webp","Mustang":"/image/vehicles/ford/mustang.webp","Ranger":"/image/vehicles/ford/ranger.webp","Escape":"/image/vehicles/ford/escape.webp","Explorer":"/image/vehicles/ford/explorer.webp"},
-    "Genesis": {"G70":"/image/vehicles/genesis/g70.webp","G80":"/image/vehicles/genesis/g80.webp","G90":"/image/vehicles/genesis/g90.webp","GV70":"/image/vehicles/genesis/gv70.webp","GV80":"/image/vehicles/genesis/gv80.webp"},
-    "GMC": {"Terrain":"/image/vehicles/gmc/terrain.webp","Acadia":"/image/vehicles/gmc/acadia.webp","Yukon":"/image/vehicles/gmc/yukon.webp","Sierra":"/image/vehicles/gmc/sierra.webp"},
-    "Honda": {"Civic":"/image/vehicles/honda/civic.webp","Accord":"/image/vehicles/honda/accord.webp","CR-V":"/image/vehicles/honda/cr-v.webp","HR-V":"/image/vehicles/honda/hr-v.webp","City":"/image/vehicles/honda/city.webp","Fit":"/image/vehicles/honda/fit.webp"},
-    "Hyundai": {"i20":"/image/vehicles/hyundai/i20.webp","i30":"/image/vehicles/hyundai/i30.webp","Tucson":"/image/vehicles/hyundai/tucson.webp","Santa Fe":"/image/vehicles/hyundai/santa-fe.webp","Elantra":"/image/vehicles/hyundai/elantra.webp","Kona":"/image/vehicles/hyundai/kona.webp"},
-    "Infiniti": {"Q50":null,"Q60":null,"QX50":null,"QX60":null},
-    "Jaguar": {"XE":"/image/vehicles/jaguar/xe.webp","XF":"/image/vehicles/jaguar/xf.webp","F-PACE":"/image/vehicles/jaguar/f-pace.webp","E-PACE":"/image/vehicles/jaguar/e-pace.webp","I-PACE":"/image/vehicles/jaguar/i-pace.webp"},
-    "Jeep": {"Renegade":"/image/vehicles/jeep/renegade.webp","Compass":"/image/vehicles/jeep/compass.webp","Cherokee":"/image/vehicles/jeep/cherokee.webp","Wrangler":"/image/vehicles/jeep/wrangler.webp","Grand Cherokee":"/image/vehicles/jeep/grand-cherokee.webp"},
-    "Kia": {"Rio":"/image/vehicles/kia/rio.webp","Ceed":"/image/vehicles/kia/ceed.webp","Sportage":"/image/vehicles/kia/sportage.webp","Sorento":"/image/vehicles/kia/sorento.webp","Picanto":"/image/vehicles/kia/picanto.webp","EV6":"/image/vehicles/kia/ev6.webp"},
-    "Lamborghini": {"Huracan":"/image/vehicles/lamborghini/huracan.webp","Urus":"/image/vehicles/lamborghini/urus.webp","Revuelto":"/image/vehicles/lamborghini/revuelto.webp"},
-    "Land Rover": {"Range Rover":"/image/vehicles/land-rover/range-rover.webp","Discovery":"/image/vehicles/land-rover/discovery.webp","Defender":"/image/vehicles/land-rover/defender.webp","Evoque":"/image/vehicles/land-rover/evoque.webp"},
-    "Lexus": {"UX":"/image/vehicles/lexus/ux.webp","NX":"/image/vehicles/lexus/nx.webp","RX":"/image/vehicles/lexus/rx.webp","ES":"/image/vehicles/lexus/es.webp","LS":"/image/vehicles/lexus/ls.webp"},
-    "Lincoln": {"Corsair":"/image/vehicles/lincoln/corsair.webp","Aviator":"/image/vehicles/lincoln/aviator.webp","Navigator":"/image/vehicles/lincoln/navigator.webp"},
-    "Maserati": {"Ghibli":"/image/vehicles/maserati/ghibli.webp","Levante":"/image/vehicles/maserati/levante.webp","Grecale":"/image/vehicles/maserati/grecale.webp","GranTurismo":"/image/vehicles/maserati/granturismo.webp"},
-    "Mazda": {"2":"/image/vehicles/mazda/2.webp","3":"/image/vehicles/mazda/3.webp","6":"/image/vehicles/mazda/6.webp","CX-3":"/image/vehicles/mazda/cx-3.webp","CX-5":"/image/vehicles/mazda/cx-5.webp","MX-5":"/image/vehicles/mazda/mx-5.webp"},
-    "McLaren": {"720S":"/image/vehicles/mclaren/720s.webp","750S":"/image/vehicles/mclaren/750s.webp","Artura":"/image/vehicles/mclaren/artura.webp","GT":"/image/vehicles/mclaren/gt.webp"},
-    "Mercedes-Benz": {"A-Class":"/image/vehicles/mercedes-benz/a-class.webp","C-Class":"/image/vehicles/mercedes-benz/c-class.webp","E-Class":"/image/vehicles/mercedes-benz/e-class.webp","GLC":"/image/vehicles/mercedes-benz/glc.webp","GLE":"/image/vehicles/mercedes-benz/gle.webp","EQC":"/image/vehicles/mercedes-benz/eqc.webp"},
-    "Mitsubishi": {"Lancer":"/image/vehicles/mitsubishi/lancer.webp","Outlander":"/image/vehicles/mitsubishi/outlander.webp","ASX":"/image/vehicles/mitsubishi/asx.webp","Pajero":"/image/vehicles/mitsubishi/pajero.webp"},
-    "Nissan": {"Micra":"/image/vehicles/nissan/micra.webp","Qashqai":"/image/vehicles/nissan/qashqai.webp","X-Trail":"/image/vehicles/nissan/x-trail.webp","Leaf":"/image/vehicles/nissan/leaf.webp","Altima":"/image/vehicles/nissan/altima.webp"},
-    "Opel": {"Corsa":null,"Astra":null,"Insignia":"/image/vehicles/opel/insignia.webp","Mokka":"/image/vehicles/opel/mokka.webp","Grandland":"/image/vehicles/opel/grandland.webp"},
-    "Peugeot": {"208":"/image/vehicles/peugeot/208.webp","308":"/image/vehicles/peugeot/308.webp","3008":"/image/vehicles/peugeot/3008.webp","5008":"/image/vehicles/peugeot/5008.webp","2008":"/image/vehicles/peugeot/2008.webp"},
-    "Porsche": {"911":"/image/vehicles/porsche/911.webp","Cayenne":"/image/vehicles/porsche/cayenne.webp","Macan":"/image/vehicles/porsche/macan.webp","Taycan":"/image/vehicles/porsche/taycan.webp","Panamera":"/image/vehicles/porsche/panamera.webp"},
-    "Ram": {"1500":"/image/vehicles/ram/1500.webp","2500":"/image/vehicles/ram/2500.webp","3500":"/image/vehicles/ram/3500.webp"},
-    "Renault": {"Clio":"/image/vehicles/renault/clio.webp","Megane":"/image/vehicles/renault/megane.webp","Captur":"/image/vehicles/renault/captur.webp","Duster":"/image/vehicles/renault/duster.webp","Arkana":"/image/vehicles/renault/arkana.webp"},
-    "Rolls-Royce": {"Ghost":"/image/vehicles/rolls-royce/ghost.webp","Phantom":"/image/vehicles/rolls-royce/phantom.webp","Cullinan":"/image/vehicles/rolls-royce/cullinan.webp","Spectre":"/image/vehicles/rolls-royce/spectre.webp"},
-    "Seat": {"Ibiza":"/image/vehicles/seat/ibiza.webp","Leon":"/image/vehicles/seat/leon.webp","Arona":"/image/vehicles/seat/arona.webp","Ateca":"/image/vehicles/seat/ateca.webp","Tarraco":"/image/vehicles/seat/tarraco.webp"},
-    "Skoda": {"Fabia":"/image/vehicles/skoda/fabia.webp","Octavia":"/image/vehicles/skoda/octavia.webp","Superb":"/image/vehicles/skoda/superb.webp","Karoq":"/image/vehicles/skoda/karoq.webp","Kodiaq":"/image/vehicles/skoda/kodiaq.webp"},
-    "Smart": {"ForTwo":"/image/vehicles/smart/fortwo.webp","ForFour":"/image/vehicles/smart/forfour.webp"},
-    "Subaru": {"Impreza":"/image/vehicles/subaru/impreza.webp","Forester":"/image/vehicles/subaru/forester.webp","Outback":"/image/vehicles/subaru/outback.webp","XV":"/image/vehicles/subaru/xv.webp","WRX":"/image/vehicles/subaru/wrx.webp"},
-    "Suzuki": {"Swift":"/image/vehicles/suzuki/swift.webp","Baleno":"/image/vehicles/suzuki/baleno.webp","Vitara":"/image/vehicles/suzuki/vitara.webp","Jimny":"/image/vehicles/suzuki/jimny.webp","Ertiga":"/image/vehicles/suzuki/ertiga.webp"},
-    "Tesla": {"Model 3":"/image/vehicles/tesla/model-3.webp","Model Y":"/image/vehicles/tesla/model-y.webp","Model S":"/image/vehicles/tesla/model-s.webp","Model X":"/image/vehicles/tesla/model-x.webp"},
-    "Toyota": {"Corolla":"/image/vehicles/toyota/corolla.webp","Camry":"/image/vehicles/toyota/camry.webp","RAV4":"/image/vehicles/toyota/rav4.webp","Land Cruiser":"/image/vehicles/toyota/land-cruiser.webp","Yaris":"/image/vehicles/toyota/yaris.webp","Prius":"/image/vehicles/toyota/prius.webp","Hilux":"/image/vehicles/toyota/hilux.webp"},
-    "Volkswagen": {"Golf":"/image/vehicles/volkswagen/golf.webp","Passat":"/image/vehicles/volkswagen/passat.webp","Tiguan":"/image/vehicles/volkswagen/tiguan.webp","Polo":"/image/vehicles/volkswagen/polo.webp","Touareg":"/image/vehicles/volkswagen/touareg.webp","Arteon":"/image/vehicles/volkswagen/arteon.webp"},
-    "Volvo": {"S60":"/image/vehicles/volvo/s60.webp","S90":"/image/vehicles/volvo/s90.webp","XC40":"/image/vehicles/volvo/xc40.webp","XC60":"/image/vehicles/volvo/xc60.webp","XC90":"/image/vehicles/volvo/xc90.webp"},
-  };
-
-  function getModelImage(brand, model) {
-    /* The shipped local /image/vehicles/<brand>/<model>.webp files are unreliable
-       DUPLICATES (many distinct models share one identical file — e.g. every Honda
-       file is byte-identical), which caused every model to show the same (Civic)
-       image. They are therefore no longer used: the correct per-model photo comes
-       from the image API (getVehicleImageUrl → Wikipedia). Returning null makes any
-       image fallback skip straight to a neutral icon instead of another model's
-       photo. (VEHICLE_IMAGES is kept for reference / possible future re-population.) */
-    return null;
+  // Only imported, model-verified photographs may be used as local assets.
+  // Their provenance and attribution are recorded in vehicle-images-manifest.json.
+  const VEHICLE_IMAGES = vehicleAssets.images;
+  function getModelImage(brand, model, year = "", market = "") {
+    if (year || market) return null; // Model-card photos do not establish year/specification.
+    return VEHICLE_IMAGES[catalogueKey(brand)]?.[catalogueKey(model)]?.path || null;
   }
 
-  /* Dynamic, per-vehicle image fetched from an external CDN (imagin.studio) so
-     the picture matches the ACTUAL make/model/year instead of a static
-     placeholder. Used as the primary <img> src; on error the UI falls back to a
-     shipped image (getModelImage) and finally an icon — see dzImgFallback(). */
+  function modelImageCredit(brand, model) {
+    const photo = VEHICLE_IMAGES[catalogueKey(brand)]?.[catalogueKey(model)];
+    return photo ? `${photo.attribution} ? ${photo.license} ? ${photo.filePage} ? resized to WebP` : "";
+  }
+
   function getVehicleImageUrl(brand, model, year) {
     if (!brand || state.vehicle.market) return "";
-    /* Route through the server proxy so the image-CDN key lives in one place
-       (env IMAGIN_CUSTOMER) and can be swapped for a watermark-free licensed key
-       without touching the client. The server 307-redirects to the CDN. */
+    const local = getModelImage(brand, model, year);
+    if (local) return local;
     let u = "/api/vehicles/image?make=" + encodeURIComponent(brand) +
             "&model=" + encodeURIComponent(model || "");
     if (year) u += "&year=" + encodeURIComponent(year);
@@ -903,9 +861,6 @@
 
   /* Build flat model index from CAR_BRANDS + VEHICLE_IMAGES */
   const MODEL_INDEX = [];
-  const IMAGE_SOURCES = {
-    "Toyota": { "Corolla": "Toyota USA Newsroom", "Camry": "Toyota USA Newsroom" },
-  };
   function buildModelIndex() {
     MODEL_INDEX.length = 0;
     for (const brand of CAR_BRANDS) {
@@ -915,7 +870,7 @@
           model: model,
           logo: brand.logo,
           image: getModelImage(brand.name, model),
-          imageSource: (IMAGE_SOURCES[brand.name] && IMAGE_SOURCES[brand.name][model]) || "CarDekho",
+          imageSource: modelImageCredit(brand.name, model),
           _norm: normalizeModel(model),
           _brandNorm: normalizeModel(brand.name),
         });
@@ -1794,7 +1749,7 @@
       for (const entry of modelResults) {
         const imgSrc = getVehicleImageUrl(entry.brand, entry.model) || entry.image;
         const vehicleImgHtml = imgSrc
-          ? `<img src="${esc(imgSrc)}" alt="${esc(entry.brand)} ${esc(entry.model)}" class="dz-car-item-vehicle-img" loading="lazy" onerror="this.style.display='none'">`
+          ? `<img src="${esc(imgSrc)}" alt="${esc(entry.brand)} ${esc(entry.model)}" title="${esc(entry.imageSource)}" class="dz-car-item-vehicle-img" loading="lazy" onerror="this.style.display='none'">`
           : "";
         const logoHtml = entry.logo
           ? `<img src="${entry.logo}" alt="${esc(entry.brand)}" class="dz-car-logo-img" onerror="this.style.display='none'">`
@@ -1967,7 +1922,7 @@
       const local = getModelImage(brandName, m) || (imgMap && imgMap[m]) || "";
       const primary = getVehicleImageUrl(brandName, m) || local;
       const modelImageHtml = primary
-        ? `<div class="dz-model-img-wrap"><img src="${esc(primary)}" data-local="${esc(local)}" alt="${esc(brandName)} ${esc(m)}" class="dz-model-img" loading="lazy" onerror="dzImgFallback(this)"><div class="dz-model-img-fallback"><i class="bi bi-car-front-fill"></i></div></div>`
+        ? `<div class="dz-model-img-wrap"><img src="${esc(primary)}" data-local="${esc(local)}" alt="${esc(brandName)} ${esc(m)}" title="${esc(modelImageCredit(brandName, m))}" class="dz-model-img" loading="lazy" onerror="dzImgFallback(this)"><div class="dz-model-img-fallback"><i class="bi bi-car-front-fill"></i></div></div>`
         : `<div class="dz-model-img-wrap dz-model-img-no"><div class="dz-model-img-fallback dz-model-img-fallback--visible"><i class="bi bi-car-front-fill"></i></div></div>`;
       const logoHtml = logo
         ? `<img src="${logo}" alt="${esc(brandName)}" class="dz-model-logo" onerror="this.style.display='none'">`
@@ -2017,7 +1972,7 @@
   function updateSelectedVehicleImage(brand, model) {
     const imgWrap = $("#dz-selected-image");
     if (!imgWrap) return;
-    const local = getModelImage(brand, model);
+    const local = getModelImage(brand, model, state.vehicle.year, state.vehicle.market);
     const primary = getVehicleImageUrl(brand, model, state.vehicle.year) || local;
     if (primary) {
       imgWrap.innerHTML = `<img src="${esc(primary)}" data-local="${esc(local || "")}" alt="${esc(brand)} ${esc(model)}" class="dz-selected-vehicle-img" onerror="dzImgFallback(this)"><div class="dz-selected-img-fallback"><i class="bi bi-car-front-fill"></i></div>`;
@@ -2031,7 +1986,7 @@
     const img = $("#dz-info-vehicle-img");
     const fallback = $("#dz-info-vehicle-fallback");
     if (!img || !fallback) return;
-    const local = getModelImage(brand, model);
+    const local = getModelImage(brand, model, state.vehicle.year, state.vehicle.market);
     const imgSrc = getVehicleImageUrl(brand, model, state.vehicle.year) || local;
     if (imgSrc) {
       img.setAttribute("data-local", local || "");
@@ -2657,13 +2612,13 @@
     if (_allBrandsList) return _allBrandsList;
     let live = [];
     try { live = await VehicleAPI.makes("", 600); } catch (_) { live = []; }
-    const seen = new Set(CAR_BRANDS.map((b) => b.name.toLowerCase()));
+    const seen = new Set(CAR_BRANDS.map((b) => catalogueKey(b.name)));
     const merged = CAR_BRANDS.slice();
     for (const it of live) {
       const name = (it.value || it.label || "").trim();
-      if (name && !seen.has(name.toLowerCase())) {
-        seen.add(name.toLowerCase());
-        merged.push({ name: name, logo: it.logo || null, models: [] });
+      if (name && !seen.has(catalogueKey(name))) {
+        seen.add(catalogueKey(name));
+        merged.push({ name: name, logo: vehicleAssets.logos[catalogueKey(name)] || it.logo || null, models: [] });
       }
     }
     merged.sort((a, b) => a.name.localeCompare(b.name));

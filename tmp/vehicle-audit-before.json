@@ -1,0 +1,786 @@
+{
+  "brands": [
+    {
+      "name": "Acura",
+      "logo": "/image/car_logos/acura.svg",
+      "models": [
+        "ILX",
+        "TLX",
+        "RDX",
+        "MDX"
+      ]
+    },
+    {
+      "name": "Alfa Romeo",
+      "logo": "/image/car_logos/alfa-romeo.svg",
+      "models": [
+        "Giulia",
+        "Stelvio",
+        "Tonale"
+      ]
+    },
+    {
+      "name": "Aston Martin",
+      "logo": "/image/car_logos/aston-martin.svg",
+      "models": [
+        "Vantage",
+        "DB12",
+        "DBX"
+      ]
+    },
+    {
+      "name": "Audi",
+      "logo": "/image/car_logos/audi.svg",
+      "models": [
+        "A3",
+        "A4",
+        "A6",
+        "Q3",
+        "Q5",
+        "Q7",
+        "e-tron"
+      ]
+    },
+    {
+      "name": "Bentley",
+      "logo": "/image/car_logos/bentley.svg",
+      "models": [
+        "Continental GT",
+        "Flying Spur",
+        "Bentayga"
+      ]
+    },
+    {
+      "name": "BMW",
+      "logo": "/image/car_logos/bmw.svg",
+      "models": [
+        "1 Series",
+        "3 Series",
+        "5 Series",
+        "X1",
+        "X3",
+        "X5",
+        "i4"
+      ]
+    },
+    {
+      "name": "Buick",
+      "logo": "/image/car_logos/buick.svg",
+      "models": [
+        "Encore",
+        "Envision",
+        "LaCrosse"
+      ]
+    },
+    {
+      "name": "Cadillac",
+      "logo": "/image/car_logos/cadillac.svg",
+      "models": [
+        "CT4",
+        "CT5",
+        "XT4",
+        "XT5",
+        "Escalade"
+      ]
+    },
+    {
+      "name": "Chevrolet",
+      "logo": "/image/car_logos/chevrolet.svg",
+      "models": [
+        "Spark",
+        "Cruze",
+        "Malibu",
+        "Trailblazer",
+        "Equinox"
+      ]
+    },
+    {
+      "name": "Chrysler",
+      "logo": "/image/car_logos/chrysler.svg",
+      "models": [
+        "300",
+        "Pacifica"
+      ]
+    },
+    {
+      "name": "Citroen",
+      "logo": "/image/car_logos/citroen.svg",
+      "models": [
+        "C1",
+        "C3",
+        "C4",
+        "C5",
+        "Berlingo"
+      ]
+    },
+    {
+      "name": "Dodge",
+      "logo": "/image/car_logos/dodge.svg",
+      "models": [
+        "Challenger",
+        "Charger",
+        "Durango"
+      ]
+    },
+    {
+      "name": "Ferrari",
+      "logo": "/image/car_logos/ferrari.svg",
+      "models": [
+        "Roma",
+        "SF90",
+        "296",
+        "812",
+        "F8"
+      ]
+    },
+    {
+      "name": "Fiat",
+      "logo": "/image/car_logos/fiat.svg",
+      "models": [
+        "500",
+        "Panda",
+        "Punto",
+        "Tipo"
+      ]
+    },
+    {
+      "name": "Ford",
+      "logo": "/image/car_logos/ford.svg",
+      "models": [
+        "Fiesta",
+        "Focus",
+        "Mustang",
+        "Ranger",
+        "Escape",
+        "Explorer"
+      ]
+    },
+    {
+      "name": "Genesis",
+      "logo": "/image/car_logos/genesis.svg",
+      "models": [
+        "G70",
+        "G80",
+        "G90",
+        "GV70",
+        "GV80"
+      ]
+    },
+    {
+      "name": "GMC",
+      "logo": "/image/car_logos/gmc.svg",
+      "models": [
+        "Terrain",
+        "Acadia",
+        "Yukon",
+        "Sierra"
+      ]
+    },
+    {
+      "name": "Honda",
+      "logo": "/image/car_logos/honda.svg",
+      "models": [
+        "Civic",
+        "Accord",
+        "CR-V",
+        "HR-V",
+        "City",
+        "Fit"
+      ]
+    },
+    {
+      "name": "Hyundai",
+      "logo": "/image/car_logos/hyundai.svg",
+      "models": [
+        "i20",
+        "i30",
+        "Tucson",
+        "Santa Fe",
+        "Elantra",
+        "Kona"
+      ]
+    },
+    {
+      "name": "Infiniti",
+      "logo": "/image/car_logos/infiniti.svg",
+      "models": [
+        "Q50",
+        "Q60",
+        "QX50",
+        "QX60"
+      ]
+    },
+    {
+      "name": "Jaguar",
+      "logo": "/image/car_logos/jaguar.svg",
+      "models": [
+        "XE",
+        "XF",
+        "F-PACE",
+        "E-PACE",
+        "I-PACE"
+      ]
+    },
+    {
+      "name": "Jeep",
+      "logo": "/image/car_logos/jeep.svg",
+      "models": [
+        "Renegade",
+        "Compass",
+        "Cherokee",
+        "Wrangler",
+        "Grand Cherokee"
+      ]
+    },
+    {
+      "name": "Kia",
+      "logo": "/image/car_logos/kia.svg",
+      "models": [
+        "Rio",
+        "Ceed",
+        "Sportage",
+        "Sorento",
+        "Picanto",
+        "EV6"
+      ]
+    },
+    {
+      "name": "Lamborghini",
+      "logo": "/image/car_logos/lamborghini.svg",
+      "models": [
+        "Huracan",
+        "Urus",
+        "Revuelto"
+      ]
+    },
+    {
+      "name": "Land Rover",
+      "logo": "/image/car_logos/land-rover.svg",
+      "models": [
+        "Range Rover",
+        "Discovery",
+        "Defender",
+        "Evoque"
+      ]
+    },
+    {
+      "name": "Lexus",
+      "logo": "/image/car_logos/lexus.svg",
+      "models": [
+        "UX",
+        "NX",
+        "RX",
+        "ES",
+        "LS"
+      ]
+    },
+    {
+      "name": "Lincoln",
+      "logo": "/image/car_logos/lincoln.svg",
+      "models": [
+        "Corsair",
+        "Aviator",
+        "Navigator"
+      ]
+    },
+    {
+      "name": "Maserati",
+      "logo": "/image/car_logos/maserati.svg",
+      "models": [
+        "Ghibli",
+        "Levante",
+        "Grecale",
+        "GranTurismo"
+      ]
+    },
+    {
+      "name": "Mazda",
+      "logo": "/image/car_logos/mazda.svg",
+      "models": [
+        "2",
+        "3",
+        "6",
+        "CX-3",
+        "CX-5",
+        "MX-5"
+      ]
+    },
+    {
+      "name": "McLaren",
+      "logo": "/image/car_logos/mclaren.svg",
+      "models": [
+        "720S",
+        "750S",
+        "Artura",
+        "GT"
+      ]
+    },
+    {
+      "name": "Mercedes-Benz",
+      "logo": "/image/car_logos/mercedes-benz.svg",
+      "models": [
+        "A-Class",
+        "C-Class",
+        "E-Class",
+        "GLC",
+        "GLE",
+        "EQC"
+      ]
+    },
+    {
+      "name": "Mitsubishi",
+      "logo": "/image/car_logos/mitsubishi.svg",
+      "models": [
+        "Lancer",
+        "Outlander",
+        "ASX",
+        "Pajero"
+      ]
+    },
+    {
+      "name": "Nissan",
+      "logo": "/image/car_logos/nissan.svg",
+      "models": [
+        "Micra",
+        "Qashqai",
+        "X-Trail",
+        "Leaf",
+        "Altima"
+      ]
+    },
+    {
+      "name": "Opel",
+      "logo": "/image/car_logos/opel.svg",
+      "models": [
+        "Corsa",
+        "Astra",
+        "Insignia",
+        "Mokka",
+        "Grandland"
+      ]
+    },
+    {
+      "name": "Peugeot",
+      "logo": "/image/car_logos/peugeot.svg",
+      "models": [
+        "208",
+        "308",
+        "3008",
+        "5008",
+        "2008"
+      ]
+    },
+    {
+      "name": "Porsche",
+      "logo": "/image/car_logos/porsche.svg",
+      "models": [
+        "911",
+        "Cayenne",
+        "Macan",
+        "Taycan",
+        "Panamera"
+      ]
+    },
+    {
+      "name": "Ram",
+      "logo": "/image/car_logos/ram.svg",
+      "models": [
+        "1500",
+        "2500",
+        "3500"
+      ]
+    },
+    {
+      "name": "Renault",
+      "logo": "/image/car_logos/renault.svg",
+      "models": [
+        "Clio",
+        "Megane",
+        "Captur",
+        "Duster",
+        "Arkana"
+      ]
+    },
+    {
+      "name": "Rolls-Royce",
+      "logo": "/image/car_logos/rolls-royce.svg",
+      "models": [
+        "Ghost",
+        "Phantom",
+        "Cullinan",
+        "Spectre"
+      ]
+    },
+    {
+      "name": "Seat",
+      "logo": "/image/car_logos/seat.svg",
+      "models": [
+        "Ibiza",
+        "Leon",
+        "Arona",
+        "Ateca",
+        "Tarraco"
+      ]
+    },
+    {
+      "name": "Skoda",
+      "logo": "/image/car_logos/skoda.svg",
+      "models": [
+        "Fabia",
+        "Octavia",
+        "Superb",
+        "Karoq",
+        "Kodiaq",
+        "Enyaq"
+      ]
+    },
+    {
+      "name": "Smart",
+      "logo": "/image/car_logos/smart.svg",
+      "models": [
+        "ForTwo",
+        "ForFour"
+      ]
+    },
+    {
+      "name": "Subaru",
+      "logo": "/image/car_logos/subaru.svg",
+      "models": [
+        "Impreza",
+        "Forester",
+        "Outback",
+        "XV",
+        "WRX"
+      ]
+    },
+    {
+      "name": "Suzuki",
+      "logo": "/image/car_logos/suzuki.svg",
+      "models": [
+        "Swift",
+        "Baleno",
+        "Vitara",
+        "Jimny",
+        "Ertiga"
+      ]
+    },
+    {
+      "name": "Tesla",
+      "logo": "/image/car_logos/tesla.svg",
+      "models": [
+        "Model 3",
+        "Model Y",
+        "Model S",
+        "Model X"
+      ]
+    },
+    {
+      "name": "Toyota",
+      "logo": "/image/car_logos/toyota.svg",
+      "models": [
+        "Corolla",
+        "Camry",
+        "RAV4",
+        "Land Cruiser",
+        "Yaris",
+        "Prius",
+        "Hilux"
+      ]
+    },
+    {
+      "name": "Volkswagen",
+      "logo": "/image/car_logos/volkswagen.svg",
+      "models": [
+        "Golf",
+        "Passat",
+        "Tiguan",
+        "Polo",
+        "Touareg",
+        "Arteon"
+      ]
+    },
+    {
+      "name": "Volvo",
+      "logo": "/image/car_logos/volvo.svg",
+      "models": [
+        "S60",
+        "S90",
+        "XC40",
+        "XC60",
+        "XC90"
+      ]
+    },
+    {
+      "name": "Dacia",
+      "logo": null,
+      "models": [
+        "Sandero",
+        "Duster",
+        "Logan",
+        "Jogger"
+      ]
+    },
+    {
+      "name": "Mini",
+      "logo": null,
+      "models": [
+        "Cooper",
+        "Clubman",
+        "Countryman"
+      ]
+    }
+  ],
+  "counts": {
+    "brands": 50,
+    "models": 229,
+    "logo_files": 50,
+    "vehicle_files": 217
+  },
+  "duplicate_assets": [
+    [
+      "image/vehicles/acura/ilx.webp",
+      "image/vehicles/acura/mdx.webp",
+      "image/vehicles/acura/rdx.webp",
+      "image/vehicles/acura/tlx.webp",
+      "image/vehicles/alfa-romeo/giulia.webp",
+      "image/vehicles/alfa-romeo/stelvio.webp",
+      "image/vehicles/alfa-romeo/tonale.webp",
+      "image/vehicles/bmw/x1.webp",
+      "image/vehicles/bmw/x3.webp",
+      "image/vehicles/buick/encore.webp",
+      "image/vehicles/buick/envision.webp",
+      "image/vehicles/buick/lacrosse.webp",
+      "image/vehicles/lincoln/aviator.webp",
+      "image/vehicles/lincoln/corsair.webp",
+      "image/vehicles/lincoln/navigator.webp",
+      "image/vehicles/nissan/x-trail.webp",
+      "image/vehicles/ram/1500.webp",
+      "image/vehicles/ram/2500.webp",
+      "image/vehicles/ram/3500.webp",
+      "image/vehicles/seat/arona.webp",
+      "image/vehicles/seat/ateca.webp",
+      "image/vehicles/seat/ibiza.webp",
+      "image/vehicles/seat/leon.webp",
+      "image/vehicles/seat/tarraco.webp",
+      "image/vehicles/suzuki/baleno.webp",
+      "image/vehicles/suzuki/ertiga.webp",
+      "image/vehicles/suzuki/jimny.webp",
+      "image/vehicles/suzuki/swift.webp",
+      "image/vehicles/suzuki/vitara.webp",
+      "image/vehicles/volvo/xc60.webp"
+    ],
+    [
+      "image/vehicles/aston-martin/db12.webp",
+      "image/vehicles/aston-martin/dbx.webp",
+      "image/vehicles/aston-martin/vantage.webp",
+      "image/vehicles/bentley/flying-spur.webp",
+      "image/vehicles/ferrari/296-gtb.webp",
+      "image/vehicles/ferrari/f8-tributo.webp",
+      "image/vehicles/ferrari/roma.webp",
+      "image/vehicles/lamborghini/urus.webp",
+      "image/vehicles/maserati/granturismo.webp",
+      "image/vehicles/mclaren/750s.webp",
+      "image/vehicles/porsche/panamera.webp"
+    ],
+    [
+      "image/vehicles/audi/a4.webp",
+      "image/vehicles/audi/e-tron.webp",
+      "image/vehicles/audi/q3.webp",
+      "image/vehicles/bmw/5-series.webp",
+      "image/vehicles/toyota/camry.webp"
+    ],
+    [
+      "image/vehicles/audi/a6.webp",
+      "image/vehicles/audi/q5.webp",
+      "image/vehicles/bentley/bentayga.webp",
+      "image/vehicles/bentley/continental-gt.webp",
+      "image/vehicles/bmw/3-series.webp",
+      "image/vehicles/bmw/x5.webp",
+      "image/vehicles/jaguar/f-pace.webp",
+      "image/vehicles/jeep/grand-cherokee.webp",
+      "image/vehicles/jeep/wrangler.webp",
+      "image/vehicles/land-rover/defender.webp",
+      "image/vehicles/land-rover/discovery.webp",
+      "image/vehicles/land-rover/range-rover.webp",
+      "image/vehicles/lexus/nx.webp",
+      "image/vehicles/lexus/rx.webp",
+      "image/vehicles/maserati/levante.webp",
+      "image/vehicles/mercedes-benz/c-class.webp",
+      "image/vehicles/mercedes-benz/glc.webp",
+      "image/vehicles/mercedes-benz/gle.webp",
+      "image/vehicles/porsche/cayenne.webp",
+      "image/vehicles/porsche/macan.webp",
+      "image/vehicles/rolls-royce/cullinan.webp",
+      "image/vehicles/rolls-royce/phantom.webp"
+    ],
+    [
+      "image/vehicles/cadillac/ct4.webp",
+      "image/vehicles/cadillac/ct5.webp",
+      "image/vehicles/cadillac/xt4.webp",
+      "image/vehicles/cadillac/xt5.webp"
+    ],
+    [
+      "image/vehicles/chevrolet/cruze.webp",
+      "image/vehicles/chevrolet/spark.webp"
+    ],
+    [
+      "image/vehicles/chevrolet/equinox.webp",
+      "image/vehicles/chevrolet/malibu.webp"
+    ],
+    [
+      "image/vehicles/chrysler/300.webp",
+      "image/vehicles/chrysler/pacifica.webp"
+    ],
+    [
+      "image/vehicles/citroen/berlingo.webp",
+      "image/vehicles/citroen/c1.webp",
+      "image/vehicles/citroen/c3.webp",
+      "image/vehicles/citroen/c4.webp",
+      "image/vehicles/citroen/c5.webp"
+    ],
+    [
+      "image/vehicles/dodge/challenger.webp",
+      "image/vehicles/dodge/charger.webp",
+      "image/vehicles/dodge/durango.webp"
+    ],
+    [
+      "image/vehicles/ferrari/sf90-stradale.webp",
+      "image/vehicles/lamborghini/revuelto.webp"
+    ],
+    [
+      "image/vehicles/fiat/panda.webp",
+      "image/vehicles/hyundai/i20.webp",
+      "image/vehicles/renault/clio.webp"
+    ],
+    [
+      "image/vehicles/ford/escape.webp",
+      "image/vehicles/ford/explorer.webp",
+      "image/vehicles/ford/ranger.webp"
+    ],
+    [
+      "image/vehicles/genesis/g70.webp",
+      "image/vehicles/genesis/g80.webp",
+      "image/vehicles/genesis/g90.webp",
+      "image/vehicles/skoda/kodiaq.webp"
+    ],
+    [
+      "image/vehicles/genesis/gv70.webp",
+      "image/vehicles/genesis/gv80.webp"
+    ],
+    [
+      "image/vehicles/gmc/acadia.webp",
+      "image/vehicles/gmc/sierra.webp",
+      "image/vehicles/gmc/terrain.webp",
+      "image/vehicles/gmc/yukon.webp"
+    ],
+    [
+      "image/vehicles/honda/accord.webp",
+      "image/vehicles/honda/city.webp",
+      "image/vehicles/honda/civic.webp",
+      "image/vehicles/honda/cr-v.webp",
+      "image/vehicles/honda/fit.webp",
+      "image/vehicles/honda/hr-v.webp"
+    ],
+    [
+      "image/vehicles/hyundai/elantra.webp",
+      "image/vehicles/hyundai/kona.webp",
+      "image/vehicles/hyundai/santa-fe.webp",
+      "image/vehicles/hyundai/tucson.webp"
+    ],
+    [
+      "image/vehicles/jaguar/e-pace.webp",
+      "image/vehicles/jaguar/i-pace.webp",
+      "image/vehicles/jaguar/xe.webp",
+      "image/vehicles/jaguar/xf.webp"
+    ],
+    [
+      "image/vehicles/jeep/cherokee.webp",
+      "image/vehicles/jeep/compass.webp",
+      "image/vehicles/jeep/renegade.webp"
+    ],
+    [
+      "image/vehicles/kia/ceed.webp",
+      "image/vehicles/kia/picanto.webp",
+      "image/vehicles/kia/rio.webp",
+      "image/vehicles/kia/sportage.webp"
+    ],
+    [
+      "image/vehicles/kia/ev6.webp",
+      "image/vehicles/tesla/model-y.webp"
+    ],
+    [
+      "image/vehicles/maserati/grecale.webp",
+      "image/vehicles/volvo/xc90.webp"
+    ],
+    [
+      "image/vehicles/mazda/2.webp",
+      "image/vehicles/mazda/3.webp",
+      "image/vehicles/mazda/6.webp",
+      "image/vehicles/mazda/cx-3.webp",
+      "image/vehicles/mazda/cx-5.webp",
+      "image/vehicles/mazda/mx-5.webp"
+    ],
+    [
+      "image/vehicles/nissan/altima.webp",
+      "image/vehicles/nissan/leaf.webp",
+      "image/vehicles/nissan/micra.webp",
+      "image/vehicles/nissan/qashqai.webp"
+    ],
+    [
+      "image/vehicles/opel/grandland.webp",
+      "image/vehicles/opel/insignia.webp",
+      "image/vehicles/opel/mokka.webp"
+    ],
+    [
+      "image/vehicles/peugeot/2008.webp",
+      "image/vehicles/peugeot/208.webp",
+      "image/vehicles/peugeot/3008.webp",
+      "image/vehicles/peugeot/308.webp",
+      "image/vehicles/peugeot/5008.webp"
+    ],
+    [
+      "image/vehicles/renault/arkana.webp",
+      "image/vehicles/renault/captur.webp"
+    ],
+    [
+      "image/vehicles/skoda/fabia.webp",
+      "image/vehicles/skoda/karoq.webp",
+      "image/vehicles/skoda/octavia.webp",
+      "image/vehicles/skoda/superb.webp"
+    ],
+    [
+      "image/vehicles/smart/forfour.webp",
+      "image/vehicles/smart/fortwo.webp"
+    ],
+    [
+      "image/vehicles/subaru/forester.webp",
+      "image/vehicles/subaru/impreza.webp",
+      "image/vehicles/subaru/outback.webp",
+      "image/vehicles/subaru/wrx.webp",
+      "image/vehicles/subaru/xv.webp"
+    ],
+    [
+      "image/vehicles/toyota/corolla.webp",
+      "image/vehicles/toyota/yaris.webp"
+    ],
+    [
+      "image/vehicles/toyota/land-cruiser.webp",
+      "image/vehicles/toyota/prius.webp"
+    ],
+    [
+      "image/vehicles/volkswagen/arteon.webp",
+      "image/vehicles/volkswagen/golf.webp"
+    ],
+    [
+      "image/vehicles/volkswagen/passat.webp",
+      "image/vehicles/volkswagen/polo.webp",
+      "image/vehicles/volkswagen/tiguan.webp",
+      "image/vehicles/volkswagen/touareg.webp"
+    ],
+    [
+      "image/vehicles/volvo/s60.webp",
+      "image/vehicles/volvo/s90.webp",
+      "image/vehicles/volvo/xc40.webp"
+    ]
+  ]
+}

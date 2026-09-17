@@ -108,10 +108,11 @@ def test_vehicle_text(browser_page, text, brand, model, year, market):
     playwright.expect(page.locator('#dz-car-selected-model')).to_contain_text(model)
     playwright.expect(page.locator('#dz-year-select')).to_have_value(year)
     playwright.expect(page.locator('#dz-market-select')).to_have_value(market)
-    page.locator('#dz-continue-vehicle').click()
-    playwright.expect(page.locator('#dz-vehicle-badge-text')).to_contain_text(f'{brand} {model} {year} {market}')
-    # Persisted identity includes numeric year and market.
-    page.wait_for_timeout(1000)
+    with page.expect_response(lambda response: '/api/diag-sessions/' in response.url
+                              and response.url.endswith('/update') and response.status == 200):
+        page.locator('#dz-continue-vehicle').click()
+        playwright.expect(page.locator('#dz-vehicle-badge-text')).to_contain_text(f'{brand} {model} {year} {market}')
+    # Inspect persisted identity after the server acknowledges the autosave.
     from src.shared.store import store
     vehicles = [s['vehicle'] for s in store.diag_sessions('tester@example.com')]
     assert any(v.get('brand') == brand and v.get('model') == model and
@@ -177,6 +178,34 @@ def test_full_model_grid_and_live_search_index(browser_page):
     page.locator('#dz-vehicle-search').fill('M4')
     playwright.expect(page.locator('#dz-car-selected-brand')).to_have_text('BMW')
     playwright.expect(page.locator('#dz-car-selected-model')).to_contain_text('M4')
+
+
+def test_downloaded_vehicle_assets_desktop_and_mobile(browser_page):
+    page, base = browser_page
+    for width in [1280, 390]:
+        page.set_viewport_size({'width': width, 'height': 900})
+        for brand, models in [('Honda', ['Accord', 'Civic', 'CR-V']),
+                              ('Toyota', ['Camry', 'Corolla']),
+                              ('BYD', ['Seal']), ('BMW', ['M4'])]:
+            page.goto(base + '/diagnose', wait_until='domcontentloaded')
+            page.locator('#dz-brands-view-all').click()
+            card = page.locator(f'#dz-brands-grid [data-brand="{brand}"]')
+            playwright.expect(card).to_be_visible()
+            logo = card.locator('img')
+            playwright.expect(logo).to_be_visible()
+            page.wait_for_function('(img) => img.complete && img.naturalWidth > 0', arg=logo.element_handle())
+            card.click()
+            urls = []
+            for model in models:
+                photo = page.locator(f'#dz-car-models-grid [data-model="{model}"] img.dz-model-img')
+                photo.scroll_into_view_if_needed()
+                playwright.expect(photo).to_be_visible()
+                page.wait_for_function('(img) => img.complete && img.naturalWidth > 0', arg=photo.element_handle())
+                assert '/image/vehicles/' in photo.get_attribute('src')
+                assert photo.get_attribute('title')
+                urls.append(photo.get_attribute('src'))
+            assert len(urls) == len(set(urls))
+        page.screenshot(path=str(Path(f'tmp/vehicle-selector-{width}.png')), full_page=True)
 
 
 def test_partial_arabic_and_confirmation(browser_page):
