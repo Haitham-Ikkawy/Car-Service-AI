@@ -1,0 +1,83 @@
+{
+  "Ram 2500": {
+    "batchcomplete": "",
+    "query": {
+      "categorymembers": [
+        {
+          "pageid": 31628532,
+          "ns": 14,
+          "title": "Category:Ram 2500 (DS)"
+        },
+        {
+          "pageid": 78392619,
+          "ns": 14,
+          "title": "Category:Ram 2500 (DT)"
+        },
+        {
+          "pageid": 143474550,
+          "ns": 14,
+          "title": "Category:Ram Power Wagon"
+        }
+      ]
+    }
+  },
+  "JAC JS4": {
+    "batchcomplete": "",
+    "query": {
+      "categorymembers": []
+    }
+  },
+  "Volvo EX40": {
+    "batchcomplete": "",
+    "query": {
+      "categorymembers": [
+        {
+          "pageid": 195211976,
+          "ns": 6,
+          "title": "File:Volvo EX40 (2025) (54848375749).jpg"
+        },
+        {
+          "pageid": 155553096,
+          "ns": 6,
+          "title": "File:Volvo EX40 Auto Zuerich 2024 DSC 6718.jpg"
+        },
+        {
+          "pageid": 154838333,
+          "ns": 6,
+          "title": "File:Volvo EX40 Ultra Twin Motor (ZAA-XE400AXCE2) front.jpg"
+        },
+        {
+          "pageid": 154838332,
+          "ns": 6,
+          "title": "File:Volvo EX40 Ultra Twin Motor (ZAA-XE400AXCE2) rear.jpg"
+        },
+        {
+          "pageid": 155035522,
+          "ns": 6,
+          "title": "File:Volvo EX40, Auto 2024, Zurich (PANA0853).jpg"
+        },
+        {
+          "pageid": 155035428,
+          "ns": 6,
+          "title": "File:Volvo EX40, Auto 2024, Zurich (PANA0988).jpg"
+        },
+        {
+          "pageid": 193542314,
+          "ns": 6,
+          "title": "File:Wildwood Tramcar north of Pine Avenue.jpeg"
+        },
+        {
+          "pageid": 193542356,
+          "ns": 6,
+          "title": "File:Wildwood Tramcar south of Garfield Avenue.jpeg"
+        }
+      ]
+    }
+  },
+  "Volvo EC40": {
+    "batchcomplete": "",
+    "query": {
+      "categorymembers": []
+    }
+  }
+}

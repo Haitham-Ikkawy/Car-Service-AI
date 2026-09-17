@@ -1,0 +1,116 @@
+{
+  "batchcomplete": "",
+  "query": {
+    "pages": {
+      "-1": {
+        "ns": 0,
+        "title": "Ram pickup (fifth generation)",
+        "missing": ""
+      },
+      "-2": {
+        "ns": 0,
+        "title": "Ram pickup (fourth generation)",
+        "missing": ""
+      },
+      "82121186": {
+        "pageid": 82121186,
+        "ns": 0,
+        "title": "Buick Verano (North America)",
+        "thumbnail": {
+          "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2f/2012_Buick_Verano_--_04-30-2012.JPG/960px-2012_Buick_Verano_--_04-30-2012.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+          "width": 640,
+          "height": 392
+        },
+        "pageimage": "2012_Buick_Verano_--_04-30-2012.JPG"
+      },
+      "58675144": {
+        "pageid": 58675144,
+        "ns": 0,
+        "title": "Chery Arrizo 5 Plus",
+        "thumbnail": {
+          "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d6/Chery_Arrizo_GX_008.jpg/960px-Chery_Arrizo_GX_008.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+          "width": 640,
+          "height": 480
+        },
+        "pageimage": "Chery_Arrizo_GX_008.jpg"
+      },
+      "56729524": {
+        "pageid": 56729524,
+        "ns": 0,
+        "title": "Geely Boyue",
+        "thumbnail": {
+          "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6d/2023_Geely_Boyue_L_%282%29%2C_front_8.3.23.jpg/960px-2023_Geely_Boyue_L_%282%29%2C_front_8.3.23.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+          "width": 640,
+          "height": 372
+        },
+        "pageimage": "2023_Geely_Boyue_L_(2),_front_8.3.23.jpg"
+      },
+      "65538084": {
+        "pageid": 65538084,
+        "ns": 0,
+        "title": "Geely Haoyue",
+        "thumbnail": {
+          "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/90/2023_Geely_Haoyue_L.jpg/960px-2023_Geely_Haoyue_L.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+          "width": 640,
+          "height": 413
+        },
+        "pageimage": "2023_Geely_Haoyue_L.jpg"
+      },
+      "60778517": {
+        "pageid": 60778517,
+        "ns": 0,
+        "title": "Geely Xingyue S",
+        "thumbnail": {
+          "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/22/2019_Geely_Xingyue_%28front%29.jpg/960px-2019_Geely_Xingyue_%28front%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+          "width": 640,
+          "height": 350
+        },
+        "pageimage": "2019_Geely_Xingyue_(front).jpg"
+      },
+      "58160591": {
+        "pageid": 58160591,
+        "ns": 0,
+        "title": "JAC Binyue",
+        "thumbnail": {
+          "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a7/JAC_Binyue_facelift_--_Auto_Chongqing_--_2012-06-07.jpg/960px-JAC_Binyue_facelift_--_Auto_Chongqing_--_2012-06-07.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+          "width": 640,
+          "height": 459
+        },
+        "pageimage": "JAC_Binyue_facelift_--_Auto_Chongqing_--_2012-06-07.jpg"
+      },
+      "65680146": {
+        "pageid": 65680146,
+        "ns": 0,
+        "title": "JAC Shuailing T8",
+        "thumbnail": {
+          "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2a/JAC_Frison.jpg/960px-JAC_Frison.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+          "width": 640,
+          "height": 480
+        },
+        "pageimage": "JAC_Frison.jpg"
+      },
+      "74835464": {
+        "pageid": 74835464,
+        "ns": 0,
+        "title": "JAC T9 Ute",
+        "thumbnail": {
+          "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2e/JAC_Hunter_facelift_001.jpg/960px-JAC_Hunter_facelift_001.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+          "width": 640,
+          "height": 480
+        },
+        "pageimage": "JAC_Hunter_facelift_001.jpg"
+      },
+      "66872664": {
+        "pageid": 66872664,
+        "ns": 0,
+        "title": "Sehol X4",
+        "thumbnail": {
+          "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/99/Sehol_E40X_001.jpg/960px-Sehol_E40X_001.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+          "width": 640,
+          "height": 480
+        },
+        "pageimage": "Sehol_E40X_001.jpg"
+      }
+    }
+  }
+}

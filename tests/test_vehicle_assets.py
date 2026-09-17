@@ -37,3 +37,15 @@ def test_catalogue_logos_and_connected_photos():
             assert record['sha256'] == digest
             assert record['verifiedModel'] and record['market'] == 'unknown'
     assert len(seen) > 200
+
+
+def test_all_connected_assets_are_served_as_images(auth_client):
+    source = (ROOT / 'src/ai_report/static/vehicle_assets.js').read_text(encoding='utf-8')
+    assets = json.loads(source.split(' = ', 1)[1].rstrip(';\n'))
+    paths = set(assets['logos'].values())
+    paths.update(photo['path'] for models in assets['images'].values() for photo in models.values())
+    for path in sorted(paths):
+        response = auth_client.get(path)
+        assert response.status_code == 200, path
+        assert response.headers['content-type'].startswith('image/'), path
+        assert response.content, path

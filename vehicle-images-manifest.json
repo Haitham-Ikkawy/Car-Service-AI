@@ -122,9 +122,24 @@
           "verification": "Exact brand/model in article image filename; shared-article lead image not used"
         },
         "NSX": {
-          "status": "missing",
-          "reason": "Shared article; exact photograph still required",
-          "modelSource": "https://en.wikipedia.org/wiki/Honda_NSX"
+          "sourcePage": "https://en.wikipedia.org/wiki/Honda_NSX_%28second_generation%29",
+          "verifiedModel": true,
+          "scope": "model",
+          "year": null,
+          "market": "unknown",
+          "status": "downloaded",
+          "path": "/image/vehicles/acura/nsx.webp",
+          "sourceUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ef/2022_Acura_NSX_Type_S%2C_front_5.4.25.jpg/960px-2022_Acura_NSX_Type_S%2C_front_5.4.25.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "sourceType": "wikimedia_commons",
+          "imageSource": "Wikimedia Commons",
+          "attribution": "Kevauto",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "description": "A 2022 Acura NSX Type S photographed in Greenpoint, Brooklyn, New York, USA",
+          "filePage": "https://commons.wikimedia.org/wiki/File:2022_Acura_NSX_Type_S%2C_front_5.4.25.jpg",
+          "modification": "Resized to at most 640×440 and converted to WebP",
+          "sha256": "6ea7f812d6d9dbb9c8b25a0c97ed32340bd4ea522e1d9a0d48dfe0c78c412521",
+          "verification": "Reviewed model article / Commons category and named photograph. Regional name or model-name alias retained where documented; no claim of exact year or market."
         }
       },
       "logoProvenance": {
@@ -213,13 +228,24 @@
           "sha256": "2833a4edf73b23756bc46a052dbf507ef95514ed1f5b8380255b69dbb9f43e52"
         },
         "Junior": {
-          "sourcePage": "https://en.wikipedia.org/wiki/Alfa_Romeo_Junior",
+          "sourcePage": "https://en.wikipedia.org/wiki/Alfa_Romeo_Junior_%282024%29",
           "verifiedModel": true,
           "scope": "model",
           "year": null,
           "market": "unknown",
-          "status": "missing",
-          "reason": "No raster vehicle photograph on verified model page"
+          "status": "downloaded",
+          "path": "/image/vehicles/alfa-romeo/junior.webp",
+          "sourceUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c9/Alfa_Romeo_Junior_Ibrida_DSC_7219.jpg/960px-Alfa_Romeo_Junior_Ibrida_DSC_7219.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "sourceType": "wikimedia_commons",
+          "imageSource": "Wikimedia Commons",
+          "attribution": "Alexander Migl",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "description": "Alfa Romeo Junior Ibrida in Stuttgart",
+          "filePage": "https://commons.wikimedia.org/wiki/File:Alfa_Romeo_Junior_Ibrida_DSC_7219.jpg",
+          "modification": "Resized to at most 640×440 and converted to WebP",
+          "sha256": "f79fe979dc6586c97c37efa54631a4e9b8a290eda1d811f688e1db10fe7e4edc",
+          "verification": "Reviewed model article / Commons category and named photograph. Regional name or model-name alias retained where documented; no claim of exact year or market."
         },
         "4C": {
           "sourcePage": "https://en.wikipedia.org/wiki/Alfa_Romeo_4C",
@@ -1591,13 +1617,24 @@
           "sha256": "3791248a3b781073762f12ab510f00b12a61604436a033f448c0c9784b64dc08"
         },
         "Verano": {
-          "sourcePage": "https://en.wikipedia.org/wiki/Buick_Verano",
+          "sourcePage": "https://en.wikipedia.org/wiki/Buick_Verano_%28North_America%29",
           "verifiedModel": true,
           "scope": "model",
           "year": null,
           "market": "unknown",
-          "status": "missing",
-          "reason": "No raster vehicle photograph on verified model page"
+          "status": "downloaded",
+          "path": "/image/vehicles/buick/verano.webp",
+          "sourceUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2f/2012_Buick_Verano_--_04-30-2012.JPG/960px-2012_Buick_Verano_--_04-30-2012.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "sourceType": "wikimedia_commons",
+          "imageSource": "Wikimedia Commons",
+          "attribution": "IFCAR",
+          "license": "Public domain",
+          "licenseUrl": "",
+          "description": "2012 Buick Verano photographed in Washington, D.C., USA.",
+          "filePage": "https://commons.wikimedia.org/wiki/File:2012_Buick_Verano_--_04-30-2012.JPG",
+          "modification": "Resized to at most 640×440 and converted to WebP",
+          "sha256": "c83d5c8a43070f3a8299b3eb386914046c8b506aebfd51cb0a168c46cac42885",
+          "verification": "Reviewed model article / Commons category and named photograph. Regional name or model-name alias retained where documented; no claim of exact year or market."
         },
         "GL8": {
           "sourcePage": "https://en.wikipedia.org/wiki/Buick_GL8",
@@ -8273,8 +8310,24 @@
           "verification": "Exact brand/model in article image filename; shared-article lead image not used"
         },
         "2500": {
-          "status": "missing",
-          "reason": "Exact model page not verified"
+          "sourcePage": "https://en.wikipedia.org/wiki/Ram_2500_%28DT%29",
+          "verifiedModel": true,
+          "scope": "model",
+          "year": null,
+          "market": "unknown",
+          "status": "downloaded",
+          "path": "/image/vehicles/ram/2500.webp",
+          "sourceUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0d/2025_RAM_2500_Laramie_Sport_Crew_Cab_4x4%2C_front_NYIAS_2025.jpg/960px-2025_RAM_2500_Laramie_Sport_Crew_Cab_4x4%2C_front_NYIAS_2025.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "sourceType": "wikimedia_commons",
+          "imageSource": "Wikimedia Commons",
+          "attribution": "Kevauto",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "description": "A 2025 RAM 2500 Laramie Sport Crew Cab photographed during the 2025 New York International Auto Show, inside the Javits Convention Center, at Hudson Yards, Manhattan, New York.",
+          "filePage": "https://commons.wikimedia.org/wiki/File:2025_RAM_2500_Laramie_Sport_Crew_Cab_4x4%2C_front_NYIAS_2025.jpg",
+          "modification": "Resized to at most 640×440 and converted to WebP",
+          "sha256": "a37d44e1c7cbec0b1aa8e57a001f34542e10c90a64a721f2a332400c5cdee5bf",
+          "verification": "Reviewed model article / Commons category and named photograph. Regional name or model-name alias retained where documented; no claim of exact year or market."
         },
         "3500": {
           "sourcePage": "https://en.wikipedia.org/wiki/Ram_pickup",
@@ -9129,19 +9182,64 @@
           "sha256": "6b9396e0d24728d6705211d737154d2b60b9c274f80bdb6c562b8ef36c406d4f"
         },
         "#1": {
-          "status": "missing",
-          "reason": "Shared article; exact photograph still required",
-          "modelSource": "https://en.wikipedia.org/wiki/Smart"
+          "sourcePage": "https://en.wikipedia.org/wiki/Smart_1",
+          "verifiedModel": true,
+          "scope": "model",
+          "year": null,
+          "market": "unknown",
+          "status": "downloaded",
+          "path": "/image/vehicles/smart/1.webp",
+          "sourceUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4b/Smart_%E2%99%AF1_Pro_%E2%80%93_f_11102025.jpg/960px-Smart_%E2%99%AF1_Pro_%E2%80%93_f_11102025.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "sourceType": "wikimedia_commons",
+          "imageSource": "Wikimedia Commons",
+          "attribution": "© M 93",
+          "license": "CC BY-SA 3.0 de",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+          "description": "Smart ♯1 Pro",
+          "filePage": "https://commons.wikimedia.org/wiki/File:Smart_%E2%99%AF1_Pro_%E2%80%93_f_11102025.jpg",
+          "modification": "Resized to at most 640×440 and converted to WebP",
+          "sha256": "c6f3c14b607ce913958516c074128d8d074a49b31210dc4066d1400fd54a84ac",
+          "verification": "Reviewed model article / Commons category and named photograph. Regional name or model-name alias retained where documented; no claim of exact year or market."
         },
         "#3": {
-          "status": "missing",
-          "reason": "Shared article; exact photograph still required",
-          "modelSource": "https://en.wikipedia.org/wiki/Smart"
+          "sourcePage": "https://en.wikipedia.org/wiki/Smart_3",
+          "verifiedModel": true,
+          "scope": "model",
+          "year": null,
+          "market": "unknown",
+          "status": "downloaded",
+          "path": "/image/vehicles/smart/3.webp",
+          "sourceUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/Smart_Hashtag_3_DSC_7992.jpg/960px-Smart_Hashtag_3_DSC_7992.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "sourceType": "wikimedia_commons",
+          "imageSource": "Wikimedia Commons",
+          "attribution": "Alexander Migl",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "description": "Smart Hashtag 3 in Esslingen",
+          "filePage": "https://commons.wikimedia.org/wiki/File:Smart_Hashtag_3_DSC_7992.jpg",
+          "modification": "Resized to at most 640×440 and converted to WebP",
+          "sha256": "3629922204183bb3a9e07e8e82513ab275664324916f2616440daf58160d3480",
+          "verification": "Reviewed model article / Commons category and named photograph. Regional name or model-name alias retained where documented; no claim of exact year or market."
         },
         "#5": {
-          "status": "missing",
-          "reason": "Shared article; exact photograph still required",
-          "modelSource": "https://en.wikipedia.org/wiki/Smart"
+          "sourcePage": "https://en.wikipedia.org/wiki/Smart_5",
+          "verifiedModel": true,
+          "scope": "model",
+          "year": null,
+          "market": "unknown",
+          "status": "downloaded",
+          "path": "/image/vehicles/smart/5.webp",
+          "sourceUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/69/Smart_Hashtag_5_Premium_autoMOBIL_T%C3%BCbingen_2025_DSC_2755_%28cropped%29.jpg/960px-Smart_Hashtag_5_Premium_autoMOBIL_T%C3%BCbingen_2025_DSC_2755_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "sourceType": "wikimedia_commons",
+          "imageSource": "Wikimedia Commons",
+          "attribution": "Alexander Migl",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "description": "Smart Hashtag 5 Premium at autoMOBIL Tübingen 2025",
+          "filePage": "https://commons.wikimedia.org/wiki/File:Smart_Hashtag_5_Premium_autoMOBIL_T%C3%BCbingen_2025_DSC_2755_%28cropped%29.jpg",
+          "modification": "Resized to at most 640×440 and converted to WebP",
+          "sha256": "693ff0809b99442f962b27f8147639f40a77347a6d2fe3ae1822a355ef5c6917",
+          "verification": "Reviewed model article / Commons category and named photograph. Regional name or model-name alias retained where documented; no claim of exact year or market."
         }
       },
       "logoProvenance": {
@@ -10807,14 +10905,43 @@
           "sha256": "a0c040f83686bd29a7cf7de8e9a520a09bdb9e2bf1bc71338afcf1017f0f2eff"
         },
         "EX40": {
-          "status": "missing",
-          "reason": "Shared article; exact photograph still required",
-          "modelSource": "https://en.wikipedia.org/wiki/Volvo_XC40"
+          "verifiedModel": true,
+          "scope": "model",
+          "year": null,
+          "market": "unknown",
+          "status": "downloaded",
+          "path": "/image/vehicles/volvo/ex40.webp",
+          "sourceUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ad/Volvo_EX40_Auto_Zuerich_2024_DSC_6718.jpg/960px-Volvo_EX40_Auto_Zuerich_2024_DSC_6718.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "sourceType": "wikimedia_commons",
+          "imageSource": "Wikimedia Commons",
+          "attribution": "Alexander-93",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "description": "Volvo EX40 at Auto Zürich 2024",
+          "filePage": "https://commons.wikimedia.org/wiki/File:Volvo_EX40_Auto_Zuerich_2024_DSC_6718.jpg",
+          "modification": "Resized to at most 640×440 and converted to WebP",
+          "sha256": "90a54122de298dae4b6bd1d739adbda985f6bd04046609ba5ea296374c7bb3fa",
+          "verification": "Named Volvo EX40 photograph in Commons Volvo EX40 category; selected clear exterior view"
         },
         "EC40": {
-          "status": "missing",
-          "reason": "Shared article; exact photograph still required",
-          "modelSource": "https://en.wikipedia.org/wiki/Volvo_XC40"
+          "sourcePage": "https://en.wikipedia.org/wiki/Volvo_C40",
+          "verifiedModel": true,
+          "scope": "model",
+          "year": null,
+          "market": "unknown",
+          "status": "downloaded",
+          "path": "/image/vehicles/volvo/ec40.webp",
+          "sourceUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3b/2024_Volvo_EC40_Ultra_Twin_Motor_Black_Edition.jpg/960px-2024_Volvo_EC40_Ultra_Twin_Motor_Black_Edition.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "sourceType": "wikimedia_commons",
+          "imageSource": "Wikimedia Commons",
+          "attribution": "Chanokchon",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "description": "2024 Volvo EC40 Ultra Twin Motor Black Edition in Volvo Downtown Store, Emsphere, Bangkok, Thailand.",
+          "filePage": "https://commons.wikimedia.org/wiki/File:2024_Volvo_EC40_Ultra_Twin_Motor_Black_Edition.jpg",
+          "modification": "Resized to at most 640×440 and converted to WebP",
+          "sha256": "e1c5ffad7dd0d5402e997e7fe1fd64172ab53f4cb1dce255acbcd1fb81a84edf",
+          "verification": "Reviewed model article / Commons category and named photograph. Regional name or model-name alias retained where documented; no claim of exact year or market."
         },
         "C40": {
           "sourcePage": "https://en.wikipedia.org/wiki/Volvo_XC40",
@@ -12373,9 +12500,24 @@
           "verification": "Exact brand/model in article image filename; shared-article lead image not used"
         },
         "Atlas": {
-          "status": "missing",
-          "reason": "Shared article; exact photograph still required",
-          "modelSource": "https://en.wikipedia.org/wiki/Geely_Boyue"
+          "sourcePage": "https://en.wikipedia.org/wiki/Geely_Boyue",
+          "verifiedModel": true,
+          "scope": "model",
+          "year": null,
+          "market": "unknown",
+          "status": "downloaded",
+          "path": "/image/vehicles/geely/atlas.webp",
+          "sourceUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/2019_Geely_Boyue_%28facelift%29%2C_front_8.3.23.jpg/960px-2019_Geely_Boyue_%28facelift%29%2C_front_8.3.23.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "sourceType": "wikimedia_commons",
+          "imageSource": "Wikimedia Commons",
+          "attribution": "Kevauto",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "description": "A 2019 Geely Boyue facelift photographed in Luolong District, Luoyang, Henan province, China",
+          "filePage": "https://commons.wikimedia.org/wiki/File:2019_Geely_Boyue_%28facelift%29%2C_front_8.3.23.jpg",
+          "modification": "Resized to at most 640×440 and converted to WebP",
+          "sha256": "2e28bd3a4064cde7952df1eaaf538743935d0640ed5ced714c12f1b242746b0e",
+          "verification": "Reviewed model article / Commons category and named photograph. Regional name or model-name alias retained where documented; no claim of exact year or market."
         },
         "Monjaro": {
           "sourcePage": "https://en.wikipedia.org/wiki/Geely_Xingyue_L",
@@ -12398,19 +12540,64 @@
           "verification": "Exact brand/model in article image filename; shared-article lead image not used"
         },
         "Okavango": {
-          "status": "missing",
-          "reason": "Shared article; exact photograph still required",
-          "modelSource": "https://en.wikipedia.org/wiki/Geely_Haoyue"
+          "sourcePage": "https://en.wikipedia.org/wiki/Geely_Haoyue",
+          "verifiedModel": true,
+          "scope": "model",
+          "year": null,
+          "market": "unknown",
+          "status": "downloaded",
+          "path": "/image/vehicles/geely/okavango.webp",
+          "sourceUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7d/2022_Geely_Haoyue.jpg/960px-2022_Geely_Haoyue.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "sourceType": "wikimedia_commons",
+          "imageSource": "Wikimedia Commons",
+          "attribution": "User3204",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "description": "​一輛來自惠州的吉利豪越，拍攝於中國廣東省深圳市羅湖區。",
+          "filePage": "https://commons.wikimedia.org/wiki/File:2022_Geely_Haoyue.jpg",
+          "modification": "Resized to at most 640×440 and converted to WebP",
+          "sha256": "b96e245e4289c5741fb8673ab8fa96263494a6a90836d8878d59cb8d4e7d14e6",
+          "verification": "Reviewed model article / Commons category and named photograph. Regional name or model-name alias retained where documented; no claim of exact year or market."
         },
         "Tugella": {
-          "status": "missing",
-          "reason": "Shared article; exact photograph still required",
-          "modelSource": "https://en.wikipedia.org/wiki/Geely_Xingyue_S"
+          "sourcePage": "https://en.wikipedia.org/wiki/Geely_Xingyue_S",
+          "verifiedModel": true,
+          "scope": "model",
+          "year": null,
+          "market": "unknown",
+          "status": "downloaded",
+          "path": "/image/vehicles/geely/tugella.webp",
+          "sourceUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/22/2019_Geely_Xingyue_%28front%29.jpg/960px-2019_Geely_Xingyue_%28front%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "sourceType": "wikimedia_commons",
+          "imageSource": "Wikimedia Commons",
+          "attribution": "User3204",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "description": "​一輛吉利星越S，拍攝於中國廣東省深圳市福田區",
+          "filePage": "https://commons.wikimedia.org/wiki/File:2019_Geely_Xingyue_%28front%29.jpg",
+          "modification": "Resized to at most 640×440 and converted to WebP",
+          "sha256": "47c109fe38421d8e50dfd8f3a7173239e24c30c8fe9b89d6b05788fd67e77abd",
+          "verification": "Reviewed model article / Commons category and named photograph. Regional name or model-name alias retained where documented; no claim of exact year or market."
         },
         "Geometry C": {
-          "status": "missing",
-          "reason": "Shared article; exact photograph still required",
-          "modelSource": "https://en.wikipedia.org/wiki/Geometry_C"
+          "sourcePage": "https://en.wikipedia.org/wiki/Geometry_C",
+          "verifiedModel": true,
+          "scope": "model",
+          "year": null,
+          "market": "unknown",
+          "status": "downloaded",
+          "path": "/image/vehicles/geely/geometry-c.webp",
+          "sourceUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a5/Geometry_C_012.jpg/960px-Geometry_C_012.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "sourceType": "wikimedia_commons",
+          "imageSource": "Wikimedia Commons",
+          "attribution": "Elizbeth smith",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "description": "Geometry C",
+          "filePage": "https://commons.wikimedia.org/wiki/File:Geometry_C_012.jpg",
+          "modification": "Resized to at most 640×440 and converted to WebP",
+          "sha256": "c0c30c8fa5df659623641afdad1c1c5b10435b0bcf9ec7c518268059114ba1fc",
+          "verification": "Reviewed model article / Commons category and named photograph. Regional name or model-name alias retained where documented; no claim of exact year or market."
         }
       },
       "logo": "/image/car_logos/geely.png",
@@ -12559,9 +12746,24 @@
           "verification": "Exact brand/model in article image filename; shared-article lead image not used"
         },
         "Arrizo 6": {
-          "status": "missing",
-          "reason": "Shared article; exact photograph still required",
-          "modelSource": "https://en.wikipedia.org/wiki/Chery_Arrizo_5_Plus"
+          "sourcePage": "https://en.wikipedia.org/wiki/Chery_Arrizo_5_Plus",
+          "verifiedModel": true,
+          "scope": "model",
+          "year": null,
+          "market": "unknown",
+          "status": "downloaded",
+          "path": "/image/vehicles/chery/arrizo-6.webp",
+          "sourceUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d6/Chery_Arrizo_GX_008.jpg/960px-Chery_Arrizo_GX_008.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "sourceType": "wikimedia_commons",
+          "imageSource": "Wikimedia Commons",
+          "attribution": "Quzhouliulian",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "description": "Chery Arrizo GX",
+          "filePage": "https://commons.wikimedia.org/wiki/File:Chery_Arrizo_GX_008.jpg",
+          "modification": "Resized to at most 640×440 and converted to WebP",
+          "sha256": "911f54141776a7554e25148ab4998389d7f5917630dd756b894ccc24c4016282",
+          "verification": "Reviewed model article / Commons category and named photograph. Regional name or model-name alias retained where documented; no claim of exact year or market."
         }
       },
       "logo": "/image/car_logos/chery.png",
@@ -12814,9 +13016,24 @@
           "sha256": "8154761a33018cdbf6d9815e3a307b371f1a0a4192772159cd3db5be3ae0e89f"
         },
         "Poer": {
-          "status": "missing",
-          "reason": "Shared article; exact photograph still required",
-          "modelSource": "https://en.wikipedia.org/wiki/GWM_Cannon"
+          "sourcePage": "https://en.wikipedia.org/wiki/GWM_Cannon",
+          "verifiedModel": true,
+          "scope": "model",
+          "year": null,
+          "market": "unknown",
+          "status": "downloaded",
+          "path": "/image/vehicles/great-wall/poer.webp",
+          "sourceUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/82/2023_Great-Wall_Pao_Passenger_Edition_%28facelift%29%2C_front_8.18.23.jpg/960px-2023_Great-Wall_Pao_Passenger_Edition_%28facelift%29%2C_front_8.18.23.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "sourceType": "wikimedia_commons",
+          "imageSource": "Wikimedia Commons",
+          "attribution": "Kevauto",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "description": "A 2023 Great-Wall Pao facelift photographed in Luolong District, Luoyang, Henan province, China",
+          "filePage": "https://commons.wikimedia.org/wiki/File:2023_Great-Wall_Pao_Passenger_Edition_%28facelift%29%2C_front_8.18.23.jpg",
+          "modification": "Resized to at most 640×440 and converted to WebP",
+          "sha256": "34c883cfb7e46be31fff5f7e09ce5b53088c6a28a11368bbed89fdce599fed13",
+          "verification": "Reviewed model article / Commons category and named photograph. Regional name or model-name alias retained where documented; no claim of exact year or market."
         }
       },
       "logo": "/image/car_logos/great-wall.png",
@@ -13500,9 +13717,24 @@
           "verification": "Exact brand/model in article image filename; shared-article lead image not used"
         },
         "One": {
-          "status": "missing",
-          "reason": "Shared article; exact photograph still required",
-          "modelSource": "https://en.wikipedia.org/wiki/Li_One"
+          "sourcePage": "https://en.wikipedia.org/wiki/Li_One",
+          "verifiedModel": true,
+          "scope": "model",
+          "year": null,
+          "market": "unknown",
+          "status": "downloaded",
+          "path": "/image/vehicles/li-auto/one.webp",
+          "sourceUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/2020_Lixiang_ONE_%28front%29.jpg/960px-2020_Lixiang_ONE_%28front%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "sourceType": "wikimedia_commons",
+          "imageSource": "Wikimedia Commons",
+          "attribution": "User3204",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "description": "​一輛理想ONE，拍攝於中國廣東省深圳市羅湖區",
+          "filePage": "https://commons.wikimedia.org/wiki/File:2020_Lixiang_ONE_%28front%29.jpg",
+          "modification": "Resized to at most 640×440 and converted to WebP",
+          "sha256": "ef700b4919d8bd494ddef4ace46f5ef30b78d4ce703ecf607a65065f0ebab1bf",
+          "verification": "Reviewed model article / Commons category and named photograph. Regional name or model-name alias retained where documented; no claim of exact year or market."
         }
       },
       "logo": "/image/car_logos/li-auto.png",
@@ -13698,9 +13930,24 @@
           "sha256": "267e644fda01d3b1d165432ef6fe94c568bc1fc5d4b47d08f169f020f8093ddb"
         },
         "GN6": {
-          "status": "missing",
-          "reason": "Shared article; exact photograph still required",
-          "modelSource": "https://en.wikipedia.org/wiki/Trumpchi_M6"
+          "sourcePage": "https://en.wikipedia.org/wiki/Trumpchi_M6",
+          "verifiedModel": true,
+          "scope": "model",
+          "year": null,
+          "market": "unknown",
+          "status": "downloaded",
+          "path": "/image/vehicles/gac/gn6.webp",
+          "sourceUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6e/Trumpchi_GM6_IMG001.jpg/960px-Trumpchi_GM6_IMG001.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "sourceType": "wikimedia_commons",
+          "imageSource": "Wikimedia Commons",
+          "attribution": "Zotyefan",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "description": "Trumpchi GM6",
+          "filePage": "https://commons.wikimedia.org/wiki/File:Trumpchi_GM6_IMG001.jpg",
+          "modification": "Resized to at most 640×440 and converted to WebP",
+          "sha256": "2b2ec2a416c77a47db4dde56ac608f0c95cc99fb62d973a005f64bd7b72dcfa1",
+          "verification": "Reviewed model article / Commons category and named photograph. Regional name or model-name alias retained where documented; no claim of exact year or market."
         },
         "GN8": {
           "sourcePage": "https://en.wikipedia.org/wiki/Trumpchi_M8",
@@ -13918,13 +14165,28 @@
     "JAC": {
       "models": {
         "J7": {
-          "status": "missing",
-          "reason": "Shared article; exact photograph still required",
-          "modelSource": "https://en.wikipedia.org/wiki/JAC_Binyue"
+          "sourcePage": "https://en.wikipedia.org/wiki/JAC_Binyue",
+          "verifiedModel": true,
+          "scope": "model",
+          "year": null,
+          "market": "unknown",
+          "status": "downloaded",
+          "path": "/image/vehicles/jac/j7.webp",
+          "sourceUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a7/JAC_Binyue_facelift_--_Auto_Chongqing_--_2012-06-07.jpg/960px-JAC_Binyue_facelift_--_Auto_Chongqing_--_2012-06-07.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "sourceType": "wikimedia_commons",
+          "imageSource": "Wikimedia Commons",
+          "attribution": "Navigator84",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+          "description": "JAC Binyue facelift photographed at the 2012 Chongqing Auto Show, Chongqing, China.",
+          "filePage": "https://commons.wikimedia.org/wiki/File:JAC_Binyue_facelift_--_Auto_Chongqing_--_2012-06-07.jpg",
+          "modification": "Resized to at most 640×440 and converted to WebP",
+          "sha256": "1fd36f9efa0e6f3f47d32d641491239f720fdb1e4a9c34f81b7cf4ed1f38608d",
+          "verification": "Reviewed model article / Commons category and named photograph. Regional name or model-name alias retained where documented; no claim of exact year or market."
         },
         "JS4": {
           "status": "missing",
-          "reason": "Shared article; exact photograph still required",
+          "reason": "No verified petrol JS4 photograph obtained; available e-JS4/E40X assets depict different variants.",
           "modelSource": "https://en.wikipedia.org/wiki/Sehol_X4"
         },
         "S3": {
@@ -13968,14 +14230,44 @@
           "verification": "Exact brand/model in article image filename; shared-article lead image not used"
         },
         "T8": {
-          "status": "missing",
-          "reason": "Shared article; exact photograph still required",
-          "modelSource": "https://en.wikipedia.org/wiki/JAC_Shuailing_T8"
+          "sourcePage": "https://en.wikipedia.org/wiki/JAC_Shuailing_T8",
+          "verifiedModel": true,
+          "scope": "model",
+          "year": null,
+          "market": "unknown",
+          "status": "downloaded",
+          "path": "/image/vehicles/jac/t8.webp",
+          "sourceUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2a/JAC_Frison.jpg/960px-JAC_Frison.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "sourceType": "wikimedia_commons",
+          "imageSource": "Wikimedia Commons",
+          "attribution": "Jason Lawrence",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+          "description": "One of many Chinese models on the Mexican market. Seen in San Luis Potosi, Mexico.",
+          "filePage": "https://commons.wikimedia.org/wiki/File:JAC_Frison.jpg",
+          "modification": "Resized to at most 640×440 and converted to WebP",
+          "sha256": "a4bf90cfc6b20e210109217f95363e2cb1c280900af221e7c7b94b88f5244209",
+          "verification": "Reviewed model article / Commons category and named photograph. Regional name or model-name alias retained where documented; no claim of exact year or market."
         },
         "T9": {
-          "status": "missing",
-          "reason": "Shared article; exact photograph still required",
-          "modelSource": "https://en.wikipedia.org/wiki/JAC_T9_Ute"
+          "sourcePage": "https://en.wikipedia.org/wiki/JAC_T9_Ute",
+          "verifiedModel": true,
+          "scope": "model",
+          "year": null,
+          "market": "unknown",
+          "status": "downloaded",
+          "path": "/image/vehicles/jac/t9.webp",
+          "sourceUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2e/JAC_Hunter_facelift_001.jpg/960px-JAC_Hunter_facelift_001.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "sourceType": "wikimedia_commons",
+          "imageSource": "Wikimedia Commons",
+          "attribution": "JustAnotherCarDesigner",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "description": "JAC Hunter facelift",
+          "filePage": "https://commons.wikimedia.org/wiki/File:JAC_Hunter_facelift_001.jpg",
+          "modification": "Resized to at most 640×440 and converted to WebP",
+          "sha256": "83e6808a805d22792debc0f79369dbf891bc1acf19e437c66dff9711f15b7f95",
+          "verification": "Reviewed model article / Commons category and named photograph. Regional name or model-name alias retained where documented; no claim of exact year or market."
         }
       },
       "logo": "/image/car_logos/jac.png",
@@ -14027,9 +14319,24 @@
           "sha256": "bd3f34458af88c9ee96dd7ff2af8fb3e9ad6b4ce4ce8824a3d1cd5fc2b47e9a2"
         },
         "X35": {
-          "status": "missing",
-          "reason": "Shared article; exact photograph still required",
-          "modelSource": "https://en.wikipedia.org/wiki/Beijing_X3"
+          "sourcePage": "https://en.wikipedia.org/wiki/Beijing_X3",
+          "verifiedModel": true,
+          "scope": "model",
+          "year": null,
+          "market": "unknown",
+          "status": "downloaded",
+          "path": "/image/vehicles/baic/x35.webp",
+          "sourceUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/2018_BAIC_Senova_X35%2C_front_8.11.18.jpg/960px-2018_BAIC_Senova_X35%2C_front_8.11.18.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "sourceType": "wikimedia_commons",
+          "imageSource": "Wikimedia Commons",
+          "attribution": "Kevauto",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "description": "A 2018 BAIC Senova X35 photographed at a BAIC dealership, in Luoyang, Henan province, China",
+          "filePage": "https://commons.wikimedia.org/wiki/File:2018_BAIC_Senova_X35%2C_front_8.11.18.jpg",
+          "modification": "Resized to at most 640×440 and converted to WebP",
+          "sha256": "65d20a3c0ffa0f830f5548287a49ed1cc95a622adb62085e38d35c0b6c3b5af0",
+          "verification": "Reviewed model article / Commons category and named photograph. Regional name or model-name alias retained where documented; no claim of exact year or market."
         },
         "X55": {
           "sourcePage": "https://en.wikipedia.org/wiki/Beijing_Mofang",
@@ -14063,9 +14370,24 @@
     "FAW": {
       "models": {
         "Besturn B50": {
-          "status": "missing",
-          "reason": "Shared article; exact photograph still required",
-          "modelSource": "https://en.wikipedia.org/wiki/Bestune_B50"
+          "sourcePage": "https://en.wikipedia.org/wiki/Bestune_B50",
+          "verifiedModel": true,
+          "scope": "model",
+          "year": null,
+          "market": "unknown",
+          "status": "downloaded",
+          "path": "/image/vehicles/faw/besturn-b50.webp",
+          "sourceUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Besturn_B50_II_03.jpg/960px-Besturn_B50_II_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "sourceType": "wikimedia_commons",
+          "imageSource": "Wikimedia Commons",
+          "attribution": "Jengtingchen",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "description": "Besturn B50 II",
+          "filePage": "https://commons.wikimedia.org/wiki/File:Besturn_B50_II_03.jpg",
+          "modification": "Resized to at most 640×440 and converted to WebP",
+          "sha256": "cb1ed368a99228debc6d7283e3cc17f430608a5bab6625abbcec7ed8dc31a692",
+          "verification": "Reviewed model article / Commons category and named photograph. Regional name or model-name alias retained where documented; no claim of exact year or market."
         },
         "Besturn B70": {
           "sourcePage": "https://en.wikipedia.org/wiki/Bestune_B70",
@@ -14666,9 +14988,24 @@
           "sha256": "7f972e66335be33427b6f28885ced6d6366808cca3c778592a281aa6d779f568"
         },
         "XUV400": {
-          "status": "missing",
-          "reason": "Shared article; exact photograph still required",
-          "modelSource": "https://en.wikipedia.org/wiki/Mahindra_XUV300"
+          "sourcePage": "https://en.wikipedia.org/wiki/Mahindra_XUV300",
+          "verifiedModel": true,
+          "scope": "model",
+          "year": null,
+          "market": "unknown",
+          "status": "downloaded",
+          "path": "/image/vehicles/mahindra/xuv400.webp",
+          "sourceUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ef/2023_Mahindra_XUV_400_EL_EV_%2C_Ashiana_Brahmananda%2C_Jamshedpur%2C_Jharkhand%2C_India_%28_Ank_Kumar%2C_Infosys_Limited_%29_01.jpg/960px-2023_Mahindra_XUV_400_EL_EV_%2C_Ashiana_Brahmananda%2C_Jamshedpur%2C_Jharkhand%2C_India_%28_Ank_Kumar%2C_Infosys_Limited_%29_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "sourceType": "wikimedia_commons",
+          "imageSource": "Wikimedia Commons",
+          "attribution": "Ank Kumar",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "description": "Model - 2023 Mahindra XUV 400 EL\nPlace - Ashiana Brahmananda,Tamuliya ,East  Singhbhum district, Jamshedpur, Jharkhand, India\n2023 Mahindra XUV 400 EL EV is a 5-seater all electric SUV by Indian automaker Mahindra & Mahindra.\n\nIt is the first all-electric SUV by Mahindra & Mahindra and is the main competitor in India for Tata Nexon EV.",
+          "filePage": "https://commons.wikimedia.org/wiki/File:2023_Mahindra_XUV_400_EL_EV_%2C_Ashiana_Brahmananda%2C_Jamshedpur%2C_Jharkhand%2C_India_%28_Ank_Kumar%2C_Infosys_Limited_%29_01.jpg",
+          "modification": "Resized to at most 640×440 and converted to WebP",
+          "sha256": "2128f0283d7017df3a7ae7da39da90be77b88921edb840ccad0946921d378cc6",
+          "verification": "Reviewed model article / Commons category and named photograph. Regional name or model-name alias retained where documented; no claim of exact year or market."
         }
       },
       "logo": "/image/car_logos/mahindra.svg",
@@ -15283,9 +15620,24 @@
           "verification": "Exact brand/model in article image filename; shared-article lead image not used"
         },
         "695": {
-          "status": "missing",
-          "reason": "Shared article; exact photograph still required",
-          "modelSource": "https://en.wikipedia.org/wiki/Fiat_500"
+          "sourcePage": "https://en.wikipedia.org/wiki/Fiat_500_%282007%29",
+          "verifiedModel": true,
+          "scope": "model",
+          "year": null,
+          "market": "unknown",
+          "status": "downloaded",
+          "path": "/image/vehicles/abarth/695.webp",
+          "sourceUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2b/Abarth695TributoFerraridc.jpg/960px-Abarth695TributoFerraridc.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "sourceType": "wikimedia_commons",
+          "imageSource": "Wikimedia Commons",
+          "attribution": "DiegoCeron",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "description": "This photo was captured with a camara LG GM360 in Mexico City",
+          "filePage": "https://commons.wikimedia.org/wiki/File:Abarth695TributoFerraridc.jpg",
+          "modification": "Resized to at most 640×440 and converted to WebP",
+          "sha256": "3b9ef8023a90ddfafc6cfd138975a0164a68cf50af3aef8cdd4949fddf0f6296",
+          "verification": "Reviewed model article / Commons category and named photograph. Regional name or model-name alias retained where documented; no claim of exact year or market."
         },
         "124 Spider": {
           "sourcePage": "https://en.wikipedia.org/wiki/Fiat_124_Spider_%282016%29",

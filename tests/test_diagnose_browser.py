@@ -208,6 +208,42 @@ def test_downloaded_vehicle_assets_desktop_and_mobile(browser_page):
         page.screenshot(path=str(Path(f'tmp/vehicle-selector-{width}.png')), full_page=True)
 
 
+def test_selected_model_photos_and_keyboard_search(browser_page):
+    page, base = browser_page
+    cases = [('BMW', 'X5'), ('BMW', '3 Series'), ('Mercedes-Benz', 'C-Class'),
+             ('Toyota', 'Land Cruiser'), ('Honda', 'Accord'), ('Audi', 'A4'),
+             ('Porsche', '911'), ('Ford', 'Mustang'), ('Tesla', 'Model 3'),
+             ('Hyundai', 'Tucson'), ('Kia', 'Sportage'), ('Smart', '#1')]
+    page.goto(base + '/diagnose', wait_until='domcontentloaded')
+    for index, (brand, model) in enumerate(cases):
+        if index:
+            page.locator('#dz-change-vehicle').click()
+        brand_card = page.locator(f'#dz-brands-grid [data-brand="{brand}"]')
+        if not brand_card.count():
+            page.locator('#dz-brands-view-all').click()
+        brand_card.click()
+        card = page.locator(f'#dz-car-models-grid [data-model="{model}"]')
+        card.click()
+        playwright.expect(page.locator('#dz-car-selected-brand')).to_have_text(brand)
+        playwright.expect(page.locator('#dz-car-selected-model')).to_have_text(model)
+        photo = page.locator('#dz-selected-image img')
+        playwright.expect(photo).to_be_visible()
+        page.wait_for_function('(img) => img.complete && img.naturalWidth > 0', arg=photo.element_handle())
+        assert photo.get_attribute('src') == card.locator('img.dz-model-img').get_attribute('src')
+        assert '/image/vehicles/' in photo.get_attribute('src')
+        assert photo.get_attribute('src') == page.locator('#dz-info-vehicle-img').get_attribute('src')
+    page.locator('#dz-change-vehicle').click()
+    page.locator('#dz-vehicle-search').fill('BMW X5')
+    playwright.expect(page.locator('#dz-car-suggestions')).to_be_visible()
+    page.locator('#dz-vehicle-search').press('ArrowDown')
+    page.locator('#dz-vehicle-search').press('Enter')
+    playwright.expect(page.locator('#dz-car-selected-brand')).to_have_text('BMW')
+    playwright.expect(page.locator('#dz-car-selected-model')).to_have_text('X5')
+    photo = page.locator('#dz-selected-image img')
+    page.wait_for_function('(img) => img.complete && img.naturalWidth > 0', arg=photo.element_handle())
+    page.screenshot(path=str(Path('tmp/selected-model-photo.png')), full_page=False)
+
+
 def test_partial_arabic_and_confirmation(browser_page):
     page, base = browser_page
     page.goto(base + '/diagnose')

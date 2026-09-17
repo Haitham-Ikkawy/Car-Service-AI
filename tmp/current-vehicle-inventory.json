@@ -1,0 +1,4770 @@
+{
+  "summary": {
+    "brands_found": 87,
+    "brands_added": 0,
+    "models_found": 771,
+    "models_added": 0,
+    "logos_found": 87,
+    "logos_added": 0,
+    "vehicle_images_found": 746,
+    "vehicle_images_added": 24,
+    "connected_vehicle_images": 770,
+    "missing": [
+      [
+        "JAC",
+        "JS4",
+        "No verified petrol JS4 photograph obtained; available e-JS4/E40X assets depict different variants."
+      ]
+    ],
+    "added": [
+      [
+        "Acura",
+        "NSX",
+        "/image/vehicles/acura/nsx.webp"
+      ],
+      [
+        "Alfa Romeo",
+        "Junior",
+        "/image/vehicles/alfa-romeo/junior.webp"
+      ],
+      [
+        "Buick",
+        "Verano",
+        "/image/vehicles/buick/verano.webp"
+      ],
+      [
+        "Ram",
+        "2500",
+        "/image/vehicles/ram/2500.webp"
+      ],
+      [
+        "Smart",
+        "#1",
+        "/image/vehicles/smart/1.webp"
+      ],
+      [
+        "Smart",
+        "#3",
+        "/image/vehicles/smart/3.webp"
+      ],
+      [
+        "Smart",
+        "#5",
+        "/image/vehicles/smart/5.webp"
+      ],
+      [
+        "Volvo",
+        "EX40",
+        "/image/vehicles/volvo/ex40.webp"
+      ],
+      [
+        "Volvo",
+        "EC40",
+        "/image/vehicles/volvo/ec40.webp"
+      ],
+      [
+        "Geely",
+        "Atlas",
+        "/image/vehicles/geely/atlas.webp"
+      ],
+      [
+        "Geely",
+        "Okavango",
+        "/image/vehicles/geely/okavango.webp"
+      ],
+      [
+        "Geely",
+        "Tugella",
+        "/image/vehicles/geely/tugella.webp"
+      ],
+      [
+        "Geely",
+        "Geometry C",
+        "/image/vehicles/geely/geometry-c.webp"
+      ],
+      [
+        "Chery",
+        "Arrizo 6",
+        "/image/vehicles/chery/arrizo-6.webp"
+      ],
+      [
+        "Great Wall",
+        "Poer",
+        "/image/vehicles/great-wall/poer.webp"
+      ],
+      [
+        "Li Auto",
+        "One",
+        "/image/vehicles/li-auto/one.webp"
+      ],
+      [
+        "GAC",
+        "GN6",
+        "/image/vehicles/gac/gn6.webp"
+      ],
+      [
+        "JAC",
+        "J7",
+        "/image/vehicles/jac/j7.webp"
+      ],
+      [
+        "JAC",
+        "T8",
+        "/image/vehicles/jac/t8.webp"
+      ],
+      [
+        "JAC",
+        "T9",
+        "/image/vehicles/jac/t9.webp"
+      ],
+      [
+        "BAIC",
+        "X35",
+        "/image/vehicles/baic/x35.webp"
+      ],
+      [
+        "FAW",
+        "Besturn B50",
+        "/image/vehicles/faw/besturn-b50.webp"
+      ],
+      [
+        "Mahindra",
+        "XUV400",
+        "/image/vehicles/mahindra/xuv400.webp"
+      ],
+      [
+        "Abarth",
+        "695",
+        "/image/vehicles/abarth/695.webp"
+      ]
+    ]
+  },
+  "inventory": [
+    {
+      "brand": "Acura",
+      "model": "ILX",
+      "logo": "/image/car_logos/acura.svg",
+      "image": "/image/vehicles/acura/ilx.webp"
+    },
+    {
+      "brand": "Acura",
+      "model": "TLX",
+      "logo": "/image/car_logos/acura.svg",
+      "image": "/image/vehicles/acura/tlx.webp"
+    },
+    {
+      "brand": "Acura",
+      "model": "RDX",
+      "logo": "/image/car_logos/acura.svg",
+      "image": "/image/vehicles/acura/rdx.webp"
+    },
+    {
+      "brand": "Acura",
+      "model": "MDX",
+      "logo": "/image/car_logos/acura.svg",
+      "image": "/image/vehicles/acura/mdx.webp"
+    },
+    {
+      "brand": "Acura",
+      "model": "ZDX",
+      "logo": "/image/car_logos/acura.svg",
+      "image": "/image/vehicles/acura/zdx.webp"
+    },
+    {
+      "brand": "Acura",
+      "model": "Integra",
+      "logo": "/image/car_logos/acura.svg",
+      "image": "/image/vehicles/acura/integra.webp"
+    },
+    {
+      "brand": "Acura",
+      "model": "NSX",
+      "logo": "/image/car_logos/acura.svg",
+      "image": "/image/vehicles/acura/nsx.webp"
+    },
+    {
+      "brand": "Alfa Romeo",
+      "model": "Giulia",
+      "logo": "/image/car_logos/alfa-romeo.svg",
+      "image": "/image/vehicles/alfa-romeo/giulia.webp"
+    },
+    {
+      "brand": "Alfa Romeo",
+      "model": "Stelvio",
+      "logo": "/image/car_logos/alfa-romeo.svg",
+      "image": "/image/vehicles/alfa-romeo/stelvio.webp"
+    },
+    {
+      "brand": "Alfa Romeo",
+      "model": "Tonale",
+      "logo": "/image/car_logos/alfa-romeo.svg",
+      "image": "/image/vehicles/alfa-romeo/tonale.webp"
+    },
+    {
+      "brand": "Alfa Romeo",
+      "model": "Giulietta",
+      "logo": "/image/car_logos/alfa-romeo.svg",
+      "image": "/image/vehicles/alfa-romeo/giulietta.webp"
+    },
+    {
+      "brand": "Alfa Romeo",
+      "model": "Junior",
+      "logo": "/image/car_logos/alfa-romeo.svg",
+      "image": "/image/vehicles/alfa-romeo/junior.webp"
+    },
+    {
+      "brand": "Alfa Romeo",
+      "model": "4C",
+      "logo": "/image/car_logos/alfa-romeo.svg",
+      "image": "/image/vehicles/alfa-romeo/4c.webp"
+    },
+    {
+      "brand": "Alfa Romeo",
+      "model": "159",
+      "logo": "/image/car_logos/alfa-romeo.svg",
+      "image": "/image/vehicles/alfa-romeo/159.webp"
+    },
+    {
+      "brand": "Alfa Romeo",
+      "model": "Brera",
+      "logo": "/image/car_logos/alfa-romeo.svg",
+      "image": "/image/vehicles/alfa-romeo/brera.webp"
+    },
+    {
+      "brand": "Aston Martin",
+      "model": "Vantage",
+      "logo": "/image/car_logos/aston-martin.svg",
+      "image": "/image/vehicles/aston-martin/vantage.webp"
+    },
+    {
+      "brand": "Aston Martin",
+      "model": "DB12",
+      "logo": "/image/car_logos/aston-martin.svg",
+      "image": "/image/vehicles/aston-martin/db12.webp"
+    },
+    {
+      "brand": "Aston Martin",
+      "model": "DBX",
+      "logo": "/image/car_logos/aston-martin.svg",
+      "image": "/image/vehicles/aston-martin/dbx.webp"
+    },
+    {
+      "brand": "Aston Martin",
+      "model": "DB11",
+      "logo": "/image/car_logos/aston-martin.svg",
+      "image": "/image/vehicles/aston-martin/db11.webp"
+    },
+    {
+      "brand": "Aston Martin",
+      "model": "DBS",
+      "logo": "/image/car_logos/aston-martin.svg",
+      "image": "/image/vehicles/aston-martin/dbs.webp"
+    },
+    {
+      "brand": "Aston Martin",
+      "model": "Vanquish",
+      "logo": "/image/car_logos/aston-martin.svg",
+      "image": "/image/vehicles/aston-martin/vanquish.webp"
+    },
+    {
+      "brand": "Aston Martin",
+      "model": "Valkyrie",
+      "logo": "/image/car_logos/aston-martin.svg",
+      "image": "/image/vehicles/aston-martin/valkyrie.webp"
+    },
+    {
+      "brand": "Audi",
+      "model": "A3",
+      "logo": "/image/car_logos/audi.svg",
+      "image": "/image/vehicles/audi/a3.webp"
+    },
+    {
+      "brand": "Audi",
+      "model": "A4",
+      "logo": "/image/car_logos/audi.svg",
+      "image": "/image/vehicles/audi/a4.webp"
+    },
+    {
+      "brand": "Audi",
+      "model": "A6",
+      "logo": "/image/car_logos/audi.svg",
+      "image": "/image/vehicles/audi/a6.webp"
+    },
+    {
+      "brand": "Audi",
+      "model": "Q3",
+      "logo": "/image/car_logos/audi.svg",
+      "image": "/image/vehicles/audi/q3.webp"
+    },
+    {
+      "brand": "Audi",
+      "model": "Q5",
+      "logo": "/image/car_logos/audi.svg",
+      "image": "/image/vehicles/audi/q5.webp"
+    },
+    {
+      "brand": "Audi",
+      "model": "Q7",
+      "logo": "/image/car_logos/audi.svg",
+      "image": "/image/vehicles/audi/q7.webp"
+    },
+    {
+      "brand": "Audi",
+      "model": "e-tron",
+      "logo": "/image/car_logos/audi.svg",
+      "image": "/image/vehicles/audi/e-tron.webp"
+    },
+    {
+      "brand": "Audi",
+      "model": "A1",
+      "logo": "/image/car_logos/audi.svg",
+      "image": "/image/vehicles/audi/a1.webp"
+    },
+    {
+      "brand": "Audi",
+      "model": "A5",
+      "logo": "/image/car_logos/audi.svg",
+      "image": "/image/vehicles/audi/a5.webp"
+    },
+    {
+      "brand": "Audi",
+      "model": "A7",
+      "logo": "/image/car_logos/audi.svg",
+      "image": "/image/vehicles/audi/a7.webp"
+    },
+    {
+      "brand": "Audi",
+      "model": "A8",
+      "logo": "/image/car_logos/audi.svg",
+      "image": "/image/vehicles/audi/a8.webp"
+    },
+    {
+      "brand": "Audi",
+      "model": "Q2",
+      "logo": "/image/car_logos/audi.svg",
+      "image": "/image/vehicles/audi/q2.webp"
+    },
+    {
+      "brand": "Audi",
+      "model": "Q4 e-tron",
+      "logo": "/image/car_logos/audi.svg",
+      "image": "/image/vehicles/audi/q4-e-tron.webp"
+    },
+    {
+      "brand": "Audi",
+      "model": "Q8",
+      "logo": "/image/car_logos/audi.svg",
+      "image": "/image/vehicles/audi/q8.webp"
+    },
+    {
+      "brand": "Audi",
+      "model": "Q8 e-tron",
+      "logo": "/image/car_logos/audi.svg",
+      "image": "/image/vehicles/audi/q8-e-tron.webp"
+    },
+    {
+      "brand": "Audi",
+      "model": "Q6 e-tron",
+      "logo": "/image/car_logos/audi.svg",
+      "image": "/image/vehicles/audi/q6-e-tron.webp"
+    },
+    {
+      "brand": "Audi",
+      "model": "TT",
+      "logo": "/image/car_logos/audi.svg",
+      "image": "/image/vehicles/audi/tt.webp"
+    },
+    {
+      "brand": "Audi",
+      "model": "R8",
+      "logo": "/image/car_logos/audi.svg",
+      "image": "/image/vehicles/audi/r8.webp"
+    },
+    {
+      "brand": "Audi",
+      "model": "e-tron GT",
+      "logo": "/image/car_logos/audi.svg",
+      "image": "/image/vehicles/audi/e-tron-gt.webp"
+    },
+    {
+      "brand": "Bentley",
+      "model": "Continental GT",
+      "logo": "/image/car_logos/bentley.svg",
+      "image": "/image/vehicles/bentley/continental-gt.webp"
+    },
+    {
+      "brand": "Bentley",
+      "model": "Flying Spur",
+      "logo": "/image/car_logos/bentley.svg",
+      "image": "/image/vehicles/bentley/flying-spur.webp"
+    },
+    {
+      "brand": "Bentley",
+      "model": "Bentayga",
+      "logo": "/image/car_logos/bentley.svg",
+      "image": "/image/vehicles/bentley/bentayga.webp"
+    },
+    {
+      "brand": "Bentley",
+      "model": "Mulsanne",
+      "logo": "/image/car_logos/bentley.svg",
+      "image": "/image/vehicles/bentley/mulsanne.webp"
+    },
+    {
+      "brand": "BMW",
+      "model": "1 Series",
+      "logo": "/image/car_logos/bmw.svg",
+      "image": "/image/vehicles/bmw/1-series.webp"
+    },
+    {
+      "brand": "BMW",
+      "model": "3 Series",
+      "logo": "/image/car_logos/bmw.svg",
+      "image": "/image/vehicles/bmw/3-series.webp"
+    },
+    {
+      "brand": "BMW",
+      "model": "5 Series",
+      "logo": "/image/car_logos/bmw.svg",
+      "image": "/image/vehicles/bmw/5-series.webp"
+    },
+    {
+      "brand": "BMW",
+      "model": "X1",
+      "logo": "/image/car_logos/bmw.svg",
+      "image": "/image/vehicles/bmw/x1.webp"
+    },
+    {
+      "brand": "BMW",
+      "model": "X3",
+      "logo": "/image/car_logos/bmw.svg",
+      "image": "/image/vehicles/bmw/x3.webp"
+    },
+    {
+      "brand": "BMW",
+      "model": "X5",
+      "logo": "/image/car_logos/bmw.svg",
+      "image": "/image/vehicles/bmw/x5.webp"
+    },
+    {
+      "brand": "BMW",
+      "model": "i4",
+      "logo": "/image/car_logos/bmw.svg",
+      "image": "/image/vehicles/bmw/i4.webp"
+    },
+    {
+      "brand": "BMW",
+      "model": "2 Series",
+      "logo": "/image/car_logos/bmw.svg",
+      "image": "/image/vehicles/bmw/2-series.webp"
+    },
+    {
+      "brand": "BMW",
+      "model": "4 Series",
+      "logo": "/image/car_logos/bmw.svg",
+      "image": "/image/vehicles/bmw/4-series.webp"
+    },
+    {
+      "brand": "BMW",
+      "model": "6 Series",
+      "logo": "/image/car_logos/bmw.svg",
+      "image": "/image/vehicles/bmw/6-series.webp"
+    },
+    {
+      "brand": "BMW",
+      "model": "7 Series",
+      "logo": "/image/car_logos/bmw.svg",
+      "image": "/image/vehicles/bmw/7-series.webp"
+    },
+    {
+      "brand": "BMW",
+      "model": "8 Series",
+      "logo": "/image/car_logos/bmw.svg",
+      "image": "/image/vehicles/bmw/8-series.webp"
+    },
+    {
+      "brand": "BMW",
+      "model": "X2",
+      "logo": "/image/car_logos/bmw.svg",
+      "image": "/image/vehicles/bmw/x2.webp"
+    },
+    {
+      "brand": "BMW",
+      "model": "X4",
+      "logo": "/image/car_logos/bmw.svg",
+      "image": "/image/vehicles/bmw/x4.webp"
+    },
+    {
+      "brand": "BMW",
+      "model": "X6",
+      "logo": "/image/car_logos/bmw.svg",
+      "image": "/image/vehicles/bmw/x6.webp"
+    },
+    {
+      "brand": "BMW",
+      "model": "X7",
+      "logo": "/image/car_logos/bmw.svg",
+      "image": "/image/vehicles/bmw/x7.webp"
+    },
+    {
+      "brand": "BMW",
+      "model": "XM",
+      "logo": "/image/car_logos/bmw.svg",
+      "image": "/image/vehicles/bmw/xm.webp"
+    },
+    {
+      "brand": "BMW",
+      "model": "i3",
+      "logo": "/image/car_logos/bmw.svg",
+      "image": "/image/vehicles/bmw/i3.webp"
+    },
+    {
+      "brand": "BMW",
+      "model": "i8",
+      "logo": "/image/car_logos/bmw.svg",
+      "image": "/image/vehicles/bmw/i8.webp"
+    },
+    {
+      "brand": "BMW",
+      "model": "iX",
+      "logo": "/image/car_logos/bmw.svg",
+      "image": "/image/vehicles/bmw/ix.webp"
+    },
+    {
+      "brand": "BMW",
+      "model": "iX3",
+      "logo": "/image/car_logos/bmw.svg",
+      "image": "/image/vehicles/bmw/ix3.webp"
+    },
+    {
+      "brand": "BMW",
+      "model": "M2",
+      "logo": "/image/car_logos/bmw.svg",
+      "image": "/image/vehicles/bmw/m2.webp"
+    },
+    {
+      "brand": "BMW",
+      "model": "M3",
+      "logo": "/image/car_logos/bmw.svg",
+      "image": "/image/vehicles/bmw/m3.webp"
+    },
+    {
+      "brand": "BMW",
+      "model": "M4",
+      "logo": "/image/car_logos/bmw.svg",
+      "image": "/image/vehicles/bmw/m4.webp"
+    },
+    {
+      "brand": "BMW",
+      "model": "M5",
+      "logo": "/image/car_logos/bmw.svg",
+      "image": "/image/vehicles/bmw/m5.webp"
+    },
+    {
+      "brand": "BMW",
+      "model": "M8",
+      "logo": "/image/car_logos/bmw.svg",
+      "image": "/image/vehicles/bmw/m8.webp"
+    },
+    {
+      "brand": "BMW",
+      "model": "i5",
+      "logo": "/image/car_logos/bmw.svg",
+      "image": "/image/vehicles/bmw/i5.webp"
+    },
+    {
+      "brand": "BMW",
+      "model": "i7",
+      "logo": "/image/car_logos/bmw.svg",
+      "image": "/image/vehicles/bmw/i7.webp"
+    },
+    {
+      "brand": "BMW",
+      "model": "iX1",
+      "logo": "/image/car_logos/bmw.svg",
+      "image": "/image/vehicles/bmw/ix1.webp"
+    },
+    {
+      "brand": "BMW",
+      "model": "Z4",
+      "logo": "/image/car_logos/bmw.svg",
+      "image": "/image/vehicles/bmw/z4.webp"
+    },
+    {
+      "brand": "Buick",
+      "model": "Encore",
+      "logo": "/image/car_logos/buick.svg",
+      "image": "/image/vehicles/buick/encore.webp"
+    },
+    {
+      "brand": "Buick",
+      "model": "Envision",
+      "logo": "/image/car_logos/buick.svg",
+      "image": "/image/vehicles/buick/envision.webp"
+    },
+    {
+      "brand": "Buick",
+      "model": "LaCrosse",
+      "logo": "/image/car_logos/buick.svg",
+      "image": "/image/vehicles/buick/lacrosse.webp"
+    },
+    {
+      "brand": "Buick",
+      "model": "Enclave",
+      "logo": "/image/car_logos/buick.svg",
+      "image": "/image/vehicles/buick/enclave.webp"
+    },
+    {
+      "brand": "Buick",
+      "model": "Envista",
+      "logo": "/image/car_logos/buick.svg",
+      "image": "/image/vehicles/buick/envista.webp"
+    },
+    {
+      "brand": "Buick",
+      "model": "Regal",
+      "logo": "/image/car_logos/buick.svg",
+      "image": "/image/vehicles/buick/regal.webp"
+    },
+    {
+      "brand": "Buick",
+      "model": "Verano",
+      "logo": "/image/car_logos/buick.svg",
+      "image": "/image/vehicles/buick/verano.webp"
+    },
+    {
+      "brand": "Buick",
+      "model": "GL8",
+      "logo": "/image/car_logos/buick.svg",
+      "image": "/image/vehicles/buick/gl8.webp"
+    },
+    {
+      "brand": "Cadillac",
+      "model": "CT4",
+      "logo": "/image/car_logos/cadillac.png",
+      "image": "/image/vehicles/cadillac/ct4.webp"
+    },
+    {
+      "brand": "Cadillac",
+      "model": "CT5",
+      "logo": "/image/car_logos/cadillac.png",
+      "image": "/image/vehicles/cadillac/ct5.webp"
+    },
+    {
+      "brand": "Cadillac",
+      "model": "XT4",
+      "logo": "/image/car_logos/cadillac.png",
+      "image": "/image/vehicles/cadillac/xt4.webp"
+    },
+    {
+      "brand": "Cadillac",
+      "model": "XT5",
+      "logo": "/image/car_logos/cadillac.png",
+      "image": "/image/vehicles/cadillac/xt5.webp"
+    },
+    {
+      "brand": "Cadillac",
+      "model": "Escalade",
+      "logo": "/image/car_logos/cadillac.png",
+      "image": "/image/vehicles/cadillac/escalade.webp"
+    },
+    {
+      "brand": "Cadillac",
+      "model": "XT6",
+      "logo": "/image/car_logos/cadillac.png",
+      "image": "/image/vehicles/cadillac/xt6.webp"
+    },
+    {
+      "brand": "Cadillac",
+      "model": "Lyriq",
+      "logo": "/image/car_logos/cadillac.png",
+      "image": "/image/vehicles/cadillac/lyriq.webp"
+    },
+    {
+      "brand": "Cadillac",
+      "model": "Optiq",
+      "logo": "/image/car_logos/cadillac.png",
+      "image": "/image/vehicles/cadillac/optiq.webp"
+    },
+    {
+      "brand": "Cadillac",
+      "model": "Vistiq",
+      "logo": "/image/car_logos/cadillac.png",
+      "image": "/image/vehicles/cadillac/vistiq.webp"
+    },
+    {
+      "brand": "Cadillac",
+      "model": "Celestiq",
+      "logo": "/image/car_logos/cadillac.png",
+      "image": "/image/vehicles/cadillac/celestiq.webp"
+    },
+    {
+      "brand": "Cadillac",
+      "model": "CTS",
+      "logo": "/image/car_logos/cadillac.png",
+      "image": "/image/vehicles/cadillac/cts.webp"
+    },
+    {
+      "brand": "Cadillac",
+      "model": "ATS",
+      "logo": "/image/car_logos/cadillac.png",
+      "image": "/image/vehicles/cadillac/ats.webp"
+    },
+    {
+      "brand": "Chevrolet",
+      "model": "Spark",
+      "logo": "/image/car_logos/chevrolet.svg",
+      "image": "/image/vehicles/chevrolet/spark.webp"
+    },
+    {
+      "brand": "Chevrolet",
+      "model": "Cruze",
+      "logo": "/image/car_logos/chevrolet.svg",
+      "image": "/image/vehicles/chevrolet/cruze.webp"
+    },
+    {
+      "brand": "Chevrolet",
+      "model": "Malibu",
+      "logo": "/image/car_logos/chevrolet.svg",
+      "image": "/image/vehicles/chevrolet/malibu.webp"
+    },
+    {
+      "brand": "Chevrolet",
+      "model": "Trailblazer",
+      "logo": "/image/car_logos/chevrolet.svg",
+      "image": "/image/vehicles/chevrolet/trailblazer.webp"
+    },
+    {
+      "brand": "Chevrolet",
+      "model": "Equinox",
+      "logo": "/image/car_logos/chevrolet.svg",
+      "image": "/image/vehicles/chevrolet/equinox.webp"
+    },
+    {
+      "brand": "Chevrolet",
+      "model": "Camaro",
+      "logo": "/image/car_logos/chevrolet.svg",
+      "image": "/image/vehicles/chevrolet/camaro.webp"
+    },
+    {
+      "brand": "Chevrolet",
+      "model": "Corvette",
+      "logo": "/image/car_logos/chevrolet.svg",
+      "image": "/image/vehicles/chevrolet/corvette.webp"
+    },
+    {
+      "brand": "Chevrolet",
+      "model": "Trax",
+      "logo": "/image/car_logos/chevrolet.svg",
+      "image": "/image/vehicles/chevrolet/trax.webp"
+    },
+    {
+      "brand": "Chevrolet",
+      "model": "Blazer",
+      "logo": "/image/car_logos/chevrolet.svg",
+      "image": "/image/vehicles/chevrolet/blazer.webp"
+    },
+    {
+      "brand": "Chevrolet",
+      "model": "Traverse",
+      "logo": "/image/car_logos/chevrolet.svg",
+      "image": "/image/vehicles/chevrolet/traverse.webp"
+    },
+    {
+      "brand": "Chevrolet",
+      "model": "Tahoe",
+      "logo": "/image/car_logos/chevrolet.svg",
+      "image": "/image/vehicles/chevrolet/tahoe.webp"
+    },
+    {
+      "brand": "Chevrolet",
+      "model": "Suburban",
+      "logo": "/image/car_logos/chevrolet.svg",
+      "image": "/image/vehicles/chevrolet/suburban.webp"
+    },
+    {
+      "brand": "Chevrolet",
+      "model": "Silverado",
+      "logo": "/image/car_logos/chevrolet.svg",
+      "image": "/image/vehicles/chevrolet/silverado.webp"
+    },
+    {
+      "brand": "Chevrolet",
+      "model": "Colorado",
+      "logo": "/image/car_logos/chevrolet.svg",
+      "image": "/image/vehicles/chevrolet/colorado.webp"
+    },
+    {
+      "brand": "Chevrolet",
+      "model": "Bolt",
+      "logo": "/image/car_logos/chevrolet.svg",
+      "image": "/image/vehicles/chevrolet/bolt.webp"
+    },
+    {
+      "brand": "Chevrolet",
+      "model": "Aveo",
+      "logo": "/image/car_logos/chevrolet.svg",
+      "image": "/image/vehicles/chevrolet/aveo.webp"
+    },
+    {
+      "brand": "Chevrolet",
+      "model": "Onix",
+      "logo": "/image/car_logos/chevrolet.svg",
+      "image": "/image/vehicles/chevrolet/onix.webp"
+    },
+    {
+      "brand": "Chrysler",
+      "model": "300",
+      "logo": "/image/car_logos/chrysler.svg",
+      "image": "/image/vehicles/chrysler/300.webp"
+    },
+    {
+      "brand": "Chrysler",
+      "model": "Pacifica",
+      "logo": "/image/car_logos/chrysler.svg",
+      "image": "/image/vehicles/chrysler/pacifica.webp"
+    },
+    {
+      "brand": "Chrysler",
+      "model": "Voyager",
+      "logo": "/image/car_logos/chrysler.svg",
+      "image": "/image/vehicles/chrysler/voyager.webp"
+    },
+    {
+      "brand": "Chrysler",
+      "model": "200",
+      "logo": "/image/car_logos/chrysler.svg",
+      "image": "/image/vehicles/chrysler/200.webp"
+    },
+    {
+      "brand": "Citroen",
+      "model": "C1",
+      "logo": "/image/car_logos/citroen.svg",
+      "image": "/image/vehicles/citroen/c1.webp"
+    },
+    {
+      "brand": "Citroen",
+      "model": "C3",
+      "logo": "/image/car_logos/citroen.svg",
+      "image": "/image/vehicles/citroen/c3.webp"
+    },
+    {
+      "brand": "Citroen",
+      "model": "C4",
+      "logo": "/image/car_logos/citroen.svg",
+      "image": "/image/vehicles/citroen/c4.webp"
+    },
+    {
+      "brand": "Citroen",
+      "model": "C5",
+      "logo": "/image/car_logos/citroen.svg",
+      "image": "/image/vehicles/citroen/c5.webp"
+    },
+    {
+      "brand": "Citroen",
+      "model": "Berlingo",
+      "logo": "/image/car_logos/citroen.svg",
+      "image": "/image/vehicles/citroen/berlingo.webp"
+    },
+    {
+      "brand": "Citroen",
+      "model": "C2",
+      "logo": "/image/car_logos/citroen.svg",
+      "image": "/image/vehicles/citroen/c2.webp"
+    },
+    {
+      "brand": "Citroen",
+      "model": "C3 Aircross",
+      "logo": "/image/car_logos/citroen.svg",
+      "image": "/image/vehicles/citroen/c3-aircross.webp"
+    },
+    {
+      "brand": "Citroen",
+      "model": "C4 Cactus",
+      "logo": "/image/car_logos/citroen.svg",
+      "image": "/image/vehicles/citroen/c4-cactus.webp"
+    },
+    {
+      "brand": "Citroen",
+      "model": "C4 Picasso",
+      "logo": "/image/car_logos/citroen.svg",
+      "image": "/image/vehicles/citroen/c4-picasso.webp"
+    },
+    {
+      "brand": "Citroen",
+      "model": "C5 Aircross",
+      "logo": "/image/car_logos/citroen.svg",
+      "image": "/image/vehicles/citroen/c5-aircross.webp"
+    },
+    {
+      "brand": "Citroen",
+      "model": "C5 X",
+      "logo": "/image/car_logos/citroen.svg",
+      "image": "/image/vehicles/citroen/c5-x.webp"
+    },
+    {
+      "brand": "Citroen",
+      "model": "C-Elysee",
+      "logo": "/image/car_logos/citroen.svg",
+      "image": "/image/vehicles/citroen/c-elysee.webp"
+    },
+    {
+      "brand": "Citroen",
+      "model": "Ami",
+      "logo": "/image/car_logos/citroen.svg",
+      "image": "/image/vehicles/citroen/ami.webp"
+    },
+    {
+      "brand": "Dodge",
+      "model": "Challenger",
+      "logo": "/image/car_logos/dodge.svg",
+      "image": "/image/vehicles/dodge/challenger.webp"
+    },
+    {
+      "brand": "Dodge",
+      "model": "Charger",
+      "logo": "/image/car_logos/dodge.svg",
+      "image": "/image/vehicles/dodge/charger.webp"
+    },
+    {
+      "brand": "Dodge",
+      "model": "Durango",
+      "logo": "/image/car_logos/dodge.svg",
+      "image": "/image/vehicles/dodge/durango.webp"
+    },
+    {
+      "brand": "Dodge",
+      "model": "Hornet",
+      "logo": "/image/car_logos/dodge.svg",
+      "image": "/image/vehicles/dodge/hornet.webp"
+    },
+    {
+      "brand": "Dodge",
+      "model": "Journey",
+      "logo": "/image/car_logos/dodge.svg",
+      "image": "/image/vehicles/dodge/journey.webp"
+    },
+    {
+      "brand": "Dodge",
+      "model": "Dart",
+      "logo": "/image/car_logos/dodge.svg",
+      "image": "/image/vehicles/dodge/dart.webp"
+    },
+    {
+      "brand": "Dodge",
+      "model": "Viper",
+      "logo": "/image/car_logos/dodge.svg",
+      "image": "/image/vehicles/dodge/viper.webp"
+    },
+    {
+      "brand": "Ferrari",
+      "model": "Roma",
+      "logo": "/image/car_logos/ferrari.svg",
+      "image": "/image/vehicles/ferrari/roma.webp"
+    },
+    {
+      "brand": "Ferrari",
+      "model": "SF90",
+      "logo": "/image/car_logos/ferrari.svg",
+      "image": "/image/vehicles/ferrari/sf90.webp"
+    },
+    {
+      "brand": "Ferrari",
+      "model": "296",
+      "logo": "/image/car_logos/ferrari.svg",
+      "image": "/image/vehicles/ferrari/296.webp"
+    },
+    {
+      "brand": "Ferrari",
+      "model": "812",
+      "logo": "/image/car_logos/ferrari.svg",
+      "image": "/image/vehicles/ferrari/812.webp"
+    },
+    {
+      "brand": "Ferrari",
+      "model": "F8",
+      "logo": "/image/car_logos/ferrari.svg",
+      "image": "/image/vehicles/ferrari/f8.webp"
+    },
+    {
+      "brand": "Ferrari",
+      "model": "Purosangue",
+      "logo": "/image/car_logos/ferrari.svg",
+      "image": "/image/vehicles/ferrari/purosangue.webp"
+    },
+    {
+      "brand": "Ferrari",
+      "model": "12Cilindri",
+      "logo": "/image/car_logos/ferrari.svg",
+      "image": "/image/vehicles/ferrari/12cilindri.webp"
+    },
+    {
+      "brand": "Ferrari",
+      "model": "Portofino",
+      "logo": "/image/car_logos/ferrari.svg",
+      "image": "/image/vehicles/ferrari/portofino.webp"
+    },
+    {
+      "brand": "Ferrari",
+      "model": "488",
+      "logo": "/image/car_logos/ferrari.svg",
+      "image": "/image/vehicles/ferrari/488.webp"
+    },
+    {
+      "brand": "Ferrari",
+      "model": "458 Italia",
+      "logo": "/image/car_logos/ferrari.svg",
+      "image": "/image/vehicles/ferrari/458-italia.webp"
+    },
+    {
+      "brand": "Fiat",
+      "model": "500",
+      "logo": "/image/car_logos/fiat.svg",
+      "image": "/image/vehicles/fiat/500.webp"
+    },
+    {
+      "brand": "Fiat",
+      "model": "Panda",
+      "logo": "/image/car_logos/fiat.svg",
+      "image": "/image/vehicles/fiat/panda.webp"
+    },
+    {
+      "brand": "Fiat",
+      "model": "Punto",
+      "logo": "/image/car_logos/fiat.svg",
+      "image": "/image/vehicles/fiat/punto.webp"
+    },
+    {
+      "brand": "Fiat",
+      "model": "Tipo",
+      "logo": "/image/car_logos/fiat.svg",
+      "image": "/image/vehicles/fiat/tipo.webp"
+    },
+    {
+      "brand": "Fiat",
+      "model": "600",
+      "logo": "/image/car_logos/fiat.svg",
+      "image": "/image/vehicles/fiat/600.webp"
+    },
+    {
+      "brand": "Fiat",
+      "model": "500X",
+      "logo": "/image/car_logos/fiat.svg",
+      "image": "/image/vehicles/fiat/500x.webp"
+    },
+    {
+      "brand": "Fiat",
+      "model": "500L",
+      "logo": "/image/car_logos/fiat.svg",
+      "image": "/image/vehicles/fiat/500l.webp"
+    },
+    {
+      "brand": "Fiat",
+      "model": "Doblo",
+      "logo": "/image/car_logos/fiat.svg",
+      "image": "/image/vehicles/fiat/doblo.webp"
+    },
+    {
+      "brand": "Fiat",
+      "model": "Ducato",
+      "logo": "/image/car_logos/fiat.svg",
+      "image": "/image/vehicles/fiat/ducato.webp"
+    },
+    {
+      "brand": "Fiat",
+      "model": "Fiorino",
+      "logo": "/image/car_logos/fiat.svg",
+      "image": "/image/vehicles/fiat/fiorino.webp"
+    },
+    {
+      "brand": "Fiat",
+      "model": "Argo",
+      "logo": "/image/car_logos/fiat.svg",
+      "image": "/image/vehicles/fiat/argo.webp"
+    },
+    {
+      "brand": "Fiat",
+      "model": "Cronos",
+      "logo": "/image/car_logos/fiat.svg",
+      "image": "/image/vehicles/fiat/cronos.webp"
+    },
+    {
+      "brand": "Fiat",
+      "model": "Pulse",
+      "logo": "/image/car_logos/fiat.svg",
+      "image": "/image/vehicles/fiat/pulse.webp"
+    },
+    {
+      "brand": "Fiat",
+      "model": "Fastback",
+      "logo": "/image/car_logos/fiat.svg",
+      "image": "/image/vehicles/fiat/fastback.webp"
+    },
+    {
+      "brand": "Fiat",
+      "model": "Topolino",
+      "logo": "/image/car_logos/fiat.svg",
+      "image": "/image/vehicles/fiat/topolino.webp"
+    },
+    {
+      "brand": "Ford",
+      "model": "Fiesta",
+      "logo": "/image/car_logos/ford.svg",
+      "image": "/image/vehicles/ford/fiesta.webp"
+    },
+    {
+      "brand": "Ford",
+      "model": "Focus",
+      "logo": "/image/car_logos/ford.svg",
+      "image": "/image/vehicles/ford/focus.webp"
+    },
+    {
+      "brand": "Ford",
+      "model": "Mustang",
+      "logo": "/image/car_logos/ford.svg",
+      "image": "/image/vehicles/ford/mustang.webp"
+    },
+    {
+      "brand": "Ford",
+      "model": "Ranger",
+      "logo": "/image/car_logos/ford.svg",
+      "image": "/image/vehicles/ford/ranger.webp"
+    },
+    {
+      "brand": "Ford",
+      "model": "Escape",
+      "logo": "/image/car_logos/ford.svg",
+      "image": "/image/vehicles/ford/escape.webp"
+    },
+    {
+      "brand": "Ford",
+      "model": "Explorer",
+      "logo": "/image/car_logos/ford.svg",
+      "image": "/image/vehicles/ford/explorer.webp"
+    },
+    {
+      "brand": "Ford",
+      "model": "Mustang Mach-E",
+      "logo": "/image/car_logos/ford.svg",
+      "image": "/image/vehicles/ford/mustang-mach-e.webp"
+    },
+    {
+      "brand": "Ford",
+      "model": "Fusion",
+      "logo": "/image/car_logos/ford.svg",
+      "image": "/image/vehicles/ford/fusion.webp"
+    },
+    {
+      "brand": "Ford",
+      "model": "Taurus",
+      "logo": "/image/car_logos/ford.svg",
+      "image": "/image/vehicles/ford/taurus.webp"
+    },
+    {
+      "brand": "Ford",
+      "model": "Edge",
+      "logo": "/image/car_logos/ford.svg",
+      "image": "/image/vehicles/ford/edge.webp"
+    },
+    {
+      "brand": "Ford",
+      "model": "Expedition",
+      "logo": "/image/car_logos/ford.svg",
+      "image": "/image/vehicles/ford/expedition.webp"
+    },
+    {
+      "brand": "Ford",
+      "model": "Bronco",
+      "logo": "/image/car_logos/ford.svg",
+      "image": "/image/vehicles/ford/bronco.webp"
+    },
+    {
+      "brand": "Ford",
+      "model": "Bronco Sport",
+      "logo": "/image/car_logos/ford.svg",
+      "image": "/image/vehicles/ford/bronco-sport.webp"
+    },
+    {
+      "brand": "Ford",
+      "model": "Maverick",
+      "logo": "/image/car_logos/ford.svg",
+      "image": "/image/vehicles/ford/maverick.webp"
+    },
+    {
+      "brand": "Ford",
+      "model": "Everest",
+      "logo": "/image/car_logos/ford.svg",
+      "image": "/image/vehicles/ford/everest.webp"
+    },
+    {
+      "brand": "Ford",
+      "model": "Puma",
+      "logo": "/image/car_logos/ford.svg",
+      "image": "/image/vehicles/ford/puma.webp"
+    },
+    {
+      "brand": "Ford",
+      "model": "Kuga",
+      "logo": "/image/car_logos/ford.svg",
+      "image": "/image/vehicles/ford/kuga.webp"
+    },
+    {
+      "brand": "Ford",
+      "model": "EcoSport",
+      "logo": "/image/car_logos/ford.svg",
+      "image": "/image/vehicles/ford/ecosport.webp"
+    },
+    {
+      "brand": "Ford",
+      "model": "F-150",
+      "logo": "/image/car_logos/ford.svg",
+      "image": "/image/vehicles/ford/f-150.webp"
+    },
+    {
+      "brand": "Genesis",
+      "model": "G70",
+      "logo": "/image/car_logos/genesis.svg",
+      "image": "/image/vehicles/genesis/g70.webp"
+    },
+    {
+      "brand": "Genesis",
+      "model": "G80",
+      "logo": "/image/car_logos/genesis.svg",
+      "image": "/image/vehicles/genesis/g80.webp"
+    },
+    {
+      "brand": "Genesis",
+      "model": "G90",
+      "logo": "/image/car_logos/genesis.svg",
+      "image": "/image/vehicles/genesis/g90.webp"
+    },
+    {
+      "brand": "Genesis",
+      "model": "GV70",
+      "logo": "/image/car_logos/genesis.svg",
+      "image": "/image/vehicles/genesis/gv70.webp"
+    },
+    {
+      "brand": "Genesis",
+      "model": "GV80",
+      "logo": "/image/car_logos/genesis.svg",
+      "image": "/image/vehicles/genesis/gv80.webp"
+    },
+    {
+      "brand": "Genesis",
+      "model": "GV60",
+      "logo": "/image/car_logos/genesis.svg",
+      "image": "/image/vehicles/genesis/gv60.webp"
+    },
+    {
+      "brand": "GMC",
+      "model": "Terrain",
+      "logo": "/image/car_logos/gmc.svg",
+      "image": "/image/vehicles/gmc/terrain.webp"
+    },
+    {
+      "brand": "GMC",
+      "model": "Acadia",
+      "logo": "/image/car_logos/gmc.svg",
+      "image": "/image/vehicles/gmc/acadia.webp"
+    },
+    {
+      "brand": "GMC",
+      "model": "Yukon",
+      "logo": "/image/car_logos/gmc.svg",
+      "image": "/image/vehicles/gmc/yukon.webp"
+    },
+    {
+      "brand": "GMC",
+      "model": "Sierra",
+      "logo": "/image/car_logos/gmc.svg",
+      "image": "/image/vehicles/gmc/sierra.webp"
+    },
+    {
+      "brand": "GMC",
+      "model": "Hummer EV",
+      "logo": "/image/car_logos/gmc.svg",
+      "image": "/image/vehicles/gmc/hummer-ev.webp"
+    },
+    {
+      "brand": "GMC",
+      "model": "Canyon",
+      "logo": "/image/car_logos/gmc.svg",
+      "image": "/image/vehicles/gmc/canyon.webp"
+    },
+    {
+      "brand": "Honda",
+      "model": "Civic",
+      "logo": "/image/car_logos/honda.png",
+      "image": "/image/vehicles/honda/civic.webp"
+    },
+    {
+      "brand": "Honda",
+      "model": "Accord",
+      "logo": "/image/car_logos/honda.png",
+      "image": "/image/vehicles/honda/accord.webp"
+    },
+    {
+      "brand": "Honda",
+      "model": "CR-V",
+      "logo": "/image/car_logos/honda.png",
+      "image": "/image/vehicles/honda/cr-v.webp"
+    },
+    {
+      "brand": "Honda",
+      "model": "HR-V",
+      "logo": "/image/car_logos/honda.png",
+      "image": "/image/vehicles/honda/hr-v.webp"
+    },
+    {
+      "brand": "Honda",
+      "model": "City",
+      "logo": "/image/car_logos/honda.png",
+      "image": "/image/vehicles/honda/city.webp"
+    },
+    {
+      "brand": "Honda",
+      "model": "Fit",
+      "logo": "/image/car_logos/honda.png",
+      "image": "/image/vehicles/honda/fit.webp"
+    },
+    {
+      "brand": "Honda",
+      "model": "ZR-V",
+      "logo": "/image/car_logos/honda.png",
+      "image": "/image/vehicles/honda/zr-v.webp"
+    },
+    {
+      "brand": "Honda",
+      "model": "Pilot",
+      "logo": "/image/car_logos/honda.png",
+      "image": "/image/vehicles/honda/pilot.webp"
+    },
+    {
+      "brand": "Honda",
+      "model": "Passport",
+      "logo": "/image/car_logos/honda.png",
+      "image": "/image/vehicles/honda/passport.webp"
+    },
+    {
+      "brand": "Honda",
+      "model": "Ridgeline",
+      "logo": "/image/car_logos/honda.png",
+      "image": "/image/vehicles/honda/ridgeline.webp"
+    },
+    {
+      "brand": "Honda",
+      "model": "NSX",
+      "logo": "/image/car_logos/honda.png",
+      "image": "/image/vehicles/honda/nsx.webp"
+    },
+    {
+      "brand": "Honda",
+      "model": "Odyssey",
+      "logo": "/image/car_logos/honda.png",
+      "image": "/image/vehicles/honda/odyssey.webp"
+    },
+    {
+      "brand": "Honda",
+      "model": "Amaze",
+      "logo": "/image/car_logos/honda.png",
+      "image": "/image/vehicles/honda/amaze.webp"
+    },
+    {
+      "brand": "Honda",
+      "model": "Brio",
+      "logo": "/image/car_logos/honda.png",
+      "image": "/image/vehicles/honda/brio.webp"
+    },
+    {
+      "brand": "Honda",
+      "model": "WR-V",
+      "logo": "/image/car_logos/honda.png",
+      "image": "/image/vehicles/honda/wr-v.webp"
+    },
+    {
+      "brand": "Honda",
+      "model": "BR-V",
+      "logo": "/image/car_logos/honda.png",
+      "image": "/image/vehicles/honda/br-v.webp"
+    },
+    {
+      "brand": "Honda",
+      "model": "Prologue",
+      "logo": "/image/car_logos/honda.png",
+      "image": "/image/vehicles/honda/prologue.webp"
+    },
+    {
+      "brand": "Hyundai",
+      "model": "i20",
+      "logo": "/image/car_logos/hyundai.svg",
+      "image": "/image/vehicles/hyundai/i20.webp"
+    },
+    {
+      "brand": "Hyundai",
+      "model": "i30",
+      "logo": "/image/car_logos/hyundai.svg",
+      "image": "/image/vehicles/hyundai/i30.webp"
+    },
+    {
+      "brand": "Hyundai",
+      "model": "Tucson",
+      "logo": "/image/car_logos/hyundai.svg",
+      "image": "/image/vehicles/hyundai/tucson.webp"
+    },
+    {
+      "brand": "Hyundai",
+      "model": "Santa Fe",
+      "logo": "/image/car_logos/hyundai.svg",
+      "image": "/image/vehicles/hyundai/santa-fe.webp"
+    },
+    {
+      "brand": "Hyundai",
+      "model": "Elantra",
+      "logo": "/image/car_logos/hyundai.svg",
+      "image": "/image/vehicles/hyundai/elantra.webp"
+    },
+    {
+      "brand": "Hyundai",
+      "model": "Kona",
+      "logo": "/image/car_logos/hyundai.svg",
+      "image": "/image/vehicles/hyundai/kona.webp"
+    },
+    {
+      "brand": "Hyundai",
+      "model": "i10",
+      "logo": "/image/car_logos/hyundai.svg",
+      "image": "/image/vehicles/hyundai/i10.webp"
+    },
+    {
+      "brand": "Hyundai",
+      "model": "Sonata",
+      "logo": "/image/car_logos/hyundai.svg",
+      "image": "/image/vehicles/hyundai/sonata.webp"
+    },
+    {
+      "brand": "Hyundai",
+      "model": "Accent",
+      "logo": "/image/car_logos/hyundai.svg",
+      "image": "/image/vehicles/hyundai/accent.webp"
+    },
+    {
+      "brand": "Hyundai",
+      "model": "Palisade",
+      "logo": "/image/car_logos/hyundai.svg",
+      "image": "/image/vehicles/hyundai/palisade.webp"
+    },
+    {
+      "brand": "Hyundai",
+      "model": "Ioniq 5",
+      "logo": "/image/car_logos/hyundai.svg",
+      "image": "/image/vehicles/hyundai/ioniq-5.webp"
+    },
+    {
+      "brand": "Hyundai",
+      "model": "Ioniq 6",
+      "logo": "/image/car_logos/hyundai.svg",
+      "image": "/image/vehicles/hyundai/ioniq-6.webp"
+    },
+    {
+      "brand": "Hyundai",
+      "model": "Ioniq",
+      "logo": "/image/car_logos/hyundai.svg",
+      "image": "/image/vehicles/hyundai/ioniq.webp"
+    },
+    {
+      "brand": "Hyundai",
+      "model": "Venue",
+      "logo": "/image/car_logos/hyundai.svg",
+      "image": "/image/vehicles/hyundai/venue.webp"
+    },
+    {
+      "brand": "Hyundai",
+      "model": "Staria",
+      "logo": "/image/car_logos/hyundai.svg",
+      "image": "/image/vehicles/hyundai/staria.webp"
+    },
+    {
+      "brand": "Hyundai",
+      "model": "Santa Cruz",
+      "logo": "/image/car_logos/hyundai.svg",
+      "image": "/image/vehicles/hyundai/santa-cruz.webp"
+    },
+    {
+      "brand": "Hyundai",
+      "model": "Bayon",
+      "logo": "/image/car_logos/hyundai.svg",
+      "image": "/image/vehicles/hyundai/bayon.webp"
+    },
+    {
+      "brand": "Hyundai",
+      "model": "Creta",
+      "logo": "/image/car_logos/hyundai.svg",
+      "image": "/image/vehicles/hyundai/creta.webp"
+    },
+    {
+      "brand": "Infiniti",
+      "model": "Q50",
+      "logo": "/image/car_logos/infiniti.svg",
+      "image": "/image/vehicles/infiniti/q50.webp"
+    },
+    {
+      "brand": "Infiniti",
+      "model": "Q60",
+      "logo": "/image/car_logos/infiniti.svg",
+      "image": "/image/vehicles/infiniti/q60.webp"
+    },
+    {
+      "brand": "Infiniti",
+      "model": "QX50",
+      "logo": "/image/car_logos/infiniti.svg",
+      "image": "/image/vehicles/infiniti/qx50.webp"
+    },
+    {
+      "brand": "Infiniti",
+      "model": "QX60",
+      "logo": "/image/car_logos/infiniti.svg",
+      "image": "/image/vehicles/infiniti/qx60.webp"
+    },
+    {
+      "brand": "Infiniti",
+      "model": "Q70",
+      "logo": "/image/car_logos/infiniti.svg",
+      "image": "/image/vehicles/infiniti/q70.webp"
+    },
+    {
+      "brand": "Infiniti",
+      "model": "QX30",
+      "logo": "/image/car_logos/infiniti.svg",
+      "image": "/image/vehicles/infiniti/qx30.webp"
+    },
+    {
+      "brand": "Infiniti",
+      "model": "QX70",
+      "logo": "/image/car_logos/infiniti.svg",
+      "image": "/image/vehicles/infiniti/qx70.webp"
+    },
+    {
+      "brand": "Infiniti",
+      "model": "QX80",
+      "logo": "/image/car_logos/infiniti.svg",
+      "image": "/image/vehicles/infiniti/qx80.webp"
+    },
+    {
+      "brand": "Infiniti",
+      "model": "QX55",
+      "logo": "/image/car_logos/infiniti.svg",
+      "image": "/image/vehicles/infiniti/qx55.webp"
+    },
+    {
+      "brand": "Jaguar",
+      "model": "XE",
+      "logo": "/image/car_logos/jaguar.png",
+      "image": "/image/vehicles/jaguar/xe.webp"
+    },
+    {
+      "brand": "Jaguar",
+      "model": "XF",
+      "logo": "/image/car_logos/jaguar.png",
+      "image": "/image/vehicles/jaguar/xf.webp"
+    },
+    {
+      "brand": "Jaguar",
+      "model": "F-PACE",
+      "logo": "/image/car_logos/jaguar.png",
+      "image": "/image/vehicles/jaguar/f-pace.webp"
+    },
+    {
+      "brand": "Jaguar",
+      "model": "E-PACE",
+      "logo": "/image/car_logos/jaguar.png",
+      "image": "/image/vehicles/jaguar/e-pace.webp"
+    },
+    {
+      "brand": "Jaguar",
+      "model": "I-PACE",
+      "logo": "/image/car_logos/jaguar.png",
+      "image": "/image/vehicles/jaguar/i-pace.webp"
+    },
+    {
+      "brand": "Jaguar",
+      "model": "XJ",
+      "logo": "/image/car_logos/jaguar.png",
+      "image": "/image/vehicles/jaguar/xj.webp"
+    },
+    {
+      "brand": "Jaguar",
+      "model": "F-Type",
+      "logo": "/image/car_logos/jaguar.png",
+      "image": "/image/vehicles/jaguar/f-type.webp"
+    },
+    {
+      "brand": "Jeep",
+      "model": "Renegade",
+      "logo": "/image/car_logos/jeep.svg",
+      "image": "/image/vehicles/jeep/renegade.webp"
+    },
+    {
+      "brand": "Jeep",
+      "model": "Compass",
+      "logo": "/image/car_logos/jeep.svg",
+      "image": "/image/vehicles/jeep/compass.webp"
+    },
+    {
+      "brand": "Jeep",
+      "model": "Cherokee",
+      "logo": "/image/car_logos/jeep.svg",
+      "image": "/image/vehicles/jeep/cherokee.webp"
+    },
+    {
+      "brand": "Jeep",
+      "model": "Wrangler",
+      "logo": "/image/car_logos/jeep.svg",
+      "image": "/image/vehicles/jeep/wrangler.webp"
+    },
+    {
+      "brand": "Jeep",
+      "model": "Grand Cherokee",
+      "logo": "/image/car_logos/jeep.svg",
+      "image": "/image/vehicles/jeep/grand-cherokee.webp"
+    },
+    {
+      "brand": "Jeep",
+      "model": "Gladiator",
+      "logo": "/image/car_logos/jeep.svg",
+      "image": "/image/vehicles/jeep/gladiator.webp"
+    },
+    {
+      "brand": "Jeep",
+      "model": "Wagoneer",
+      "logo": "/image/car_logos/jeep.svg",
+      "image": "/image/vehicles/jeep/wagoneer.webp"
+    },
+    {
+      "brand": "Jeep",
+      "model": "Grand Wagoneer",
+      "logo": "/image/car_logos/jeep.svg",
+      "image": "/image/vehicles/jeep/grand-wagoneer.webp"
+    },
+    {
+      "brand": "Jeep",
+      "model": "Avenger",
+      "logo": "/image/car_logos/jeep.svg",
+      "image": "/image/vehicles/jeep/avenger.webp"
+    },
+    {
+      "brand": "Jeep",
+      "model": "Commander",
+      "logo": "/image/car_logos/jeep.svg",
+      "image": "/image/vehicles/jeep/commander.webp"
+    },
+    {
+      "brand": "Kia",
+      "model": "Rio",
+      "logo": "/image/car_logos/kia.svg",
+      "image": "/image/vehicles/kia/rio.webp"
+    },
+    {
+      "brand": "Kia",
+      "model": "Ceed",
+      "logo": "/image/car_logos/kia.svg",
+      "image": "/image/vehicles/kia/ceed.webp"
+    },
+    {
+      "brand": "Kia",
+      "model": "Sportage",
+      "logo": "/image/car_logos/kia.svg",
+      "image": "/image/vehicles/kia/sportage.webp"
+    },
+    {
+      "brand": "Kia",
+      "model": "Sorento",
+      "logo": "/image/car_logos/kia.svg",
+      "image": "/image/vehicles/kia/sorento.webp"
+    },
+    {
+      "brand": "Kia",
+      "model": "Picanto",
+      "logo": "/image/car_logos/kia.svg",
+      "image": "/image/vehicles/kia/picanto.webp"
+    },
+    {
+      "brand": "Kia",
+      "model": "EV6",
+      "logo": "/image/car_logos/kia.svg",
+      "image": "/image/vehicles/kia/ev6.webp"
+    },
+    {
+      "brand": "Kia",
+      "model": "Forte",
+      "logo": "/image/car_logos/kia.svg",
+      "image": "/image/vehicles/kia/forte.webp"
+    },
+    {
+      "brand": "Kia",
+      "model": "K5",
+      "logo": "/image/car_logos/kia.svg",
+      "image": "/image/vehicles/kia/k5.webp"
+    },
+    {
+      "brand": "Kia",
+      "model": "Telluride",
+      "logo": "/image/car_logos/kia.svg",
+      "image": "/image/vehicles/kia/telluride.webp"
+    },
+    {
+      "brand": "Kia",
+      "model": "Seltos",
+      "logo": "/image/car_logos/kia.svg",
+      "image": "/image/vehicles/kia/seltos.webp"
+    },
+    {
+      "brand": "Kia",
+      "model": "EV9",
+      "logo": "/image/car_logos/kia.svg",
+      "image": "/image/vehicles/kia/ev9.webp"
+    },
+    {
+      "brand": "Kia",
+      "model": "EV3",
+      "logo": "/image/car_logos/kia.svg",
+      "image": "/image/vehicles/kia/ev3.webp"
+    },
+    {
+      "brand": "Kia",
+      "model": "EV5",
+      "logo": "/image/car_logos/kia.svg",
+      "image": "/image/vehicles/kia/ev5.webp"
+    },
+    {
+      "brand": "Kia",
+      "model": "Soul",
+      "logo": "/image/car_logos/kia.svg",
+      "image": "/image/vehicles/kia/soul.webp"
+    },
+    {
+      "brand": "Kia",
+      "model": "Niro",
+      "logo": "/image/car_logos/kia.svg",
+      "image": "/image/vehicles/kia/niro.webp"
+    },
+    {
+      "brand": "Kia",
+      "model": "Carnival",
+      "logo": "/image/car_logos/kia.svg",
+      "image": "/image/vehicles/kia/carnival.webp"
+    },
+    {
+      "brand": "Kia",
+      "model": "Stonic",
+      "logo": "/image/car_logos/kia.svg",
+      "image": "/image/vehicles/kia/stonic.webp"
+    },
+    {
+      "brand": "Lamborghini",
+      "model": "Huracan",
+      "logo": "/image/car_logos/lamborghini.svg",
+      "image": "/image/vehicles/lamborghini/huracan.webp"
+    },
+    {
+      "brand": "Lamborghini",
+      "model": "Urus",
+      "logo": "/image/car_logos/lamborghini.svg",
+      "image": "/image/vehicles/lamborghini/urus.webp"
+    },
+    {
+      "brand": "Lamborghini",
+      "model": "Revuelto",
+      "logo": "/image/car_logos/lamborghini.svg",
+      "image": "/image/vehicles/lamborghini/revuelto.webp"
+    },
+    {
+      "brand": "Lamborghini",
+      "model": "Aventador",
+      "logo": "/image/car_logos/lamborghini.svg",
+      "image": "/image/vehicles/lamborghini/aventador.webp"
+    },
+    {
+      "brand": "Lamborghini",
+      "model": "Gallardo",
+      "logo": "/image/car_logos/lamborghini.svg",
+      "image": "/image/vehicles/lamborghini/gallardo.webp"
+    },
+    {
+      "brand": "Lamborghini",
+      "model": "Temerario",
+      "logo": "/image/car_logos/lamborghini.svg",
+      "image": "/image/vehicles/lamborghini/temerario.webp"
+    },
+    {
+      "brand": "Land Rover",
+      "model": "Range Rover",
+      "logo": "/image/car_logos/land-rover.svg",
+      "image": "/image/vehicles/land-rover/range-rover.webp"
+    },
+    {
+      "brand": "Land Rover",
+      "model": "Discovery",
+      "logo": "/image/car_logos/land-rover.svg",
+      "image": "/image/vehicles/land-rover/discovery.webp"
+    },
+    {
+      "brand": "Land Rover",
+      "model": "Defender",
+      "logo": "/image/car_logos/land-rover.svg",
+      "image": "/image/vehicles/land-rover/defender.webp"
+    },
+    {
+      "brand": "Land Rover",
+      "model": "Evoque",
+      "logo": "/image/car_logos/land-rover.svg",
+      "image": "/image/vehicles/land-rover/evoque.webp"
+    },
+    {
+      "brand": "Land Rover",
+      "model": "Discovery Sport",
+      "logo": "/image/car_logos/land-rover.svg",
+      "image": "/image/vehicles/land-rover/discovery-sport.webp"
+    },
+    {
+      "brand": "Land Rover",
+      "model": "Range Rover Sport",
+      "logo": "/image/car_logos/land-rover.svg",
+      "image": "/image/vehicles/land-rover/range-rover-sport.webp"
+    },
+    {
+      "brand": "Land Rover",
+      "model": "Range Rover Velar",
+      "logo": "/image/car_logos/land-rover.svg",
+      "image": "/image/vehicles/land-rover/range-rover-velar.webp"
+    },
+    {
+      "brand": "Lexus",
+      "model": "UX",
+      "logo": "/image/car_logos/lexus.svg",
+      "image": "/image/vehicles/lexus/ux.webp"
+    },
+    {
+      "brand": "Lexus",
+      "model": "NX",
+      "logo": "/image/car_logos/lexus.svg",
+      "image": "/image/vehicles/lexus/nx.webp"
+    },
+    {
+      "brand": "Lexus",
+      "model": "RX",
+      "logo": "/image/car_logos/lexus.svg",
+      "image": "/image/vehicles/lexus/rx.webp"
+    },
+    {
+      "brand": "Lexus",
+      "model": "ES",
+      "logo": "/image/car_logos/lexus.svg",
+      "image": "/image/vehicles/lexus/es.webp"
+    },
+    {
+      "brand": "Lexus",
+      "model": "LS",
+      "logo": "/image/car_logos/lexus.svg",
+      "image": "/image/vehicles/lexus/ls.webp"
+    },
+    {
+      "brand": "Lexus",
+      "model": "IS",
+      "logo": "/image/car_logos/lexus.svg",
+      "image": "/image/vehicles/lexus/is.webp"
+    },
+    {
+      "brand": "Lexus",
+      "model": "GS",
+      "logo": "/image/car_logos/lexus.svg",
+      "image": "/image/vehicles/lexus/gs.webp"
+    },
+    {
+      "brand": "Lexus",
+      "model": "LC",
+      "logo": "/image/car_logos/lexus.svg",
+      "image": "/image/vehicles/lexus/lc.webp"
+    },
+    {
+      "brand": "Lexus",
+      "model": "RC",
+      "logo": "/image/car_logos/lexus.svg",
+      "image": "/image/vehicles/lexus/rc.webp"
+    },
+    {
+      "brand": "Lexus",
+      "model": "GX",
+      "logo": "/image/car_logos/lexus.svg",
+      "image": "/image/vehicles/lexus/gx.webp"
+    },
+    {
+      "brand": "Lexus",
+      "model": "LX",
+      "logo": "/image/car_logos/lexus.svg",
+      "image": "/image/vehicles/lexus/lx.webp"
+    },
+    {
+      "brand": "Lexus",
+      "model": "RZ",
+      "logo": "/image/car_logos/lexus.svg",
+      "image": "/image/vehicles/lexus/rz.webp"
+    },
+    {
+      "brand": "Lexus",
+      "model": "LBX",
+      "logo": "/image/car_logos/lexus.svg",
+      "image": "/image/vehicles/lexus/lbx.webp"
+    },
+    {
+      "brand": "Lexus",
+      "model": "LM",
+      "logo": "/image/car_logos/lexus.svg",
+      "image": "/image/vehicles/lexus/lm.webp"
+    },
+    {
+      "brand": "Lincoln",
+      "model": "Corsair",
+      "logo": "/image/car_logos/lincoln.svg",
+      "image": "/image/vehicles/lincoln/corsair.webp"
+    },
+    {
+      "brand": "Lincoln",
+      "model": "Aviator",
+      "logo": "/image/car_logos/lincoln.svg",
+      "image": "/image/vehicles/lincoln/aviator.webp"
+    },
+    {
+      "brand": "Lincoln",
+      "model": "Navigator",
+      "logo": "/image/car_logos/lincoln.svg",
+      "image": "/image/vehicles/lincoln/navigator.webp"
+    },
+    {
+      "brand": "Lincoln",
+      "model": "Continental",
+      "logo": "/image/car_logos/lincoln.svg",
+      "image": "/image/vehicles/lincoln/continental.webp"
+    },
+    {
+      "brand": "Lincoln",
+      "model": "Nautilus",
+      "logo": "/image/car_logos/lincoln.svg",
+      "image": "/image/vehicles/lincoln/nautilus.webp"
+    },
+    {
+      "brand": "Lincoln",
+      "model": "MKZ",
+      "logo": "/image/car_logos/lincoln.svg",
+      "image": "/image/vehicles/lincoln/mkz.webp"
+    },
+    {
+      "brand": "Lincoln",
+      "model": "MKX",
+      "logo": "/image/car_logos/lincoln.svg",
+      "image": "/image/vehicles/lincoln/mkx.webp"
+    },
+    {
+      "brand": "Maserati",
+      "model": "Ghibli",
+      "logo": "/image/car_logos/maserati.svg",
+      "image": "/image/vehicles/maserati/ghibli.webp"
+    },
+    {
+      "brand": "Maserati",
+      "model": "Levante",
+      "logo": "/image/car_logos/maserati.svg",
+      "image": "/image/vehicles/maserati/levante.webp"
+    },
+    {
+      "brand": "Maserati",
+      "model": "Grecale",
+      "logo": "/image/car_logos/maserati.svg",
+      "image": "/image/vehicles/maserati/grecale.webp"
+    },
+    {
+      "brand": "Maserati",
+      "model": "GranTurismo",
+      "logo": "/image/car_logos/maserati.svg",
+      "image": "/image/vehicles/maserati/granturismo.webp"
+    },
+    {
+      "brand": "Maserati",
+      "model": "Quattroporte",
+      "logo": "/image/car_logos/maserati.svg",
+      "image": "/image/vehicles/maserati/quattroporte.webp"
+    },
+    {
+      "brand": "Maserati",
+      "model": "MC20",
+      "logo": "/image/car_logos/maserati.svg",
+      "image": "/image/vehicles/maserati/mc20.webp"
+    },
+    {
+      "brand": "Maserati",
+      "model": "GranCabrio",
+      "logo": "/image/car_logos/maserati.svg",
+      "image": "/image/vehicles/maserati/grancabrio.webp"
+    },
+    {
+      "brand": "Mazda",
+      "model": "2",
+      "logo": "/image/car_logos/mazda.svg",
+      "image": "/image/vehicles/mazda/2.webp"
+    },
+    {
+      "brand": "Mazda",
+      "model": "3",
+      "logo": "/image/car_logos/mazda.svg",
+      "image": "/image/vehicles/mazda/3.webp"
+    },
+    {
+      "brand": "Mazda",
+      "model": "6",
+      "logo": "/image/car_logos/mazda.svg",
+      "image": "/image/vehicles/mazda/6.webp"
+    },
+    {
+      "brand": "Mazda",
+      "model": "CX-3",
+      "logo": "/image/car_logos/mazda.svg",
+      "image": "/image/vehicles/mazda/cx-3.webp"
+    },
+    {
+      "brand": "Mazda",
+      "model": "CX-5",
+      "logo": "/image/car_logos/mazda.svg",
+      "image": "/image/vehicles/mazda/cx-5.webp"
+    },
+    {
+      "brand": "Mazda",
+      "model": "MX-5",
+      "logo": "/image/car_logos/mazda.svg",
+      "image": "/image/vehicles/mazda/mx-5.webp"
+    },
+    {
+      "brand": "Mazda",
+      "model": "CX-30",
+      "logo": "/image/car_logos/mazda.svg",
+      "image": "/image/vehicles/mazda/cx-30.webp"
+    },
+    {
+      "brand": "Mazda",
+      "model": "CX-50",
+      "logo": "/image/car_logos/mazda.svg",
+      "image": "/image/vehicles/mazda/cx-50.webp"
+    },
+    {
+      "brand": "Mazda",
+      "model": "CX-60",
+      "logo": "/image/car_logos/mazda.svg",
+      "image": "/image/vehicles/mazda/cx-60.webp"
+    },
+    {
+      "brand": "Mazda",
+      "model": "CX-80",
+      "logo": "/image/car_logos/mazda.svg",
+      "image": "/image/vehicles/mazda/cx-80.webp"
+    },
+    {
+      "brand": "Mazda",
+      "model": "CX-90",
+      "logo": "/image/car_logos/mazda.svg",
+      "image": "/image/vehicles/mazda/cx-90.webp"
+    },
+    {
+      "brand": "Mazda",
+      "model": "CX-9",
+      "logo": "/image/car_logos/mazda.svg",
+      "image": "/image/vehicles/mazda/cx-9.webp"
+    },
+    {
+      "brand": "Mazda",
+      "model": "BT-50",
+      "logo": "/image/car_logos/mazda.svg",
+      "image": "/image/vehicles/mazda/bt-50.webp"
+    },
+    {
+      "brand": "Mazda",
+      "model": "RX-8",
+      "logo": "/image/car_logos/mazda.svg",
+      "image": "/image/vehicles/mazda/rx-8.webp"
+    },
+    {
+      "brand": "Mazda",
+      "model": "CX-70",
+      "logo": "/image/car_logos/mazda.svg",
+      "image": "/image/vehicles/mazda/cx-70.webp"
+    },
+    {
+      "brand": "McLaren",
+      "model": "720S",
+      "logo": "/image/car_logos/mclaren.svg",
+      "image": "/image/vehicles/mclaren/720s.webp"
+    },
+    {
+      "brand": "McLaren",
+      "model": "750S",
+      "logo": "/image/car_logos/mclaren.svg",
+      "image": "/image/vehicles/mclaren/750s.webp"
+    },
+    {
+      "brand": "McLaren",
+      "model": "Artura",
+      "logo": "/image/car_logos/mclaren.svg",
+      "image": "/image/vehicles/mclaren/artura.webp"
+    },
+    {
+      "brand": "McLaren",
+      "model": "GT",
+      "logo": "/image/car_logos/mclaren.svg",
+      "image": "/image/vehicles/mclaren/gt.webp"
+    },
+    {
+      "brand": "McLaren",
+      "model": "570S",
+      "logo": "/image/car_logos/mclaren.svg",
+      "image": "/image/vehicles/mclaren/570s.webp"
+    },
+    {
+      "brand": "McLaren",
+      "model": "P1",
+      "logo": "/image/car_logos/mclaren.svg",
+      "image": "/image/vehicles/mclaren/p1.webp"
+    },
+    {
+      "brand": "McLaren",
+      "model": "Senna",
+      "logo": "/image/car_logos/mclaren.svg",
+      "image": "/image/vehicles/mclaren/senna.webp"
+    },
+    {
+      "brand": "McLaren",
+      "model": "600LT",
+      "logo": "/image/car_logos/mclaren.svg",
+      "image": "/image/vehicles/mclaren/600lt.webp"
+    },
+    {
+      "brand": "McLaren",
+      "model": "765LT",
+      "logo": "/image/car_logos/mclaren.svg",
+      "image": "/image/vehicles/mclaren/765lt.webp"
+    },
+    {
+      "brand": "Mercedes-Benz",
+      "model": "A-Class",
+      "logo": "/image/car_logos/mercedes-benz.svg",
+      "image": "/image/vehicles/mercedes-benz/a-class.webp"
+    },
+    {
+      "brand": "Mercedes-Benz",
+      "model": "C-Class",
+      "logo": "/image/car_logos/mercedes-benz.svg",
+      "image": "/image/vehicles/mercedes-benz/c-class.webp"
+    },
+    {
+      "brand": "Mercedes-Benz",
+      "model": "E-Class",
+      "logo": "/image/car_logos/mercedes-benz.svg",
+      "image": "/image/vehicles/mercedes-benz/e-class.webp"
+    },
+    {
+      "brand": "Mercedes-Benz",
+      "model": "GLC",
+      "logo": "/image/car_logos/mercedes-benz.svg",
+      "image": "/image/vehicles/mercedes-benz/glc.webp"
+    },
+    {
+      "brand": "Mercedes-Benz",
+      "model": "GLE",
+      "logo": "/image/car_logos/mercedes-benz.svg",
+      "image": "/image/vehicles/mercedes-benz/gle.webp"
+    },
+    {
+      "brand": "Mercedes-Benz",
+      "model": "EQC",
+      "logo": "/image/car_logos/mercedes-benz.svg",
+      "image": "/image/vehicles/mercedes-benz/eqc.webp"
+    },
+    {
+      "brand": "Mercedes-Benz",
+      "model": "B-Class",
+      "logo": "/image/car_logos/mercedes-benz.svg",
+      "image": "/image/vehicles/mercedes-benz/b-class.webp"
+    },
+    {
+      "brand": "Mercedes-Benz",
+      "model": "S-Class",
+      "logo": "/image/car_logos/mercedes-benz.svg",
+      "image": "/image/vehicles/mercedes-benz/s-class.webp"
+    },
+    {
+      "brand": "Mercedes-Benz",
+      "model": "CLA",
+      "logo": "/image/car_logos/mercedes-benz.svg",
+      "image": "/image/vehicles/mercedes-benz/cla.webp"
+    },
+    {
+      "brand": "Mercedes-Benz",
+      "model": "CLS",
+      "logo": "/image/car_logos/mercedes-benz.svg",
+      "image": "/image/vehicles/mercedes-benz/cls.webp"
+    },
+    {
+      "brand": "Mercedes-Benz",
+      "model": "CLE",
+      "logo": "/image/car_logos/mercedes-benz.svg",
+      "image": "/image/vehicles/mercedes-benz/cle.webp"
+    },
+    {
+      "brand": "Mercedes-Benz",
+      "model": "GLA",
+      "logo": "/image/car_logos/mercedes-benz.svg",
+      "image": "/image/vehicles/mercedes-benz/gla.webp"
+    },
+    {
+      "brand": "Mercedes-Benz",
+      "model": "GLB",
+      "logo": "/image/car_logos/mercedes-benz.svg",
+      "image": "/image/vehicles/mercedes-benz/glb.webp"
+    },
+    {
+      "brand": "Mercedes-Benz",
+      "model": "GLS",
+      "logo": "/image/car_logos/mercedes-benz.svg",
+      "image": "/image/vehicles/mercedes-benz/gls.webp"
+    },
+    {
+      "brand": "Mercedes-Benz",
+      "model": "G-Class",
+      "logo": "/image/car_logos/mercedes-benz.svg",
+      "image": "/image/vehicles/mercedes-benz/g-class.webp"
+    },
+    {
+      "brand": "Mercedes-Benz",
+      "model": "EQA",
+      "logo": "/image/car_logos/mercedes-benz.svg",
+      "image": "/image/vehicles/mercedes-benz/eqa.webp"
+    },
+    {
+      "brand": "Mercedes-Benz",
+      "model": "EQB",
+      "logo": "/image/car_logos/mercedes-benz.svg",
+      "image": "/image/vehicles/mercedes-benz/eqb.webp"
+    },
+    {
+      "brand": "Mercedes-Benz",
+      "model": "EQE",
+      "logo": "/image/car_logos/mercedes-benz.svg",
+      "image": "/image/vehicles/mercedes-benz/eqe.webp"
+    },
+    {
+      "brand": "Mercedes-Benz",
+      "model": "EQS",
+      "logo": "/image/car_logos/mercedes-benz.svg",
+      "image": "/image/vehicles/mercedes-benz/eqs.webp"
+    },
+    {
+      "brand": "Mercedes-Benz",
+      "model": "V-Class",
+      "logo": "/image/car_logos/mercedes-benz.svg",
+      "image": "/image/vehicles/mercedes-benz/v-class.webp"
+    },
+    {
+      "brand": "Mitsubishi",
+      "model": "Lancer",
+      "logo": "/image/car_logos/mitsubishi.svg",
+      "image": "/image/vehicles/mitsubishi/lancer.webp"
+    },
+    {
+      "brand": "Mitsubishi",
+      "model": "Outlander",
+      "logo": "/image/car_logos/mitsubishi.svg",
+      "image": "/image/vehicles/mitsubishi/outlander.webp"
+    },
+    {
+      "brand": "Mitsubishi",
+      "model": "ASX",
+      "logo": "/image/car_logos/mitsubishi.svg",
+      "image": "/image/vehicles/mitsubishi/asx.webp"
+    },
+    {
+      "brand": "Mitsubishi",
+      "model": "Pajero",
+      "logo": "/image/car_logos/mitsubishi.svg",
+      "image": "/image/vehicles/mitsubishi/pajero.webp"
+    },
+    {
+      "brand": "Mitsubishi",
+      "model": "Eclipse Cross",
+      "logo": "/image/car_logos/mitsubishi.svg",
+      "image": "/image/vehicles/mitsubishi/eclipse-cross.webp"
+    },
+    {
+      "brand": "Mitsubishi",
+      "model": "Triton",
+      "logo": "/image/car_logos/mitsubishi.svg",
+      "image": "/image/vehicles/mitsubishi/triton.webp"
+    },
+    {
+      "brand": "Mitsubishi",
+      "model": "Mirage",
+      "logo": "/image/car_logos/mitsubishi.svg",
+      "image": "/image/vehicles/mitsubishi/mirage.webp"
+    },
+    {
+      "brand": "Mitsubishi",
+      "model": "Xpander",
+      "logo": "/image/car_logos/mitsubishi.svg",
+      "image": "/image/vehicles/mitsubishi/xpander.webp"
+    },
+    {
+      "brand": "Mitsubishi",
+      "model": "Colt",
+      "logo": "/image/car_logos/mitsubishi.svg",
+      "image": "/image/vehicles/mitsubishi/colt.webp"
+    },
+    {
+      "brand": "Mitsubishi",
+      "model": "Montero Sport",
+      "logo": "/image/car_logos/mitsubishi.svg",
+      "image": "/image/vehicles/mitsubishi/montero-sport.webp"
+    },
+    {
+      "brand": "Nissan",
+      "model": "Micra",
+      "logo": "/image/car_logos/nissan.svg",
+      "image": "/image/vehicles/nissan/micra.webp"
+    },
+    {
+      "brand": "Nissan",
+      "model": "Qashqai",
+      "logo": "/image/car_logos/nissan.svg",
+      "image": "/image/vehicles/nissan/qashqai.webp"
+    },
+    {
+      "brand": "Nissan",
+      "model": "X-Trail",
+      "logo": "/image/car_logos/nissan.svg",
+      "image": "/image/vehicles/nissan/x-trail.webp"
+    },
+    {
+      "brand": "Nissan",
+      "model": "Leaf",
+      "logo": "/image/car_logos/nissan.svg",
+      "image": "/image/vehicles/nissan/leaf.webp"
+    },
+    {
+      "brand": "Nissan",
+      "model": "Altima",
+      "logo": "/image/car_logos/nissan.svg",
+      "image": "/image/vehicles/nissan/altima.webp"
+    },
+    {
+      "brand": "Nissan",
+      "model": "Sentra",
+      "logo": "/image/car_logos/nissan.svg",
+      "image": "/image/vehicles/nissan/sentra.webp"
+    },
+    {
+      "brand": "Nissan",
+      "model": "Maxima",
+      "logo": "/image/car_logos/nissan.svg",
+      "image": "/image/vehicles/nissan/maxima.webp"
+    },
+    {
+      "brand": "Nissan",
+      "model": "GT-R",
+      "logo": "/image/car_logos/nissan.svg",
+      "image": "/image/vehicles/nissan/gt-r.webp"
+    },
+    {
+      "brand": "Nissan",
+      "model": "Juke",
+      "logo": "/image/car_logos/nissan.svg",
+      "image": "/image/vehicles/nissan/juke.webp"
+    },
+    {
+      "brand": "Nissan",
+      "model": "Pathfinder",
+      "logo": "/image/car_logos/nissan.svg",
+      "image": "/image/vehicles/nissan/pathfinder.webp"
+    },
+    {
+      "brand": "Nissan",
+      "model": "Patrol",
+      "logo": "/image/car_logos/nissan.svg",
+      "image": "/image/vehicles/nissan/patrol.webp"
+    },
+    {
+      "brand": "Nissan",
+      "model": "Ariya",
+      "logo": "/image/car_logos/nissan.svg",
+      "image": "/image/vehicles/nissan/ariya.webp"
+    },
+    {
+      "brand": "Nissan",
+      "model": "Navara",
+      "logo": "/image/car_logos/nissan.svg",
+      "image": "/image/vehicles/nissan/navara.webp"
+    },
+    {
+      "brand": "Nissan",
+      "model": "Rogue",
+      "logo": "/image/car_logos/nissan.svg",
+      "image": "/image/vehicles/nissan/rogue.webp"
+    },
+    {
+      "brand": "Nissan",
+      "model": "Kicks",
+      "logo": "/image/car_logos/nissan.svg",
+      "image": "/image/vehicles/nissan/kicks.webp"
+    },
+    {
+      "brand": "Nissan",
+      "model": "Versa",
+      "logo": "/image/car_logos/nissan.svg",
+      "image": "/image/vehicles/nissan/versa.webp"
+    },
+    {
+      "brand": "Nissan",
+      "model": "Armada",
+      "logo": "/image/car_logos/nissan.svg",
+      "image": "/image/vehicles/nissan/armada.webp"
+    },
+    {
+      "brand": "Nissan",
+      "model": "Titan",
+      "logo": "/image/car_logos/nissan.svg",
+      "image": "/image/vehicles/nissan/titan.webp"
+    },
+    {
+      "brand": "Nissan",
+      "model": "Z",
+      "logo": "/image/car_logos/nissan.svg",
+      "image": "/image/vehicles/nissan/z.webp"
+    },
+    {
+      "brand": "Opel",
+      "model": "Corsa",
+      "logo": "/image/car_logos/opel.svg",
+      "image": "/image/vehicles/opel/corsa.webp"
+    },
+    {
+      "brand": "Opel",
+      "model": "Astra",
+      "logo": "/image/car_logos/opel.svg",
+      "image": "/image/vehicles/opel/astra.webp"
+    },
+    {
+      "brand": "Opel",
+      "model": "Insignia",
+      "logo": "/image/car_logos/opel.svg",
+      "image": "/image/vehicles/opel/insignia.webp"
+    },
+    {
+      "brand": "Opel",
+      "model": "Mokka",
+      "logo": "/image/car_logos/opel.svg",
+      "image": "/image/vehicles/opel/mokka.webp"
+    },
+    {
+      "brand": "Opel",
+      "model": "Grandland",
+      "logo": "/image/car_logos/opel.svg",
+      "image": "/image/vehicles/opel/grandland.webp"
+    },
+    {
+      "brand": "Opel",
+      "model": "Crossland",
+      "logo": "/image/car_logos/opel.svg",
+      "image": "/image/vehicles/opel/crossland.webp"
+    },
+    {
+      "brand": "Opel",
+      "model": "Adam",
+      "logo": "/image/car_logos/opel.svg",
+      "image": "/image/vehicles/opel/adam.webp"
+    },
+    {
+      "brand": "Opel",
+      "model": "Zafira",
+      "logo": "/image/car_logos/opel.svg",
+      "image": "/image/vehicles/opel/zafira.webp"
+    },
+    {
+      "brand": "Opel",
+      "model": "Combo",
+      "logo": "/image/car_logos/opel.svg",
+      "image": "/image/vehicles/opel/combo.webp"
+    },
+    {
+      "brand": "Opel",
+      "model": "Frontera",
+      "logo": "/image/car_logos/opel.svg",
+      "image": "/image/vehicles/opel/frontera.webp"
+    },
+    {
+      "brand": "Peugeot",
+      "model": "208",
+      "logo": "/image/car_logos/peugeot.svg",
+      "image": "/image/vehicles/peugeot/208.webp"
+    },
+    {
+      "brand": "Peugeot",
+      "model": "308",
+      "logo": "/image/car_logos/peugeot.svg",
+      "image": "/image/vehicles/peugeot/308.webp"
+    },
+    {
+      "brand": "Peugeot",
+      "model": "3008",
+      "logo": "/image/car_logos/peugeot.svg",
+      "image": "/image/vehicles/peugeot/3008.webp"
+    },
+    {
+      "brand": "Peugeot",
+      "model": "5008",
+      "logo": "/image/car_logos/peugeot.svg",
+      "image": "/image/vehicles/peugeot/5008.webp"
+    },
+    {
+      "brand": "Peugeot",
+      "model": "2008",
+      "logo": "/image/car_logos/peugeot.svg",
+      "image": "/image/vehicles/peugeot/2008.webp"
+    },
+    {
+      "brand": "Peugeot",
+      "model": "108",
+      "logo": "/image/car_logos/peugeot.svg",
+      "image": "/image/vehicles/peugeot/108.webp"
+    },
+    {
+      "brand": "Peugeot",
+      "model": "408",
+      "logo": "/image/car_logos/peugeot.svg",
+      "image": "/image/vehicles/peugeot/408.webp"
+    },
+    {
+      "brand": "Peugeot",
+      "model": "508",
+      "logo": "/image/car_logos/peugeot.svg",
+      "image": "/image/vehicles/peugeot/508.webp"
+    },
+    {
+      "brand": "Peugeot",
+      "model": "Rifter",
+      "logo": "/image/car_logos/peugeot.svg",
+      "image": "/image/vehicles/peugeot/rifter.webp"
+    },
+    {
+      "brand": "Peugeot",
+      "model": "Partner",
+      "logo": "/image/car_logos/peugeot.svg",
+      "image": "/image/vehicles/peugeot/partner.webp"
+    },
+    {
+      "brand": "Peugeot",
+      "model": "Traveller",
+      "logo": "/image/car_logos/peugeot.svg",
+      "image": "/image/vehicles/peugeot/traveller.webp"
+    },
+    {
+      "brand": "Porsche",
+      "model": "911",
+      "logo": "/image/car_logos/porsche.svg",
+      "image": "/image/vehicles/porsche/911.webp"
+    },
+    {
+      "brand": "Porsche",
+      "model": "Cayenne",
+      "logo": "/image/car_logos/porsche.svg",
+      "image": "/image/vehicles/porsche/cayenne.webp"
+    },
+    {
+      "brand": "Porsche",
+      "model": "Macan",
+      "logo": "/image/car_logos/porsche.svg",
+      "image": "/image/vehicles/porsche/macan.webp"
+    },
+    {
+      "brand": "Porsche",
+      "model": "Taycan",
+      "logo": "/image/car_logos/porsche.svg",
+      "image": "/image/vehicles/porsche/taycan.webp"
+    },
+    {
+      "brand": "Porsche",
+      "model": "Panamera",
+      "logo": "/image/car_logos/porsche.svg",
+      "image": "/image/vehicles/porsche/panamera.webp"
+    },
+    {
+      "brand": "Porsche",
+      "model": "718 Boxster",
+      "logo": "/image/car_logos/porsche.svg",
+      "image": "/image/vehicles/porsche/718-boxster.webp"
+    },
+    {
+      "brand": "Porsche",
+      "model": "718 Cayman",
+      "logo": "/image/car_logos/porsche.svg",
+      "image": "/image/vehicles/porsche/718-cayman.webp"
+    },
+    {
+      "brand": "Porsche",
+      "model": "Boxster",
+      "logo": "/image/car_logos/porsche.svg",
+      "image": "/image/vehicles/porsche/boxster.webp"
+    },
+    {
+      "brand": "Porsche",
+      "model": "Cayman",
+      "logo": "/image/car_logos/porsche.svg",
+      "image": "/image/vehicles/porsche/cayman.webp"
+    },
+    {
+      "brand": "Ram",
+      "model": "1500",
+      "logo": "/image/car_logos/ram.svg",
+      "image": "/image/vehicles/ram/1500.webp"
+    },
+    {
+      "brand": "Ram",
+      "model": "2500",
+      "logo": "/image/car_logos/ram.svg",
+      "image": "/image/vehicles/ram/2500.webp"
+    },
+    {
+      "brand": "Ram",
+      "model": "3500",
+      "logo": "/image/car_logos/ram.svg",
+      "image": "/image/vehicles/ram/3500.webp"
+    },
+    {
+      "brand": "Ram",
+      "model": "Rampage",
+      "logo": "/image/car_logos/ram.svg",
+      "image": "/image/vehicles/ram/rampage.webp"
+    },
+    {
+      "brand": "Ram",
+      "model": "ProMaster",
+      "logo": "/image/car_logos/ram.svg",
+      "image": "/image/vehicles/ram/promaster.webp"
+    },
+    {
+      "brand": "Renault",
+      "model": "Clio",
+      "logo": "/image/car_logos/renault.svg",
+      "image": "/image/vehicles/renault/clio.webp"
+    },
+    {
+      "brand": "Renault",
+      "model": "Megane",
+      "logo": "/image/car_logos/renault.svg",
+      "image": "/image/vehicles/renault/megane.webp"
+    },
+    {
+      "brand": "Renault",
+      "model": "Captur",
+      "logo": "/image/car_logos/renault.svg",
+      "image": "/image/vehicles/renault/captur.webp"
+    },
+    {
+      "brand": "Renault",
+      "model": "Duster",
+      "logo": "/image/car_logos/renault.svg",
+      "image": "/image/vehicles/renault/duster.webp"
+    },
+    {
+      "brand": "Renault",
+      "model": "Arkana",
+      "logo": "/image/car_logos/renault.svg",
+      "image": "/image/vehicles/renault/arkana.webp"
+    },
+    {
+      "brand": "Renault",
+      "model": "Twingo",
+      "logo": "/image/car_logos/renault.svg",
+      "image": "/image/vehicles/renault/twingo.webp"
+    },
+    {
+      "brand": "Renault",
+      "model": "Austral",
+      "logo": "/image/car_logos/renault.svg",
+      "image": "/image/vehicles/renault/austral.webp"
+    },
+    {
+      "brand": "Renault",
+      "model": "Espace",
+      "logo": "/image/car_logos/renault.svg",
+      "image": "/image/vehicles/renault/espace.webp"
+    },
+    {
+      "brand": "Renault",
+      "model": "Scenic",
+      "logo": "/image/car_logos/renault.svg",
+      "image": "/image/vehicles/renault/scenic.webp"
+    },
+    {
+      "brand": "Renault",
+      "model": "Koleos",
+      "logo": "/image/car_logos/renault.svg",
+      "image": "/image/vehicles/renault/koleos.webp"
+    },
+    {
+      "brand": "Renault",
+      "model": "Kadjar",
+      "logo": "/image/car_logos/renault.svg",
+      "image": "/image/vehicles/renault/kadjar.webp"
+    },
+    {
+      "brand": "Renault",
+      "model": "Talisman",
+      "logo": "/image/car_logos/renault.svg",
+      "image": "/image/vehicles/renault/talisman.webp"
+    },
+    {
+      "brand": "Renault",
+      "model": "Kangoo",
+      "logo": "/image/car_logos/renault.svg",
+      "image": "/image/vehicles/renault/kangoo.webp"
+    },
+    {
+      "brand": "Renault",
+      "model": "Kwid",
+      "logo": "/image/car_logos/renault.svg",
+      "image": "/image/vehicles/renault/kwid.webp"
+    },
+    {
+      "brand": "Renault",
+      "model": "Triber",
+      "logo": "/image/car_logos/renault.svg",
+      "image": "/image/vehicles/renault/triber.webp"
+    },
+    {
+      "brand": "Renault",
+      "model": "Rafale",
+      "logo": "/image/car_logos/renault.svg",
+      "image": "/image/vehicles/renault/rafale.webp"
+    },
+    {
+      "brand": "Rolls-Royce",
+      "model": "Ghost",
+      "logo": "/image/car_logos/rolls-royce.svg",
+      "image": "/image/vehicles/rolls-royce/ghost.webp"
+    },
+    {
+      "brand": "Rolls-Royce",
+      "model": "Phantom",
+      "logo": "/image/car_logos/rolls-royce.svg",
+      "image": "/image/vehicles/rolls-royce/phantom.webp"
+    },
+    {
+      "brand": "Rolls-Royce",
+      "model": "Cullinan",
+      "logo": "/image/car_logos/rolls-royce.svg",
+      "image": "/image/vehicles/rolls-royce/cullinan.webp"
+    },
+    {
+      "brand": "Rolls-Royce",
+      "model": "Spectre",
+      "logo": "/image/car_logos/rolls-royce.svg",
+      "image": "/image/vehicles/rolls-royce/spectre.webp"
+    },
+    {
+      "brand": "Seat",
+      "model": "Ibiza",
+      "logo": "/image/car_logos/seat.svg",
+      "image": "/image/vehicles/seat/ibiza.webp"
+    },
+    {
+      "brand": "Seat",
+      "model": "Leon",
+      "logo": "/image/car_logos/seat.svg",
+      "image": "/image/vehicles/seat/leon.webp"
+    },
+    {
+      "brand": "Seat",
+      "model": "Arona",
+      "logo": "/image/car_logos/seat.svg",
+      "image": "/image/vehicles/seat/arona.webp"
+    },
+    {
+      "brand": "Seat",
+      "model": "Ateca",
+      "logo": "/image/car_logos/seat.svg",
+      "image": "/image/vehicles/seat/ateca.webp"
+    },
+    {
+      "brand": "Seat",
+      "model": "Tarraco",
+      "logo": "/image/car_logos/seat.svg",
+      "image": "/image/vehicles/seat/tarraco.webp"
+    },
+    {
+      "brand": "Seat",
+      "model": "Alhambra",
+      "logo": "/image/car_logos/seat.svg",
+      "image": "/image/vehicles/seat/alhambra.webp"
+    },
+    {
+      "brand": "Seat",
+      "model": "Toledo",
+      "logo": "/image/car_logos/seat.svg",
+      "image": "/image/vehicles/seat/toledo.webp"
+    },
+    {
+      "brand": "Skoda",
+      "model": "Fabia",
+      "logo": "/image/car_logos/skoda.svg",
+      "image": "/image/vehicles/skoda/fabia.webp"
+    },
+    {
+      "brand": "Skoda",
+      "model": "Octavia",
+      "logo": "/image/car_logos/skoda.svg",
+      "image": "/image/vehicles/skoda/octavia.webp"
+    },
+    {
+      "brand": "Skoda",
+      "model": "Superb",
+      "logo": "/image/car_logos/skoda.svg",
+      "image": "/image/vehicles/skoda/superb.webp"
+    },
+    {
+      "brand": "Skoda",
+      "model": "Karoq",
+      "logo": "/image/car_logos/skoda.svg",
+      "image": "/image/vehicles/skoda/karoq.webp"
+    },
+    {
+      "brand": "Skoda",
+      "model": "Kodiaq",
+      "logo": "/image/car_logos/skoda.svg",
+      "image": "/image/vehicles/skoda/kodiaq.webp"
+    },
+    {
+      "brand": "Skoda",
+      "model": "Enyaq",
+      "logo": "/image/car_logos/skoda.svg",
+      "image": "/image/vehicles/skoda/enyaq.webp"
+    },
+    {
+      "brand": "Skoda",
+      "model": "Scala",
+      "logo": "/image/car_logos/skoda.svg",
+      "image": "/image/vehicles/skoda/scala.webp"
+    },
+    {
+      "brand": "Skoda",
+      "model": "Kamiq",
+      "logo": "/image/car_logos/skoda.svg",
+      "image": "/image/vehicles/skoda/kamiq.webp"
+    },
+    {
+      "brand": "Skoda",
+      "model": "Elroq",
+      "logo": "/image/car_logos/skoda.svg",
+      "image": "/image/vehicles/skoda/elroq.webp"
+    },
+    {
+      "brand": "Skoda",
+      "model": "Rapid",
+      "logo": "/image/car_logos/skoda.svg",
+      "image": "/image/vehicles/skoda/rapid.webp"
+    },
+    {
+      "brand": "Smart",
+      "model": "ForTwo",
+      "logo": "/image/car_logos/smart.png",
+      "image": "/image/vehicles/smart/fortwo.webp"
+    },
+    {
+      "brand": "Smart",
+      "model": "ForFour",
+      "logo": "/image/car_logos/smart.png",
+      "image": "/image/vehicles/smart/forfour.webp"
+    },
+    {
+      "brand": "Smart",
+      "model": "#1",
+      "logo": "/image/car_logos/smart.png",
+      "image": "/image/vehicles/smart/1.webp"
+    },
+    {
+      "brand": "Smart",
+      "model": "#3",
+      "logo": "/image/car_logos/smart.png",
+      "image": "/image/vehicles/smart/3.webp"
+    },
+    {
+      "brand": "Smart",
+      "model": "#5",
+      "logo": "/image/car_logos/smart.png",
+      "image": "/image/vehicles/smart/5.webp"
+    },
+    {
+      "brand": "Subaru",
+      "model": "Impreza",
+      "logo": "/image/car_logos/subaru.png",
+      "image": "/image/vehicles/subaru/impreza.webp"
+    },
+    {
+      "brand": "Subaru",
+      "model": "Forester",
+      "logo": "/image/car_logos/subaru.png",
+      "image": "/image/vehicles/subaru/forester.webp"
+    },
+    {
+      "brand": "Subaru",
+      "model": "Outback",
+      "logo": "/image/car_logos/subaru.png",
+      "image": "/image/vehicles/subaru/outback.webp"
+    },
+    {
+      "brand": "Subaru",
+      "model": "XV",
+      "logo": "/image/car_logos/subaru.png",
+      "image": "/image/vehicles/subaru/xv.webp"
+    },
+    {
+      "brand": "Subaru",
+      "model": "WRX",
+      "logo": "/image/car_logos/subaru.png",
+      "image": "/image/vehicles/subaru/wrx.webp"
+    },
+    {
+      "brand": "Subaru",
+      "model": "Legacy",
+      "logo": "/image/car_logos/subaru.png",
+      "image": "/image/vehicles/subaru/legacy.webp"
+    },
+    {
+      "brand": "Subaru",
+      "model": "Ascent",
+      "logo": "/image/car_logos/subaru.png",
+      "image": "/image/vehicles/subaru/ascent.webp"
+    },
+    {
+      "brand": "Subaru",
+      "model": "Crosstrek",
+      "logo": "/image/car_logos/subaru.png",
+      "image": "/image/vehicles/subaru/crosstrek.webp"
+    },
+    {
+      "brand": "Subaru",
+      "model": "BRZ",
+      "logo": "/image/car_logos/subaru.png",
+      "image": "/image/vehicles/subaru/brz.webp"
+    },
+    {
+      "brand": "Subaru",
+      "model": "Solterra",
+      "logo": "/image/car_logos/subaru.png",
+      "image": "/image/vehicles/subaru/solterra.webp"
+    },
+    {
+      "brand": "Suzuki",
+      "model": "Swift",
+      "logo": "/image/car_logos/suzuki.svg",
+      "image": "/image/vehicles/suzuki/swift.webp"
+    },
+    {
+      "brand": "Suzuki",
+      "model": "Baleno",
+      "logo": "/image/car_logos/suzuki.svg",
+      "image": "/image/vehicles/suzuki/baleno.webp"
+    },
+    {
+      "brand": "Suzuki",
+      "model": "Vitara",
+      "logo": "/image/car_logos/suzuki.svg",
+      "image": "/image/vehicles/suzuki/vitara.webp"
+    },
+    {
+      "brand": "Suzuki",
+      "model": "Jimny",
+      "logo": "/image/car_logos/suzuki.svg",
+      "image": "/image/vehicles/suzuki/jimny.webp"
+    },
+    {
+      "brand": "Suzuki",
+      "model": "Ertiga",
+      "logo": "/image/car_logos/suzuki.svg",
+      "image": "/image/vehicles/suzuki/ertiga.webp"
+    },
+    {
+      "brand": "Suzuki",
+      "model": "Celerio",
+      "logo": "/image/car_logos/suzuki.svg",
+      "image": "/image/vehicles/suzuki/celerio.webp"
+    },
+    {
+      "brand": "Suzuki",
+      "model": "Ignis",
+      "logo": "/image/car_logos/suzuki.svg",
+      "image": "/image/vehicles/suzuki/ignis.webp"
+    },
+    {
+      "brand": "Suzuki",
+      "model": "Alto",
+      "logo": "/image/car_logos/suzuki.svg",
+      "image": "/image/vehicles/suzuki/alto.webp"
+    },
+    {
+      "brand": "Suzuki",
+      "model": "Ciaz",
+      "logo": "/image/car_logos/suzuki.svg",
+      "image": "/image/vehicles/suzuki/ciaz.webp"
+    },
+    {
+      "brand": "Suzuki",
+      "model": "Fronx",
+      "logo": "/image/car_logos/suzuki.svg",
+      "image": "/image/vehicles/suzuki/fronx.webp"
+    },
+    {
+      "brand": "Suzuki",
+      "model": "S-Cross",
+      "logo": "/image/car_logos/suzuki.svg",
+      "image": "/image/vehicles/suzuki/s-cross.webp"
+    },
+    {
+      "brand": "Suzuki",
+      "model": "XL7",
+      "logo": "/image/car_logos/suzuki.svg",
+      "image": "/image/vehicles/suzuki/xl7.webp"
+    },
+    {
+      "brand": "Suzuki",
+      "model": "Grand Vitara",
+      "logo": "/image/car_logos/suzuki.svg",
+      "image": "/image/vehicles/suzuki/grand-vitara.webp"
+    },
+    {
+      "brand": "Tesla",
+      "model": "Model 3",
+      "logo": "/image/car_logos/tesla.png",
+      "image": "/image/vehicles/tesla/model-3.webp"
+    },
+    {
+      "brand": "Tesla",
+      "model": "Model Y",
+      "logo": "/image/car_logos/tesla.png",
+      "image": "/image/vehicles/tesla/model-y.webp"
+    },
+    {
+      "brand": "Tesla",
+      "model": "Model S",
+      "logo": "/image/car_logos/tesla.png",
+      "image": "/image/vehicles/tesla/model-s.webp"
+    },
+    {
+      "brand": "Tesla",
+      "model": "Model X",
+      "logo": "/image/car_logos/tesla.png",
+      "image": "/image/vehicles/tesla/model-x.webp"
+    },
+    {
+      "brand": "Tesla",
+      "model": "Cybertruck",
+      "logo": "/image/car_logos/tesla.png",
+      "image": "/image/vehicles/tesla/cybertruck.webp"
+    },
+    {
+      "brand": "Tesla",
+      "model": "Roadster",
+      "logo": "/image/car_logos/tesla.png",
+      "image": "/image/vehicles/tesla/roadster.webp"
+    },
+    {
+      "brand": "Toyota",
+      "model": "Corolla",
+      "logo": "/image/car_logos/toyota.png",
+      "image": "/image/vehicles/toyota/corolla.webp"
+    },
+    {
+      "brand": "Toyota",
+      "model": "Camry",
+      "logo": "/image/car_logos/toyota.png",
+      "image": "/image/vehicles/toyota/camry.webp"
+    },
+    {
+      "brand": "Toyota",
+      "model": "RAV4",
+      "logo": "/image/car_logos/toyota.png",
+      "image": "/image/vehicles/toyota/rav4.webp"
+    },
+    {
+      "brand": "Toyota",
+      "model": "Land Cruiser",
+      "logo": "/image/car_logos/toyota.png",
+      "image": "/image/vehicles/toyota/land-cruiser.webp"
+    },
+    {
+      "brand": "Toyota",
+      "model": "Yaris",
+      "logo": "/image/car_logos/toyota.png",
+      "image": "/image/vehicles/toyota/yaris.webp"
+    },
+    {
+      "brand": "Toyota",
+      "model": "Prius",
+      "logo": "/image/car_logos/toyota.png",
+      "image": "/image/vehicles/toyota/prius.webp"
+    },
+    {
+      "brand": "Toyota",
+      "model": "Hilux",
+      "logo": "/image/car_logos/toyota.png",
+      "image": "/image/vehicles/toyota/hilux.webp"
+    },
+    {
+      "brand": "Toyota",
+      "model": "C-HR",
+      "logo": "/image/car_logos/toyota.png",
+      "image": "/image/vehicles/toyota/c-hr.webp"
+    },
+    {
+      "brand": "Toyota",
+      "model": "Highlander",
+      "logo": "/image/car_logos/toyota.png",
+      "image": "/image/vehicles/toyota/highlander.webp"
+    },
+    {
+      "brand": "Toyota",
+      "model": "Land Cruiser Prado",
+      "logo": "/image/car_logos/toyota.png",
+      "image": "/image/vehicles/toyota/land-cruiser-prado.webp"
+    },
+    {
+      "brand": "Toyota",
+      "model": "Fortuner",
+      "logo": "/image/car_logos/toyota.png",
+      "image": "/image/vehicles/toyota/fortuner.webp"
+    },
+    {
+      "brand": "Toyota",
+      "model": "Supra",
+      "logo": "/image/car_logos/toyota.png",
+      "image": "/image/vehicles/toyota/supra.webp"
+    },
+    {
+      "brand": "Toyota",
+      "model": "bZ4X",
+      "logo": "/image/car_logos/toyota.png",
+      "image": "/image/vehicles/toyota/bz4x.webp"
+    },
+    {
+      "brand": "Toyota",
+      "model": "Crown",
+      "logo": "/image/car_logos/toyota.png",
+      "image": "/image/vehicles/toyota/crown.webp"
+    },
+    {
+      "brand": "Toyota",
+      "model": "Sequoia",
+      "logo": "/image/car_logos/toyota.png",
+      "image": "/image/vehicles/toyota/sequoia.webp"
+    },
+    {
+      "brand": "Toyota",
+      "model": "Tacoma",
+      "logo": "/image/car_logos/toyota.png",
+      "image": "/image/vehicles/toyota/tacoma.webp"
+    },
+    {
+      "brand": "Toyota",
+      "model": "Tundra",
+      "logo": "/image/car_logos/toyota.png",
+      "image": "/image/vehicles/toyota/tundra.webp"
+    },
+    {
+      "brand": "Toyota",
+      "model": "Sienna",
+      "logo": "/image/car_logos/toyota.png",
+      "image": "/image/vehicles/toyota/sienna.webp"
+    },
+    {
+      "brand": "Toyota",
+      "model": "Alphard",
+      "logo": "/image/car_logos/toyota.png",
+      "image": "/image/vehicles/toyota/alphard.webp"
+    },
+    {
+      "brand": "Toyota",
+      "model": "Avanza",
+      "logo": "/image/car_logos/toyota.png",
+      "image": "/image/vehicles/toyota/avanza.webp"
+    },
+    {
+      "brand": "Toyota",
+      "model": "Innova",
+      "logo": "/image/car_logos/toyota.png",
+      "image": "/image/vehicles/toyota/innova.webp"
+    },
+    {
+      "brand": "Toyota",
+      "model": "Vitz",
+      "logo": "/image/car_logos/toyota.png",
+      "image": "/image/vehicles/toyota/vitz.webp"
+    },
+    {
+      "brand": "Toyota",
+      "model": "GR Yaris",
+      "logo": "/image/car_logos/toyota.png",
+      "image": "/image/vehicles/toyota/gr-yaris.webp"
+    },
+    {
+      "brand": "Toyota",
+      "model": "GR86",
+      "logo": "/image/car_logos/toyota.png",
+      "image": "/image/vehicles/toyota/gr86.webp"
+    },
+    {
+      "brand": "Toyota",
+      "model": "Rush",
+      "logo": "/image/car_logos/toyota.png",
+      "image": "/image/vehicles/toyota/rush.webp"
+    },
+    {
+      "brand": "Volkswagen",
+      "model": "Golf",
+      "logo": "/image/car_logos/volkswagen.svg",
+      "image": "/image/vehicles/volkswagen/golf.webp"
+    },
+    {
+      "brand": "Volkswagen",
+      "model": "Passat",
+      "logo": "/image/car_logos/volkswagen.svg",
+      "image": "/image/vehicles/volkswagen/passat.webp"
+    },
+    {
+      "brand": "Volkswagen",
+      "model": "Tiguan",
+      "logo": "/image/car_logos/volkswagen.svg",
+      "image": "/image/vehicles/volkswagen/tiguan.webp"
+    },
+    {
+      "brand": "Volkswagen",
+      "model": "Polo",
+      "logo": "/image/car_logos/volkswagen.svg",
+      "image": "/image/vehicles/volkswagen/polo.webp"
+    },
+    {
+      "brand": "Volkswagen",
+      "model": "Touareg",
+      "logo": "/image/car_logos/volkswagen.svg",
+      "image": "/image/vehicles/volkswagen/touareg.webp"
+    },
+    {
+      "brand": "Volkswagen",
+      "model": "Arteon",
+      "logo": "/image/car_logos/volkswagen.svg",
+      "image": "/image/vehicles/volkswagen/arteon.webp"
+    },
+    {
+      "brand": "Volkswagen",
+      "model": "T-Roc",
+      "logo": "/image/car_logos/volkswagen.svg",
+      "image": "/image/vehicles/volkswagen/t-roc.webp"
+    },
+    {
+      "brand": "Volkswagen",
+      "model": "T-Cross",
+      "logo": "/image/car_logos/volkswagen.svg",
+      "image": "/image/vehicles/volkswagen/t-cross.webp"
+    },
+    {
+      "brand": "Volkswagen",
+      "model": "Taigo",
+      "logo": "/image/car_logos/volkswagen.svg",
+      "image": "/image/vehicles/volkswagen/taigo.webp"
+    },
+    {
+      "brand": "Volkswagen",
+      "model": "Jetta",
+      "logo": "/image/car_logos/volkswagen.svg",
+      "image": "/image/vehicles/volkswagen/jetta.webp"
+    },
+    {
+      "brand": "Volkswagen",
+      "model": "Atlas",
+      "logo": "/image/car_logos/volkswagen.svg",
+      "image": "/image/vehicles/volkswagen/atlas.webp"
+    },
+    {
+      "brand": "Volkswagen",
+      "model": "ID.3",
+      "logo": "/image/car_logos/volkswagen.svg",
+      "image": "/image/vehicles/volkswagen/id.3.webp"
+    },
+    {
+      "brand": "Volkswagen",
+      "model": "ID.4",
+      "logo": "/image/car_logos/volkswagen.svg",
+      "image": "/image/vehicles/volkswagen/id.4.webp"
+    },
+    {
+      "brand": "Volkswagen",
+      "model": "ID.7",
+      "logo": "/image/car_logos/volkswagen.svg",
+      "image": "/image/vehicles/volkswagen/id.7.webp"
+    },
+    {
+      "brand": "Volkswagen",
+      "model": "ID. Buzz",
+      "logo": "/image/car_logos/volkswagen.svg",
+      "image": "/image/vehicles/volkswagen/id.-buzz.webp"
+    },
+    {
+      "brand": "Volkswagen",
+      "model": "Touran",
+      "logo": "/image/car_logos/volkswagen.svg",
+      "image": "/image/vehicles/volkswagen/touran.webp"
+    },
+    {
+      "brand": "Volkswagen",
+      "model": "Sharan",
+      "logo": "/image/car_logos/volkswagen.svg",
+      "image": "/image/vehicles/volkswagen/sharan.webp"
+    },
+    {
+      "brand": "Volkswagen",
+      "model": "Amarok",
+      "logo": "/image/car_logos/volkswagen.svg",
+      "image": "/image/vehicles/volkswagen/amarok.webp"
+    },
+    {
+      "brand": "Volkswagen",
+      "model": "Caddy",
+      "logo": "/image/car_logos/volkswagen.svg",
+      "image": "/image/vehicles/volkswagen/caddy.webp"
+    },
+    {
+      "brand": "Volkswagen",
+      "model": "ID.5",
+      "logo": "/image/car_logos/volkswagen.svg",
+      "image": "/image/vehicles/volkswagen/id.5.webp"
+    },
+    {
+      "brand": "Volvo",
+      "model": "S60",
+      "logo": "/image/car_logos/volvo.svg",
+      "image": "/image/vehicles/volvo/s60.webp"
+    },
+    {
+      "brand": "Volvo",
+      "model": "S90",
+      "logo": "/image/car_logos/volvo.svg",
+      "image": "/image/vehicles/volvo/s90.webp"
+    },
+    {
+      "brand": "Volvo",
+      "model": "XC40",
+      "logo": "/image/car_logos/volvo.svg",
+      "image": "/image/vehicles/volvo/xc40.webp"
+    },
+    {
+      "brand": "Volvo",
+      "model": "XC60",
+      "logo": "/image/car_logos/volvo.svg",
+      "image": "/image/vehicles/volvo/xc60.webp"
+    },
+    {
+      "brand": "Volvo",
+      "model": "XC90",
+      "logo": "/image/car_logos/volvo.svg",
+      "image": "/image/vehicles/volvo/xc90.webp"
+    },
+    {
+      "brand": "Volvo",
+      "model": "V60",
+      "logo": "/image/car_logos/volvo.svg",
+      "image": "/image/vehicles/volvo/v60.webp"
+    },
+    {
+      "brand": "Volvo",
+      "model": "V90",
+      "logo": "/image/car_logos/volvo.svg",
+      "image": "/image/vehicles/volvo/v90.webp"
+    },
+    {
+      "brand": "Volvo",
+      "model": "EX30",
+      "logo": "/image/car_logos/volvo.svg",
+      "image": "/image/vehicles/volvo/ex30.webp"
+    },
+    {
+      "brand": "Volvo",
+      "model": "EX90",
+      "logo": "/image/car_logos/volvo.svg",
+      "image": "/image/vehicles/volvo/ex90.webp"
+    },
+    {
+      "brand": "Volvo",
+      "model": "EX40",
+      "logo": "/image/car_logos/volvo.svg",
+      "image": "/image/vehicles/volvo/ex40.webp"
+    },
+    {
+      "brand": "Volvo",
+      "model": "EC40",
+      "logo": "/image/car_logos/volvo.svg",
+      "image": "/image/vehicles/volvo/ec40.webp"
+    },
+    {
+      "brand": "Volvo",
+      "model": "C40",
+      "logo": "/image/car_logos/volvo.svg",
+      "image": "/image/vehicles/volvo/c40.webp"
+    },
+    {
+      "brand": "Dacia",
+      "model": "Sandero",
+      "logo": "/image/car_logos/dacia.svg",
+      "image": "/image/vehicles/dacia/sandero.webp"
+    },
+    {
+      "brand": "Dacia",
+      "model": "Duster",
+      "logo": "/image/car_logos/dacia.svg",
+      "image": "/image/vehicles/dacia/duster.webp"
+    },
+    {
+      "brand": "Dacia",
+      "model": "Logan",
+      "logo": "/image/car_logos/dacia.svg",
+      "image": "/image/vehicles/dacia/logan.webp"
+    },
+    {
+      "brand": "Dacia",
+      "model": "Jogger",
+      "logo": "/image/car_logos/dacia.svg",
+      "image": "/image/vehicles/dacia/jogger.webp"
+    },
+    {
+      "brand": "Dacia",
+      "model": "Spring",
+      "logo": "/image/car_logos/dacia.svg",
+      "image": "/image/vehicles/dacia/spring.webp"
+    },
+    {
+      "brand": "Dacia",
+      "model": "Bigster",
+      "logo": "/image/car_logos/dacia.svg",
+      "image": "/image/vehicles/dacia/bigster.webp"
+    },
+    {
+      "brand": "Mini",
+      "model": "Cooper",
+      "logo": "/image/car_logos/mini.svg",
+      "image": "/image/vehicles/mini/cooper.webp"
+    },
+    {
+      "brand": "Mini",
+      "model": "Clubman",
+      "logo": "/image/car_logos/mini.svg",
+      "image": "/image/vehicles/mini/clubman.webp"
+    },
+    {
+      "brand": "Mini",
+      "model": "Countryman",
+      "logo": "/image/car_logos/mini.svg",
+      "image": "/image/vehicles/mini/countryman.webp"
+    },
+    {
+      "brand": "Mini",
+      "model": "Aceman",
+      "logo": "/image/car_logos/mini.svg",
+      "image": "/image/vehicles/mini/aceman.webp"
+    },
+    {
+      "brand": "Isuzu",
+      "model": "D-Max",
+      "logo": "/image/car_logos/isuzu.png",
+      "image": "/image/vehicles/isuzu/d-max.webp"
+    },
+    {
+      "brand": "Isuzu",
+      "model": "MU-X",
+      "logo": "/image/car_logos/isuzu.png",
+      "image": "/image/vehicles/isuzu/mu-x.webp"
+    },
+    {
+      "brand": "Isuzu",
+      "model": "Trooper",
+      "logo": "/image/car_logos/isuzu.png",
+      "image": "/image/vehicles/isuzu/trooper.webp"
+    },
+    {
+      "brand": "Daihatsu",
+      "model": "Terios",
+      "logo": "/image/car_logos/daihatsu.png",
+      "image": "/image/vehicles/daihatsu/terios.webp"
+    },
+    {
+      "brand": "Daihatsu",
+      "model": "Sirion",
+      "logo": "/image/car_logos/daihatsu.png",
+      "image": "/image/vehicles/daihatsu/sirion.webp"
+    },
+    {
+      "brand": "Daihatsu",
+      "model": "Mira",
+      "logo": "/image/car_logos/daihatsu.png",
+      "image": "/image/vehicles/daihatsu/mira.webp"
+    },
+    {
+      "brand": "Daihatsu",
+      "model": "Move",
+      "logo": "/image/car_logos/daihatsu.png",
+      "image": "/image/vehicles/daihatsu/move.webp"
+    },
+    {
+      "brand": "Daihatsu",
+      "model": "Tanto",
+      "logo": "/image/car_logos/daihatsu.png",
+      "image": "/image/vehicles/daihatsu/tanto.webp"
+    },
+    {
+      "brand": "Daihatsu",
+      "model": "Rocky",
+      "logo": "/image/car_logos/daihatsu.png",
+      "image": "/image/vehicles/daihatsu/rocky.webp"
+    },
+    {
+      "brand": "Daihatsu",
+      "model": "Copen",
+      "logo": "/image/car_logos/daihatsu.png",
+      "image": "/image/vehicles/daihatsu/copen.webp"
+    },
+    {
+      "brand": "Daihatsu",
+      "model": "Ayla",
+      "logo": "/image/car_logos/daihatsu.png",
+      "image": "/image/vehicles/daihatsu/ayla.webp"
+    },
+    {
+      "brand": "Daihatsu",
+      "model": "Sigra",
+      "logo": "/image/car_logos/daihatsu.png",
+      "image": "/image/vehicles/daihatsu/sigra.webp"
+    },
+    {
+      "brand": "DS",
+      "model": "DS 3",
+      "logo": "/image/car_logos/ds.png",
+      "image": "/image/vehicles/ds/ds-3.webp"
+    },
+    {
+      "brand": "DS",
+      "model": "DS 4",
+      "logo": "/image/car_logos/ds.png",
+      "image": "/image/vehicles/ds/ds-4.webp"
+    },
+    {
+      "brand": "DS",
+      "model": "DS 7",
+      "logo": "/image/car_logos/ds.png",
+      "image": "/image/vehicles/ds/ds-7.webp"
+    },
+    {
+      "brand": "DS",
+      "model": "DS 9",
+      "logo": "/image/car_logos/ds.png",
+      "image": "/image/vehicles/ds/ds-9.webp"
+    },
+    {
+      "brand": "Lancia",
+      "model": "Ypsilon",
+      "logo": "/image/car_logos/lancia.png",
+      "image": "/image/vehicles/lancia/ypsilon.webp"
+    },
+    {
+      "brand": "Lancia",
+      "model": "Delta",
+      "logo": "/image/car_logos/lancia.png",
+      "image": "/image/vehicles/lancia/delta.webp"
+    },
+    {
+      "brand": "Lancia",
+      "model": "Thema",
+      "logo": "/image/car_logos/lancia.png",
+      "image": "/image/vehicles/lancia/thema.webp"
+    },
+    {
+      "brand": "Lancia",
+      "model": "Musa",
+      "logo": "/image/car_logos/lancia.png",
+      "image": "/image/vehicles/lancia/musa.webp"
+    },
+    {
+      "brand": "Bugatti",
+      "model": "Veyron",
+      "logo": "/image/car_logos/bugatti.svg",
+      "image": "/image/vehicles/bugatti/veyron.webp"
+    },
+    {
+      "brand": "Bugatti",
+      "model": "Chiron",
+      "logo": "/image/car_logos/bugatti.svg",
+      "image": "/image/vehicles/bugatti/chiron.webp"
+    },
+    {
+      "brand": "Bugatti",
+      "model": "Divo",
+      "logo": "/image/car_logos/bugatti.svg",
+      "image": "/image/vehicles/bugatti/divo.webp"
+    },
+    {
+      "brand": "Bugatti",
+      "model": "Tourbillon",
+      "logo": "/image/car_logos/bugatti.svg",
+      "image": "/image/vehicles/bugatti/tourbillon.webp"
+    },
+    {
+      "brand": "Lotus",
+      "model": "Elise",
+      "logo": "/image/car_logos/lotus.png",
+      "image": "/image/vehicles/lotus/elise.webp"
+    },
+    {
+      "brand": "Lotus",
+      "model": "Exige",
+      "logo": "/image/car_logos/lotus.png",
+      "image": "/image/vehicles/lotus/exige.webp"
+    },
+    {
+      "brand": "Lotus",
+      "model": "Evora",
+      "logo": "/image/car_logos/lotus.png",
+      "image": "/image/vehicles/lotus/evora.webp"
+    },
+    {
+      "brand": "Lotus",
+      "model": "Emira",
+      "logo": "/image/car_logos/lotus.png",
+      "image": "/image/vehicles/lotus/emira.webp"
+    },
+    {
+      "brand": "Lotus",
+      "model": "Eletre",
+      "logo": "/image/car_logos/lotus.png",
+      "image": "/image/vehicles/lotus/eletre.webp"
+    },
+    {
+      "brand": "Lotus",
+      "model": "Emeya",
+      "logo": "/image/car_logos/lotus.png",
+      "image": "/image/vehicles/lotus/emeya.webp"
+    },
+    {
+      "brand": "Lotus",
+      "model": "Evija",
+      "logo": "/image/car_logos/lotus.png",
+      "image": "/image/vehicles/lotus/evija.webp"
+    },
+    {
+      "brand": "Polestar",
+      "model": "1",
+      "logo": "/image/car_logos/polestar.svg",
+      "image": "/image/vehicles/polestar/1.webp"
+    },
+    {
+      "brand": "Polestar",
+      "model": "2",
+      "logo": "/image/car_logos/polestar.svg",
+      "image": "/image/vehicles/polestar/2.webp"
+    },
+    {
+      "brand": "Polestar",
+      "model": "3",
+      "logo": "/image/car_logos/polestar.svg",
+      "image": "/image/vehicles/polestar/3.webp"
+    },
+    {
+      "brand": "Polestar",
+      "model": "4",
+      "logo": "/image/car_logos/polestar.svg",
+      "image": "/image/vehicles/polestar/4.webp"
+    },
+    {
+      "brand": "Saab",
+      "model": "9-3",
+      "logo": "/image/car_logos/saab.png",
+      "image": "/image/vehicles/saab/9-3.webp"
+    },
+    {
+      "brand": "Saab",
+      "model": "9-5",
+      "logo": "/image/car_logos/saab.png",
+      "image": "/image/vehicles/saab/9-5.webp"
+    },
+    {
+      "brand": "Saab",
+      "model": "900",
+      "logo": "/image/car_logos/saab.png",
+      "image": "/image/vehicles/saab/900.webp"
+    },
+    {
+      "brand": "Saab",
+      "model": "9000",
+      "logo": "/image/car_logos/saab.png",
+      "image": "/image/vehicles/saab/9000.webp"
+    },
+    {
+      "brand": "Rivian",
+      "model": "R1T",
+      "logo": "/image/car_logos/rivian.png",
+      "image": "/image/vehicles/rivian/r1t.webp"
+    },
+    {
+      "brand": "Rivian",
+      "model": "R1S",
+      "logo": "/image/car_logos/rivian.png",
+      "image": "/image/vehicles/rivian/r1s.webp"
+    },
+    {
+      "brand": "Rivian",
+      "model": "R2",
+      "logo": "/image/car_logos/rivian.png",
+      "image": "/image/vehicles/rivian/r2.webp"
+    },
+    {
+      "brand": "Lucid",
+      "model": "Air",
+      "logo": "/image/car_logos/lucid.svg",
+      "image": "/image/vehicles/lucid/air.webp"
+    },
+    {
+      "brand": "Lucid",
+      "model": "Gravity",
+      "logo": "/image/car_logos/lucid.svg",
+      "image": "/image/vehicles/lucid/gravity.webp"
+    },
+    {
+      "brand": "Daewoo",
+      "model": "Lanos",
+      "logo": "/image/car_logos/daewoo.png",
+      "image": "/image/vehicles/daewoo/lanos.webp"
+    },
+    {
+      "brand": "Daewoo",
+      "model": "Nubira",
+      "logo": "/image/car_logos/daewoo.png",
+      "image": "/image/vehicles/daewoo/nubira.webp"
+    },
+    {
+      "brand": "Daewoo",
+      "model": "Leganza",
+      "logo": "/image/car_logos/daewoo.png",
+      "image": "/image/vehicles/daewoo/leganza.webp"
+    },
+    {
+      "brand": "Daewoo",
+      "model": "Lacetti",
+      "logo": "/image/car_logos/daewoo.png",
+      "image": "/image/vehicles/daewoo/lacetti.webp"
+    },
+    {
+      "brand": "Daewoo",
+      "model": "Kalos",
+      "logo": "/image/car_logos/daewoo.png",
+      "image": "/image/vehicles/daewoo/kalos.webp"
+    },
+    {
+      "brand": "Daewoo",
+      "model": "Matiz",
+      "logo": "/image/car_logos/daewoo.png",
+      "image": "/image/vehicles/daewoo/matiz.webp"
+    },
+    {
+      "brand": "BYD",
+      "model": "Atto 3",
+      "logo": "/image/car_logos/byd.png",
+      "image": "/image/vehicles/byd/atto-3.webp"
+    },
+    {
+      "brand": "BYD",
+      "model": "Dolphin",
+      "logo": "/image/car_logos/byd.png",
+      "image": "/image/vehicles/byd/dolphin.webp"
+    },
+    {
+      "brand": "BYD",
+      "model": "Seal",
+      "logo": "/image/car_logos/byd.png",
+      "image": "/image/vehicles/byd/seal.webp"
+    },
+    {
+      "brand": "BYD",
+      "model": "Seagull",
+      "logo": "/image/car_logos/byd.png",
+      "image": "/image/vehicles/byd/seagull.webp"
+    },
+    {
+      "brand": "BYD",
+      "model": "Han",
+      "logo": "/image/car_logos/byd.png",
+      "image": "/image/vehicles/byd/han.webp"
+    },
+    {
+      "brand": "BYD",
+      "model": "Tang",
+      "logo": "/image/car_logos/byd.png",
+      "image": "/image/vehicles/byd/tang.webp"
+    },
+    {
+      "brand": "BYD",
+      "model": "Qin",
+      "logo": "/image/car_logos/byd.png",
+      "image": "/image/vehicles/byd/qin.webp"
+    },
+    {
+      "brand": "BYD",
+      "model": "Song Plus",
+      "logo": "/image/car_logos/byd.png",
+      "image": "/image/vehicles/byd/song-plus.webp"
+    },
+    {
+      "brand": "BYD",
+      "model": "Seal U",
+      "logo": "/image/car_logos/byd.png",
+      "image": "/image/vehicles/byd/seal-u.webp"
+    },
+    {
+      "brand": "BYD",
+      "model": "Shark",
+      "logo": "/image/car_logos/byd.png",
+      "image": "/image/vehicles/byd/shark.webp"
+    },
+    {
+      "brand": "Geely",
+      "model": "Emgrand",
+      "logo": "/image/car_logos/geely.png",
+      "image": "/image/vehicles/geely/emgrand.webp"
+    },
+    {
+      "brand": "Geely",
+      "model": "Coolray",
+      "logo": "/image/car_logos/geely.png",
+      "image": "/image/vehicles/geely/coolray.webp"
+    },
+    {
+      "brand": "Geely",
+      "model": "Atlas",
+      "logo": "/image/car_logos/geely.png",
+      "image": "/image/vehicles/geely/atlas.webp"
+    },
+    {
+      "brand": "Geely",
+      "model": "Monjaro",
+      "logo": "/image/car_logos/geely.png",
+      "image": "/image/vehicles/geely/monjaro.webp"
+    },
+    {
+      "brand": "Geely",
+      "model": "Okavango",
+      "logo": "/image/car_logos/geely.png",
+      "image": "/image/vehicles/geely/okavango.webp"
+    },
+    {
+      "brand": "Geely",
+      "model": "Tugella",
+      "logo": "/image/car_logos/geely.png",
+      "image": "/image/vehicles/geely/tugella.webp"
+    },
+    {
+      "brand": "Geely",
+      "model": "Geometry C",
+      "logo": "/image/car_logos/geely.png",
+      "image": "/image/vehicles/geely/geometry-c.webp"
+    },
+    {
+      "brand": "Chery",
+      "model": "Tiggo 7",
+      "logo": "/image/car_logos/chery.png",
+      "image": "/image/vehicles/chery/tiggo-7.webp"
+    },
+    {
+      "brand": "Chery",
+      "model": "Tiggo 8",
+      "logo": "/image/car_logos/chery.png",
+      "image": "/image/vehicles/chery/tiggo-8.webp"
+    },
+    {
+      "brand": "Chery",
+      "model": "Tiggo 9",
+      "logo": "/image/car_logos/chery.png",
+      "image": "/image/vehicles/chery/tiggo-9.webp"
+    },
+    {
+      "brand": "Chery",
+      "model": "Arrizo 5",
+      "logo": "/image/car_logos/chery.png",
+      "image": "/image/vehicles/chery/arrizo-5.webp"
+    },
+    {
+      "brand": "Chery",
+      "model": "Arrizo 8",
+      "logo": "/image/car_logos/chery.png",
+      "image": "/image/vehicles/chery/arrizo-8.webp"
+    },
+    {
+      "brand": "Chery",
+      "model": "QQ",
+      "logo": "/image/car_logos/chery.png",
+      "image": "/image/vehicles/chery/qq.webp"
+    },
+    {
+      "brand": "Chery",
+      "model": "Tiggo 4",
+      "logo": "/image/car_logos/chery.png",
+      "image": "/image/vehicles/chery/tiggo-4.webp"
+    },
+    {
+      "brand": "Chery",
+      "model": "Arrizo 6",
+      "logo": "/image/car_logos/chery.png",
+      "image": "/image/vehicles/chery/arrizo-6.webp"
+    },
+    {
+      "brand": "Changan",
+      "model": "CS35",
+      "logo": "/image/car_logos/changan.png",
+      "image": "/image/vehicles/changan/cs35.webp"
+    },
+    {
+      "brand": "Changan",
+      "model": "CS55",
+      "logo": "/image/car_logos/changan.png",
+      "image": "/image/vehicles/changan/cs55.webp"
+    },
+    {
+      "brand": "Changan",
+      "model": "CS75",
+      "logo": "/image/car_logos/changan.png",
+      "image": "/image/vehicles/changan/cs75.webp"
+    },
+    {
+      "brand": "Changan",
+      "model": "CS95",
+      "logo": "/image/car_logos/changan.png",
+      "image": "/image/vehicles/changan/cs95.webp"
+    },
+    {
+      "brand": "Changan",
+      "model": "UNI-T",
+      "logo": "/image/car_logos/changan.png",
+      "image": "/image/vehicles/changan/uni-t.webp"
+    },
+    {
+      "brand": "Changan",
+      "model": "UNI-K",
+      "logo": "/image/car_logos/changan.png",
+      "image": "/image/vehicles/changan/uni-k.webp"
+    },
+    {
+      "brand": "Changan",
+      "model": "UNI-V",
+      "logo": "/image/car_logos/changan.png",
+      "image": "/image/vehicles/changan/uni-v.webp"
+    },
+    {
+      "brand": "Changan",
+      "model": "Alsvin",
+      "logo": "/image/car_logos/changan.png",
+      "image": "/image/vehicles/changan/alsvin.webp"
+    },
+    {
+      "brand": "Changan",
+      "model": "Eado",
+      "logo": "/image/car_logos/changan.png",
+      "image": "/image/vehicles/changan/eado.webp"
+    },
+    {
+      "brand": "Great Wall",
+      "model": "Wingle",
+      "logo": "/image/car_logos/great-wall.png",
+      "image": "/image/vehicles/great-wall/wingle.webp"
+    },
+    {
+      "brand": "Great Wall",
+      "model": "Voleex C30",
+      "logo": "/image/car_logos/great-wall.png",
+      "image": "/image/vehicles/great-wall/voleex-c30.webp"
+    },
+    {
+      "brand": "Great Wall",
+      "model": "Voleex C50",
+      "logo": "/image/car_logos/great-wall.png",
+      "image": "/image/vehicles/great-wall/voleex-c50.webp"
+    },
+    {
+      "brand": "Great Wall",
+      "model": "Poer",
+      "logo": "/image/car_logos/great-wall.png",
+      "image": "/image/vehicles/great-wall/poer.webp"
+    },
+    {
+      "brand": "Haval",
+      "model": "H2",
+      "logo": "/image/car_logos/haval.png",
+      "image": "/image/vehicles/haval/h2.webp"
+    },
+    {
+      "brand": "Haval",
+      "model": "H6",
+      "logo": "/image/car_logos/haval.png",
+      "image": "/image/vehicles/haval/h6.webp"
+    },
+    {
+      "brand": "Haval",
+      "model": "H9",
+      "logo": "/image/car_logos/haval.png",
+      "image": "/image/vehicles/haval/h9.webp"
+    },
+    {
+      "brand": "Haval",
+      "model": "Jolion",
+      "logo": "/image/car_logos/haval.png",
+      "image": "/image/vehicles/haval/jolion.webp"
+    },
+    {
+      "brand": "Haval",
+      "model": "H5",
+      "logo": "/image/car_logos/haval.png",
+      "image": "/image/vehicles/haval/h5.webp"
+    },
+    {
+      "brand": "Haval",
+      "model": "Dargo",
+      "logo": "/image/car_logos/haval.png",
+      "image": "/image/vehicles/haval/dargo.webp"
+    },
+    {
+      "brand": "Zeekr",
+      "model": "001",
+      "logo": "/image/car_logos/zeekr.png",
+      "image": "/image/vehicles/zeekr/001.webp"
+    },
+    {
+      "brand": "Zeekr",
+      "model": "007",
+      "logo": "/image/car_logos/zeekr.png",
+      "image": "/image/vehicles/zeekr/007.webp"
+    },
+    {
+      "brand": "Zeekr",
+      "model": "009",
+      "logo": "/image/car_logos/zeekr.png",
+      "image": "/image/vehicles/zeekr/009.webp"
+    },
+    {
+      "brand": "Zeekr",
+      "model": "X",
+      "logo": "/image/car_logos/zeekr.png",
+      "image": "/image/vehicles/zeekr/x.webp"
+    },
+    {
+      "brand": "Zeekr",
+      "model": "7X",
+      "logo": "/image/car_logos/zeekr.png",
+      "image": "/image/vehicles/zeekr/7x.webp"
+    },
+    {
+      "brand": "NIO",
+      "model": "ET5",
+      "logo": "/image/car_logos/nio.png",
+      "image": "/image/vehicles/nio/et5.webp"
+    },
+    {
+      "brand": "NIO",
+      "model": "ET7",
+      "logo": "/image/car_logos/nio.png",
+      "image": "/image/vehicles/nio/et7.webp"
+    },
+    {
+      "brand": "NIO",
+      "model": "ES6",
+      "logo": "/image/car_logos/nio.png",
+      "image": "/image/vehicles/nio/es6.webp"
+    },
+    {
+      "brand": "NIO",
+      "model": "ES8",
+      "logo": "/image/car_logos/nio.png",
+      "image": "/image/vehicles/nio/es8.webp"
+    },
+    {
+      "brand": "NIO",
+      "model": "EC6",
+      "logo": "/image/car_logos/nio.png",
+      "image": "/image/vehicles/nio/ec6.webp"
+    },
+    {
+      "brand": "NIO",
+      "model": "EC7",
+      "logo": "/image/car_logos/nio.png",
+      "image": "/image/vehicles/nio/ec7.webp"
+    },
+    {
+      "brand": "XPeng",
+      "model": "P7",
+      "logo": "/image/car_logos/xpeng.png",
+      "image": "/image/vehicles/xpeng/p7.webp"
+    },
+    {
+      "brand": "XPeng",
+      "model": "P5",
+      "logo": "/image/car_logos/xpeng.png",
+      "image": "/image/vehicles/xpeng/p5.webp"
+    },
+    {
+      "brand": "XPeng",
+      "model": "G6",
+      "logo": "/image/car_logos/xpeng.png",
+      "image": "/image/vehicles/xpeng/g6.webp"
+    },
+    {
+      "brand": "XPeng",
+      "model": "G9",
+      "logo": "/image/car_logos/xpeng.png",
+      "image": "/image/vehicles/xpeng/g9.webp"
+    },
+    {
+      "brand": "XPeng",
+      "model": "X9",
+      "logo": "/image/car_logos/xpeng.png",
+      "image": "/image/vehicles/xpeng/x9.webp"
+    },
+    {
+      "brand": "Hongqi",
+      "model": "H5",
+      "logo": "/image/car_logos/hongqi.png",
+      "image": "/image/vehicles/hongqi/h5.webp"
+    },
+    {
+      "brand": "Hongqi",
+      "model": "H9",
+      "logo": "/image/car_logos/hongqi.png",
+      "image": "/image/vehicles/hongqi/h9.webp"
+    },
+    {
+      "brand": "Hongqi",
+      "model": "HS5",
+      "logo": "/image/car_logos/hongqi.png",
+      "image": "/image/vehicles/hongqi/hs5.webp"
+    },
+    {
+      "brand": "Hongqi",
+      "model": "HS7",
+      "logo": "/image/car_logos/hongqi.png",
+      "image": "/image/vehicles/hongqi/hs7.webp"
+    },
+    {
+      "brand": "Hongqi",
+      "model": "E-HS9",
+      "logo": "/image/car_logos/hongqi.png",
+      "image": "/image/vehicles/hongqi/e-hs9.webp"
+    },
+    {
+      "brand": "Li Auto",
+      "model": "L6",
+      "logo": "/image/car_logos/li-auto.png",
+      "image": "/image/vehicles/li-auto/l6.webp"
+    },
+    {
+      "brand": "Li Auto",
+      "model": "L7",
+      "logo": "/image/car_logos/li-auto.png",
+      "image": "/image/vehicles/li-auto/l7.webp"
+    },
+    {
+      "brand": "Li Auto",
+      "model": "L8",
+      "logo": "/image/car_logos/li-auto.png",
+      "image": "/image/vehicles/li-auto/l8.webp"
+    },
+    {
+      "brand": "Li Auto",
+      "model": "L9",
+      "logo": "/image/car_logos/li-auto.png",
+      "image": "/image/vehicles/li-auto/l9.webp"
+    },
+    {
+      "brand": "Li Auto",
+      "model": "Mega",
+      "logo": "/image/car_logos/li-auto.png",
+      "image": "/image/vehicles/li-auto/mega.webp"
+    },
+    {
+      "brand": "Li Auto",
+      "model": "One",
+      "logo": "/image/car_logos/li-auto.png",
+      "image": "/image/vehicles/li-auto/one.webp"
+    },
+    {
+      "brand": "Leapmotor",
+      "model": "T03",
+      "logo": "/image/car_logos/leapmotor.png",
+      "image": "/image/vehicles/leapmotor/t03.webp"
+    },
+    {
+      "brand": "Leapmotor",
+      "model": "C10",
+      "logo": "/image/car_logos/leapmotor.png",
+      "image": "/image/vehicles/leapmotor/c10.webp"
+    },
+    {
+      "brand": "Leapmotor",
+      "model": "C11",
+      "logo": "/image/car_logos/leapmotor.png",
+      "image": "/image/vehicles/leapmotor/c11.webp"
+    },
+    {
+      "brand": "Leapmotor",
+      "model": "C16",
+      "logo": "/image/car_logos/leapmotor.png",
+      "image": "/image/vehicles/leapmotor/c16.webp"
+    },
+    {
+      "brand": "Leapmotor",
+      "model": "B10",
+      "logo": "/image/car_logos/leapmotor.png",
+      "image": "/image/vehicles/leapmotor/b10.webp"
+    },
+    {
+      "brand": "GAC",
+      "model": "GS3",
+      "logo": "/image/car_logos/gac.png",
+      "image": "/image/vehicles/gac/gs3.webp"
+    },
+    {
+      "brand": "GAC",
+      "model": "GS4",
+      "logo": "/image/car_logos/gac.png",
+      "image": "/image/vehicles/gac/gs4.webp"
+    },
+    {
+      "brand": "GAC",
+      "model": "GS8",
+      "logo": "/image/car_logos/gac.png",
+      "image": "/image/vehicles/gac/gs8.webp"
+    },
+    {
+      "brand": "GAC",
+      "model": "Empow",
+      "logo": "/image/car_logos/gac.png",
+      "image": "/image/vehicles/gac/empow.webp"
+    },
+    {
+      "brand": "GAC",
+      "model": "GN6",
+      "logo": "/image/car_logos/gac.png",
+      "image": "/image/vehicles/gac/gn6.webp"
+    },
+    {
+      "brand": "GAC",
+      "model": "GN8",
+      "logo": "/image/car_logos/gac.png",
+      "image": "/image/vehicles/gac/gn8.webp"
+    },
+    {
+      "brand": "MG",
+      "model": "3",
+      "logo": "/image/car_logos/mg.svg",
+      "image": "/image/vehicles/mg/3.webp"
+    },
+    {
+      "brand": "MG",
+      "model": "4",
+      "logo": "/image/car_logos/mg.svg",
+      "image": "/image/vehicles/mg/4.webp"
+    },
+    {
+      "brand": "MG",
+      "model": "5",
+      "logo": "/image/car_logos/mg.svg",
+      "image": "/image/vehicles/mg/5.webp"
+    },
+    {
+      "brand": "MG",
+      "model": "6",
+      "logo": "/image/car_logos/mg.svg",
+      "image": "/image/vehicles/mg/6.webp"
+    },
+    {
+      "brand": "MG",
+      "model": "7",
+      "logo": "/image/car_logos/mg.svg",
+      "image": "/image/vehicles/mg/7.webp"
+    },
+    {
+      "brand": "MG",
+      "model": "HS",
+      "logo": "/image/car_logos/mg.svg",
+      "image": "/image/vehicles/mg/hs.webp"
+    },
+    {
+      "brand": "MG",
+      "model": "ZS",
+      "logo": "/image/car_logos/mg.svg",
+      "image": "/image/vehicles/mg/zs.webp"
+    },
+    {
+      "brand": "MG",
+      "model": "Cyberster",
+      "logo": "/image/car_logos/mg.svg",
+      "image": "/image/vehicles/mg/cyberster.webp"
+    },
+    {
+      "brand": "MG",
+      "model": "Marvel R",
+      "logo": "/image/car_logos/mg.svg",
+      "image": "/image/vehicles/mg/marvel-r.webp"
+    },
+    {
+      "brand": "JAC",
+      "model": "J7",
+      "logo": "/image/car_logos/jac.png",
+      "image": "/image/vehicles/jac/j7.webp"
+    },
+    {
+      "brand": "JAC",
+      "model": "JS4",
+      "logo": "/image/car_logos/jac.png",
+      "image": null
+    },
+    {
+      "brand": "JAC",
+      "model": "S3",
+      "logo": "/image/car_logos/jac.png",
+      "image": "/image/vehicles/jac/s3.webp"
+    },
+    {
+      "brand": "JAC",
+      "model": "T6",
+      "logo": "/image/car_logos/jac.png",
+      "image": "/image/vehicles/jac/t6.webp"
+    },
+    {
+      "brand": "JAC",
+      "model": "T8",
+      "logo": "/image/car_logos/jac.png",
+      "image": "/image/vehicles/jac/t8.webp"
+    },
+    {
+      "brand": "JAC",
+      "model": "T9",
+      "logo": "/image/car_logos/jac.png",
+      "image": "/image/vehicles/jac/t9.webp"
+    },
+    {
+      "brand": "BAIC",
+      "model": "BJ40",
+      "logo": "/image/car_logos/baic.png",
+      "image": "/image/vehicles/baic/bj40.webp"
+    },
+    {
+      "brand": "BAIC",
+      "model": "BJ80",
+      "logo": "/image/car_logos/baic.png",
+      "image": "/image/vehicles/baic/bj80.webp"
+    },
+    {
+      "brand": "BAIC",
+      "model": "X35",
+      "logo": "/image/car_logos/baic.png",
+      "image": "/image/vehicles/baic/x35.webp"
+    },
+    {
+      "brand": "BAIC",
+      "model": "X55",
+      "logo": "/image/car_logos/baic.png",
+      "image": "/image/vehicles/baic/x55.webp"
+    },
+    {
+      "brand": "FAW",
+      "model": "Besturn B50",
+      "logo": "/image/car_logos/faw.png",
+      "image": "/image/vehicles/faw/besturn-b50.webp"
+    },
+    {
+      "brand": "FAW",
+      "model": "Besturn B70",
+      "logo": "/image/car_logos/faw.png",
+      "image": "/image/vehicles/faw/besturn-b70.webp"
+    },
+    {
+      "brand": "FAW",
+      "model": "Besturn X40",
+      "logo": "/image/car_logos/faw.png",
+      "image": "/image/vehicles/faw/besturn-x40.webp"
+    },
+    {
+      "brand": "FAW",
+      "model": "Besturn X80",
+      "logo": "/image/car_logos/faw.png",
+      "image": "/image/vehicles/faw/besturn-x80.webp"
+    },
+    {
+      "brand": "Dongfeng",
+      "model": "Aeolus A60",
+      "logo": "/image/car_logos/dongfeng.png",
+      "image": "/image/vehicles/dongfeng/aeolus-a60.webp"
+    },
+    {
+      "brand": "Dongfeng",
+      "model": "Aeolus Yixuan",
+      "logo": "/image/car_logos/dongfeng.png",
+      "image": "/image/vehicles/dongfeng/aeolus-yixuan.webp"
+    },
+    {
+      "brand": "Dongfeng",
+      "model": "Fengon 580",
+      "logo": "/image/car_logos/dongfeng.png",
+      "image": "/image/vehicles/dongfeng/fengon-580.webp"
+    },
+    {
+      "brand": "Dongfeng",
+      "model": "Fengon 500",
+      "logo": "/image/car_logos/dongfeng.png",
+      "image": "/image/vehicles/dongfeng/fengon-500.webp"
+    },
+    {
+      "brand": "Foton",
+      "model": "Tunland",
+      "logo": "/image/car_logos/foton.png",
+      "image": "/image/vehicles/foton/tunland.webp"
+    },
+    {
+      "brand": "Foton",
+      "model": "Sauvana",
+      "logo": "/image/car_logos/foton.png",
+      "image": "/image/vehicles/foton/sauvana.webp"
+    },
+    {
+      "brand": "Foton",
+      "model": "Toano",
+      "logo": "/image/car_logos/foton.png",
+      "image": "/image/vehicles/foton/toano.webp"
+    },
+    {
+      "brand": "Tata",
+      "model": "Nexon",
+      "logo": "/image/car_logos/tata.svg",
+      "image": "/image/vehicles/tata/nexon.webp"
+    },
+    {
+      "brand": "Tata",
+      "model": "Harrier",
+      "logo": "/image/car_logos/tata.svg",
+      "image": "/image/vehicles/tata/harrier.webp"
+    },
+    {
+      "brand": "Tata",
+      "model": "Safari",
+      "logo": "/image/car_logos/tata.svg",
+      "image": "/image/vehicles/tata/safari.webp"
+    },
+    {
+      "brand": "Tata",
+      "model": "Punch",
+      "logo": "/image/car_logos/tata.svg",
+      "image": "/image/vehicles/tata/punch.webp"
+    },
+    {
+      "brand": "Tata",
+      "model": "Tiago",
+      "logo": "/image/car_logos/tata.svg",
+      "image": "/image/vehicles/tata/tiago.webp"
+    },
+    {
+      "brand": "Tata",
+      "model": "Tigor",
+      "logo": "/image/car_logos/tata.svg",
+      "image": "/image/vehicles/tata/tigor.webp"
+    },
+    {
+      "brand": "Tata",
+      "model": "Altroz",
+      "logo": "/image/car_logos/tata.svg",
+      "image": "/image/vehicles/tata/altroz.webp"
+    },
+    {
+      "brand": "Tata",
+      "model": "Curvv",
+      "logo": "/image/car_logos/tata.svg",
+      "image": "/image/vehicles/tata/curvv.webp"
+    },
+    {
+      "brand": "Tata",
+      "model": "Nano",
+      "logo": "/image/car_logos/tata.svg",
+      "image": "/image/vehicles/tata/nano.webp"
+    },
+    {
+      "brand": "Tata",
+      "model": "Indica",
+      "logo": "/image/car_logos/tata.svg",
+      "image": "/image/vehicles/tata/indica.webp"
+    },
+    {
+      "brand": "Mahindra",
+      "model": "Scorpio",
+      "logo": "/image/car_logos/mahindra.svg",
+      "image": "/image/vehicles/mahindra/scorpio.webp"
+    },
+    {
+      "brand": "Mahindra",
+      "model": "Thar",
+      "logo": "/image/car_logos/mahindra.svg",
+      "image": "/image/vehicles/mahindra/thar.webp"
+    },
+    {
+      "brand": "Mahindra",
+      "model": "XUV700",
+      "logo": "/image/car_logos/mahindra.svg",
+      "image": "/image/vehicles/mahindra/xuv700.webp"
+    },
+    {
+      "brand": "Mahindra",
+      "model": "XUV300",
+      "logo": "/image/car_logos/mahindra.svg",
+      "image": "/image/vehicles/mahindra/xuv300.webp"
+    },
+    {
+      "brand": "Mahindra",
+      "model": "XUV 3XO",
+      "logo": "/image/car_logos/mahindra.svg",
+      "image": "/image/vehicles/mahindra/xuv-3xo.webp"
+    },
+    {
+      "brand": "Mahindra",
+      "model": "Bolero",
+      "logo": "/image/car_logos/mahindra.svg",
+      "image": "/image/vehicles/mahindra/bolero.webp"
+    },
+    {
+      "brand": "Mahindra",
+      "model": "Marazzo",
+      "logo": "/image/car_logos/mahindra.svg",
+      "image": "/image/vehicles/mahindra/marazzo.webp"
+    },
+    {
+      "brand": "Mahindra",
+      "model": "BE 6",
+      "logo": "/image/car_logos/mahindra.svg",
+      "image": "/image/vehicles/mahindra/be-6.webp"
+    },
+    {
+      "brand": "Mahindra",
+      "model": "XEV 9e",
+      "logo": "/image/car_logos/mahindra.svg",
+      "image": "/image/vehicles/mahindra/xev-9e.webp"
+    },
+    {
+      "brand": "Mahindra",
+      "model": "XUV400",
+      "logo": "/image/car_logos/mahindra.svg",
+      "image": "/image/vehicles/mahindra/xuv400.webp"
+    },
+    {
+      "brand": "Proton",
+      "model": "Saga",
+      "logo": "/image/car_logos/proton.svg",
+      "image": "/image/vehicles/proton/saga.webp"
+    },
+    {
+      "brand": "Proton",
+      "model": "Persona",
+      "logo": "/image/car_logos/proton.svg",
+      "image": "/image/vehicles/proton/persona.webp"
+    },
+    {
+      "brand": "Proton",
+      "model": "Iriz",
+      "logo": "/image/car_logos/proton.svg",
+      "image": "/image/vehicles/proton/iriz.webp"
+    },
+    {
+      "brand": "Proton",
+      "model": "X50",
+      "logo": "/image/car_logos/proton.svg",
+      "image": "/image/vehicles/proton/x50.webp"
+    },
+    {
+      "brand": "Proton",
+      "model": "X70",
+      "logo": "/image/car_logos/proton.svg",
+      "image": "/image/vehicles/proton/x70.webp"
+    },
+    {
+      "brand": "Proton",
+      "model": "S70",
+      "logo": "/image/car_logos/proton.svg",
+      "image": "/image/vehicles/proton/s70.webp"
+    },
+    {
+      "brand": "Proton",
+      "model": "Exora",
+      "logo": "/image/car_logos/proton.svg",
+      "image": "/image/vehicles/proton/exora.webp"
+    },
+    {
+      "brand": "Proton",
+      "model": "X90",
+      "logo": "/image/car_logos/proton.svg",
+      "image": "/image/vehicles/proton/x90.webp"
+    },
+    {
+      "brand": "Perodua",
+      "model": "Myvi",
+      "logo": "/image/car_logos/perodua.png",
+      "image": "/image/vehicles/perodua/myvi.webp"
+    },
+    {
+      "brand": "Perodua",
+      "model": "Axia",
+      "logo": "/image/car_logos/perodua.png",
+      "image": "/image/vehicles/perodua/axia.webp"
+    },
+    {
+      "brand": "Perodua",
+      "model": "Bezza",
+      "logo": "/image/car_logos/perodua.png",
+      "image": "/image/vehicles/perodua/bezza.webp"
+    },
+    {
+      "brand": "Perodua",
+      "model": "Alza",
+      "logo": "/image/car_logos/perodua.png",
+      "image": "/image/vehicles/perodua/alza.webp"
+    },
+    {
+      "brand": "Perodua",
+      "model": "Ativa",
+      "logo": "/image/car_logos/perodua.png",
+      "image": "/image/vehicles/perodua/ativa.webp"
+    },
+    {
+      "brand": "Perodua",
+      "model": "Aruz",
+      "logo": "/image/car_logos/perodua.png",
+      "image": "/image/vehicles/perodua/aruz.webp"
+    },
+    {
+      "brand": "VinFast",
+      "model": "VF 3",
+      "logo": "/image/car_logos/vinfast.png",
+      "image": "/image/vehicles/vinfast/vf-3.webp"
+    },
+    {
+      "brand": "VinFast",
+      "model": "VF 5",
+      "logo": "/image/car_logos/vinfast.png",
+      "image": "/image/vehicles/vinfast/vf-5.webp"
+    },
+    {
+      "brand": "VinFast",
+      "model": "VF 6",
+      "logo": "/image/car_logos/vinfast.png",
+      "image": "/image/vehicles/vinfast/vf-6.webp"
+    },
+    {
+      "brand": "VinFast",
+      "model": "VF 7",
+      "logo": "/image/car_logos/vinfast.png",
+      "image": "/image/vehicles/vinfast/vf-7.webp"
+    },
+    {
+      "brand": "VinFast",
+      "model": "VF 8",
+      "logo": "/image/car_logos/vinfast.png",
+      "image": "/image/vehicles/vinfast/vf-8.webp"
+    },
+    {
+      "brand": "VinFast",
+      "model": "VF 9",
+      "logo": "/image/car_logos/vinfast.png",
+      "image": "/image/vehicles/vinfast/vf-9.webp"
+    },
+    {
+      "brand": "VinFast",
+      "model": "Lux A2.0",
+      "logo": "/image/car_logos/vinfast.png",
+      "image": "/image/vehicles/vinfast/lux-a2.0.webp"
+    },
+    {
+      "brand": "VinFast",
+      "model": "Lux SA2.0",
+      "logo": "/image/car_logos/vinfast.png",
+      "image": "/image/vehicles/vinfast/lux-sa2.0.webp"
+    },
+    {
+      "brand": "Cupra",
+      "model": "Formentor",
+      "logo": "/image/car_logos/cupra.png",
+      "image": "/image/vehicles/cupra/formentor.webp"
+    },
+    {
+      "brand": "Cupra",
+      "model": "Born",
+      "logo": "/image/car_logos/cupra.png",
+      "image": "/image/vehicles/cupra/born.webp"
+    },
+    {
+      "brand": "Cupra",
+      "model": "Tavascan",
+      "logo": "/image/car_logos/cupra.png",
+      "image": "/image/vehicles/cupra/tavascan.webp"
+    },
+    {
+      "brand": "Cupra",
+      "model": "Terramar",
+      "logo": "/image/car_logos/cupra.png",
+      "image": "/image/vehicles/cupra/terramar.webp"
+    },
+    {
+      "brand": "Cupra",
+      "model": "Leon",
+      "logo": "/image/car_logos/cupra.png",
+      "image": "/image/vehicles/cupra/leon.webp"
+    },
+    {
+      "brand": "Cupra",
+      "model": "Ateca",
+      "logo": "/image/car_logos/cupra.png",
+      "image": "/image/vehicles/cupra/ateca.webp"
+    },
+    {
+      "brand": "Abarth",
+      "model": "595",
+      "logo": "/image/car_logos/abarth.png",
+      "image": "/image/vehicles/abarth/595.webp"
+    },
+    {
+      "brand": "Abarth",
+      "model": "695",
+      "logo": "/image/car_logos/abarth.png",
+      "image": "/image/vehicles/abarth/695.webp"
+    },
+    {
+      "brand": "Abarth",
+      "model": "124 Spider",
+      "logo": "/image/car_logos/abarth.png",
+      "image": "/image/vehicles/abarth/124-spider.webp"
+    },
+    {
+      "brand": "Abarth",
+      "model": "500e",
+      "logo": "/image/car_logos/abarth.png",
+      "image": "/image/vehicles/abarth/500e.webp"
+    }
+  ]
+}

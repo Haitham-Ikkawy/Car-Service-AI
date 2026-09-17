@@ -5,6 +5,7 @@ Run with:  uvicorn src.app:app --reload
 from __future__ import annotations
 
 import threading
+import mimetypes
 from pathlib import Path
 from urllib.parse import quote
 
@@ -47,6 +48,8 @@ for _name in ("chat_ai", "image_diagnosis", "sound_diagnosis", "video_diagnosis"
     app.mount(f"/static/{_name}", StaticFiles(directory=str(_dir)), name=f"static-{_name}")
 app.mount("/static", StaticFiles(directory=str(BASE_DIR / "shared" / "static")), name="static")
 # Project-level media library (automotive images & video) served from the repo image/ folder.
+# Windows MIME registries may omit WebP; serve vehicle photos as images everywhere.
+mimetypes.add_type("image/webp", ".webp")
 app.mount("/image", StaticFiles(directory=str(PROJECT_ROOT / "image")), name="image")
 app.mount("/img", StaticFiles(directory=str(PROJECT_ROOT / "image")), name="img")
 
