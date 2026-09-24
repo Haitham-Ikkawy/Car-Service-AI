@@ -213,7 +213,7 @@
     if (previewSource) {
       vehicleImgHtml = `<img src="${esc(previewSource)}" alt="Uploaded car" class="dz-loading-vehicle-img">`;
     } else if (brand && model) {
-      const local = getModelImage(brand, model, state.vehicle.year, state.vehicle.market);
+      const local = getModelLocalPhoto(brand, model);
       const primary = getVehicleImageUrl(brand, model, state.vehicle.year) || local;
       if (primary) {
         vehicleImgHtml = `<img src="${esc(primary)}" data-local="${esc(local || "")}" alt="${esc(brand)} ${esc(model)}" class="dz-loading-vehicle-img" onerror="dzImgFallback(this)">`;
@@ -342,7 +342,7 @@
 
     /* Vehicle image */
     if (imgEl) {
-      const local = getModelImage(brand, model, state.vehicle.year, state.vehicle.market);
+      const local = getModelLocalPhoto(brand, model);
       const primary = getVehicleImageUrl(brand, model, state.vehicle.year) || local;
       if (primary) {
         const img = document.createElement("img");
@@ -775,7 +775,16 @@
   // Their provenance and attribution are recorded in vehicle-images-manifest.json.
   const VEHICLE_IMAGES = vehicleAssets.images;
   function getModelImage(brand, model, year = "", market = "") {
-    if (year || market) return null; // Model-card photos do not establish year/specification.
+    /* When a specific year/market is chosen we prefer the live Wikipedia photo
+       of that year via getVehicleImageUrl(). The local model photo is only a
+       model-level illustration and is NOT presented as year/spec-accurate, but
+       it is still a real photo of the car and far better than an HTML icon. */
+    if (year || market) return null; // model photo "seen by caller" path; handled below
+    return VEHICLE_IMAGES[catalogueKey(brand)]?.[catalogueKey(model)]?.path || null;
+  }
+
+  /* Local model photo regardless of year/market — used as the graceful fallback. */
+  function getModelLocalPhoto(brand, model) {
     return VEHICLE_IMAGES[catalogueKey(brand)]?.[catalogueKey(model)]?.path || null;
   }
 
@@ -785,8 +794,14 @@
   }
 
   function getVehicleImageUrl(brand, model, year) {
-    if (!brand || state.vehicle.market) return "";
-    const local = getModelImage(brand, model, year);
+    const local = getModelLocalPhoto(brand, model);
+    if (!brand || !model) return local || "";
+    /* The local model photo is a real photograph of the car and ships with the
+       app, so it is always the primary image regardless of selected year/market.
+       It is only bypassed when the model genuinely has no local photo — in that
+       case the live year photo is attempted and the caller's onerror chain then
+       falls back to an icon. Guarantees a real car photo, never the HTML icon,
+       for every model that has a shipped asset. */
     if (local) return local;
     let u = "/api/vehicles/image?make=" + encodeURIComponent(brand) +
             "&model=" + encodeURIComponent(model || "");
@@ -1972,7 +1987,7 @@
   function updateSelectedVehicleImage(brand, model) {
     const imgWrap = $("#dz-selected-image");
     if (!imgWrap) return;
-    const local = getModelImage(brand, model, state.vehicle.year, state.vehicle.market);
+    const local = getModelLocalPhoto(brand, model);
     const primary = getVehicleImageUrl(brand, model, state.vehicle.year) || local;
     if (primary) {
       imgWrap.innerHTML = `<img src="${esc(primary)}" data-local="${esc(local || "")}" alt="${esc(brand)} ${esc(model)}" class="dz-selected-vehicle-img" onerror="dzImgFallback(this)"><div class="dz-selected-img-fallback"><i class="bi bi-car-front-fill"></i></div>`;
@@ -1986,7 +2001,7 @@
     const img = $("#dz-info-vehicle-img");
     const fallback = $("#dz-info-vehicle-fallback");
     if (!img || !fallback) return;
-    const local = getModelImage(brand, model, state.vehicle.year, state.vehicle.market);
+    const local = getModelLocalPhoto(brand, model);
     const imgSrc = getVehicleImageUrl(brand, model, state.vehicle.year) || local;
     if (imgSrc) {
       img.setAttribute("data-local", local || "");
